@@ -7,9 +7,25 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
 
 const Container = styled.div`
-  display: inline-block;
-  width: 700px;
+  /* width: 700px; */
   height: 300px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+`;
+
+const WordmapContainer = styled.div`
+  height: 95%;
+`;
+
+const Title = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  :first-child {
+    color: #feb100;
+    margin-right: 5px;
+  }
 `;
 
 function mapStateToProps(state: RootState) {
@@ -41,9 +57,9 @@ function WordMap({ data }: Props) {
 
     // Add labels
     series.nodes.template.label.text = "{name}";
-    series.fontSize = 12;
-    series.minRadius = 20;
-    series.maxRadius = 40;
+    series.fontSize = 14;
+    series.minRadius = 25;
+    series.maxRadius = 50;
 
     chartRef.current = chart;
     return () => {
@@ -51,7 +67,13 @@ function WordMap({ data }: Props) {
     };
   }, [data]);
 
-  return <Container id="keyword-wordmap" />;
+  return (
+    <Container>
+      <Title>리그오브레전드</Title>
+      <Title>인기영상</Title>
+      <WordmapContainer id="keyword-wordmap" />
+    </Container>
+  );
 }
 
 export default connector(WordMap);
