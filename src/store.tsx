@@ -56,7 +56,7 @@ const keywordSlice = createSlice({
   name: "keywordReducer",
   initialState: keywordData,
   reducers: {
-    add: (state, action) => {
+    keywordDataUpdate: (state, action) => {
       state.wordmap = action.payload.wordmap;
       state.comment = action.payload.comment;
       state.lines = action.payload.lines;
@@ -73,3 +73,10 @@ const cReducer = combineReducers({
 const store = configureStore({
   reducer: cReducer,
 });
+
+export const { keywordDataUpdate } = keywordSlice.actions;
+
+export default store;
+
+export type RootState = ReturnType<typeof store.getState>;
+export type RootDispatch = typeof store.dispatch;
