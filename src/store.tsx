@@ -69,3 +69,7 @@ const keywordSlice = createSlice({
 const cReducer = combineReducers({
   keyword: keywordSlice.reducer,
 });
+
+const store = configureStore({
+  reducer: cReducer,
+});
