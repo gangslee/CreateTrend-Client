@@ -1,5 +1,3 @@
-import React from "react";
+import KeywordContainer from "./KeywordContainer";
 
-export default function Keyword() {
-  return <h1>Keyword</h1>;
-}
+export default KeywordContainer;
