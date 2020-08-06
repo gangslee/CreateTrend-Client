@@ -12,6 +12,7 @@ export interface ICommentData {
   avatar: string;
   comment: string;
   thumbnail: string;
+  link: string;
 }
 
 export interface ILineChartData {

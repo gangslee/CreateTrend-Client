@@ -70,7 +70,7 @@ function WordMap({ data }: Props) {
   return (
     <Container>
       <Title>리그오브레전드</Title>
-      <Title>인기영상</Title>
+      <Title>인기 영상</Title>
       <WordmapContainer id="keyword-wordmap" />
     </Container>
   );

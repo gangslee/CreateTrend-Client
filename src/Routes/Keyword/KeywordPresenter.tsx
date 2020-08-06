@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+
 import WordMap from "../../Components/Wordmap";
+import KeywordChart from "../../Components/KeywordChart";
 
 const Container = styled.div`
   width: 1040px;
@@ -27,6 +29,7 @@ export default function KeywordPresenter() {
     <Container>
       <AnalysisSection>
         <WordMap />
+        <KeywordChart />
       </AnalysisSection>
       <VideoSection></VideoSection>
     </Container>
