@@ -1,7 +1,8 @@
-import React from "react";
-import KeywordPresenter from "./KeywordPresenter";
+import React, { useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-import { IKeywordData } from "../../store";
+import { RootDispatch, keywordDataUpdate, IKeywordData } from "../../store";
+import KeywordPresenter from "./KeywordPresenter";
 
 const getData = (): IKeywordData => {
   const data = {
@@ -108,7 +109,28 @@ const getData = (): IKeywordData => {
   return data;
 };
 
-export default function KeywordContainer() {
-  console.log(getData());
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    update: (data: IKeywordData) => {
+      if (data) {
+        dispatch(keywordDataUpdate(data));
+      }
+    },
+  };
+}
+
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+function KeywordContainer({ update }: Props) {
+  useEffect(() => {
+    const sampleData = getData();
+    update(sampleData);
+  }, [update]);
   return <KeywordPresenter />;
 }
+
+export default connector(KeywordContainer);
