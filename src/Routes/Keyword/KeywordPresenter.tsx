@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import WordMap from "../../Components/Wordmap";
 
 const Container = styled.div`
   width: 1040px;
@@ -12,7 +13,7 @@ const Container = styled.div`
 const AnalysisSection = styled.div`
   width: 700px;
   height: 1000px;
-  border: 1px solid #aaa;
+  /* border: 1px solid #aaa; */
 `;
 
 const VideoSection = styled.div`
@@ -24,7 +25,9 @@ const VideoSection = styled.div`
 export default function KeywordPresenter() {
   return (
     <Container>
-      <AnalysisSection></AnalysisSection>
+      <AnalysisSection>
+        <WordMap />
+      </AnalysisSection>
       <VideoSection></VideoSection>
     </Container>
   );
