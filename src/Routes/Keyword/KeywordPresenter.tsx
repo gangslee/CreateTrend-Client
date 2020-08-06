@@ -12,7 +12,7 @@ const Container = styled.div`
 const AnalysisSection = styled.div`
   width: 700px;
   height: 1000px;
-  /* border: 1px solid #aaa; */
+  border: 1px solid #aaa;
 `;
 
 const VideoSection = styled.div`
