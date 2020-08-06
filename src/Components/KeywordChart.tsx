@@ -34,17 +34,21 @@ interface IImageProps {
 }
 
 const Avatar = styled.div`
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   border-radius: 25px;
   background-image: url(${({ bgUrl }: IImageProps) => bgUrl});
 `;
 
 const Comment = styled.div`
   width: 300px;
+  padding: 3px;
+  border: 1px solid #f1f1f1;
+  background-color: #fafafa;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 `;
@@ -55,7 +59,10 @@ const Image = styled.div`
   background-image: url(${({ bgUrl }: IImageProps) => bgUrl});
   background-size: cover;
   background-position: center center;
-  transition: opacity 0.1s linear;
+  transition: opacity 0.3s linear;
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 function mapStateToProps(state: RootState) {
