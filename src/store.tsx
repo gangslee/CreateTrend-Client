@@ -1,4 +1,4 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
 
 export interface IWordMapData {
   name: string;
@@ -64,4 +64,8 @@ const keywordSlice = createSlice({
       state.video = action.payload.video;
     },
   },
+});
+
+const cReducer = combineReducers({
+  keyword: keywordSlice.reducer,
 });
