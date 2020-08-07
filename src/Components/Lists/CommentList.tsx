@@ -64,7 +64,7 @@ const Image = styled.div`
 `;
 
 function mapStateToProps(state: RootState) {
-  return {data: state.keyword.comment};
+  return {data: state.keyword};
 }
 
 const connector = connect(mapStateToProps);
@@ -75,23 +75,24 @@ type Props = PropsFromRedux;
 
 function CommentList({data}: Props) {
   return (
-    <Container>
-      <Title>리그오브레전드</Title>
-      <Title>댓글 모음</Title>
-      {data ? (
-        data.map((data, index) => (
-          <ItemContainer key={index}>
-            <Avatar src={data.avatar} />
-            <Comment>{data.comment}</Comment>
-            <a href={data.link} target="blank">
-              <Image bgUrl={data.thumbnail} />
-            </a>
-          </ItemContainer>
-        ))
-      ) : (
-        <></>
-      )}
-    </Container>
+    // <Container>
+    //   <Title>리그오브레전드</Title>
+    //   <Title>댓글 모음</Title>
+    //   {data ? (
+    //     data.map((data, index) => (
+    //       <ItemContainer key={index}>
+    //         <Avatar src={data.avatar} />
+    //         <Comment>{data.comment}</Comment>
+    //         <a href={data.link} target="blank">
+    //           <Image bgUrl={data.thumbnail} />
+    //         </a>
+    //       </ItemContainer>
+    //     ))
+    //   ) : (
+    //     <></>
+    //   )}
+    // </Container>
+    <div>Comment</div>
   );
 }
 

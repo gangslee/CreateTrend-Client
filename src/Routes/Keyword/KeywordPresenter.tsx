@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 import WordMap from '../../Components/Charts/Wordmap';
-import CommentList from '../../Components/Charts/CommentList';
 import LineChart from '../../Components/Charts/LineChart';
 
 const Container = styled.div`
@@ -43,7 +42,6 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
         <>
           <AnalysisSection>
             <WordMap />
-            <CommentList />
             <LineChartContainer>
               <LineChart index={0} />
               <LineChart index={1} />

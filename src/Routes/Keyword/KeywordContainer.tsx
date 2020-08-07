@@ -22,33 +22,6 @@ const getData = (): IKeywordData => {
       },
     ],
 
-    comment: [
-      {
-        avatar:
-          'https://yt3.ggpht.com/a/AATXAJxUpf1rMI6WCz3S3h5i2Dzhb5DgMWD1ntDl5ubd=s48-c-k-c0xffffffff-no-rj-mo',
-        comment:
-          '안녕하세요!!  쓰리컨드입니다 ~,~이렇게 두번씩이나 형님께  방송을 배우니 덕분에 저도 예능감이 조금은 늘은것 같습니다!?? 너무 감사합니다ㅋㅋㅋ ',
-        thumbnail:
-          'https://i.ytimg.com/vi/Y34wmDantyM/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBdpLf5j87DDuew84T0hLDO_KSnCQ',
-        link: 'https://www.youtube.com/watch?v=Y34wmDantyM',
-      },
-      {
-        avatar:
-          'https://yt3.ggpht.com/a/AATXAJxDlLzF1fsvIjyemmh-avKWPKemoUX0zDAcaI-h=s48-c-k-c0xffffffff-no-rj-mo',
-        comment:
-          '무슨 리그오브레전드 나레이션 성우님이 동화책 읽어주는 느낌이네 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
-        thumbnail: 'https://i.ytimg.com/vi/LNpvFYq853s/hqdefault.jpg',
-        link: 'https://www.youtube.com/watch?v=LNpvFYq853s',
-      },
-      {
-        avatar:
-          'https://yt3.ggpht.com/a/AATXAJyEtDdPxpA1zBw8E3FLWc9FoD-iZSvSlb6F1qhoTQ=s48-c-k-c0xffffffff-no-rj-mo',
-        comment:
-          'Way to feature a streamer clip doing bugs about Yone and emotes instead of Vandril who first found the bugs',
-        thumbnail: 'https://i.ytimg.com/vi/G0TyjkteZJw/hqdefault.jpg',
-        link: 'https://www.youtube.com/watch?v=G0TyjkteZJw',
-      },
-    ],
     lines: [
       {
         name: '인기도 추이',

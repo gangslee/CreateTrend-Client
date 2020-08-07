@@ -39,7 +39,6 @@ export interface IVideoListData {
 
 export interface IKeywordData {
   wordmap: IWordMapData[];
-  comment: ICommentData[];
   lines: ILineChartData[];
   keyword: IKeywordChartData[];
   video: IVideoListData[];
@@ -48,7 +47,6 @@ export interface IKeywordData {
 
 const keywordData: IKeywordData = {
   wordmap: null,
-  comment: null,
   lines: null,
   keyword: null,
   video: null,
@@ -61,7 +59,6 @@ const keywordSlice = createSlice({
   reducers: {
     keywordDataUpdate: (state, action) => {
       state.wordmap = action.payload.wordmap;
-      state.comment = action.payload.comment;
       state.lines = action.payload.lines;
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;

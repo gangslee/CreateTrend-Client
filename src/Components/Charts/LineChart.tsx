@@ -87,7 +87,7 @@ function LineChart({data, index}: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [data, index]);
+  }, [useData.data, useData.name, index]);
 
   return (
     <Container>
