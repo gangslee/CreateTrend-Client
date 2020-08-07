@@ -3,25 +3,28 @@ import styled from 'styled-components';
 
 import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
+import KeywordChart from '../../Components/Charts/KeywordChart';
 
 const Container = styled.div`
   width: 1040px;
-  height: 1000px;
   display: flex;
   justify-content: space-between;
+  box-sizing: border-box;
   margin: 50px auto;
 `;
 
 const AnalysisSection = styled.div`
   width: 700px;
-  height: 1000px;
+  /* height: 1000px; */
   /* border: 1px solid #aaa; */
 `;
 
-const LineChartContainer = styled.div`
+const ChartContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  :not(:last-child) {
+    margin-bottom: 30px;
+  }
 `;
 
 const VideoSection = styled.div`
@@ -41,10 +44,14 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
         <>
           <AnalysisSection>
             <WordMap />
-            <LineChartContainer>
+            <ChartContainer>
               <LineChart index={0} />
               <LineChart index={1} />
-            </LineChartContainer>
+            </ChartContainer>
+            <ChartContainer>
+              <KeywordChart index={0} />
+              <KeywordChart index={1} />
+            </ChartContainer>
           </AnalysisSection>
           <VideoSection></VideoSection>
         </>

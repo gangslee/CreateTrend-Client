@@ -12,7 +12,6 @@ const Container = styled.div`
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  margin-bottom: 20px;
   padding: 10px 0px;
 `;
 
@@ -48,8 +47,6 @@ interface ILineChartProps extends Props {
 }
 
 function LineChart({data, index}: ILineChartProps) {
-  console.log(data, index);
-
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
   useLayoutEffect(() => {
