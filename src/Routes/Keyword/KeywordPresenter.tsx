@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import WordMap from '../../Components/Charts/Wordmap';
 import CommentList from '../../Components/Charts/CommentList';
+import LineChart from '../../Components/Charts/LineChart';
 
 const Container = styled.div`
   width: 1040px;
@@ -30,6 +31,9 @@ export default function KeywordPresenter() {
       <AnalysisSection>
         <WordMap />
         <CommentList />
+        {/* <LineChartContainer> */}
+        <LineChart />
+        {/* </LineChartContainer> */}
       </AnalysisSection>
       <VideoSection></VideoSection>
     </Container>

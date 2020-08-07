@@ -5,11 +5,10 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState} from '../../store';
 
 const Container = styled.div`
-  /* height: 400px; */
   box-sizing: border-box;
   border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
-  margin-bottom: 30px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
   padding: 20px;
 `;
 
@@ -34,8 +33,8 @@ interface IImageProps {
 }
 
 const Avatar = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 50px;
+  height: 50px;
   border-radius: 25px;
   background-image: url(${({bgUrl}: IImageProps) => bgUrl});
 `;
@@ -76,7 +75,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function CommentList({data}: Props) {
-  console.log(data);
   return (
     <Container>
       <Title>리그오브레전드</Title>
@@ -86,7 +84,7 @@ function CommentList({data}: Props) {
           <ItemContainer key={index}>
             <Avatar bgUrl={data.avatar} />
             <Comment>{data.comment}</Comment>
-            <a href={data.link}>
+            <a href={data.link} target="blank">
               <Image bgUrl={data.thumbnail} />
             </a>
           </ItemContainer>
