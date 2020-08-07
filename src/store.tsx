@@ -29,6 +29,17 @@ export interface IKeywordChartData {
 }
 
 export interface IVideoListData {
+  type: string;
+  data: {
+    id: string;
+    name: string;
+    thumbnail: string;
+    keyword?: string[];
+  }[];
+  current?: number;
+}
+
+export interface IAsideVideoListData {
   name: string;
   data: {
     name: string;
@@ -42,6 +53,7 @@ export interface IKeywordData {
   lines: ILineChartData[];
   keyword: IKeywordChartData[];
   video: IVideoListData[];
+  asideVideo?: IAsideVideoListData[];
   useAble?: boolean;
 }
 
@@ -50,6 +62,7 @@ const keywordData: IKeywordData = {
   lines: null,
   keyword: null,
   video: null,
+  asideVideo: null,
   useAble: false,
 };
 
@@ -62,7 +75,18 @@ const keywordSlice = createSlice({
       state.lines = action.payload.lines;
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
+      state.asideVideo = action.payload.asideVideo;
       state.useAble = true;
+    },
+    sliderStateNext: (state, action) => {
+      state.video[action.payload].current === 4
+        ? (state.video[action.payload].current = 0)
+        : (state.video[action.payload].current += 1);
+    },
+    sliderStatePrev: (state, action) => {
+      state.video[action.payload].current === 0
+        ? (state.video[action.payload].current = 4)
+        : (state.video[action.payload].current -= 1);
     },
   },
 });
@@ -75,7 +99,7 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {keywordDataUpdate} = keywordSlice.actions;
+export const {keywordDataUpdate, sliderStateNext, sliderStatePrev} = keywordSlice.actions;
 
 export default store;
 

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
+import VideoList from '../../Components/Lists/VideoList';
 
 const Container = styled.div`
   width: 1040px;
@@ -48,6 +49,7 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
               <LineChart index={0} />
               <LineChart index={1} />
             </ChartContainer>
+            <VideoList type="analysis" />
             <ChartContainer>
               <KeywordChart index={0} />
               <KeywordChart index={1} />

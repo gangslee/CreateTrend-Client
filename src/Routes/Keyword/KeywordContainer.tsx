@@ -3,6 +3,7 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, keywordDataUpdate, IKeywordData} from '../../store';
 import KeywordPresenter from './KeywordPresenter';
+import {current} from '@reduxjs/toolkit';
 
 const getData = (): IKeywordData => {
   const data = {
@@ -106,24 +107,45 @@ const getData = (): IKeywordData => {
     ],
     video: [
       {
-        name: 'n1',
+        type: 'analysis',
         data: [
           {
-            name: 'video1',
-            thumbnail: 'https://i.ytimg.com/vi/yGKskqjPH1o/hq720.jpg',
-            link: 'https://www.youtube.com/watch?v=yGKskqjPH1o',
+            id: 'Y34wmDantyM',
+            name: '[롤] 감스트 그 분이 왔습니다 ㄷㄷ LOL',
+            thumbnail:
+              'https://i.ytimg.com/vi/Y34wmDantyM/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLD79Ay1YDwEcRCV0RaaZb1weyi9cQ',
+            keyword: ['롤', '감스트', '가렌', '게스트', '쓰리컨드'],
           },
-        ],
-      },
-      {
-        name: 'n2',
-        data: [
           {
-            name: 'video2',
-            thumbnail: 'https://i.ytimg.com/vi/yGKskqjPH1o/hq720.jpg',
-            link: 'https://www.youtube.com/watch?v=yGKskqjPH1o',
+            id: 'kpHFdVjLQbA',
+            name: '[롤] 감스트 브론즈1 100점 찍었습니다! 실버가 보인다!! LOL',
+            thumbnail:
+              'https://i.ytimg.com/vi/kpHFdVjLQbA/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAg1lewAEE_CTH0pPNsJ038MNlkEw',
+            keyword: ['롤', '감스트', '승격전', '브론즈', '실버'],
+          },
+          {
+            id: 'my4j1Z5c88A',
+            name: '신챔프 수학 출시 임박, 요네 심화 정보',
+            thumbnail:
+              'https://i.ytimg.com/vi/my4j1Z5c88A/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAlzviTWyij1i9bTwqlNmwLn9Y0BA',
+            keyword: ['롤박사 해도리', '패치노트', '10.16', '야스오', '요네'],
+          },
+          {
+            id: 'K4mI_q1I5lU',
+            name: '롤 신스킨에 레바의 손길이 닿아버렸습니다',
+            thumbnail:
+              'https://i.ytimg.com/vi/K4mI_q1I5lU/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAfYFUV6pi6JZvvvejci358Nq8yZw',
+            keyword: ['레바', '신스킨', '킨드레드', '그림방송', '트위치'],
+          },
+          {
+            id: 'zKTXxy9Z6hs',
+            name: "다시 돌아온 100만 조회수의 '그 버그'",
+            thumbnail:
+              'https://i.ytimg.com/vi/zKTXxy9Z6hs/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLC_YbxETJgUGGwAQBsshOdbGb6JIw',
+            keyword: ['롤', '롤박사 해도리', '버그', '노틸러스', '챔피언'],
           },
         ],
+        current: 0,
       },
     ],
   };

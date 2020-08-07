@@ -65,7 +65,6 @@ interface IKeywordChartProps extends Props {
 }
 
 function KeywordChart({data, index}: IKeywordChartProps) {
-  console.log(data);
   const usingData = index ? data[index] : data[0];
   return (
     <Container>
