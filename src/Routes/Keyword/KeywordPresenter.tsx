@@ -23,7 +23,7 @@ const ChartContainer = styled.div`
   display: flex;
   justify-content: space-between;
   :not(:last-child) {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 `;
 

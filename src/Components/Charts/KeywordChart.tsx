@@ -6,18 +6,35 @@ import {RootState} from '../../store';
 
 const Container = styled.div`
   width: 330px;
+  padding: 20px;
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
 `;
 
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Title = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  margin-right: 5px;
+  :last-child {
+    color: #feb100;
+    font-size: 25px;
+  }
+`;
+
 const KeywordChartContainer = styled.div`
-  margin: 5px 20px;
-  padding: 10px;
+  margin: 10px 0px;
+  padding: 5px 10px;
   font-size: 16px;
   font-weight: 600;
   :not(:last-child) {
-    border-bottom: 1px solid #bbb;
+    border-bottom: 2px solid #ddd;
   }
 `;
 
@@ -52,10 +69,13 @@ function KeywordChart({data, index}: IKeywordChartProps) {
   const usingData = index ? data[index] : data[0];
   return (
     <Container>
+      <TitleContainer>
+        <Title>{usingData.name}</Title>
+        <Title>TOP 10</Title>
+      </TitleContainer>
       {usingData.data.map((keyword, index) => (
         <KeywordChartContainer key={index}>
           <Rank>{index + 1}</Rank>
-
           <Keyword> {keyword}</Keyword>
         </KeywordChartContainer>
       ))}
