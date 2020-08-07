@@ -8,7 +8,7 @@ const getData = (): IKeywordData => {
   const data = {
     wordmap: [
       {
-        name: '볼리베어',
+        name: '리그오브레전드',
         children: [
           {
             name: '롤',
@@ -16,6 +16,26 @@ const getData = (): IKeywordData => {
           },
           {
             name: '넥서스',
+            value: 180,
+          },
+          {
+            name: '라이엇',
+            value: 160,
+          },
+          {
+            name: '볼리베어',
+            value: 140,
+          },
+          {
+            name: '페이커',
+            value: 120,
+          },
+          {
+            name: 'LCK',
+            value: 100,
+          },
+          {
+            name: '담원',
             value: 80,
           },
         ],

@@ -7,7 +7,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
 
 const Container = styled.div`
-  height: 250px;
+  height: 320px;
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -52,9 +52,10 @@ function WordMap({data}: Props) {
 
     // Add labels
     series.nodes.template.label.text = '{name}';
-    series.fontSize = 14;
-    series.minRadius = 25;
-    series.maxRadius = 50;
+    series.fontSize = 15;
+    series.fontWeight = 'bold';
+    series.minRadius = 30;
+    series.maxRadius = 60;
 
     chartRef.current = chart;
     return () => {
