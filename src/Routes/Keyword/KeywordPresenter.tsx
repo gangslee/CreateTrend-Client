@@ -22,7 +22,7 @@ const AnalysisSection = styled.div`
 const LineChartContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 250px;
+  /* height: 250px; */
   margin-bottom: 30px;
 `;
 

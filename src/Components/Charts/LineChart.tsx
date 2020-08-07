@@ -8,16 +8,30 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import {RootState} from '../../store';
 
 const Container = styled.div`
-  width: 325px;
-  height: 250px;
+  width: 330px;
+  /* height: 250px; */
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   margin-bottom: 20px;
+  padding: 10px 0px;
+`;
+
+const TitleContainer = styled.div`
+  margin: 10px 15px;
+`;
+
+const Title = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  :first-child {
+    color: #feb100;
+    margin-right: 5px;
+  }
 `;
 
 const LineChartContainer = styled.div`
-  height: 95%;
+  height: 200px;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -38,8 +52,8 @@ function LineChart({data, index}: ILineChartProps) {
   console.log(data, index);
 
   const chartRef = useRef(null);
+  const useData = index ? data[index] : data[0];
   useLayoutEffect(() => {
-    const useData = index ? data[index] : data[0];
     const chart = am4core.create(useData.name, am4charts.XYChart);
     chart.data = useData.data;
 
@@ -77,7 +91,12 @@ function LineChart({data, index}: ILineChartProps) {
 
   return (
     <Container>
-      <LineChartContainer id={data[index].name} />
+      <TitleContainer>
+        <Title>리그오브레전드</Title>
+        <Title>{useData.name}</Title>
+      </TitleContainer>
+
+      <LineChartContainer id={useData.name} />
     </Container>
   );
 }
