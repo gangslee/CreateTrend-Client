@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootDispatch, keywordDataUpdate, IKeywordData} from '../../store';
+import {RootState, RootDispatch, keywordDataUpdate, IKeywordData} from '../../store';
 import KeywordPresenter from './KeywordPresenter';
 
 const getData = (): IKeywordData => {
@@ -34,7 +34,7 @@ const getData = (): IKeywordData => {
       },
       {
         avatar:
-          'https://yt3.ggpht.com/a/AATXAJwpPs3HUxZx_MQ3-As5udiujBicZvcgx3yQcME1=s48-c-k-c0xffffffff-no-rj-mo',
+          'https://yt3.ggpht.com/a/AATXAJxDlLzF1fsvIjyemmh-avKWPKemoUX0zDAcaI-h=s48-c-k-c0xffffffff-no-rj-mo',
         comment:
           '무슨 리그오브레전드 나레이션 성우님이 동화책 읽어주는 느낌이네 ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
         thumbnail: 'https://i.ytimg.com/vi/LNpvFYq853s/hqdefault.jpg',
@@ -119,6 +119,10 @@ const getData = (): IKeywordData => {
   return data;
 };
 
+function mapStateToProps(state: RootState) {
+  return {useAble: state.keyword.useAble};
+}
+
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: IKeywordData) => {
@@ -129,18 +133,18 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   };
 }
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function KeywordContainer({update}: Props) {
+function KeywordContainer({useAble, update}: Props) {
   useEffect(() => {
     const sampleData = getData();
     update(sampleData);
   }, [update]);
-  return <KeywordPresenter />;
+  return <KeywordPresenter loading={useAble} />;
 }
 
 export default connector(KeywordContainer);

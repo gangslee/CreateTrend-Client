@@ -28,15 +28,10 @@ const ItemContainer = styled.div`
   margin: 10px;
 `;
 
-interface IImageProps {
-  bgUrl: string;
-}
-
-const Avatar = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  background-image: url(${({bgUrl}: IImageProps) => bgUrl});
+const Avatar = styled.img`
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
 `;
 
 const Comment = styled.div`
@@ -51,6 +46,10 @@ const Comment = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 `;
+
+interface IImageProps {
+  bgUrl: string;
+}
 
 const Image = styled.div`
   width: 200px;
@@ -82,7 +81,7 @@ function CommentList({data}: Props) {
       {data ? (
         data.map((data, index) => (
           <ItemContainer key={index}>
-            <Avatar bgUrl={data.avatar} />
+            <Avatar src={data.avatar} />
             <Comment>{data.comment}</Comment>
             <a href={data.link} target="blank">
               <Image bgUrl={data.thumbnail} />

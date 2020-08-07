@@ -1,4 +1,4 @@
-import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
+import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
 
 export interface IWordMapData {
   name: string;
@@ -43,6 +43,7 @@ export interface IKeywordData {
   lines: ILineChartData[];
   keyword: IKeywordChartData[];
   video: IVideoListData[];
+  useAble?: boolean;
 }
 
 const keywordData: IKeywordData = {
@@ -51,10 +52,11 @@ const keywordData: IKeywordData = {
   lines: null,
   keyword: null,
   video: null,
+  useAble: false,
 };
 
 const keywordSlice = createSlice({
-  name: "keywordReducer",
+  name: 'keywordReducer',
   initialState: keywordData,
   reducers: {
     keywordDataUpdate: (state, action) => {
@@ -63,6 +65,7 @@ const keywordSlice = createSlice({
       state.lines = action.payload.lines;
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
+      state.useAble = true;
     },
   },
 });
@@ -75,7 +78,7 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const { keywordDataUpdate } = keywordSlice.actions;
+export const {keywordDataUpdate} = keywordSlice.actions;
 
 export default store;
 

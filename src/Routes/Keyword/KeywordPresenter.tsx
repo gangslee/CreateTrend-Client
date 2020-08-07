@@ -19,23 +19,41 @@ const AnalysisSection = styled.div`
   /* border: 1px solid #aaa; */
 `;
 
+const LineChartContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 250px;
+  margin-bottom: 30px;
+`;
+
 const VideoSection = styled.div`
   width: 290px;
   height: 1000px;
   border: 1px solid #aaa;
 `;
 
-export default function KeywordPresenter() {
+interface IKeywordPresenter {
+  loading: boolean;
+}
+
+export default function KeywordPresenter({loading}: IKeywordPresenter) {
   return (
     <Container>
-      <AnalysisSection>
-        <WordMap />
-        <CommentList />
-        {/* <LineChartContainer> */}
-        <LineChart />
-        {/* </LineChartContainer> */}
-      </AnalysisSection>
-      <VideoSection></VideoSection>
+      {loading ? (
+        <>
+          <AnalysisSection>
+            <WordMap />
+            <CommentList />
+            <LineChartContainer>
+              <LineChart index={0} />
+              <LineChart index={1} />
+            </LineChartContainer>
+          </AnalysisSection>
+          <VideoSection></VideoSection>
+        </>
+      ) : (
+        <h1>NOTYET</h1>
+      )}
     </Container>
   );
 }
