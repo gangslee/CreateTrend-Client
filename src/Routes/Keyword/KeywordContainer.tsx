@@ -146,6 +146,43 @@ const getData = (): IKeywordData => {
         ],
         current: 0,
       },
+      {
+        type: 'aside',
+        data: [
+          {
+            id: 'r1RJA020Ozo',
+            name: '[롤] 감스트 실버승급전!! 브론즈분들 먼저올라갑니다^^ LOL',
+            thumbnail:
+              'https://i.ytimg.com/vi/r1RJA020Ozo/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLBbgMa8F_b2PS0OR-GSYJIeL0_efg',
+          },
+          {
+            id: 'd15O3zSLA_Q',
+            name: 'Yone Champion Spotlight | Gameplay - League of Legends',
+            thumbnail:
+              'https://i.ytimg.com/vi/d15O3zSLA_Q/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLDZcoYeCuS-Mu4-_PvLogx8BpbGmA',
+          },
+          {
+            id: 'my4j1Z5c88A',
+            name: '각성한 피지컬! 페이커 7-8월 롤 매드무비 [T1 Faker Montage]',
+            thumbnail:
+              'https://i.ytimg.com/vi/SEPY5wPtH6g/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCxPoUb0rDaaxz1LhMQ1Da3XEbISA',
+          },
+          {
+            id: 'gESNgH-xL-0',
+            name:
+              '금요일 요네 출시..방학 시작..랭겜..파.괴.｜10.16 LOL 패치노트 하이라이트 - 리그 오브 레전드',
+            thumbnail:
+              'https://i.ytimg.com/vi/gESNgH-xL-0/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLCEH2VHC8vflOYy7DxRak5eDrMhRg',
+          },
+          {
+            id: 'xyoMSOmKY9U',
+            name: '요네랑 릴리아 두둥등장! | 롤 애니메이션',
+            thumbnail:
+              'https://i.ytimg.com/vi/xyoMSOmKY9U/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLB2yu9Jb0VZwuXdyJKaJexNGkdayw',
+          },
+        ],
+        current: 0,
+      },
     ],
   };
   return data;

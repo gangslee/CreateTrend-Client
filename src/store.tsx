@@ -39,21 +39,11 @@ export interface IVideoListData {
   current?: number;
 }
 
-export interface IAsideVideoListData {
-  name: string;
-  data: {
-    name: string;
-    thumbnail: string;
-    link: string;
-  }[];
-}
-
 export interface IKeywordData {
   wordmap: IWordMapData[];
   lines: ILineChartData[];
   keyword: IKeywordChartData[];
   video: IVideoListData[];
-  asideVideo?: IAsideVideoListData[];
   useAble?: boolean;
 }
 
@@ -62,7 +52,6 @@ const keywordData: IKeywordData = {
   lines: null,
   keyword: null,
   video: null,
-  asideVideo: null,
   useAble: false,
 };
 
@@ -75,7 +64,6 @@ const keywordSlice = createSlice({
       state.lines = action.payload.lines;
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
-      state.asideVideo = action.payload.asideVideo;
       state.useAble = true;
     },
     sliderStateNext: (state, action) => {

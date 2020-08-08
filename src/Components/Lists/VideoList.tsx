@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
+import Slider from '../Slider';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -19,31 +20,6 @@ const Title = styled.span`
     color: #feb100;
     margin-right: 5px;
   }
-`;
-
-const SliderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-`;
-
-interface IArrowProps {
-  bgUrl: string;
-  onClick: (e: React.MouseEvent, direction?: boolean) => void;
-}
-
-const Arrow = styled.div`
-  width: 24px;
-  height: 24px;
-  display: inline-block;
-  background-image: url(${({bgUrl}: IArrowProps) => bgUrl});
-  background-size: cover;
-  background-position: center center;
-  &:hover {
-    opacity: 0.5;
-  }
-  transition: opacity 0.1s linear;
 `;
 
 const VideoContainer = styled.div`
@@ -119,13 +95,12 @@ function VideoList({data, update, type}: IVideoListProps) {
   }
 
   const usingData = data.filter((data) => data.type === type)[0];
-
+  console.log(usingData);
   return (
     <Container>
       <Title>리그오브레전드</Title>
       <Title>인기 영상</Title>
-      <SliderContainer>
-        <Arrow bgUrl={require('../../Asset/back.png')} onClick={handleOnClick} id="prev" />
+      <Slider onClick={handleOnClick}>
         <VideoContainer>
           <Image bgUrl={usingData.data[usingData.current].thumbnail} />
           <InfoContainer>
@@ -141,8 +116,7 @@ function VideoList({data, update, type}: IVideoListProps) {
             </Info>
           </InfoContainer>
         </VideoContainer>
-        <Arrow bgUrl={require('../../Asset/next.png')} onClick={handleOnClick} id="next" />
-      </SliderContainer>
+      </Slider>
     </Container>
   );
 }

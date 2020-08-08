@@ -55,7 +55,7 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
               <KeywordChart index={1} />
             </ChartContainer>
           </AnalysisSection>
-          <VideoSection></VideoSection>
+          <VideoSection>{/* <VideoList type="aside"></VideoList> */}</VideoSection>
         </>
       ) : (
         <h1>NOTYET</h1>
