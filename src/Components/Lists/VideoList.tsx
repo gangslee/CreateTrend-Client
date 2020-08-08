@@ -1,13 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
 
 const Container = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -15,10 +12,20 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const VideoContainer = styled.div`
+const Title = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+  :first-child {
+    color: #feb100;
+    margin-right: 5px;
+  }
+`;
+
+const SliderContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  margin-top: 10px;
 `;
 
 interface IArrowProps {
@@ -39,12 +46,19 @@ const Arrow = styled.div`
   transition: opacity 0.1s linear;
 `;
 
+const VideoContainer = styled.div`
+  width: 90%;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+`;
+
 interface IImageProps {
   bgUrl: string;
 }
 
 const Image = styled.div`
-  width: 200px;
+  width: 35%;
   height: 120px;
   margin-right: 20px;
   border-radius: 5px;
@@ -58,7 +72,7 @@ const Image = styled.div`
 `;
 
 const InfoContainer = styled.div`
-  width: 375px;
+  width: 65%;
 `;
 
 const Info = styled.div`
@@ -70,6 +84,9 @@ const Info = styled.div`
   :nth-child(odd) {
     color: #feb100;
     font-size: 16px;
+  }
+  :last-child {
+    color: #5577ff;
   }
 `;
 
@@ -105,21 +122,27 @@ function VideoList({data, update, type}: IVideoListProps) {
 
   return (
     <Container>
-      <Arrow bgUrl={require('../../Asset/back.png')} onClick={handleOnClick} id="prev" />
-      <VideoContainer>
-        <Image bgUrl={usingData.data[usingData.current].thumbnail} />
-        <InfoContainer>
-          <Info>영상 제목</Info>
-          <Info>{usingData.data[usingData.current].name}</Info>
-          <Info>관련 키워드</Info>
-          <Info>
-            {usingData.data[usingData.current].keyword.map((word, index) =>
-              index !== usingData.data[usingData.current].keyword.length - 1 ? `${word}, ` : word
-            )}
-          </Info>
-        </InfoContainer>
-      </VideoContainer>
-      <Arrow bgUrl={require('../../Asset/next.png')} onClick={handleOnClick} id="next" />
+      <Title>리그오브레전드</Title>
+      <Title>인기 영상</Title>
+      <SliderContainer>
+        <Arrow bgUrl={require('../../Asset/back.png')} onClick={handleOnClick} id="prev" />
+        <VideoContainer>
+          <Image bgUrl={usingData.data[usingData.current].thumbnail} />
+          <InfoContainer>
+            <Info>영상 제목</Info>
+            <Info>{usingData.data[usingData.current].name}</Info>
+            <Info>관련 키워드</Info>
+            <Info>
+              {usingData.data[usingData.current].keyword.map((word, index) =>
+                index !== usingData.data[usingData.current].keyword.length - 1
+                  ? `#${word}, `
+                  : `#${word}`
+              )}
+            </Info>
+          </InfoContainer>
+        </VideoContainer>
+        <Arrow bgUrl={require('../../Asset/next.png')} onClick={handleOnClick} id="next" />
+      </SliderContainer>
     </Container>
   );
 }

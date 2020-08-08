@@ -3,7 +3,6 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, keywordDataUpdate, IKeywordData} from '../../store';
 import KeywordPresenter from './KeywordPresenter';
-import {current} from '@reduxjs/toolkit';
 
 const getData = (): IKeywordData => {
   const data = {
