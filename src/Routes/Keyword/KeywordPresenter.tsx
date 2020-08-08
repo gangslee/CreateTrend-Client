@@ -16,8 +16,6 @@ const Container = styled.div`
 
 const AnalysisSection = styled.div`
   width: 700px;
-  /* height: 1000px; */
-  /* border: 1px solid #aaa; */
 `;
 
 const ChartContainer = styled.div`
@@ -30,8 +28,8 @@ const ChartContainer = styled.div`
 
 const VideoSection = styled.div`
   width: 290px;
-  height: 1000px;
-  border: 1px solid #aaa;
+  /* height: 1000px; */
+  /* border: 1px solid #aaa; */
 `;
 
 interface IKeywordPresenter {
@@ -55,7 +53,9 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
               <KeywordChart index={1} />
             </ChartContainer>
           </AnalysisSection>
-          <VideoSection>{/* <VideoList type="aside"></VideoList> */}</VideoSection>
+          <VideoSection>
+            <VideoList type="aside"></VideoList>
+          </VideoSection>
         </>
       ) : (
         <h1>NOTYET</h1>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
@@ -10,7 +10,22 @@ const Container = styled.div`
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   margin-bottom: 40px;
-  padding: 20px;
+  padding: 20px 10px;
+`;
+
+interface ISCProps {
+  type: string;
+  bgUrl?: string;
+}
+
+const TitleContainer = styled.div<ISCProps>`
+  ${(props) =>
+    props.type === 'aside' &&
+    css`
+      text-align: center;
+    `};
+  padding: 0px 10px;
+  margin-bottom: 10px;
 `;
 
 const Title = styled.span`
@@ -23,22 +38,18 @@ const Title = styled.span`
 `;
 
 const VideoContainer = styled.div`
-  width: 90%;
+  width: 100%;
   display: flex;
   align-items: center;
   padding: 10px;
 `;
 
-interface IImageProps {
-  bgUrl: string;
-}
-
-const Image = styled.div`
-  width: 35%;
-  height: 120px;
-  margin-right: 20px;
+const Image = styled.img`
+  width: ${({type}: ISCProps) => (type === 'analysis' ? '35%' : '60%')};
+  height: ${({type}: ISCProps) => (type === 'analysis' ? '120px' : '85px')};
+  margin-right: ${({type}: ISCProps) => (type === 'analysis' ? '20px' : '5px')};
   border-radius: 5px;
-  background-image: url(${({bgUrl}: IImageProps) => bgUrl});
+  background-image: url(${({bgUrl}: ISCProps) => bgUrl});
   background-size: cover;
   background-position: center center;
   &:hover {
@@ -64,6 +75,18 @@ const Info = styled.div`
   :last-child {
     color: #5577ff;
   }
+`;
+
+const VideoTitle = styled.div`
+  width: 40%;
+  padding: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  font-size: 14px;
+  font-weight: 600;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -98,25 +121,38 @@ function VideoList({data, update, type}: IVideoListProps) {
   console.log(usingData);
   return (
     <Container>
-      <Title>리그오브레전드</Title>
-      <Title>인기 영상</Title>
-      <Slider onClick={handleOnClick}>
-        <VideoContainer>
-          <Image bgUrl={usingData.data[usingData.current].thumbnail} />
-          <InfoContainer>
-            <Info>영상 제목</Info>
-            <Info>{usingData.data[usingData.current].name}</Info>
-            <Info>관련 키워드</Info>
-            <Info>
-              {usingData.data[usingData.current].keyword.map((word, index) =>
-                index !== usingData.data[usingData.current].keyword.length - 1
-                  ? `#${word}, `
-                  : `#${word}`
-              )}
-            </Info>
-          </InfoContainer>
-        </VideoContainer>
-      </Slider>
+      <TitleContainer type={type}>
+        <Title>리그오브레전드</Title>
+        <Title>인기 영상</Title>
+      </TitleContainer>
+      {type === 'analysis' ? (
+        <Slider onClick={handleOnClick}>
+          <VideoContainer>
+            <Image bgUrl={usingData.data[usingData.current].thumbnail} type={type} />
+            <InfoContainer>
+              <Info>영상 제목</Info>
+              <Info>{usingData.data[usingData.current].name}</Info>
+              <Info>관련 키워드</Info>
+              <Info>
+                {usingData.data[usingData.current].keyword.map((word, index) =>
+                  index !== usingData.data[usingData.current].keyword.length - 1
+                    ? `#${word}, `
+                    : `#${word}`
+                )}
+              </Info>
+            </InfoContainer>
+          </VideoContainer>
+        </Slider>
+      ) : (
+        <>
+          {usingData.data.map((data, index) => (
+            <VideoContainer key={data.id}>
+              <Image bgUrl={usingData.data[index].thumbnail} type={type} />
+              <VideoTitle>{data.name}</VideoTitle>
+            </VideoContainer>
+          ))}
+        </>
+      )}
     </Container>
   );
 }
