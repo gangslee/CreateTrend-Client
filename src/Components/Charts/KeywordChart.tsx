@@ -55,10 +55,9 @@ function mapStateToProps(state: RootState) {
     data:
       state.page === 'KEYWORD'
         ? state.keyword.keyword
-        : state.channel.channel[state.channel.currentChannel].keywordChart[
-            state.channel.currentChart
-          ].keyword,
+        : state.channel.channel[state.channel.currentChannel].keywordChart,
     state: {
+      page: state.page,
       channel: state.channel.currentChannel,
       chart: state.channel.currentChart,
     },
@@ -75,18 +74,20 @@ interface IKeywordChartProps extends Props {
   index?: number;
 }
 
-function KeywordChart({data, index}: IKeywordChartProps) {
+function KeywordChart({data, state, index}: IKeywordChartProps) {
   const usingData = index ? data[index] : data[0];
   return (
     <Container>
-      <TitleContainer>
-        <Title>{usingData.name}</Title>
-        <Title>TOP 10</Title>
-      </TitleContainer>
-      {usingData.data.map((keyword, index) => (
+      {state.page === 'KEYWORD' && (
+        <TitleContainer>
+          <Title>{usingData.chartType}</Title>
+          <Title>TOP 10</Title>
+        </TitleContainer>
+      )}
+      {usingData.keyword.map((keyword, index) => (
         <KeywordChartContainer key={index}>
           <Rank>{index + 1}</Rank>
-          <Keyword> {keyword}</Keyword>
+          <Keyword> {keyword.name}</Keyword>
         </KeywordChartContainer>
       ))}
     </Container>

@@ -130,11 +130,7 @@ const pageSlice = createSlice({
   name: 'pageReducer',
   initialState: 'HOME',
   reducers: {
-    currentPage: (state, action) => {
-      if (action.payload) {
-        state = action.payload;
-      }
-    },
+    currentPage: (state, action) => (state = action.payload),
   },
 });
 

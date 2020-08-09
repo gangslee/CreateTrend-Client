@@ -12,8 +12,6 @@ const Container = styled.div`
 const KeywordContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 800px;
-  /* border: 1px solid #aaa; */
 `;
 
 const ChartContainer = styled.div`
