@@ -38,6 +38,7 @@ const TabContainer = styled.div`
   width: 50%;
   height: 100%;
   background-color: ${({current}: ITabContainerProps) => (current ? '#fff9eb' : '#fff')};
+  cursor: pointer;
   color: ${({current}: ITabContainerProps) => (current ? '#feb100' : '#ccc')};
   :first-child {
     border-right: 1px solid #ddd;

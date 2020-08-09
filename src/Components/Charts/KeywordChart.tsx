@@ -44,7 +44,6 @@ const KeywordChartContainer = styled.div`
   :not(:last-child) {
     border-bottom: 2px solid #ddd;
   }
-  /* ${({type}: styleType) => type === 'keyword' && css``}; */
 `;
 
 const Rank = styled.div`
@@ -64,7 +63,11 @@ function mapStateToProps(state: RootState) {
     data:
       state.page === 'keyword'
         ? state.keyword.keyword
-        : state.channel.channel[state.channel.currentChannel].keywordChart,
+        : [
+            state.channel.channel[state.channel.currentChannel].keywordChart[
+              state.channel.currentChart
+            ],
+          ],
     state: {
       page: state.page,
       channel: state.channel.currentChannel,
@@ -84,7 +87,7 @@ interface IKeywordChartProps extends Props {
 }
 
 function KeywordChart({data, state, index}: IKeywordChartProps) {
-  const usingData = index ? data[index] : data[state.chart];
+  const usingData = state.page === 'keyword' ? data[index] : data[0];
   return (
     <Container type={state.page}>
       {state.page === 'keyword' && (
