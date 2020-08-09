@@ -43,7 +43,7 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
       <KeywordContainer>
         <ChartContainer>
           <Tab type="chart" stateFunc={funcs.chart} />
-          <KeywordChart />
+          <KeywordChart stateFunc={funcs.keyword} />
         </ChartContainer>
         <ResultContainer></ResultContainer>
       </KeywordContainer>

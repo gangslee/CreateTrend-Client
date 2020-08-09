@@ -1002,6 +1002,7 @@ function getData(): IChannelData[] {
               ],
             },
           ],
+          current: 0,
         },
         {
           chartType: '영상',
@@ -1987,6 +1988,7 @@ function getData(): IChannelData[] {
               ],
             },
           ],
+          current: 0,
         },
       ],
     },
@@ -2977,6 +2979,7 @@ function getData(): IChannelData[] {
               ],
             },
           ],
+          current: 0,
         },
         {
           chartType: '영상',
@@ -3962,6 +3965,7 @@ function getData(): IChannelData[] {
               ],
             },
           ],
+          current: 0,
         },
       ],
     },

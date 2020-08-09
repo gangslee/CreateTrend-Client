@@ -6,6 +6,7 @@ import {RootState} from '../../store';
 
 type styleType = {
   type: string;
+  current?: boolean;
 };
 
 const Container = styled.div`
@@ -46,6 +47,12 @@ const KeywordChartContainer = styled.div`
   :not(:last-child) {
     border-bottom: 2px solid #ddd;
   }
+  ${({type, current}: styleType) =>
+    type === 'channel' &&
+    current &&
+    css`
+      color: #feb100;
+    `};
 `;
 
 const Rank = styled.div`
@@ -59,6 +66,10 @@ const KeywordContainer = styled.div`
   width: 89%;
   text-align: center;
 `;
+
+type keywordType = {
+  onClick?: (n: number) => void;
+};
 
 const Keyword = styled.span`
   cursor: pointer;
@@ -90,10 +101,17 @@ type Props = PropsFromRedux;
 
 interface IKeywordChartProps extends Props {
   index?: number;
+  stateFunc?: (n: number) => void;
 }
 
-function KeywordChart({data, state, index}: IKeywordChartProps) {
+function KeywordChart({data, state, index, stateFunc}: IKeywordChartProps) {
   const usingData = state.page === 'keyword' ? data[index] : data[0];
+
+  const handleKeywordClick = (e: React.MouseEvent) => {
+    const idx = usingData.keyword.findIndex((data) => data.name === e.currentTarget.innerHTML);
+    stateFunc(idx);
+  };
+  console.log(usingData.current);
   return (
     <Container type={state.page}>
       {state.page === 'keyword' && (
@@ -103,11 +121,17 @@ function KeywordChart({data, state, index}: IKeywordChartProps) {
         </TitleContainer>
       )}
       {usingData.keyword.map((keyword, index) => (
-        <KeywordChartContainer type={state.page} key={index}>
+        <KeywordChartContainer current={usingData.current === index} type={state.page} key={index}>
           <Rank>{index + 1}</Rank>
-          <KeywordContainer>
-            <Keyword> {keyword.name}</Keyword>
-          </KeywordContainer>
+          {state.page === 'keyword' ? (
+            <KeywordContainer>
+              <Keyword>{keyword.name}</Keyword>
+            </KeywordContainer>
+          ) : (
+            <KeywordContainer>
+              <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
+            </KeywordContainer>
+          )}
         </KeywordChartContainer>
       ))}
     </Container>
