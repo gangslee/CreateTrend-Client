@@ -129,9 +129,22 @@ const channelSlice = createSlice({
   },
 });
 
+const pageSlice = createSlice({
+  name: 'pageReducer',
+  initialState: 'HOME',
+  reducers: {
+    currentPage: (state, action) => {
+      if (action.payload) {
+        state = action.payload;
+      }
+    },
+  },
+});
+
 const cReducer = combineReducers({
   keyword: keywordSlice.reducer,
   channel: channelSlice.reducer,
+  page: pageSlice.reducer,
 });
 
 const store = configureStore({
@@ -141,6 +154,8 @@ const store = configureStore({
 export const {keywordDataUpdate, sliderStateNext, sliderStatePrev} = keywordSlice.actions;
 
 export const {channelDataUpdate, channelStateUpdate, chartStateUpdate} = channelSlice.actions;
+
+export const {currentPage} = pageSlice.actions;
 
 export default store;
 

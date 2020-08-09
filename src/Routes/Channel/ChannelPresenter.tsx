@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Tab from '../../Components/Container/Tab';
+import KeywordChart from '../../Components/Charts/KeywordChart';
 
 const Container = styled.div`
   width: 1040px;
@@ -37,6 +38,7 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
       <KeywordContainer>
         <ChartContainer>
           <Tab type="chart" stateFunc={funcs.chart} />
+          <KeywordChart />
         </ChartContainer>
       </KeywordContainer>
     </Container>
