@@ -16,6 +16,7 @@ const Container = styled.div`
 const KeywordContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 `;
 
 const ChartContainer = styled.div`
@@ -75,8 +76,8 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
             <LineChart type="channel" />
           </SubResultContainer>
         </ResultContainer>
-        <VideoList type="analysis" />
       </KeywordContainer>
+      <VideoList mode="analysis" type="channel" />
     </Container>
   ) : (
     <div>123</div>

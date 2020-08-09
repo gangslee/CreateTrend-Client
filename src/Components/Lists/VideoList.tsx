@@ -1,14 +1,9 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
+import React from 'react';
+import styled, {css} from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
 
-import {
-  RootState,
-  RootDispatch,
-  sliderStateNext,
-  sliderStatePrev,
-} from "../../store";
-import Slider from "../Container/Slider";
+import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
+import Slider from '../Container/Slider';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -19,13 +14,14 @@ const Container = styled.div`
 `;
 
 interface ISCProps {
-  type: string;
+  mode: string;
+  type?: string;
   bgUrl?: string;
 }
 
 const TitleContainer = styled.div<ISCProps>`
   ${(props) =>
-    props.type === "aside" &&
+    props.mode === 'aside' &&
     css`
       text-align: center;
     `};
@@ -50,12 +46,12 @@ const VideoContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${({ type }: ISCProps) => (type === "analysis" ? "35%" : "60%")};
-  height: ${({ type }: ISCProps) => (type === "analysis" ? "120px" : "85px")};
-  margin-right: ${({ type }: ISCProps) =>
-    type === "analysis" ? "20px" : "5px"};
+  width: ${({mode}: ISCProps) => (mode === 'analysis' ? '35%' : '60%')};
+  height: ${({mode, type}: ISCProps) =>
+    mode === 'analysis' ? (type === 'keyword' ? '120px' : '200px') : '85px'};
+  margin-right: ${({mode}: ISCProps) => (mode === 'analysis' ? '20px' : '5px')};
   border-radius: 5px;
-  background-image: url(${({ bgUrl }: ISCProps) => bgUrl});
+  background-image: url(${({bgUrl}: ISCProps) => bgUrl});
   background-size: cover;
   background-position: center center;
   &:hover {
@@ -96,7 +92,14 @@ const VideoTitle = styled.div`
 `;
 
 function mapStateToProps(state: RootState) {
-  return { data: state.keyword.video };
+  if (state.page === 'keyword') {
+    return {data: state.keyword.video};
+  } else if (state.page === 'channel') {
+    const channel = state.channel;
+    const channelList = channel.channel[channel.currentChannel].keywordChart[channel.currentChart];
+    const channelData = channelList.keyword[channelList.current];
+    return {data: channelData.video};
+  }
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
@@ -114,34 +117,29 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IVideoListProps extends Props {
+  mode: string;
   type: string;
 }
 
-function VideoList({ data, update, type }: IVideoListProps) {
+function VideoList({data, update, mode, type}: IVideoListProps) {
+  console.log(type);
   function handleOnClick(e: React.MouseEvent) {
-    const usingDataIdx = data.indexOf(
-      data.filter((data) => data.type === type)[0]
-    );
-    e.currentTarget.id === "next"
-      ? update(usingDataIdx, true)
-      : update(usingDataIdx, false);
+    const usingDataIdx = data.indexOf(data.filter((data) => data.type === mode)[0]);
+    e.currentTarget.id === 'next' ? update(usingDataIdx, true) : update(usingDataIdx, false);
   }
 
-  const usingData = data.filter((data) => data.type === type)[0];
+  const usingData = data.filter((data) => data.type === mode)[0];
   // console.log(usingData);
   return (
     <Container>
-      <TitleContainer type={type}>
+      <TitleContainer mode={mode}>
         <Title>리그오브레전드</Title>
         <Title>인기 영상</Title>
       </TitleContainer>
-      {type === "analysis" ? (
+      {mode === 'analysis' ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image
-              bgUrl={usingData.data[usingData.current].thumbnail}
-              type={type}
-            />
+            <Image bgUrl={usingData.data[usingData.current].thumbnail} mode={mode} type={type} />
             <InfoContainer>
               <Info>영상 제목</Info>
               <Info>{usingData.data[usingData.current].name}</Info>
@@ -160,7 +158,7 @@ function VideoList({ data, update, type }: IVideoListProps) {
         <>
           {usingData.data.map((data, index) => (
             <VideoContainer key={data.id}>
-              <Image bgUrl={usingData.data[index].thumbnail} type={type} />
+              <Image bgUrl={usingData.data[index].thumbnail} mode={mode} />
               <VideoTitle>{data.name}</VideoTitle>
             </VideoContainer>
           ))}

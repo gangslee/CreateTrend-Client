@@ -45,14 +45,14 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
               <LineChart index={0} type="keyword" />
               <LineChart index={1} type="keyword" />
             </ChartContainer>
-            <VideoList type="analysis" />
+            <VideoList mode="analysis" type="keyword" />
             <ChartContainer>
               <KeywordChart index={0} />
               <KeywordChart index={1} />
             </ChartContainer>
           </AnalysisSection>
           <VideoSection>
-            <VideoList type="aside"></VideoList>
+            <VideoList mode="aside" type="keyword"></VideoList>
           </VideoSection>
         </>
       ) : (
