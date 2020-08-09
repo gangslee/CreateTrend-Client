@@ -3994,13 +3994,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function ChannelContainer({useAble, update}: Props) {
+function ChannelContainer({useAble, update, stateFuncs}: Props) {
   useEffect(() => {
     const sampleData = getData();
     update(sampleData);
   }, [update]);
 
-  return <ChannelPresenter loading={useAble} />;
+  return <ChannelPresenter funcs={stateFuncs} loading={useAble} />;
 }
 
 export default connector(ChannelContainer);

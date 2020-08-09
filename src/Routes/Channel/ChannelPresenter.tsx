@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-import Tab from "../../Components/Container/Tab";
+import Tab from '../../Components/Container/Tab';
 
 const Container = styled.div`
   width: 1040px;
@@ -21,13 +21,16 @@ const ResultContainer = styled.div`
 
 interface IChannelPresenterProps {
   loading: boolean;
+  funcs: {
+    channel: () => void;
+  };
 }
 
-function ChannelPresenter({ loading }: IChannelPresenterProps) {
+function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
   return loading ? (
     <Container>
       {/* <TabContainer> */}
-      <Tab type="channel" />
+      <Tab type="channel" stateFunc={funcs.channel} />
       {/* </TabContainer> */}
       <ResultContainer></ResultContainer>
     </Container>
