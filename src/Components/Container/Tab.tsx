@@ -1,17 +1,28 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState} from '../../store';
 
+type styleType = {
+  type: string;
+};
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  height: 75px;
+  height: ${({type}: styleType) => (type === 'channel' ? '75px' : '55px')};
   margin-bottom: 30px;
   border: 1px solid #ddd;
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  ${({type}: styleType) =>
+    type === 'channel'
+      ? css`
+          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+        `
+      : css`
+          border-bottom: 2px solid #ddd;
+        `};
 `;
 
 interface ITabContainerProps {
@@ -34,9 +45,9 @@ const TabContainer = styled.div`
 
 const TabTitle = styled.span`
   display: inline-flex;
-  height: 30px;
+  height: ${({type}: styleType) => (type === 'channel' ? '30px' : '22px')};
   align-items: center;
-  font-size: 30px;
+  font-size: ${({type}: styleType) => (type === 'channel' ? '30px' : '22px')};
   font-weight: 600;
 `;
 
@@ -64,38 +75,22 @@ interface ITabProps extends Props {
 function Tab({state, stateFunc, type}: ITabProps) {
   const channelType = state.channel;
   const chartType = state.chart;
-  const currentType =
-    type === 'channel'
-      ? state.now[channelType].channelType
-      : state.now[channelType].keywordChart[chartType].chartType;
+  const titles = type === 'channel' ? ['MY', 'ALL'] : ['인기', '영상'];
+  const currentType = type === 'channel' ? titles[channelType] : titles[chartType];
 
-  const handleOnClickChannel = (e: React.MouseEvent) => {
+  const handleOnClick = (e: React.MouseEvent) => {
     if (e.currentTarget.innerHTML !== currentType) {
       stateFunc();
     }
   };
-  console.log(currentType);
+
   return (
-    <Container>
-      {type === 'channel' ? (
-        <>
-          <TabContainer current={currentType === 'MY'} onClick={handleOnClickChannel}>
-            <TabTitle>MY</TabTitle>
-          </TabContainer>
-          <TabContainer current={currentType === 'ALL'} onClick={handleOnClickChannel}>
-            <TabTitle>ALL</TabTitle>
-          </TabContainer>
-        </>
-      ) : (
-        <>
-          <TabContainer current={currentType === '인기'} onClick={handleOnClickChannel}>
-            <TabTitle>인기</TabTitle>
-          </TabContainer>
-          <TabContainer current={currentType === '영상'} onClick={handleOnClickChannel}>
-            <TabTitle>영상</TabTitle>
-          </TabContainer>
-        </>
-      )}
+    <Container type={type}>
+      {titles.map((title) => (
+        <TabContainer key={title} current={currentType === title} onClick={handleOnClick}>
+          <TabTitle type={type}>{title}</TabTitle>
+        </TabContainer>
+      ))}
     </Container>
   );
 }
