@@ -13,7 +13,7 @@ const Container = styled.div`
   ${({type}: styleType) =>
     type === 'keyword' &&
     css`
-      width: 330px;
+      width: 48%;
       box-sizing: border-box;
       padding: 20px;
       border-radius: 15px;

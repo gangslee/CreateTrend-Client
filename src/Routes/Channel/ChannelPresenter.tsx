@@ -5,6 +5,8 @@ import Tab from '../../Components/Container/Tab';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import TextContainer from '../../Components/Container/TextContainer';
 import Wordmap from '../../Components/Charts/Wordmap';
+import LineChart from '../../Components/Charts/LineChart';
+import VideoList from '../../Components/Lists/VideoList';
 
 const Container = styled.div`
   width: 1040px;
@@ -23,6 +25,9 @@ const ChartContainer = styled.div`
 `;
 
 const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 65%;
   border: 1px solid #ddd;
   box-sizing: border-box;
@@ -33,7 +38,7 @@ const ResultContainer = styled.div`
 const SubResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 50%;
+  height: 48%;
 `;
 
 const WordmapContainer = styled.div`
@@ -66,8 +71,11 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
               <Wordmap type="channel" />
             </WordmapContainer>
           </SubResultContainer>
-          <SubResultContainer></SubResultContainer>
+          <SubResultContainer>
+            <LineChart type="channel" />
+          </SubResultContainer>
         </ResultContainer>
+        <VideoList type="analysis" />
       </KeywordContainer>
     </Container>
   ) : (

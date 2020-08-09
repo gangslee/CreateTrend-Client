@@ -42,8 +42,8 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
           <AnalysisSection>
             <WordMap type="keyword" />
             <ChartContainer>
-              <LineChart index={0} />
-              <LineChart index={1} />
+              <LineChart index={0} type="keyword" />
+              <LineChart index={1} type="keyword" />
             </ChartContainer>
             <VideoList type="analysis" />
             <ChartContainer>

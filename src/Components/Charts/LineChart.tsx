@@ -1,18 +1,23 @@
-import React, { useRef, useLayoutEffect } from "react";
-import styled from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
+import React, {useRef, useLayoutEffect} from 'react';
+import styled from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
 
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
 
-import { RootState } from "../../store";
+import {RootState} from '../../store';
+
+type containerType = {
+  type: string;
+};
 
 const Container = styled.div`
-  width: 330px;
+  width: ${({type}: containerType) => (type === 'keyword' ? '48%' : '100%')};
+  height: 100%;
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 10px 0px;
+  padding: 10px 5px;
 `;
 
 const TitleContainer = styled.div`
@@ -29,11 +34,18 @@ const Title = styled.span`
 `;
 
 const LineChartContainer = styled.div`
-  height: 200px;
+  height: 95%;
 `;
 
 function mapStateToProps(state: RootState) {
-  return { data: state.keyword.lines };
+  if (state.page === 'keyword') {
+    return {data: state.keyword.lines};
+  } else if (state.page === 'channel') {
+    const channel = state.channel;
+    const channelList = channel.channel[channel.currentChannel].keywordChart[channel.currentChart];
+    const channelData = channelList.keyword[channelList.current];
+    return {data: channelData.line};
+  }
 }
 
 const connector = connect(mapStateToProps);
@@ -44,9 +56,10 @@ type Props = PropsFromRedux;
 
 interface ILineChartProps extends Props {
   index?: number;
+  type: string;
 }
 
-function LineChart({ data, index }: ILineChartProps) {
+function LineChart({data, index, type}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
   useLayoutEffect(() => {
@@ -64,19 +77,19 @@ function LineChart({ data, index }: ILineChartProps) {
     valueAxis.renderer.line.strokeWidth = 2;
 
     const series = chart.series.push(new am4charts.LineSeries());
-    series.name = "Value";
-    series.stroke = am4core.color("#CDA2AB");
+    series.name = 'Value';
+    series.stroke = am4core.color('#CDA2AB');
     series.strokeWidth = 3;
-    series.dataFields.valueY = "value";
-    series.dataFields.dateX = "date";
-    series.tooltipText = "{dateX} :[bold] {valueY}[/]";
+    series.dataFields.valueY = 'value';
+    series.dataFields.dateX = 'date';
+    series.tooltipText = '{dateX} :[bold] {valueY}[/]';
 
     const bullet = series.bullets.push(new am4charts.CircleBullet());
-    bullet.circle.stroke = am4core.color("#fff");
+    bullet.circle.stroke = am4core.color('#fff');
     bullet.circle.strokeWidth = 2;
 
     chart.cursor = new am4charts.XYCursor();
-    chart.cursor.behavior = "none";
+    chart.cursor.behavior = 'none';
 
     chartRef.current = chart;
 
@@ -86,11 +99,13 @@ function LineChart({ data, index }: ILineChartProps) {
   }, [useData.data, useData.name, index]);
 
   return (
-    <Container>
-      <TitleContainer>
-        <Title>리그오브레전드</Title>
-        <Title>{useData.name}</Title>
-      </TitleContainer>
+    <Container type={type}>
+      {type === 'keyword' && (
+        <TitleContainer>
+          <Title>리그오브레전드</Title>
+          <Title>{useData.name}</Title>
+        </TitleContainer>
+      )}
 
       <LineChartContainer id={useData.name} />
     </Container>
