@@ -12,7 +12,7 @@ const KeywordContainer = styled.div`
   display: flex;
   justify-content: space-between;
   height: 800px;
-  border: 1px solid #aaa;
+  /* border: 1px solid #aaa; */
 `;
 
 const ChartContainer = styled.div`
@@ -24,6 +24,7 @@ interface IChannelPresenterProps {
   loading: boolean;
   funcs: {
     channel: () => void;
+    chart: () => void;
   };
 }
 
@@ -34,7 +35,7 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
 
       <KeywordContainer>
         <ChartContainer>
-          <Tab type="chart" stateFunc={funcs.channel} />
+          <Tab type="chart" stateFunc={funcs.chart} />
         </ChartContainer>
       </KeywordContainer>
     </Container>

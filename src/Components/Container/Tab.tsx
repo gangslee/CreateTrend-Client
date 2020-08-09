@@ -74,7 +74,7 @@ function Tab({state, stateFunc, type}: ITabProps) {
       stateFunc();
     }
   };
-
+  console.log(currentType);
   return (
     <Container>
       {type === 'channel' ? (

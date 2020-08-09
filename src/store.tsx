@@ -121,6 +121,7 @@ const channelSlice = createSlice({
     },
     channelStateUpdate: (state) => {
       state.currentChannel === 0 ? (state.currentChannel = 1) : (state.currentChannel = 0);
+      state.currentChart = 0;
     },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
