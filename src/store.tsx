@@ -73,12 +73,12 @@ const keywordSlice = createSlice({
       state.video = action.payload.video;
       state.useAble = true;
     },
-    sliderStateNext: (state, action) => {
+    sliderStateNextKeyword: (state, action) => {
       state.video[action.payload].current === 4
         ? (state.video[action.payload].current = 0)
         : (state.video[action.payload].current += 1);
     },
-    sliderStatePrev: (state, action) => {
+    sliderStatePrevKeyword: (state, action) => {
       state.video[action.payload].current === 0
         ? (state.video[action.payload].current = 4)
         : (state.video[action.payload].current -= 1);
@@ -125,6 +125,28 @@ const channelSlice = createSlice({
     keywordStateUpdate: (state, action) => {
       state.channel[state.currentChannel].keywordChart[state.currentChart].current = action.payload;
     },
+    sliderStateNextChannel: (state, action) => {
+      const current = state.channel[state.currentChannel].keywordChart[state.currentChart].current;
+      state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[current].video[0]
+        .current === 4
+        ? (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
+            current
+          ].video[0].current = 0)
+        : (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
+            current
+          ].video[0].current += 1);
+    },
+    sliderStatePrevChannel: (state, action) => {
+      const current = state.channel[state.currentChannel].keywordChart[state.currentChart].current;
+      state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[current].video[0]
+        .current === 0
+        ? (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
+            current
+          ].video[0].current = 4)
+        : (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
+            current
+          ].video[0].current -= 1);
+    },
   },
 });
 
@@ -146,13 +168,19 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {keywordDataUpdate, sliderStateNext, sliderStatePrev} = keywordSlice.actions;
+export const {
+  keywordDataUpdate,
+  sliderStateNextKeyword,
+  sliderStatePrevKeyword,
+} = keywordSlice.actions;
 
 export const {
   channelDataUpdate,
   channelStateUpdate,
   chartStateUpdate,
   keywordStateUpdate,
+  sliderStateNextChannel,
+  sliderStatePrevChannel,
 } = channelSlice.actions;
 
 export const {currentPage} = pageSlice.actions;

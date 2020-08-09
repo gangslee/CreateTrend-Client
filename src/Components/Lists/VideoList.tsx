@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
+import {RootState, RootDispatch, sliderStateNextKeyword, sliderStatePrevKeyword} from '../../store';
 import Slider from '../Container/Slider';
 
 const Container = styled.div`
@@ -105,7 +105,7 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: number, type: boolean) => {
-      dispatch(type ? sliderStateNext(data) : sliderStatePrev(data));
+      dispatch(type ? sliderStateNextKeyword(data) : sliderStatePrevKeyword(data));
     },
   };
 }
