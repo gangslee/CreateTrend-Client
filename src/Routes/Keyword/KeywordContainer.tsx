@@ -196,7 +196,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: IKeywordData) => {
       if (data) {
-        dispatch(currentPage('KEYWORD'));
+        dispatch(currentPage('keyword'));
         dispatch(keywordDataUpdate(data));
       }
     },

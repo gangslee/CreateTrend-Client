@@ -3979,7 +3979,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: IChannelData[]) => {
       if (data) {
-        dispatch(currentPage('CHANNEL'));
+        dispatch(currentPage('channel'));
         dispatch(channelDataUpdate(data));
       }
     },

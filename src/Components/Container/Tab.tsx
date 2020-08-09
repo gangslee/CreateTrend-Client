@@ -12,13 +12,14 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   height: ${({type}: styleType) => (type === 'channel' ? '75px' : '55px')};
-  margin-bottom: 30px;
+
   border: 1px solid #ddd;
   box-sizing: border-box;
   ${({type}: styleType) =>
     type === 'channel'
       ? css`
           box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+          margin-bottom: 30px;
         `
       : css`
           border-bottom: 2px solid #ddd;
