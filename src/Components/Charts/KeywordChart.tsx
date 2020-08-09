@@ -67,10 +67,6 @@ const KeywordContainer = styled.div`
   text-align: center;
 `;
 
-type keywordType = {
-  onClick?: (n: number) => void;
-};
-
 const Keyword = styled.span`
   cursor: pointer;
 `;
