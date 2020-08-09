@@ -9,6 +9,7 @@ import {
   channelStateUpdate,
   chartStateUpdate,
   currentPage,
+  keywordStateUpdate,
 } from '../../store';
 import ChannelPresenter from './ChannelPresenter';
 
@@ -3989,6 +3990,9 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       },
       chart: () => {
         dispatch(chartStateUpdate());
+      },
+      keyword: (n: number) => {
+        dispatch(keywordStateUpdate(n));
       },
     },
   };

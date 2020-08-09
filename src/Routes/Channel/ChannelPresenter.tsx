@@ -31,6 +31,7 @@ interface IChannelPresenterProps {
   funcs: {
     channel: () => void;
     chart: () => void;
+    keyword: (n: number) => void;
   };
 }
 
