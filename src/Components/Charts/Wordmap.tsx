@@ -43,8 +43,8 @@ function mapStateToProps(state: RootState) {
   } else if (state.page === 'channel') {
     const channel = state.channel;
     const channelList = channel.channel[channel.currentChannel].keywordChart[channel.currentChart];
-    const channelData = channelList.keyword[channelList.current].wordmap;
-    return {data: channelData};
+    const channelData = channelList.keyword[channelList.current];
+    return {data: channelData.wordmap};
   }
 }
 
@@ -73,9 +73,12 @@ function WordMap({data, type}: IWordMapProps) {
     // Add labels
     series.nodes.template.label.text = '{name}';
     series.fontSize = type === 'keyword' ? 15 : 12;
-    series.fontWeight = 'bold';
-    series.minRadius = type === 'keyword' ? 30 : 25;
-    series.maxRadius = type === 'keyword' ? 60 : 50;
+    // series.fontWeight = 'bold';
+    series.minRadius = am4core.percent(6);
+    series.maxRadius = am4core.percent(12);
+    series.nodes.template.tooltipText = '{name}';
+    series.nodes.template.label.hideOversized = true;
+    series.nodes.template.label.truncate = true;
 
     chartRef.current = chart;
     return () => {
