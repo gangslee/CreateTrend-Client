@@ -1,11 +1,11 @@
-import React, {useRef, useLayoutEffect} from 'react';
-import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useRef, useLayoutEffect } from "react";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4charts from '@amcharts/amcharts4/charts';
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
 
-import {RootState} from '../../store';
+import { RootState } from "../../store";
 
 const Container = styled.div`
   width: 330px;
@@ -33,7 +33,7 @@ const LineChartContainer = styled.div`
 `;
 
 function mapStateToProps(state: RootState) {
-  return {data: state.keyword.lines};
+  return { data: state.keyword.lines };
 }
 
 const connector = connect(mapStateToProps);
@@ -46,7 +46,7 @@ interface ILineChartProps extends Props {
   index?: number;
 }
 
-function LineChart({data, index}: ILineChartProps) {
+function LineChart({ data, index }: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
   useLayoutEffect(() => {
@@ -64,19 +64,19 @@ function LineChart({data, index}: ILineChartProps) {
     valueAxis.renderer.line.strokeWidth = 2;
 
     const series = chart.series.push(new am4charts.LineSeries());
-    series.name = 'Value';
-    series.stroke = am4core.color('#CDA2AB');
+    series.name = "Value";
+    series.stroke = am4core.color("#CDA2AB");
     series.strokeWidth = 3;
-    series.dataFields.valueY = 'value';
-    series.dataFields.dateX = 'date';
-    series.tooltipText = '{dateX} :[bold] {valueY}[/]';
+    series.dataFields.valueY = "value";
+    series.dataFields.dateX = "date";
+    series.tooltipText = "{dateX} :[bold] {valueY}[/]";
 
     const bullet = series.bullets.push(new am4charts.CircleBullet());
-    bullet.circle.stroke = am4core.color('#fff');
+    bullet.circle.stroke = am4core.color("#fff");
     bullet.circle.strokeWidth = 2;
 
     chart.cursor = new am4charts.XYCursor();
-    chart.cursor.behavior = 'none';
+    chart.cursor.behavior = "none";
 
     chartRef.current = chart;
 
