@@ -37,7 +37,9 @@ const Title = styled.span`
 `;
 
 const KeywordChartContainer = styled.div`
-  margin: 10px 0px;
+  display: flex;
+  align-items: center;
+  margin: 5px 0px;
   padding: 5px 10px;
   font-size: ${({type}: styleType) => (type === 'keyword' ? '16px' : '18px')};
   font-weight: 600;
@@ -52,10 +54,14 @@ const Rank = styled.div`
   text-align: center;
 `;
 
-const Keyword = styled.div`
+const KeywordContainer = styled.div`
   display: inline-block;
   width: 89%;
   text-align: center;
+`;
+
+const Keyword = styled.span`
+  cursor: pointer;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -99,7 +105,9 @@ function KeywordChart({data, state, index}: IKeywordChartProps) {
       {usingData.keyword.map((keyword, index) => (
         <KeywordChartContainer type={state.page} key={index}>
           <Rank>{index + 1}</Rank>
-          <Keyword> {keyword.name}</Keyword>
+          <KeywordContainer>
+            <Keyword> {keyword.name}</Keyword>
+          </KeywordContainer>
         </KeywordChartContainer>
       ))}
     </Container>

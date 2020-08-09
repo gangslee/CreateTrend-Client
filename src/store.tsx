@@ -32,6 +32,7 @@ export interface IKeywordChartData {
     line?: ILineChartData[];
     video?: IVideoListData[];
   }[];
+  current?: number;
 }
 
 export interface IVideoListData {
@@ -94,7 +95,6 @@ interface IChannelState {
   channel: IChannelData[];
   currentChannel?: number;
   currentChart?: number;
-  currentKeyword?: number[];
   useAble?: boolean;
 }
 
@@ -102,7 +102,6 @@ const channelState: IChannelState = {
   channel: null,
   currentChannel: 0,
   currentChart: 0,
-  currentKeyword: [0, 0],
   useAble: false,
 };
 
@@ -122,6 +121,9 @@ const channelSlice = createSlice({
     },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
+    },
+    keywordStateUpdate: (state, action) => {
+      state.channel[state.currentChannel].keywordChart[state.currentChart].current = action.payload;
     },
   },
 });
@@ -146,7 +148,12 @@ const store = configureStore({
 
 export const {keywordDataUpdate, sliderStateNext, sliderStatePrev} = keywordSlice.actions;
 
-export const {channelDataUpdate, channelStateUpdate, chartStateUpdate} = channelSlice.actions;
+export const {
+  channelDataUpdate,
+  channelStateUpdate,
+  chartStateUpdate,
+  keywordStateUpdate,
+} = channelSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 

@@ -15,7 +15,13 @@ const KeywordContainer = styled.div`
 `;
 
 const ChartContainer = styled.div`
-  width: 35%;
+  width: 30%;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+`;
+
+const ResultContainer = styled.div`
+  width: 65%;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
 `;
@@ -38,6 +44,7 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
           <Tab type="chart" stateFunc={funcs.chart} />
           <KeywordChart />
         </ChartContainer>
+        <ResultContainer></ResultContainer>
       </KeywordContainer>
     </Container>
   ) : (
