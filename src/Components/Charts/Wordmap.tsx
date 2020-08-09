@@ -1,18 +1,27 @@
 import React, {useRef, useLayoutEffect} from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState} from '../../store';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
 
+type containerType = {
+  type: string;
+};
+
 const Container = styled.div`
-  height: 320px;
+  height: ${({type}: containerType) => (type === 'keyword' ? '320px' : '100%')};
   box-sizing: border-box;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  margin-bottom: 40px;
-  padding: 20px;
+
+  ${({type}: containerType) =>
+    type === 'keyword' &&
+    css`
+      margin-bottom: 40px;
+      padding: 20px;
+    `};
 `;
 
 const WordmapContainer = styled.div`
@@ -29,7 +38,14 @@ const Title = styled.span`
 `;
 
 function mapStateToProps(state: RootState) {
-  return {data: state.keyword.wordmap};
+  if (state.page === 'keyword') {
+    return {data: state.keyword.wordmap};
+  } else if (state.page === 'channel') {
+    const channel = state.channel;
+    const channelList = channel.channel[channel.currentChannel].keywordChart[channel.currentChart];
+    const channelData = channelList.keyword[channelList.current].wordmap;
+    return {data: channelData};
+  }
 }
 
 const connector = connect(mapStateToProps);
@@ -38,7 +54,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function WordMap({data}: Props) {
+interface IWordMapProps extends Props {
+  type: string;
+}
+
+function WordMap({data, type}: IWordMapProps) {
   const chartRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -52,21 +72,26 @@ function WordMap({data}: Props) {
 
     // Add labels
     series.nodes.template.label.text = '{name}';
-    series.fontSize = 15;
+    series.fontSize = type === 'keyword' ? 15 : 12;
     series.fontWeight = 'bold';
-    series.minRadius = 30;
-    series.maxRadius = 60;
+    series.minRadius = type === 'keyword' ? 30 : 25;
+    series.maxRadius = type === 'keyword' ? 60 : 50;
 
     chartRef.current = chart;
     return () => {
       chart.dispose();
     };
-  }, [data]);
+  }, [data, type]);
 
   return (
-    <Container>
-      <Title>리그오브레전드</Title>
-      <Title>인기 영상</Title>
+    <Container type={type}>
+      {type === 'keyword' && (
+        <>
+          <Title>리그오브레전드</Title>
+          <Title>인기 영상</Title>
+        </>
+      )}
+
       <WordmapContainer id="keyword-wordmap" />
     </Container>
   );

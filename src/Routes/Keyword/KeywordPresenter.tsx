@@ -28,8 +28,6 @@ const ChartContainer = styled.div`
 
 const VideoSection = styled.div`
   width: 290px;
-  /* height: 1000px; */
-  /* border: 1px solid #aaa; */
 `;
 
 interface IKeywordPresenter {
@@ -42,7 +40,7 @@ export default function KeywordPresenter({loading}: IKeywordPresenter) {
       {loading ? (
         <>
           <AnalysisSection>
-            <WordMap />
+            <WordMap type="keyword" />
             <ChartContainer>
               <LineChart index={0} />
               <LineChart index={1} />

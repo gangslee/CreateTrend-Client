@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Tab from '../../Components/Container/Tab';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import TextContainer from '../../Components/Container/TextContainer';
+import Wordmap from '../../Components/Charts/Wordmap';
 
 const Container = styled.div`
   width: 1040px;
@@ -26,7 +27,7 @@ const ResultContainer = styled.div`
   border: 1px solid #ddd;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 30px;
+  padding: 20px;
 `;
 
 const SubResultContainer = styled.div`
@@ -37,7 +38,7 @@ const SubResultContainer = styled.div`
 
 const WordmapContainer = styled.div`
   width: 70%;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3); */
 `;
 
 interface IChannelPresenterProps {
@@ -61,7 +62,9 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
         <ResultContainer>
           <SubResultContainer>
             <TextContainer type="popular" />
-            <WordmapContainer></WordmapContainer>
+            <WordmapContainer>
+              <Wordmap type="channel" />
+            </WordmapContainer>
           </SubResultContainer>
           <SubResultContainer></SubResultContainer>
         </ResultContainer>
