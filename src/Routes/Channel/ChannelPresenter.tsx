@@ -8,14 +8,15 @@ const Container = styled.div`
   margin: 50px auto;
 `;
 
-const TabContainer = styled.div`
-  height: 75px;
-  margin-bottom: 30px;
+const KeywordContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 800px;
   border: 1px solid #aaa;
 `;
 
-const ResultContainer = styled.div`
-  height: 800px;
+const ChartContainer = styled.div`
+  width: 35%;
   border: 1px solid #aaa;
 `;
 
@@ -29,10 +30,13 @@ interface IChannelPresenterProps {
 function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
   return loading ? (
     <Container>
-      {/* <TabContainer> */}
       <Tab type="channel" stateFunc={funcs.channel} />
-      {/* </TabContainer> */}
-      <ResultContainer></ResultContainer>
+
+      <KeywordContainer>
+        <ChartContainer>
+          <Tab type="chart" stateFunc={funcs.channel} />
+        </ChartContainer>
+      </KeywordContainer>
     </Container>
   ) : (
     <div>123</div>

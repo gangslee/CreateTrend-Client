@@ -77,12 +77,25 @@ function Tab({state, stateFunc, type}: ITabProps) {
 
   return (
     <Container>
-      <TabContainer current={currentType === 'MY'} onClick={handleOnClickChannel}>
-        <TabTitle>MY</TabTitle>
-      </TabContainer>
-      <TabContainer current={currentType === 'ALL'} onClick={handleOnClickChannel}>
-        <TabTitle>ALL</TabTitle>
-      </TabContainer>
+      {type === 'channel' ? (
+        <>
+          <TabContainer current={currentType === 'MY'} onClick={handleOnClickChannel}>
+            <TabTitle>MY</TabTitle>
+          </TabContainer>
+          <TabContainer current={currentType === 'ALL'} onClick={handleOnClickChannel}>
+            <TabTitle>ALL</TabTitle>
+          </TabContainer>
+        </>
+      ) : (
+        <>
+          <TabContainer current={currentType === '인기'} onClick={handleOnClickChannel}>
+            <TabTitle>인기</TabTitle>
+          </TabContainer>
+          <TabContainer current={currentType === '영상'} onClick={handleOnClickChannel}>
+            <TabTitle>영상</TabTitle>
+          </TabContainer>
+        </>
+      )}
     </Container>
   );
 }

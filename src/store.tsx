@@ -1,4 +1,4 @@
-import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
+import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
 
 export interface IWordMapData {
   name: string;
@@ -56,7 +56,7 @@ const keywordData: IKeywordData = {
 };
 
 const keywordSlice = createSlice({
-  name: "keywordReducer",
+  name: 'keywordReducer',
   initialState: keywordData,
   reducers: {
     keywordDataUpdate: (state, action) => {
@@ -110,7 +110,7 @@ const channelState: IChannelState = {
 };
 
 const channelSlice = createSlice({
-  name: "channelReducer",
+  name: 'channelReducer',
   initialState: channelState,
   reducers: {
     channelDataUpdate: (state, action) => {
@@ -120,9 +120,10 @@ const channelSlice = createSlice({
       }
     },
     channelStateUpdate: (state) => {
-      state.currentChannel === 0
-        ? (state.currentChannel = 1)
-        : (state.currentChannel = 0);
+      state.currentChannel === 0 ? (state.currentChannel = 1) : (state.currentChannel = 0);
+    },
+    chartStateUpdate: (state) => {
+      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
     },
   },
 });
@@ -136,13 +137,9 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {
-  keywordDataUpdate,
-  sliderStateNext,
-  sliderStatePrev,
-} = keywordSlice.actions;
+export const {keywordDataUpdate, sliderStateNext, sliderStatePrev} = keywordSlice.actions;
 
-export const { channelDataUpdate, channelStateUpdate } = channelSlice.actions;
+export const {channelDataUpdate, channelStateUpdate, chartStateUpdate} = channelSlice.actions;
 
 export default store;
 
