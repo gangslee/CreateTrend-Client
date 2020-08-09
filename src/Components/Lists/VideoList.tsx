@@ -1,9 +1,14 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React from "react";
+import styled, { css } from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
-import Slider from '../Slider';
+import {
+  RootState,
+  RootDispatch,
+  sliderStateNext,
+  sliderStatePrev,
+} from "../../store";
+import Slider from "../Container/Slider";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -20,7 +25,7 @@ interface ISCProps {
 
 const TitleContainer = styled.div<ISCProps>`
   ${(props) =>
-    props.type === 'aside' &&
+    props.type === "aside" &&
     css`
       text-align: center;
     `};
@@ -45,11 +50,12 @@ const VideoContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${({type}: ISCProps) => (type === 'analysis' ? '35%' : '60%')};
-  height: ${({type}: ISCProps) => (type === 'analysis' ? '120px' : '85px')};
-  margin-right: ${({type}: ISCProps) => (type === 'analysis' ? '20px' : '5px')};
+  width: ${({ type }: ISCProps) => (type === "analysis" ? "35%" : "60%")};
+  height: ${({ type }: ISCProps) => (type === "analysis" ? "120px" : "85px")};
+  margin-right: ${({ type }: ISCProps) =>
+    type === "analysis" ? "20px" : "5px"};
   border-radius: 5px;
-  background-image: url(${({bgUrl}: ISCProps) => bgUrl});
+  background-image: url(${({ bgUrl }: ISCProps) => bgUrl});
   background-size: cover;
   background-position: center center;
   &:hover {
@@ -90,7 +96,7 @@ const VideoTitle = styled.div`
 `;
 
 function mapStateToProps(state: RootState) {
-  return {data: state.keyword.video};
+  return { data: state.keyword.video };
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
@@ -111,24 +117,31 @@ interface IVideoListProps extends Props {
   type: string;
 }
 
-function VideoList({data, update, type}: IVideoListProps) {
+function VideoList({ data, update, type }: IVideoListProps) {
   function handleOnClick(e: React.MouseEvent) {
-    const usingDataIdx = data.indexOf(data.filter((data) => data.type === type)[0]);
-    e.currentTarget.id === 'next' ? update(usingDataIdx, true) : update(usingDataIdx, false);
+    const usingDataIdx = data.indexOf(
+      data.filter((data) => data.type === type)[0]
+    );
+    e.currentTarget.id === "next"
+      ? update(usingDataIdx, true)
+      : update(usingDataIdx, false);
   }
 
   const usingData = data.filter((data) => data.type === type)[0];
-  console.log(usingData);
+  // console.log(usingData);
   return (
     <Container>
       <TitleContainer type={type}>
         <Title>리그오브레전드</Title>
         <Title>인기 영상</Title>
       </TitleContainer>
-      {type === 'analysis' ? (
+      {type === "analysis" ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image bgUrl={usingData.data[usingData.current].thumbnail} type={type} />
+            <Image
+              bgUrl={usingData.data[usingData.current].thumbnail}
+              type={type}
+            />
             <InfoContainer>
               <Info>영상 제목</Info>
               <Info>{usingData.data[usingData.current].name}</Info>
