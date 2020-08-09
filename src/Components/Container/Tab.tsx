@@ -54,7 +54,6 @@ const TabTitle = styled.span`
 function mapStateToProps(state: RootState) {
   return {
     state: {
-      now: state.channel.channel,
       channel: state.channel.currentChannel,
       chart: state.channel.currentChart,
     },

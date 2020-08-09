@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, keywordDataUpdate, IKeywordData} from '../../store';
+import {RootState, RootDispatch, keywordDataUpdate, IKeywordData, currentPage} from '../../store';
 import KeywordPresenter from './KeywordPresenter';
 
 const getData = (): IKeywordData => {
@@ -74,33 +74,33 @@ const getData = (): IKeywordData => {
     ],
     keyword: [
       {
-        name: '인기 키워드',
-        data: [
-          '롤',
-          '볼리베어',
-          '패치노트',
-          '누누',
-          '페이커',
-          '기인',
-          '담원',
-          '모데카이저',
-          '쇼메이커',
-          'DRX',
+        chartType: '인기 키워드',
+        keyword: [
+          {name: '롤'},
+          {name: '볼리베어'},
+          {name: '패치노트'},
+          {name: '누누'},
+          {name: '페이커'},
+          {name: '기인'},
+          {name: '담원'},
+          {name: '모데카이저'},
+          {name: '쇼메이커'},
+          {name: 'DRX'},
         ],
       },
       {
-        name: '영상화 키워드',
-        data: [
-          'LCK',
-          '패치노트',
-          '헬퍼',
-          '김민교',
-          '정글',
-          '감스트',
-          '롤토체스',
-          '쵸비',
-          '가렌',
-          '매드무비',
+        chartType: '영상화 키워드',
+        keyword: [
+          {name: 'LCK'},
+          {name: '패치노트'},
+          {name: '헬퍼'},
+          {name: '김민교'},
+          {name: '정글'},
+          {name: '감스트'},
+          {name: '롤토체스'},
+          {name: '쵸비'},
+          {name: '가렌'},
+          {name: '매드무비'},
         ],
       },
     ],
@@ -196,6 +196,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: IKeywordData) => {
       if (data) {
+        dispatch(currentPage('KEYWORD'));
         dispatch(keywordDataUpdate(data));
       }
     },

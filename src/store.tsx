@@ -24,8 +24,14 @@ export interface ILineChartData {
 }
 
 export interface IKeywordChartData {
-  name: string;
-  data: string[];
+  chartType: string;
+  keyword: {
+    name: string;
+    popular?: number;
+    wordmap?: IWordMapData[];
+    line?: ILineChartData[];
+    video?: IVideoListData[];
+  }[];
 }
 
 export interface IVideoListData {
@@ -81,16 +87,7 @@ const keywordSlice = createSlice({
 
 export interface IChannelData {
   channelType: string;
-  keywordChart: {
-    chartType: string;
-    keyword: {
-      keywordName: string;
-      popular: number;
-      wordmap: IWordMapData[];
-      line: ILineChartData[];
-      video: IVideoListData[];
-    }[];
-  }[];
+  keywordChart: IKeywordChartData[];
 }
 
 interface IChannelState {

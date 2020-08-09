@@ -8,6 +8,7 @@ import {
   channelDataUpdate,
   channelStateUpdate,
   chartStateUpdate,
+  currentPage,
 } from '../../store';
 import ChannelPresenter from './ChannelPresenter';
 
@@ -20,7 +21,7 @@ function getData(): IChannelData[] {
           chartType: '인기',
           keyword: [
             {
-              keywordName: '리그오브레전드',
+              name: '리그오브레전드',
               popular: 90,
               wordmap: [
                 {
@@ -118,7 +119,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '배틀그라운드',
+              name: '배틀그라운드',
               popular: 91,
               wordmap: [
                 {
@@ -216,7 +217,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '피파온라인4',
+              name: '피파온라인4',
               popular: 92,
               wordmap: [
                 {
@@ -314,7 +315,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '메이플스토리',
+              name: '메이플스토리',
               popular: 93,
               wordmap: [
                 {
@@ -412,7 +413,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: 'GTA5',
+              name: 'GTA5',
               popular: 94,
               wordmap: [
                 {
@@ -510,7 +511,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '카트라이더',
+              name: '카트라이더',
               popular: 95,
               wordmap: [
                 {
@@ -608,7 +609,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '서든어택',
+              name: '서든어택',
               popular: 96,
               wordmap: [
                 {
@@ -706,7 +707,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '리니지',
+              name: '리니지',
               popular: 97,
               wordmap: [
                 {
@@ -804,7 +805,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: 'WOW',
+              name: 'WOW',
               popular: 98,
               wordmap: [
                 {
@@ -902,7 +903,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '오버워치',
+              name: '오버워치',
               popular: 99,
               wordmap: [
                 {
@@ -1005,7 +1006,7 @@ function getData(): IChannelData[] {
           chartType: '영상',
           keyword: [
             {
-              keywordName: '승급전',
+              name: '승급전',
               popular: 99,
               wordmap: [
                 {
@@ -1103,7 +1104,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: 'MMORPG',
+              name: 'MMORPG',
               popular: 98,
               wordmap: [
                 {
@@ -1201,7 +1202,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '스팀신작',
+              name: '스팀신작',
               popular: 97,
               wordmap: [
                 {
@@ -1299,7 +1300,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: 'LCK',
+              name: 'LCK',
               popular: 96,
               wordmap: [
                 {
@@ -1397,7 +1398,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '방플',
+              name: '방플',
               popular: 95,
               wordmap: [
                 {
@@ -1495,7 +1496,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '듀오',
+              name: '듀오',
               popular: 94,
               wordmap: [
                 {
@@ -1593,7 +1594,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '모바일게임',
+              name: '모바일게임',
               popular: 93,
               wordmap: [
                 {
@@ -1691,7 +1692,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '김민교',
+              name: '김민교',
               popular: 92,
               wordmap: [
                 {
@@ -1789,7 +1790,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '신작게임',
+              name: '신작게임',
               popular: 91,
               wordmap: [
                 {
@@ -1887,7 +1888,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '카드깡',
+              name: '카드깡',
               popular: 90,
               wordmap: [
                 {
@@ -1995,7 +1996,7 @@ function getData(): IChannelData[] {
           chartType: '인기',
           keyword: [
             {
-              keywordName: '송대익',
+              name: '송대익',
               popular: 90,
               wordmap: [
                 {
@@ -2093,7 +2094,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '손흥민',
+              name: '손흥민',
               popular: 91,
               wordmap: [
                 {
@@ -2191,7 +2192,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '이효리',
+              name: '이효리',
               popular: 92,
               wordmap: [
                 {
@@ -2289,7 +2290,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '윤석열',
+              name: '윤석열',
               popular: 93,
               wordmap: [
                 {
@@ -2387,7 +2388,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '강형욱',
+              name: '강형욱',
               popular: 94,
               wordmap: [
                 {
@@ -2485,7 +2486,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '트로트',
+              name: '트로트',
               popular: 95,
               wordmap: [
                 {
@@ -2583,7 +2584,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '피자나라치킨공주',
+              name: '피자나라치킨공주',
               popular: 96,
               wordmap: [
                 {
@@ -2681,7 +2682,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '레드벨벳',
+              name: '레드벨벳',
               popular: 97,
               wordmap: [
                 {
@@ -2779,7 +2780,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '김호중',
+              name: '김호중',
               popular: 98,
               wordmap: [
                 {
@@ -2877,7 +2878,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '대한민국',
+              name: '대한민국',
               popular: 99,
               wordmap: [
                 {
@@ -2980,7 +2981,7 @@ function getData(): IChannelData[] {
           chartType: '영상',
           keyword: [
             {
-              keywordName: '송대익2',
+              name: '송대익2',
               popular: 99,
               wordmap: [
                 {
@@ -3078,7 +3079,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '손흥민2',
+              name: '손흥민2',
               popular: 98,
               wordmap: [
                 {
@@ -3176,7 +3177,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '이효리2',
+              name: '이효리2',
               popular: 97,
               wordmap: [
                 {
@@ -3274,7 +3275,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '윤석열2',
+              name: '윤석열2',
               popular: 96,
               wordmap: [
                 {
@@ -3372,7 +3373,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '강형욱2',
+              name: '강형욱2',
               popular: 95,
               wordmap: [
                 {
@@ -3470,7 +3471,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '트로트2',
+              name: '트로트2',
               popular: 94,
               wordmap: [
                 {
@@ -3568,7 +3569,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '피자나라치킨공주2',
+              name: '피자나라치킨공주2',
               popular: 93,
               wordmap: [
                 {
@@ -3666,7 +3667,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '레드벨벳2',
+              name: '레드벨벳2',
               popular: 92,
               wordmap: [
                 {
@@ -3764,7 +3765,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '김호중2',
+              name: '김호중2',
               popular: 91,
               wordmap: [
                 {
@@ -3862,7 +3863,7 @@ function getData(): IChannelData[] {
               ],
             },
             {
-              keywordName: '대한민국2',
+              name: '대한민국2',
               popular: 90,
               wordmap: [
                 {
@@ -3978,6 +3979,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: IChannelData[]) => {
       if (data) {
+        dispatch(currentPage('CHANNEL'));
         dispatch(channelDataUpdate(data));
       }
     },

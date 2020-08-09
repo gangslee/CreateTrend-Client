@@ -51,7 +51,18 @@ const Keyword = styled.div`
 `;
 
 function mapStateToProps(state: RootState) {
-  return {data: state.keyword.keyword};
+  return {
+    data:
+      state.page === 'KEYWORD'
+        ? state.keyword.keyword
+        : state.channel.channel[state.channel.currentChannel].keywordChart[
+            state.channel.currentChart
+          ].keyword,
+    state: {
+      channel: state.channel.currentChannel,
+      chart: state.channel.currentChart,
+    },
+  };
 }
 
 const connector = connect(mapStateToProps);
