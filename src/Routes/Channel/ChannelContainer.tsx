@@ -7,6 +7,7 @@ import {
   IChannelData,
   channelDataUpdate,
   channelStateUpdate,
+  chartStateUpdate,
 } from '../../store';
 import ChannelPresenter from './ChannelPresenter';
 
@@ -3983,6 +3984,9 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     stateFuncs: {
       channel: () => {
         dispatch(channelStateUpdate());
+      },
+      chart: () => {
+        dispatch(chartStateUpdate());
       },
     },
   };
