@@ -4727,7 +4727,9 @@ function getData(): IChannelData[] {
 }
 
 function mapStateToProps(state: RootState) {
-  return { useAble: state.channel.useAble };
+  return {
+    useAble: state.channel.useAble,
+  };
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {

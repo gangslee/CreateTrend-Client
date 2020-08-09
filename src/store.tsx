@@ -119,6 +119,11 @@ const channelSlice = createSlice({
         state.useAble = true;
       }
     },
+    channelStateUpdate: (state) => {
+      state.currentChannel === 0
+        ? (state.currentChannel = 1)
+        : (state.currentChannel = 0);
+    },
   },
 });
 
@@ -137,7 +142,7 @@ export const {
   sliderStatePrev,
 } = keywordSlice.actions;
 
-export const { channelDataUpdate } = channelSlice.actions;
+export const { channelDataUpdate, channelStateUpdate } = channelSlice.actions;
 
 export default store;
 

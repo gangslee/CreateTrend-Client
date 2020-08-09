@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-interface IChannelPresenterProps {
-  loading: boolean;
-}
+import Tab from "../../Components/Container/Tab";
 
 const Container = styled.div`
   width: 1040px;
@@ -21,13 +19,21 @@ const ResultContainer = styled.div`
   border: 1px solid #aaa;
 `;
 
-export default function ChannelPresenter({ loading }: IChannelPresenterProps) {
+interface IChannelPresenterProps {
+  loading: boolean;
+}
+
+function ChannelPresenter({ loading }: IChannelPresenterProps) {
   return loading ? (
     <Container>
-      <TabContainer></TabContainer>
+      {/* <TabContainer> */}
+      <Tab type="channel" />
+      {/* </TabContainer> */}
       <ResultContainer></ResultContainer>
     </Container>
   ) : (
     <div>123</div>
   );
 }
+
+export default ChannelPresenter;
