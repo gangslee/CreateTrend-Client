@@ -7,6 +7,7 @@ import {
   IChannelData,
   channelDataUpdate,
 } from "../../store";
+import ChannelPresenter from "./ChannelPresenter";
 
 function getData(): IChannelData[] {
   const data = [
@@ -4750,8 +4751,8 @@ function ChannelContainer({ useAble, update }: Props) {
     const sampleData = getData();
     update(sampleData);
   }, [update]);
-  console.log(useAble);
-  return <h1>ChannelContainer</h1>;
+
+  return <ChannelPresenter loading={useAble} />;
 }
 
 export default connector(ChannelContainer);
