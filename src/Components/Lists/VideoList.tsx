@@ -2,7 +2,14 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, sliderStateNextKeyword, sliderStatePrevKeyword} from '../../store';
+import {
+  RootState,
+  RootDispatch,
+  sliderStateNextKeyword,
+  sliderStatePrevKeyword,
+  sliderStateNextChannel,
+  sliderStatePrevChannel,
+} from '../../store';
 import Slider from '../Container/Slider';
 
 const Container = styled.div`
@@ -14,7 +21,7 @@ const Container = styled.div`
 `;
 
 interface ISCProps {
-  mode: string;
+  mode?: string;
   type?: string;
   bgUrl?: string;
 }
@@ -65,10 +72,10 @@ const InfoContainer = styled.div`
 `;
 
 const Info = styled.div`
-  font-size: 14px;
+  font-size: ${({type}: ISCProps) => (type === 'keyword' ? '14px' : '22px')};
   font-weight: 600;
   :nth-child(2) {
-    margin-bottom: 10px;
+    margin-bottom: ${({type}: ISCProps) => (type === 'keyword' ? '10px' : '20px')};
   }
   :nth-child(odd) {
     color: #feb100;
@@ -104,8 +111,13 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    update: (data: number, type: boolean) => {
-      dispatch(type ? sliderStateNextKeyword(data) : sliderStatePrevKeyword(data));
+    updates: {
+      updateKeyword: (data: number, type: boolean) => {
+        dispatch(type ? sliderStateNextKeyword(data) : sliderStatePrevKeyword(data));
+      },
+      updateChannel: (data: number, type: boolean) => {
+        dispatch(type ? sliderStateNextChannel(data) : sliderStatePrevChannel(data));
+      },
     },
   };
 }
@@ -121,15 +133,19 @@ interface IVideoListProps extends Props {
   type: string;
 }
 
-function VideoList({data, update, mode, type}: IVideoListProps) {
-  console.log(type);
-  function handleOnClick(e: React.MouseEvent) {
+function VideoList({data, updates, mode, type}: IVideoListProps) {
+  const handleOnClick = (e: React.MouseEvent) => {
     const usingDataIdx = data.indexOf(data.filter((data) => data.type === mode)[0]);
-    e.currentTarget.id === 'next' ? update(usingDataIdx, true) : update(usingDataIdx, false);
-  }
+    const direction = e.currentTarget.id === 'next' ? true : false;
+    if (type === 'keyword') {
+      updates.updateKeyword(usingDataIdx, direction);
+    } else if (type === 'channel') {
+      updates.updateChannel(usingDataIdx, direction);
+    }
+  };
 
   const usingData = data.filter((data) => data.type === mode)[0];
-  // console.log(usingData);
+
   return (
     <Container>
       <TitleContainer mode={mode}>
@@ -141,10 +157,10 @@ function VideoList({data, update, mode, type}: IVideoListProps) {
           <VideoContainer>
             <Image bgUrl={usingData.data[usingData.current].thumbnail} mode={mode} type={type} />
             <InfoContainer>
-              <Info>영상 제목</Info>
-              <Info>{usingData.data[usingData.current].name}</Info>
-              <Info>관련 키워드</Info>
-              <Info>
+              <Info type={type}>영상 제목</Info>
+              <Info type={type}>{usingData.data[usingData.current].name}</Info>
+              <Info type={type}>관련 키워드</Info>
+              <Info type={type}>
                 {usingData.data[usingData.current].keyword.map((word, index) =>
                   index !== usingData.data[usingData.current].keyword.length - 1
                     ? `#${word}, `

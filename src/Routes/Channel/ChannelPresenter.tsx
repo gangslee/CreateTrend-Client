@@ -20,7 +20,7 @@ const KeywordContainer = styled.div`
 `;
 
 const ChartContainer = styled.div`
-  width: 30%;
+  width: 25%;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
 `;
@@ -29,7 +29,7 @@ const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 65%;
+  width: 73%;
   border: 1px solid #ddd;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
