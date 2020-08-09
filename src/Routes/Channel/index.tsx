@@ -1,5 +1,3 @@
-import React from "react";
+import ChannelContainer from "./ChannelContainer";
 
-export default function Channel() {
-  return <h1>Channel</h1>;
-}
+export default ChannelContainer;

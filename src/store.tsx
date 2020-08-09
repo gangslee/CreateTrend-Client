@@ -80,26 +80,28 @@ const keywordSlice = createSlice({
 });
 
 export interface IChannelData {
-  channel: {
-    channelType: string;
-    keywordChart: {
-      chartType: string;
-      keyword: {
-        keywordName: string;
-        popular: number;
-        wordmap: IWordMapData[];
-        line: ILineChartData[];
-        video: IVideoListData[];
-      }[];
+  channelType: string;
+  keywordChart: {
+    chartType: string;
+    keyword: {
+      keywordName: string;
+      popular: number;
+      wordmap: IWordMapData[];
+      line: ILineChartData[];
+      video: IVideoListData[];
     }[];
   }[];
+}
+
+interface IChannelState {
+  channel: IChannelData[];
   currentChannel?: number;
   currentChart?: number;
   currentKeyword?: number[];
   useAble?: boolean;
 }
 
-const channelData: IChannelData = {
+const channelState: IChannelState = {
   channel: null,
   currentChannel: 0,
   currentChart: 0,
@@ -109,7 +111,7 @@ const channelData: IChannelData = {
 
 const channelSlice = createSlice({
   name: "channelReducer",
-  initialState: channelData,
+  initialState: channelState,
   reducers: {
     channelDataUpdate: (state, action) => {
       if (action.payload) {
