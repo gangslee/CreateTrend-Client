@@ -40,11 +40,11 @@ const Title = styled.span`
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.wordmap};
-  } else if (state.page === 'channel') {
-    const channel = state.channel;
-    const channelList = channel.keywordChart[channel.currentChart];
-    const channelData = channelList.keyword[channelList.current];
-    return {data: channelData.wordmap};
+  } else if (state.page === 'statistics') {
+    const statistics = state.statistics;
+    const statisticsList = statistics.keywordChart[statistics.currentChart];
+    const statisticsData = statisticsList.keyword[statisticsList.current];
+    return {data: statisticsData.wordmap};
   }
 }
 

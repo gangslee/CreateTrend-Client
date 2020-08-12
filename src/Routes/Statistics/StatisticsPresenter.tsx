@@ -67,15 +67,15 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
           <SubResultContainer>
             <TextContainer type="popular" />
             <WordmapContainer>
-              <Wordmap type="channel" />
+              <Wordmap type="statistics" />
             </WordmapContainer>
           </SubResultContainer>
           <SubResultContainer>
-            <LineChart type="channel" />
+            <LineChart type="statistics" />
           </SubResultContainer>
         </ResultContainer>
       </KeywordContainer>
-      <VideoList mode="analysis" type="channel" />
+      <VideoList mode="analysis" type="statistics" />
     </Container>
   ) : (
     <div>123</div>

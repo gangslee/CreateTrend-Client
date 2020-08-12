@@ -7,8 +7,8 @@ import {
   RootDispatch,
   sliderStateNextKeyword,
   sliderStatePrevKeyword,
-  sliderStateNextChannel,
-  sliderStatePrevChannel,
+  sliderStateNextStatistics,
+  sliderStatePrevStatistics,
 } from '../../store';
 import Slider from '../Container/Slider';
 
@@ -101,11 +101,11 @@ const VideoTitle = styled.div`
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.video};
-  } else if (state.page === 'channel') {
-    const channel = state.channel;
-    const channelList = channel.keywordChart[channel.currentChart];
-    const channelData = channelList.keyword[channelList.current];
-    return {data: channelData.video};
+  } else if (state.page === 'statistics') {
+    const statistics = state.statistics;
+    const statisticsList = statistics.keywordChart[statistics.currentChart];
+    const statisticsData = statisticsList.keyword[statisticsList.current];
+    return {data: statisticsData.video};
   }
 }
 
@@ -116,7 +116,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
         dispatch(type ? sliderStateNextKeyword(data) : sliderStatePrevKeyword(data));
       },
       updateChannel: (data: number, type: boolean) => {
-        dispatch(type ? sliderStateNextChannel(data) : sliderStatePrevChannel(data));
+        dispatch(type ? sliderStateNextStatistics(data) : sliderStatePrevStatistics(data));
       },
     },
   };
@@ -139,7 +139,7 @@ function VideoList({data, updates, mode, type}: IVideoListProps) {
     const direction = e.currentTarget.id === 'next' ? true : false;
     if (type === 'keyword') {
       updates.updateKeyword(usingDataIdx, direction);
-    } else if (type === 'channel') {
+    } else if (type === 'statistics') {
       updates.updateChannel(usingDataIdx, direction);
     }
   };

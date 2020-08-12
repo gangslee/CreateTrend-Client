@@ -10,7 +10,7 @@ import {
   keywordStateUpdate,
   IKeywordChartData,
 } from '../../store';
-import ChannelPresenter from './ChannelPresenter';
+import ChannelPresenter from './StatisticsPresenter';
 
 function getData(): IKeywordChartData[] {
   const data = [
@@ -1993,7 +1993,7 @@ function getData(): IKeywordChartData[] {
 
 function mapStateToProps(state: RootState) {
   return {
-    useAble: state.channel.useAble,
+    useAble: state.statistics.useAble,
   };
 }
 
@@ -2001,7 +2001,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: (data: IKeywordChartData[]) => {
       if (data) {
-        dispatch(currentPage('channel'));
+        dispatch(currentPage('statistics'));
         dispatch(channelDataUpdate(data));
       }
     },

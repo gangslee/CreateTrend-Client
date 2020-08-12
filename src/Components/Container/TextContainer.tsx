@@ -23,10 +23,10 @@ const PopularContent = styled.span`
 `;
 
 function mapStateToProps(state: RootState) {
-  const channel = state.channel;
-  const channelData = channel.keywordChart[channel.currentChart];
+  const statistics = state.statistics;
+  const statisticsData = statistics.keywordChart[statistics.currentChart];
   return {
-    channel: channelData.keyword[channelData.current],
+    statistics: statisticsData.keyword[statisticsData.current],
   };
 }
 
@@ -40,11 +40,11 @@ interface ITextContainerProps extends Props {
   type: string;
 }
 
-function TextContainer({type, channel}: ITextContainerProps) {
+function TextContainer({type, statistics}: ITextContainerProps) {
   return (
     <Popular>
       <PopularTitle>평균 인기도</PopularTitle>
-      <PopularContent>{channel.popular}%</PopularContent>
+      <PopularContent>{statistics.popular}%</PopularContent>
     </Popular>
   );
 }

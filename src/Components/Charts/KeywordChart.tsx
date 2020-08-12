@@ -76,11 +76,11 @@ function mapStateToProps(state: RootState) {
     data:
       state.page === 'keyword'
         ? state.keyword.keyword
-        : [state.channel.keywordChart[state.channel.currentChart]],
+        : [state.statistics.keywordChart[state.statistics.currentChart]],
     state: {
       page: state.page,
 
-      chart: state.channel.currentChart,
+      chart: state.statistics.currentChart,
     },
   };
 }

@@ -86,25 +86,21 @@ const keywordSlice = createSlice({
   },
 });
 
-export interface IChannelData {
-  keywordChart: IKeywordChartData[];
-}
-
-interface IChannelState {
+interface IStatisticsState {
   keywordChart: IKeywordChartData[];
   currentChart?: number;
   useAble?: boolean;
 }
 
-const channelState: IChannelState = {
+const statisticsState: IStatisticsState = {
   keywordChart: null,
   currentChart: 0,
   useAble: false,
 };
 
-const channelSlice = createSlice({
-  name: 'channelReducer',
-  initialState: channelState,
+const statisticsSlice = createSlice({
+  name: 'statisticsReducer',
+  initialState: statisticsState,
   reducers: {
     channelDataUpdate: (state, action) => {
       if (action.payload) {
@@ -118,13 +114,13 @@ const channelSlice = createSlice({
     keywordStateUpdate: (state, action) => {
       state.keywordChart[state.currentChart].current = action.payload;
     },
-    sliderStateNextChannel: (state, action) => {
+    sliderStateNextStatistics: (state, action) => {
       const current = state.keywordChart[state.currentChart].current;
       state.keywordChart[state.currentChart].keyword[current].video[0].current === 4
         ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 0)
         : (state.keywordChart[state.currentChart].keyword[current].video[0].current += 1);
     },
-    sliderStatePrevChannel: (state, action) => {
+    sliderStatePrevStatistics: (state, action) => {
       const current = state.keywordChart[state.currentChart].current;
       state.keywordChart[state.currentChart].keyword[current].video[0].current === 0
         ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 4)
@@ -135,7 +131,7 @@ const channelSlice = createSlice({
 
 const pageSlice = createSlice({
   name: 'pageReducer',
-  initialState: 'HOME',
+  initialState: 'home',
   reducers: {
     currentPage: (state, action) => (state = action.payload),
   },
@@ -143,7 +139,7 @@ const pageSlice = createSlice({
 
 const cReducer = combineReducers({
   keyword: keywordSlice.reducer,
-  channel: channelSlice.reducer,
+  statistics: statisticsSlice.reducer,
   page: pageSlice.reducer,
 });
 
@@ -161,9 +157,9 @@ export const {
   channelDataUpdate,
   chartStateUpdate,
   keywordStateUpdate,
-  sliderStateNextChannel,
-  sliderStatePrevChannel,
-} = channelSlice.actions;
+  sliderStateNextStatistics,
+  sliderStatePrevStatistics,
+} = statisticsSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 
