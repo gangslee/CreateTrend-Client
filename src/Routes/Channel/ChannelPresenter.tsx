@@ -59,7 +59,6 @@ interface IChannelPresenterProps {
 function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
   return loading ? (
     <Container>
-      <Tab type="channel" stateFunc={funcs.channel} />
       <KeywordContainer>
         <ChartContainer>
           <Tab type="chart" stateFunc={funcs.chart} />
