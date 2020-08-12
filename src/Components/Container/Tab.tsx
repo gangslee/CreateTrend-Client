@@ -56,7 +56,6 @@ const TabTitle = styled.span`
 function mapStateToProps(state: RootState) {
   return {
     state: {
-      channel: state.channel.currentChannel,
       chart: state.channel.currentChart,
     },
   };
@@ -74,10 +73,9 @@ interface ITabProps extends Props {
 }
 
 function Tab({state, stateFunc, type}: ITabProps) {
-  const channelType = state.channel;
   const chartType = state.chart;
-  const titles = type === 'channel' ? ['MY', 'ALL'] : ['인기', '영상'];
-  const currentType = type === 'channel' ? titles[channelType] : titles[chartType];
+  const titles = ['인기', '영상'];
+  const currentType = titles[chartType];
 
   const handleOnClick = (e: React.MouseEvent) => {
     if (e.currentTarget.innerHTML !== currentType) {

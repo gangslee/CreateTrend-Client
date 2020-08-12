@@ -24,7 +24,7 @@ const PopularContent = styled.span`
 
 function mapStateToProps(state: RootState) {
   const channel = state.channel;
-  const channelData = channel.channel[channel.currentChannel].keywordChart[channel.currentChart];
+  const channelData = channel.keywordChart[channel.currentChart];
   return {
     channel: channelData.keyword[channelData.current],
   };

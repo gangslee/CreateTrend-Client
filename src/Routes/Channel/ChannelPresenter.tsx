@@ -50,7 +50,6 @@ const WordmapContainer = styled.div`
 interface IChannelPresenterProps {
   loading: boolean;
   funcs: {
-    channel: () => void;
     chart: () => void;
     keyword: (n: number) => void;
   };

@@ -42,7 +42,7 @@ function mapStateToProps(state: RootState) {
     return {data: state.keyword.lines};
   } else if (state.page === 'channel') {
     const channel = state.channel;
-    const channelList = channel.channel[channel.currentChannel].keywordChart[channel.currentChart];
+    const channelList = channel.keywordChart[channel.currentChart];
     const channelData = channelList.keyword[channelList.current];
     return {data: channelData.line};
   }

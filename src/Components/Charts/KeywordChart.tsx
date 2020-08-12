@@ -76,14 +76,10 @@ function mapStateToProps(state: RootState) {
     data:
       state.page === 'keyword'
         ? state.keyword.keyword
-        : [
-            state.channel.channel[state.channel.currentChannel].keywordChart[
-              state.channel.currentChart
-            ],
-          ],
+        : [state.channel.keywordChart[state.channel.currentChart]],
     state: {
       page: state.page,
-      channel: state.channel.currentChannel,
+
       chart: state.channel.currentChart,
     },
   };
@@ -107,7 +103,7 @@ function KeywordChart({data, state, index, stateFunc}: IKeywordChartProps) {
     const idx = usingData.keyword.findIndex((data) => data.name === e.currentTarget.innerHTML);
     stateFunc(idx);
   };
-  console.log(usingData.current);
+
   return (
     <Container type={state.page}>
       {state.page === 'keyword' && (
