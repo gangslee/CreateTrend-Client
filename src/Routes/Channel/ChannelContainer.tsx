@@ -6,7 +6,6 @@ import {
   RootDispatch,
   IChannelData,
   channelDataUpdate,
-  channelStateUpdate,
   chartStateUpdate,
   currentPage,
   keywordStateUpdate,

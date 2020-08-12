@@ -87,20 +87,17 @@ const keywordSlice = createSlice({
 });
 
 export interface IChannelData {
-  channelType: string;
   keywordChart: IKeywordChartData[];
 }
 
 interface IChannelState {
-  channel: IChannelData[];
-  currentChannel?: number;
+  keywordChart: IKeywordChartData[];
   currentChart?: number;
   useAble?: boolean;
 }
 
 const channelState: IChannelState = {
-  channel: null,
-  currentChannel: 0,
+  keywordChart: null,
   currentChart: 0,
   useAble: false,
 };
@@ -111,41 +108,27 @@ const channelSlice = createSlice({
   reducers: {
     channelDataUpdate: (state, action) => {
       if (action.payload) {
-        state.channel = action.payload;
+        state.keywordChart = action.payload;
         state.useAble = true;
       }
-    },
-    channelStateUpdate: (state) => {
-      state.currentChannel === 0 ? (state.currentChannel = 1) : (state.currentChannel = 0);
-      state.currentChart = 0;
     },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
     },
     keywordStateUpdate: (state, action) => {
-      state.channel[state.currentChannel].keywordChart[state.currentChart].current = action.payload;
+      state.keywordChart[state.currentChart].current = action.payload;
     },
     sliderStateNextChannel: (state, action) => {
-      const current = state.channel[state.currentChannel].keywordChart[state.currentChart].current;
-      state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[current].video[0]
-        .current === 4
-        ? (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
-            current
-          ].video[0].current = 0)
-        : (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
-            current
-          ].video[0].current += 1);
+      const current = state.keywordChart[state.currentChart].current;
+      state.keywordChart[state.currentChart].keyword[current].video[0].current === 4
+        ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 0)
+        : (state.keywordChart[state.currentChart].keyword[current].video[0].current += 1);
     },
     sliderStatePrevChannel: (state, action) => {
-      const current = state.channel[state.currentChannel].keywordChart[state.currentChart].current;
-      state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[current].video[0]
-        .current === 0
-        ? (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
-            current
-          ].video[0].current = 4)
-        : (state.channel[state.currentChannel].keywordChart[state.currentChart].keyword[
-            current
-          ].video[0].current -= 1);
+      const current = state.keywordChart[state.currentChart].current;
+      state.keywordChart[state.currentChart].keyword[current].video[0].current === 0
+        ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 4)
+        : (state.keywordChart[state.currentChart].keyword[current].video[0].current -= 1);
     },
   },
 });
@@ -176,7 +159,6 @@ export const {
 
 export const {
   channelDataUpdate,
-  channelStateUpdate,
   chartStateUpdate,
   keywordStateUpdate,
   sliderStateNextChannel,
