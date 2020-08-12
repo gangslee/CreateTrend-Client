@@ -1,7 +1,7 @@
 import React from 'react';
 
-function Home() {
+function HomeContainer() {
   return <HomePresenter />;
 }
 
-export default Home;
+export default HomeContainer;
