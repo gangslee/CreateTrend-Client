@@ -43,6 +43,17 @@ function PieChart({data}: Props) {
     pieSeries.labels.template.disabled = true;
     pieSeries.ticks.template.disabled = true;
 
+    pieSeries.slices.template.events.on('hit', (e) => {
+      pieSeries.slices.each((item) => {
+        if (item.isActive && item !== e.target) {
+          item.isActive = false;
+        }
+      });
+      if (e.target.isActive) {
+        console.log(e.target.dataItem.properties.category);
+      }
+    });
+
     chartRef.current = chart;
 
     return () => {
