@@ -67,7 +67,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function ChannelInfo({data}: Props) {
-  console.log(data);
   return (
     <Container>
       <ItemContainer>

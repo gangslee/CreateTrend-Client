@@ -38,11 +38,30 @@ function getData(): IStarState {
       },
     ],
     keyword: {
-      keyword: [
+      pie: [
         {
-          name: 'asdasd',
-          pie: [],
-          wordmap: [],
+          name: '지무비',
+          value: 17,
+        },
+        {
+          name: '채널',
+          value: 16,
+        },
+        {
+          name: '가입',
+          value: 14,
+        },
+        {
+          name: '영화',
+          value: 13,
+        },
+        {
+          name: 'naver',
+          value: 13,
+        },
+        {
+          name: '개인',
+          value: 11,
         },
       ],
       current: 0,

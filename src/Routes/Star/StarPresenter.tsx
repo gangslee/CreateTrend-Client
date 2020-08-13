@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+
 import ChannelInfo from '../../Components/Container/ChannelInfo';
 import VideoList from '../../Components/Lists/VideoList';
+import PieChart from '../../Components/Charts/PieChart';
 
 const Container = styled.div`
   width: 1040px;
@@ -39,7 +41,9 @@ function StarPresenter({loading}: IStarPresenterProps) {
       <AnalysisSection>
         <ChannelInfo />
         <ChartSection>
-          <ChartContainer></ChartContainer>
+          <ChartContainer>
+            <PieChart />
+          </ChartContainer>
           <ChartContainer></ChartContainer>
         </ChartSection>
       </AnalysisSection>

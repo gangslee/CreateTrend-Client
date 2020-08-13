@@ -143,7 +143,14 @@ export interface IStarState {
     channel_start_date: string;
     subscriber: number;
   };
-  keyword: IKeywordChartData;
+  keyword: {
+    pie: {
+      name: string;
+      value: number;
+      wordmap?: IWordMapData[];
+    }[];
+    current: 0;
+  };
   video: IVideoListData[];
   useAble?: boolean;
 }
