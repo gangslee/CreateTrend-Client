@@ -49,26 +49,236 @@ function getData(): IStarState {
         {
           name: '지무비',
           value: 17,
+          wordmap: [
+            {
+              name: '지무비',
+              children: [
+                {
+                  name: '1번 노드',
+                  value: 10,
+                },
+                {
+                  name: '2번 노드',
+                  value: 9,
+                },
+                {
+                  name: '3번 노드',
+                  value: 8,
+                },
+                {
+                  name: '4번 노드',
+                  value: 7,
+                },
+                {
+                  name: '5번 노드',
+                  value: 6,
+                },
+                {
+                  name: '6번 노드',
+                  value: 5,
+                },
+                {
+                  name: '7번 노드',
+                  value: 4,
+                },
+              ],
+            },
+          ],
         },
         {
           name: '채널',
           value: 16,
+          wordmap: [
+            {
+              name: '채널',
+              children: [
+                {
+                  name: '1번 노드',
+                  value: 10,
+                },
+                {
+                  name: '2번 노드',
+                  value: 9,
+                },
+                {
+                  name: '3번 노드',
+                  value: 8,
+                },
+                {
+                  name: '4번 노드',
+                  value: 7,
+                },
+                {
+                  name: '5번 노드',
+                  value: 6,
+                },
+                {
+                  name: '6번 노드',
+                  value: 5,
+                },
+                {
+                  name: '7번 노드',
+                  value: 4,
+                },
+              ],
+            },
+          ],
         },
         {
           name: '가입',
           value: 14,
+          wordmap: [
+            {
+              name: '가입',
+              children: [
+                {
+                  name: '1번 노드',
+                  value: 10,
+                },
+                {
+                  name: '2번 노드',
+                  value: 9,
+                },
+                {
+                  name: '3번 노드',
+                  value: 8,
+                },
+                {
+                  name: '4번 노드',
+                  value: 7,
+                },
+                {
+                  name: '5번 노드',
+                  value: 6,
+                },
+                {
+                  name: '6번 노드',
+                  value: 5,
+                },
+                {
+                  name: '7번 노드',
+                  value: 4,
+                },
+              ],
+            },
+          ],
         },
         {
           name: '영화',
           value: 13,
+          wordmap: [
+            {
+              name: '영화',
+              children: [
+                {
+                  name: '1번 노드',
+                  value: 10,
+                },
+                {
+                  name: '2번 노드',
+                  value: 9,
+                },
+                {
+                  name: '3번 노드',
+                  value: 8,
+                },
+                {
+                  name: '4번 노드',
+                  value: 7,
+                },
+                {
+                  name: '5번 노드',
+                  value: 6,
+                },
+                {
+                  name: '6번 노드',
+                  value: 5,
+                },
+                {
+                  name: '7번 노드',
+                  value: 4,
+                },
+              ],
+            },
+          ],
         },
         {
           name: 'naver',
           value: 13,
+          wordmap: [
+            {
+              name: 'naver',
+              children: [
+                {
+                  name: '1번 노드',
+                  value: 10,
+                },
+                {
+                  name: '2번 노드',
+                  value: 9,
+                },
+                {
+                  name: '3번 노드',
+                  value: 8,
+                },
+                {
+                  name: '4번 노드',
+                  value: 7,
+                },
+                {
+                  name: '5번 노드',
+                  value: 6,
+                },
+                {
+                  name: '6번 노드',
+                  value: 5,
+                },
+                {
+                  name: '7번 노드',
+                  value: 4,
+                },
+              ],
+            },
+          ],
         },
         {
           name: '개인',
           value: 11,
+          wordmap: [
+            {
+              name: '개인',
+              children: [
+                {
+                  name: '1번 노드',
+                  value: 10,
+                },
+                {
+                  name: '2번 노드',
+                  value: 9,
+                },
+                {
+                  name: '3번 노드',
+                  value: 8,
+                },
+                {
+                  name: '4번 노드',
+                  value: 7,
+                },
+                {
+                  name: '5번 노드',
+                  value: 6,
+                },
+                {
+                  name: '6번 노드',
+                  value: 5,
+                },
+                {
+                  name: '7번 노드',
+                  value: 4,
+                },
+              ],
+            },
+          ],
         },
       ],
       current: 0,

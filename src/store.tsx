@@ -147,7 +147,7 @@ export interface IStarState {
     pie: {
       name: string;
       value: number;
-      wordmap?: IWordMapData[];
+      wordmap: IWordMapData[];
     }[];
     current: 0;
   };

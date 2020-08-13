@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ChannelInfo from '../../Components/Container/ChannelInfo';
 import VideoList from '../../Components/Lists/VideoList';
 import PieChart from '../../Components/Charts/PieChart';
+import Wordmap from '../../Components/Charts/Wordmap';
 
 const Container = styled.div`
   width: 1040px;
@@ -47,7 +48,9 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
           <ChartContainer>
             <PieChart stateFunc={funcs.starPie} />
           </ChartContainer>
-          <ChartContainer></ChartContainer>
+          <ChartContainer>
+            <Wordmap type="star" />
+          </ChartContainer>
         </ChartSection>
       </AnalysisSection>
       <VideoSection>

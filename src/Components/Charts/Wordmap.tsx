@@ -13,7 +13,6 @@ type containerType = {
 const Container = styled.div`
   height: ${({type}: containerType) => (type === 'keyword' ? '320px' : '100%')};
   box-sizing: border-box;
-  border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
 
   ${({type}: containerType) =>
@@ -45,6 +44,9 @@ function mapStateToProps(state: RootState) {
     const statisticsList = statistics.keywordChart[statistics.currentChart];
     const statisticsData = statisticsList.keyword[statisticsList.current];
     return {data: statisticsData.wordmap};
+  } else if (state.page === 'star') {
+    const {current} = state.star.keyword;
+    return {data: state.star.keyword.pie[current].wordmap};
   }
 }
 
