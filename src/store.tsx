@@ -135,18 +135,15 @@ const statisticsSlice = createSlice({
   },
 });
 
-interface IStarState {
+export interface IStarState {
   channelInfo: {
     thumbnail_url: string;
     channel_description: string;
     channel_name: string;
     channel_start_date: string;
   };
-  keyword: IKeywordChartData[];
-  video: {
-    type?: string;
-    data: IVideoListData[];
-  };
+  keyword: IKeywordChartData;
+  video: IVideoListData[];
   useAble?: boolean;
 }
 
