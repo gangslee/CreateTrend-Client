@@ -189,8 +189,25 @@ const getData = (): IKeywordData => {
   return data;
 };
 
-function mapStateToProps(state: RootState) {
-  return {useAble: state.keyword.useAble};
+interface OwnProps {
+  match: {
+    params: {
+      search: string;
+    };
+  };
+}
+
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
+  const {
+    match: {
+      params: {search},
+    },
+  } = ownProps;
+
+  return {
+    useAble: state.keyword.useAble,
+    search: search,
+  };
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
@@ -210,17 +227,20 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function KeywordContainer({useAble, update}: Props) {
+function KeywordContainer({useAble, update, search}: Props) {
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (search: string) => {
       try {
-        const {data} = await getApi.keyword('롤');
+        console.log(search);
+        const {data} = await getApi.keyword(search);
+        console.log(data);
       } catch {
       } finally {
       }
     };
 
-    fetchData();
+    const a = fetchData(search);
+    console.log(a);
 
     const sampleData = getData();
     update(sampleData);
