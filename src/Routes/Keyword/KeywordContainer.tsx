@@ -244,7 +244,7 @@ function KeywordContainer({useAble, update, search}: Props) {
 
     const sampleData = getData();
     update(sampleData);
-  }, [update]);
+  }, [update, search]);
   return <KeywordPresenter loading={useAble} />;
 }
 

@@ -23,6 +23,11 @@ export interface ILineChartData {
   }[];
 }
 
+export interface IPieChartData {
+  country: string;
+  litres: number;
+}
+
 export interface IKeywordChartData {
   chartType: string;
   keyword: {
@@ -31,6 +36,7 @@ export interface IKeywordChartData {
     wordmap?: IWordMapData[];
     line?: ILineChartData[];
     video?: IVideoListData[];
+    pie?: IPieChartData[];
   }[];
   current?: number;
 }
@@ -102,7 +108,7 @@ const statisticsSlice = createSlice({
   name: 'statisticsReducer',
   initialState: statisticsState,
   reducers: {
-    channelDataUpdate: (state, action) => {
+    statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
         state.useAble = true;
@@ -125,6 +131,41 @@ const statisticsSlice = createSlice({
       state.keywordChart[state.currentChart].keyword[current].video[0].current === 0
         ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 4)
         : (state.keywordChart[state.currentChart].keyword[current].video[0].current -= 1);
+    },
+  },
+});
+
+interface IStarState {
+  channelInfo: {
+    thumbnail_url: string;
+    channel_description: string;
+    channel_name: string;
+    channel_start_date: string;
+  };
+  keyword: IKeywordChartData[];
+  video: {
+    type?: string;
+    data: IVideoListData[];
+  };
+  useAble?: boolean;
+}
+
+const starState: IStarState = {
+  channelInfo: null,
+  keyword: null,
+  video: null,
+  useAble: false,
+};
+
+const starSlice = createSlice({
+  name: 'starReducer',
+  initialState: starState,
+  reducers: {
+    starDataUpdate: (state, action) => {
+      state.channelInfo = action.payload.channelInfo;
+      state.keyword = action.payload.keyword;
+      state.video = action.payload.video;
+      state.useAble = true;
     },
   },
 });
@@ -154,7 +195,7 @@ export const {
 } = keywordSlice.actions;
 
 export const {
-  channelDataUpdate,
+  statisticsDataUpdate,
   chartStateUpdate,
   keywordStateUpdate,
   sliderStateNextStatistics,

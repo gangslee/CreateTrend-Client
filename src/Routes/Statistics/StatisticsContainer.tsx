@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {
   RootState,
   RootDispatch,
-  channelDataUpdate,
+  statisticsDataUpdate,
   chartStateUpdate,
   currentPage,
   keywordStateUpdate,
@@ -2002,7 +2002,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     update: (data: IKeywordChartData[]) => {
       if (data) {
         dispatch(currentPage('statistics'));
-        dispatch(channelDataUpdate(data));
+        dispatch(statisticsDataUpdate(data));
       }
     },
     stateFuncs: {
