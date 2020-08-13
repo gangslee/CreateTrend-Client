@@ -172,6 +172,9 @@ const starSlice = createSlice({
       state.video = action.payload.video;
       state.useAble = true;
     },
+    starPieSliceStateUpdate: (state, action) => {
+      state.keyword.current = action.payload;
+    },
   },
 });
 
@@ -208,7 +211,7 @@ export const {
   sliderStatePrevStatistics,
 } = statisticsSlice.actions;
 
-export const {starDataUpdate} = starSlice.actions;
+export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 
