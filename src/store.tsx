@@ -29,7 +29,6 @@ export interface IPieChartData {
 }
 
 export interface IKeywordChartData {
-  chartType: string;
   keyword: {
     name: string;
     popular?: number;
@@ -38,6 +37,7 @@ export interface IKeywordChartData {
     video?: IVideoListData[];
     pie?: IPieChartData[];
   }[];
+  chartType?: string;
   current?: number;
 }
 
@@ -181,6 +181,7 @@ const pageSlice = createSlice({
 const cReducer = combineReducers({
   keyword: keywordSlice.reducer,
   statistics: statisticsSlice.reducer,
+  star: starSlice.reducer,
   page: pageSlice.reducer,
 });
 
@@ -201,6 +202,8 @@ export const {
   sliderStateNextStatistics,
   sliderStatePrevStatistics,
 } = statisticsSlice.actions;
+
+export const {starDataUpdate} = starSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 
