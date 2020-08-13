@@ -13,6 +13,7 @@ function getData(): IStarState {
         'G리는 영화&드라마 리뷰&프리뷰채널, 지무비 : G Movie \n\n[지무비 공식 인스타그램] \nhttps://www.instagram.com/G_movie__/\n[지무비 개인 인스타그램] \nhttps://www.instagram.com/awayout1/\n[지무비 페이스북] \nhttps://www.facebook.com/pg/Gmoviee\n[팬 사서함]\n서울특별시 강남구 테헤란로 518 15층 샌드박스 네트워크 \n받는 사람명 - 지무비\n[문의 이메일] \nawayout2@naver.com',
       channel_name: '지무비 : G Movie',
       channel_start_date: '2017-11-26',
+      subscriber: 3610000,
     },
     video: [
       {

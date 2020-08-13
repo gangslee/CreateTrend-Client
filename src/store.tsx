@@ -141,6 +141,7 @@ export interface IStarState {
     channel_description: string;
     channel_name: string;
     channel_start_date: string;
+    subscriber: number;
   };
   keyword: IKeywordChartData;
   video: IVideoListData[];
