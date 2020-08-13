@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ChannelInfo from '../../Components/Container/ChannelInfo';
 
 const Container = styled.div`
   width: 1040px;
@@ -11,8 +12,6 @@ const Container = styled.div`
 
 const AnalysisSection = styled.div`
   width: 700px;
-  border: 1px solid #ddd;
-  height: 1000px;
 `;
 
 const VideoSection = styled.div`
@@ -28,7 +27,9 @@ interface IStarPresenterProps {
 function StarPresenter({loading}: IStarPresenterProps) {
   return loading ? (
     <Container>
-      <AnalysisSection></AnalysisSection>
+      <AnalysisSection>
+        <ChannelInfo />
+      </AnalysisSection>
       <VideoSection></VideoSection>
     </Container>
   ) : (
