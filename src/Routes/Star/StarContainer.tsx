@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, starDataUpdate, currentPage, IStarState} from '../../store';
+import StarPresenter from './StarPresenter';
 
 function getData(): IStarState {
   const data: IStarState = {
@@ -51,7 +52,7 @@ function getData(): IStarState {
 
 function mapStateToProps(state: RootState) {
   return {
-    useAble: state.star,
+    useAble: state.star.useAble,
   };
 }
 
@@ -77,8 +78,8 @@ function StarContainer({useAble, update}: Props) {
     const sampleData = getData();
     update(sampleData);
   }, [update]);
-  console.log(useAble);
-  return <h1>StarContainer</h1>;
+
+  return <StarPresenter />;
 }
 
 export default connector(StarContainer);
