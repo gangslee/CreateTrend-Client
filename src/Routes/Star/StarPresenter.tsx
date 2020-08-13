@@ -7,7 +7,6 @@ const Container = styled.div`
   justify-content: space-between;
   box-sizing: border-box;
   margin: 50px auto;
-  border: 1px solid #ddd;
 `;
 
 const AnalysisSection = styled.div`
@@ -22,12 +21,18 @@ const VideoSection = styled.div`
   height: 1000px;
 `;
 
-function StarPresenter() {
-  return (
+interface IStarPresenterProps {
+  loading: boolean;
+}
+
+function StarPresenter({loading}: IStarPresenterProps) {
+  return loading ? (
     <Container>
       <AnalysisSection></AnalysisSection>
       <VideoSection></VideoSection>
     </Container>
+  ) : (
+    <h1>NOT YET</h1>
   );
 }
 

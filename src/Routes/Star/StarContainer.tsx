@@ -79,7 +79,7 @@ function StarContainer({useAble, update}: Props) {
     update(sampleData);
   }, [update]);
 
-  return <StarPresenter />;
+  return <StarPresenter loading={useAble} />;
 }
 
 export default connector(StarContainer);
