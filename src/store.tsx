@@ -173,7 +173,9 @@ const starSlice = createSlice({
       state.useAble = true;
     },
     starPieSliceStateUpdate: (state, action) => {
-      state.keyword.current = action.payload;
+      if (state.keyword.current !== action.payload) {
+        state.keyword.current = action.payload;
+      }
     },
   },
 });

@@ -33,16 +33,19 @@ const VideoSection = styled.div`
 
 interface IStarPresenterProps {
   loading: boolean;
+  funcs: {
+    starPie: (n: number) => void;
+  };
 }
 
-function StarPresenter({loading}: IStarPresenterProps) {
+function StarPresenter({loading, funcs}: IStarPresenterProps) {
   return loading ? (
     <Container>
       <AnalysisSection>
         <ChannelInfo />
         <ChartSection>
           <ChartContainer>
-            <PieChart />
+            <PieChart stateFunc={funcs.starPie} />
           </ChartContainer>
           <ChartContainer></ChartContainer>
         </ChartSection>

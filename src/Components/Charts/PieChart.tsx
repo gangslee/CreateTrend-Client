@@ -27,7 +27,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function PieChart({data}: Props) {
+interface IPieChartProps extends Props {
+  stateFunc: (n: number) => void;
+}
+
+function PieChart({data, stateFunc}: IPieChartProps) {
   const chartRef = useRef(null);
   useEffect(() => {
     const chart = am4core.create('keyword-piechart', am4charts.PieChart3D);
@@ -50,7 +54,8 @@ function PieChart({data}: Props) {
         }
       });
       if (e.target.isActive) {
-        console.log(e.target.dataItem.properties.category);
+        const idx = data.findIndex((data) => data.name === e.target.dataItem.properties.category);
+        stateFunc(idx);
       }
     });
 
@@ -59,7 +64,7 @@ function PieChart({data}: Props) {
     return () => {
       chart.dispose();
     };
-  }, [data]);
+  }, [data, stateFunc]);
 
   return <Container id="keyword-piechart" />;
 }

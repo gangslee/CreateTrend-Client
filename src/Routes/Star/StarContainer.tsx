@@ -1,7 +1,14 @@
 import React, {useEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, starDataUpdate, currentPage, IStarState} from '../../store';
+import {
+  RootState,
+  RootDispatch,
+  starDataUpdate,
+  starPieSliceStateUpdate,
+  currentPage,
+  IStarState,
+} from '../../store';
 import StarPresenter from './StarPresenter';
 
 function getData(): IStarState {
@@ -84,6 +91,11 @@ function mapDispatchToProps(dispatch: RootDispatch) {
         dispatch(starDataUpdate(data));
       }
     },
+    stateFuncs: {
+      starPie: (idx: number) => {
+        dispatch(starPieSliceStateUpdate(idx));
+      },
+    },
   };
 }
 
@@ -93,13 +105,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function StarContainer({useAble, update}: Props) {
+function StarContainer({useAble, update, stateFuncs}: Props) {
   useEffect(() => {
     const sampleData = getData();
     update(sampleData);
   }, [update]);
 
-  return <StarPresenter loading={useAble} />;
+  return <StarPresenter loading={useAble} funcs={stateFuncs} />;
 }
 
 export default connector(StarContainer);
