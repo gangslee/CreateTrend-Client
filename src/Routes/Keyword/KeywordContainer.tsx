@@ -3,6 +3,7 @@ import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, keywordDataUpdate, IKeywordData, currentPage} from '../../store';
 import KeywordPresenter from './KeywordPresenter';
+import {getApi} from '../../api';
 
 const getData = (): IKeywordData => {
   const data = {
@@ -211,6 +212,16 @@ type Props = PropsFromRedux;
 
 function KeywordContainer({useAble, update}: Props) {
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const {data} = await getApi.keyword('롤');
+      } catch {
+      } finally {
+      }
+    };
+
+    fetchData();
+
     const sampleData = getData();
     update(sampleData);
   }, [update]);
