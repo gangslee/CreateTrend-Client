@@ -6,6 +6,8 @@ import {RootState} from '../../store';
 
 const Container = styled.div`
   padding: 20px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  margin-bottom: 30px;
 `;
 
 const ItemContainer = styled.div`

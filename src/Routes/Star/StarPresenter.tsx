@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ChannelInfo from '../../Components/Container/ChannelInfo';
+import VideoList from '../../Components/Lists/VideoList';
 
 const Container = styled.div`
   width: 1040px;
@@ -14,10 +15,18 @@ const AnalysisSection = styled.div`
   width: 700px;
 `;
 
+const ChartSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ChartContainer = styled.div`
+  width: 47%;
+  border: 1px solid #ddd;
+`;
+
 const VideoSection = styled.div`
   width: 290px;
-  border: 1px solid #ddd;
-  height: 1000px;
 `;
 
 interface IStarPresenterProps {
@@ -29,8 +38,14 @@ function StarPresenter({loading}: IStarPresenterProps) {
     <Container>
       <AnalysisSection>
         <ChannelInfo />
+        <ChartSection>
+          <ChartContainer></ChartContainer>
+          <ChartContainer></ChartContainer>
+        </ChartSection>
       </AnalysisSection>
-      <VideoSection></VideoSection>
+      <VideoSection>
+        <VideoList mode="aside" type="star" />
+      </VideoSection>
     </Container>
   ) : (
     <h1>NOT YET</h1>

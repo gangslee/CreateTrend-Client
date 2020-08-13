@@ -106,6 +106,8 @@ function mapStateToProps(state: RootState) {
     const statisticsList = statistics.keywordChart[statistics.currentChart];
     const statisticsData = statisticsList.keyword[statisticsList.current];
     return {data: statisticsData.video};
+  } else if (state.page === 'star') {
+    return {data: state.star.video};
   }
 }
 
