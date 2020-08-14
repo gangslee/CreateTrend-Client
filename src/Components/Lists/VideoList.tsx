@@ -48,7 +48,7 @@ const VideoContainer = styled.div`
 const Image = styled.img`
   width: ${({mode}: ISCProps) => (mode === 'analysis' ? '35%' : '60%')};
   height: ${({mode, type}: ISCProps) =>
-    mode === 'analysis' ? (type === 'keyword' ? '120px' : '200px') : '85px'};
+    mode === 'analysis' ? (type === 'statistics' ? '200px' : '120px') : '85px'};
   margin-right: ${({mode}: ISCProps) => (mode === 'analysis' ? '20px' : '5px')};
   border-radius: 5px;
   background-image: url(${({bgUrl}: ISCProps) => bgUrl});
@@ -65,10 +65,10 @@ const InfoContainer = styled.div`
 `;
 
 const Info = styled.div`
-  font-size: ${({type}: ISCProps) => (type === 'keyword' ? '14px' : '22px')};
+  font-size: ${({type}: ISCProps) => (type === 'statistics' ? '22px' : '14px')};
   font-weight: 600;
   :nth-child(2) {
-    margin-bottom: ${({type}: ISCProps) => (type === 'keyword' ? '10px' : '20px')};
+    margin-bottom: ${({type}: ISCProps) => (type === 'statistics' ? '20px' : '10px')};
   }
   :nth-child(odd) {
     color: #feb100;
@@ -100,7 +100,7 @@ function mapStateToProps(state: RootState) {
     const statisticsData = statisticsList.keyword[statisticsList.current];
     return {data: statisticsData.video, current: state.slider.statistics};
   } else if (state.page === 'star') {
-    return {data: state.star.video, current: state.slider.star};
+    return {data: state.star.video.concat(state.period.video), current: state.slider.star};
   }
 }
 
@@ -128,7 +128,7 @@ function VideoList({data, current, update, mode, type}: IVideoListProps) {
     const direction = e.currentTarget.id === 'next' ? true : false;
     update(type, direction);
   };
-
+  console.log(data);
   const usingData = data.filter((data) => data.type === mode)[0];
 
   return (
@@ -146,7 +146,7 @@ function VideoList({data, current, update, mode, type}: IVideoListProps) {
               <Info type={type}>{usingData.data[current].name}</Info>
               <Info type={type}>관련 키워드</Info>
               <Info type={type}>
-                {usingData.data[usingData.current].keyword.map((word, index) =>
+                {usingData.data[current].keyword.map((word, index) =>
                   index !== usingData.data[current].keyword.length - 1 ? `#${word}, ` : `#${word}`
                 )}
               </Info>

@@ -31,6 +31,7 @@ const ChartContainer = styled.div`
 
 const LinechartContainer = styled.div`
   height: 300px;
+  margin-bottom: 30px;
 `;
 
 const VideoSection = styled.div`
@@ -60,6 +61,7 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
         <LinechartContainer>
           <LineChart type="star" />
         </LinechartContainer>
+        <VideoList mode="analysis" type="star" />
       </AnalysisSection>
       <VideoSection>
         <VideoList mode="aside" type="star" />
