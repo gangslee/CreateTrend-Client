@@ -48,7 +48,7 @@ const KeywordChartContainer = styled.div`
     border-bottom: 2px solid #ddd;
   }
   ${({type, current}: styleType) =>
-    type === 'channel' &&
+    type === 'statistics' &&
     current &&
     css`
       color: #feb100;

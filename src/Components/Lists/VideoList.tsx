@@ -2,14 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {
-  RootState,
-  RootDispatch,
-  sliderStateNextKeyword,
-  sliderStatePrevKeyword,
-  sliderStateNextStatistics,
-  sliderStatePrevStatistics,
-} from '../../store';
+import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
 import Slider from '../Container/Slider';
 
 const Container = styled.div`
@@ -100,26 +93,21 @@ const VideoTitle = styled.div`
 
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
-    return {data: state.keyword.video};
+    return {data: state.keyword.video, current: state.slider.keyword};
   } else if (state.page === 'statistics') {
     const statistics = state.statistics;
     const statisticsList = statistics.keywordChart[statistics.currentChart];
     const statisticsData = statisticsList.keyword[statisticsList.current];
-    return {data: statisticsData.video};
+    return {data: statisticsData.video, current: state.slider.statistics};
   } else if (state.page === 'star') {
-    return {data: state.star.video};
+    return {data: state.star.video, current: state.slider.star};
   }
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    updates: {
-      updateKeyword: (data: number, type: boolean) => {
-        dispatch(type ? sliderStateNextKeyword(data) : sliderStatePrevKeyword(data));
-      },
-      updateChannel: (data: number, type: boolean) => {
-        dispatch(type ? sliderStateNextStatistics(data) : sliderStatePrevStatistics(data));
-      },
+    update: (data: string, type: boolean) => {
+      dispatch(type ? sliderStateNext(data) : sliderStatePrev(data));
     },
   };
 }
@@ -135,15 +123,10 @@ interface IVideoListProps extends Props {
   type: string;
 }
 
-function VideoList({data, updates, mode, type}: IVideoListProps) {
+function VideoList({data, current, update, mode, type}: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
-    const usingDataIdx = data.indexOf(data.filter((data) => data.type === mode)[0]);
     const direction = e.currentTarget.id === 'next' ? true : false;
-    if (type === 'keyword') {
-      updates.updateKeyword(usingDataIdx, direction);
-    } else if (type === 'statistics') {
-      updates.updateChannel(usingDataIdx, direction);
-    }
+    update(type, direction);
   };
 
   const usingData = data.filter((data) => data.type === mode)[0];
@@ -157,16 +140,14 @@ function VideoList({data, updates, mode, type}: IVideoListProps) {
       {mode === 'analysis' ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image bgUrl={usingData.data[usingData.current].thumbnail} mode={mode} type={type} />
+            <Image bgUrl={usingData.data[current].thumbnail} mode={mode} type={type} />
             <InfoContainer>
               <Info type={type}>영상 제목</Info>
-              <Info type={type}>{usingData.data[usingData.current].name}</Info>
+              <Info type={type}>{usingData.data[current].name}</Info>
               <Info type={type}>관련 키워드</Info>
               <Info type={type}>
                 {usingData.data[usingData.current].keyword.map((word, index) =>
-                  index !== usingData.data[usingData.current].keyword.length - 1
-                    ? `#${word}, `
-                    : `#${word}`
+                  index !== usingData.data[current].keyword.length - 1 ? `#${word}, ` : `#${word}`
                 )}
               </Info>
             </InfoContainer>

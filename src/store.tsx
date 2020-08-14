@@ -8,13 +8,6 @@ export interface IWordMapData {
   }[];
 }
 
-export interface ICommentData {
-  avatar: string;
-  comment: string;
-  thumbnail: string;
-  link: string;
-}
-
 export interface ILineChartData {
   name: string;
   data: {
@@ -35,7 +28,6 @@ export interface IKeywordChartData {
     wordmap?: IWordMapData[];
     line?: ILineChartData[];
     video?: IVideoListData[];
-    pie?: IPieChartData[];
   }[];
   chartType?: string;
   current?: number;
@@ -79,16 +71,6 @@ const keywordSlice = createSlice({
       state.video = action.payload.video;
       state.useAble = true;
     },
-    sliderStateNextKeyword: (state, action) => {
-      state.video[action.payload].current === 4
-        ? (state.video[action.payload].current = 0)
-        : (state.video[action.payload].current += 1);
-    },
-    sliderStatePrevKeyword: (state, action) => {
-      state.video[action.payload].current === 0
-        ? (state.video[action.payload].current = 4)
-        : (state.video[action.payload].current -= 1);
-    },
   },
 });
 
@@ -119,18 +101,6 @@ const statisticsSlice = createSlice({
     },
     keywordStateUpdate: (state, action) => {
       state.keywordChart[state.currentChart].current = action.payload;
-    },
-    sliderStateNextStatistics: (state, action) => {
-      const current = state.keywordChart[state.currentChart].current;
-      state.keywordChart[state.currentChart].keyword[current].video[0].current === 4
-        ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 0)
-        : (state.keywordChart[state.currentChart].keyword[current].video[0].current += 1);
-    },
-    sliderStatePrevStatistics: (state, action) => {
-      const current = state.keywordChart[state.currentChart].current;
-      state.keywordChart[state.currentChart].keyword[current].video[0].current === 0
-        ? (state.keywordChart[state.currentChart].keyword[current].video[0].current = 4)
-        : (state.keywordChart[state.currentChart].keyword[current].video[0].current -= 1);
     },
   },
 });
@@ -189,6 +159,35 @@ const periodState: IStarState = {
   useAble: false,
 };
 
+const sliderSlice = createSlice({
+  name: 'sliderReducer',
+  initialState: {
+    keyword: 0,
+    statistics: 0,
+    star: 0,
+  },
+  reducers: {
+    sliderStateNext: (state, action) => {
+      if (action.payload === 'keyword') {
+        state.keyword !== 4 ? (state.keyword += 1) : (state.keyword = 0);
+      } else if (action.payload === 'statistics') {
+        state.statistics !== 4 ? (state.statistics += 1) : (state.statistics = 0);
+      } else if (action.payload === 'star') {
+        state.star !== 4 ? (state.star += 1) : (state.star = 0);
+      }
+    },
+    sliderStatePrev: (state, action) => {
+      if (action.payload === 'keyword') {
+        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = 4);
+      } else if (action.payload === 'statistics') {
+        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = 4);
+      } else if (action.payload === 'star') {
+        state.star !== 0 ? (state.star -= 1) : (state.star = 4);
+      }
+    },
+  },
+});
+
 const periodSlice = createSlice({
   name: 'periodReducer',
   initialState: periodState,
@@ -214,6 +213,7 @@ const cReducer = combineReducers({
   statistics: statisticsSlice.reducer,
   star: starSlice.reducer,
   period: periodSlice.reducer,
+  slider: sliderSlice.reducer,
   page: pageSlice.reducer,
 });
 
@@ -221,23 +221,15 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {
-  keywordDataUpdate,
-  sliderStateNextKeyword,
-  sliderStatePrevKeyword,
-} = keywordSlice.actions;
+export const {keywordDataUpdate} = keywordSlice.actions;
 
-export const {
-  statisticsDataUpdate,
-  chartStateUpdate,
-  keywordStateUpdate,
-  sliderStateNextStatistics,
-  sliderStatePrevStatistics,
-} = statisticsSlice.actions;
+export const {statisticsDataUpdate, chartStateUpdate, keywordStateUpdate} = statisticsSlice.actions;
 
 export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
 
 export const {periodDataUpdate} = periodSlice.actions;
+
+export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 
