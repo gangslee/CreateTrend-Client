@@ -136,7 +136,7 @@ const statisticsSlice = createSlice({
 });
 
 export interface IStarState {
-  channelInfo: {
+  channelInfo?: {
     thumbnail_url: string;
     channel_description: string;
     channel_name: string;
@@ -151,7 +151,7 @@ export interface IStarState {
     }[];
     current: 0;
   };
-  line: ILineChartData[];
+  line?: ILineChartData[];
   video: IVideoListData[];
   useAble?: boolean;
 }
@@ -183,6 +183,24 @@ const starSlice = createSlice({
   },
 });
 
+const periodState: IStarState = {
+  keyword: null,
+  video: null,
+  useAble: false,
+};
+
+const periodSlice = createSlice({
+  name: 'periodReducer',
+  initialState: periodState,
+  reducers: {
+    periodDataUpdate: (state, action) => {
+      state.keyword = action.payload.keyword;
+      state.video = action.payload.video;
+      state.useAble = true;
+    },
+  },
+});
+
 const pageSlice = createSlice({
   name: 'pageReducer',
   initialState: 'home',
@@ -195,6 +213,7 @@ const cReducer = combineReducers({
   keyword: keywordSlice.reducer,
   statistics: statisticsSlice.reducer,
   star: starSlice.reducer,
+  period: periodSlice.reducer,
   page: pageSlice.reducer,
 });
 
@@ -217,6 +236,8 @@ export const {
 } = statisticsSlice.actions;
 
 export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
+
+export const {periodDataUpdate} = periodSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 

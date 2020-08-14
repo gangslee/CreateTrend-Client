@@ -114,7 +114,7 @@ function LineChart({data, index, type}: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [useData.data, useData.name, index]);
+  }, [useData.data, useData.name, index, type]);
 
   return (
     <Container type={type}>
