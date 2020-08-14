@@ -5,6 +5,7 @@ import ChannelInfo from '../../Components/Container/ChannelInfo';
 import VideoList from '../../Components/Lists/VideoList';
 import PieChart from '../../Components/Charts/PieChart';
 import Wordmap from '../../Components/Charts/Wordmap';
+import LineChart from '../../Components/Charts/LineChart';
 
 const Container = styled.div`
   width: 1040px;
@@ -21,11 +22,15 @@ const AnalysisSection = styled.div`
 const ChartSection = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 30px;
 `;
 
 const ChartContainer = styled.div`
   width: 47%;
-  border: 1px solid #ddd;
+`;
+
+const LinechartContainer = styled.div`
+  height: 300px;
 `;
 
 const VideoSection = styled.div`
@@ -52,6 +57,9 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
             <Wordmap type="star" />
           </ChartContainer>
         </ChartSection>
+        <LinechartContainer>
+          <LineChart type="star" />
+        </LinechartContainer>
       </AnalysisSection>
       <VideoSection>
         <VideoList mode="aside" type="star" />

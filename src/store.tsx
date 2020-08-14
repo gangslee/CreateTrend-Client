@@ -151,6 +151,7 @@ export interface IStarState {
     }[];
     current: 0;
   };
+  line: ILineChartData[];
   video: IVideoListData[];
   useAble?: boolean;
 }
@@ -158,6 +159,7 @@ export interface IStarState {
 const starState: IStarState = {
   channelInfo: null,
   keyword: null,
+  line: null,
   video: null,
   useAble: false,
 };
@@ -169,6 +171,7 @@ const starSlice = createSlice({
     starDataUpdate: (state, action) => {
       state.channelInfo = action.payload.channelInfo;
       state.keyword = action.payload.keyword;
+      state.line = action.payload.line;
       state.video = action.payload.video;
       state.useAble = true;
     },

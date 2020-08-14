@@ -283,6 +283,22 @@ function getData(): IStarState {
       ],
       current: 0,
     },
+    line: [
+      {
+        name: '인기도 추이',
+        data: [
+          {date: '2020-08-01', value: 4500},
+          {date: '2020-08-02', value: 2690},
+          {date: '2020-08-03', value: 7000},
+          {date: '2020-08-04', value: 4900},
+          {date: '2020-08-05', value: 5000},
+          {date: '2020-08-06', value: 4500},
+          {date: '2020-08-07', value: 2690},
+          {date: '2020-08-08', value: 7000},
+          {date: '2020-08-09', value: 4900},
+        ],
+      },
+    ],
   };
   return data;
 }
