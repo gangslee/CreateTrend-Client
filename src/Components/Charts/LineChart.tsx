@@ -91,7 +91,23 @@ function LineChart({data, index, type}: ILineChartProps) {
     bullet.circle.strokeWidth = 2;
 
     chart.cursor = new am4charts.XYCursor();
-    chart.cursor.behavior = 'none';
+    chart.cursor.behavior = type === 'star' ? 'zoomX' : 'none';
+    if (type === 'star') {
+      chart.cursor.events.on('zoomended', function (e) {
+        const range = e.target.xRange;
+
+        const calculate = () => {
+          const axis = e.target.chart.xAxes.getIndex(0);
+          const from = axis.getPositionLabel(axis.toAxisPosition(range.start));
+          const to = axis.getPositionLabel(axis.toAxisPosition(range.end));
+          console.log('Selected from ' + from + ' to ' + to);
+        };
+        range !== undefined ? calculate() : alert('Select Again');
+      });
+      chart.zoomOutButton.events.on('hit', () => {
+        console.log('out');
+      });
+    }
 
     chartRef.current = chart;
 
