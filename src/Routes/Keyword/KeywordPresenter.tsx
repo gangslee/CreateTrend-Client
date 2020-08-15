@@ -32,27 +32,28 @@ const VideoSection = styled.div`
 
 interface IKeywordPresenter {
   loading: boolean;
+  search: string;
 }
 
-export default function KeywordPresenter({loading}: IKeywordPresenter) {
+export default function KeywordPresenter({loading, search}: IKeywordPresenter) {
   return (
     <Container>
       {loading ? (
         <>
           <AnalysisSection>
-            <WordMap type="keyword" />
+            <WordMap type="keyword" title={search} />
             <ChartContainer>
-              <LineChart index={0} type="keyword" />
-              <LineChart index={1} type="keyword" />
+              <LineChart index={0} type="keyword" title={search} />
+              <LineChart index={1} type="keyword" title={search} />
             </ChartContainer>
-            <VideoList mode="analysis" type="keyword" />
+            <VideoList mode="analysis" type="keyword" title={search} />
             <ChartContainer>
               <KeywordChart index={0} />
               <KeywordChart index={1} />
             </ChartContainer>
           </AnalysisSection>
           <VideoSection>
-            <VideoList mode="aside" type="keyword"></VideoList>
+            <VideoList mode="aside" type="keyword" title={search}></VideoList>
           </VideoSection>
         </>
       ) : (

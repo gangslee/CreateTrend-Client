@@ -12,7 +12,7 @@ export default () => (
         <Route path="/" exact component={Home} />
         <Route path="/keyword/:search" component={Keyword} />
         <Route path="/statistics" component={Statistics} />
-        <Route path="/star" component={Star} />
+        <Route path="/star/:id" component={Star} />
         <Redirect from="*" to="/" />
       </Switch>
     </>

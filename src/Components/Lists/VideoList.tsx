@@ -7,7 +7,6 @@ import Slider from '../Container/Slider';
 
 const Container = styled.div`
   box-sizing: border-box;
-  border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   margin-bottom: 40px;
   padding: 20px 10px;
@@ -78,6 +77,11 @@ const Info = styled.div`
   :last-child {
     color: #5577ff;
   }
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const VideoTitle = styled.div`
@@ -121,9 +125,10 @@ type Props = PropsFromRedux;
 interface IVideoListProps extends Props {
   mode: string;
   type: string;
+  title?: string;
 }
 
-function VideoList({data, current, update, mode, type}: IVideoListProps) {
+function VideoList({data, current, update, mode, type, title}: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
     const direction = e.currentTarget.id === 'next' ? true : false;
     update(type, direction);
@@ -134,7 +139,7 @@ function VideoList({data, current, update, mode, type}: IVideoListProps) {
   return (
     <Container>
       <TitleContainer mode={mode}>
-        <Title>리그오브레전드</Title>
+        <Title>{title}</Title>
         <Title>인기 영상</Title>
       </TitleContainer>
       {mode === 'analysis' ? (

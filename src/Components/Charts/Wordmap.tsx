@@ -69,9 +69,10 @@ type Props = PropsFromRedux;
 
 interface IWordMapProps extends Props {
   type: string;
+  title?: string;
 }
 
-function WordMap({data, type}: IWordMapProps) {
+function WordMap({data, type, title}: IWordMapProps) {
   const chartRef = useRef(null);
 
   useLayoutEffect(() => {
@@ -103,7 +104,7 @@ function WordMap({data, type}: IWordMapProps) {
     <Container type={type}>
       {type === 'keyword' && (
         <>
-          <Title>리그오브레전드</Title>
+          <Title>{title}</Title>
           <Title>인기 영상</Title>
         </>
       )}

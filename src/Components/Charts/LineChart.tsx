@@ -59,9 +59,10 @@ type Props = PropsFromRedux;
 interface ILineChartProps extends Props {
   index?: number;
   type: string;
+  title?: string;
 }
 
-function LineChart({data, index, type}: ILineChartProps) {
+function LineChart({data, index, type, title}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
   useLayoutEffect(() => {
@@ -120,7 +121,7 @@ function LineChart({data, index, type}: ILineChartProps) {
     <Container type={type}>
       {type === 'keyword' && (
         <TitleContainer>
-          <Title>리그오브레전드</Title>
+          <Title>{title}</Title>
           <Title>{useData.type}</Title>
         </TitleContainer>
       )}
