@@ -144,8 +144,8 @@ const starSlice = createSlice({
     starDataUpdate: (state, action) => {
       state.channelInfo = action.payload.channelInfo;
       state.keyword = action.payload.keyword;
-      state.line = action.payload.line;
-      state.video = action.payload.video;
+      state.line = [action.payload.line];
+      state.video = [action.payload.video];
       state.useAble = true;
     },
     starPieSliceStateUpdate: (state, action) => {
@@ -161,6 +161,18 @@ const periodState: IStarState = {
   video: null,
   useAble: false,
 };
+
+const periodSlice = createSlice({
+  name: 'periodReducer',
+  initialState: periodState,
+  reducers: {
+    periodDataUpdate: (state, action) => {
+      state.keyword = action.payload.keyword;
+      state.video = action.payload.video;
+      state.useAble = true;
+    },
+  },
+});
 
 const sliderSlice = createSlice({
   name: 'sliderReducer',
@@ -187,18 +199,6 @@ const sliderSlice = createSlice({
       } else if (action.payload === 'star') {
         state.star !== 0 ? (state.star -= 1) : (state.star = 9);
       }
-    },
-  },
-});
-
-const periodSlice = createSlice({
-  name: 'periodReducer',
-  initialState: periodState,
-  reducers: {
-    periodDataUpdate: (state, action) => {
-      state.keyword = action.payload.keyword;
-      state.video = action.payload.video;
-      state.useAble = true;
     },
   },
 });

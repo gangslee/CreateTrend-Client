@@ -51,20 +51,14 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
       <AnalysisSection>
         <ChannelInfo />
         <ChartSection>
-          <ChartContainer>
-            <PieChart stateFunc={funcs.starPie} type="star" />
-          </ChartContainer>
-          <ChartContainer>{/* <Wordmap type="star" /> */}</ChartContainer>
+          <PieChart stateFunc={funcs.starPie} type="star" />
         </ChartSection>
         <LinechartContainer>
           <LineChart type="star" />
         </LinechartContainer>
         <VideoList mode="analysis" type="star" />
         <ChartSection>
-          <ChartContainer>
-            <PieChart stateFunc={funcs.starPie} type="period" />
-          </ChartContainer>
-          <ChartContainer>{/* <Wordmap type="period" /> */}</ChartContainer>
+          <PieChart stateFunc={funcs.starPie} type="period" />
         </ChartSection>
       </AnalysisSection>
 

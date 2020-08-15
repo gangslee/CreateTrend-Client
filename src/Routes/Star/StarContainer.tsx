@@ -718,7 +718,7 @@ function StarContainer({useAble, id, update, stateFuncs}: Props) {
       try {
         const {data} = await getApi.star(id);
         const sampleData2 = getData2();
-        console.log(data);
+
         update(data, sampleData2);
       } catch (e) {
         console.log(e);
