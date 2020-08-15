@@ -11,4 +11,6 @@ export const getApi = {
         search: search,
       },
     }),
+
+  star: (id: string) => api.get(`youtuber_search/channellist/${id}/`),
 };

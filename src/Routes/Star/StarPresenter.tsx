@@ -54,9 +54,7 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
           <ChartContainer>
             <PieChart stateFunc={funcs.starPie} type="star" />
           </ChartContainer>
-          <ChartContainer>
-            <Wordmap type="star" />
-          </ChartContainer>
+          <ChartContainer>{/* <Wordmap type="star" /> */}</ChartContainer>
         </ChartSection>
         <LinechartContainer>
           <LineChart type="star" />
@@ -66,9 +64,7 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
           <ChartContainer>
             <PieChart stateFunc={funcs.starPie} type="period" />
           </ChartContainer>
-          <ChartContainer>
-            <Wordmap type="period" />
-          </ChartContainer>
+          <ChartContainer>{/* <Wordmap type="period" /> */}</ChartContainer>
         </ChartSection>
       </AnalysisSection>
 
