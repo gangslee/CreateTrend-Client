@@ -312,31 +312,31 @@ function getData2(): IStarState {
         data: [
           {
             id: '257R-JkTmcA',
-            name: '시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
+            name: 'p1시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
             thumbnail: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
             keyword: ['시속, 대재앙, 상상, 초월, 이상'],
           },
           {
             id: '9VzZ1G8X_I0',
-            name: '상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
+            name: 'p1상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
             thumbnail: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
             keyword: ['상위, 0.1, 재벌2세, 참교육, 상위'],
           },
           {
             id: 'zS82ef7mQzw',
-            name: '분장을 벗은 영화 캐릭터들의 G리는 실제 모습들..',
+            name: 'p1분장을 벗은 영화 캐릭터들의 G리는 실제 모습들..',
             thumbnail: 'https://i.ytimg.com/vi/zS82ef7mQzw/hqdefault.jpg',
             keyword: ['분장, 벗은, 영화, 캐릭터, 실제'],
           },
           {
             id: '257R-JkTmcA',
-            name: '시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
+            name: 'p1시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
             thumbnail: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
             keyword: ['달릴, 없다면, 죽어야하는, 상상, km'],
           },
           {
             id: '9VzZ1G8X_I0',
-            name: '상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
+            name: 'p1상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
             thumbnail: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
             keyword: ['재벌, 2세, 교육, 형사, 상위'],
           },
@@ -346,11 +346,11 @@ function getData2(): IStarState {
     keyword: {
       pie: [
         {
-          name: '지무비',
+          name: 'p1지무비',
           value: 17,
           wordmap: [
             {
-              name: '지무비',
+              name: 'p1지무비',
               children: [
                 {
                   name: '1번 노드',
@@ -385,11 +385,11 @@ function getData2(): IStarState {
           ],
         },
         {
-          name: '채널',
+          name: 'p1채널',
           value: 16,
           wordmap: [
             {
-              name: '채널',
+              name: 'p1채널',
               children: [
                 {
                   name: '1번 노드',
@@ -424,11 +424,11 @@ function getData2(): IStarState {
           ],
         },
         {
-          name: '가입',
+          name: 'p1가입',
           value: 14,
           wordmap: [
             {
-              name: '가입',
+              name: 'p1가입',
               children: [
                 {
                   name: '1번 노드',
@@ -463,11 +463,11 @@ function getData2(): IStarState {
           ],
         },
         {
-          name: '영화',
+          name: 'p1영화',
           value: 13,
           wordmap: [
             {
-              name: '영화',
+              name: 'p1영화',
               children: [
                 {
                   name: '1번 노드',
@@ -502,11 +502,11 @@ function getData2(): IStarState {
           ],
         },
         {
-          name: 'naver',
+          name: 'p1naver',
           value: 13,
           wordmap: [
             {
-              name: 'naver',
+              name: 'p1naver',
               children: [
                 {
                   name: '1번 노드',
@@ -541,11 +541,11 @@ function getData2(): IStarState {
           ],
         },
         {
-          name: '개인',
+          name: 'p1개인',
           value: 11,
           wordmap: [
             {
-              name: '개인',
+              name: 'p1개인',
               children: [
                 {
                   name: '1번 노드',
@@ -587,7 +587,6 @@ function getData2(): IStarState {
 }
 
 function mapStateToProps(state: RootState) {
-  console.log(state.star, state.period);
   return {
     useAble: {
       star: state.star.useAble,

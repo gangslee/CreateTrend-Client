@@ -42,6 +42,7 @@ const VideoContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
   padding: 10px;
 `;
 
@@ -80,8 +81,7 @@ const Info = styled.div`
 `;
 
 const VideoTitle = styled.div`
-  width: 40%;
-  padding: 3px;
+  width: 35%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -128,7 +128,7 @@ function VideoList({data, current, update, mode, type}: IVideoListProps) {
     const direction = e.currentTarget.id === 'next' ? true : false;
     update(type, direction);
   };
-  console.log(data);
+
   const usingData = data.filter((data) => data.type === mode)[0];
 
   return (

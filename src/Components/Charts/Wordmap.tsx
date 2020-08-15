@@ -36,7 +36,11 @@ const Title = styled.span`
   }
 `;
 
-function mapStateToProps(state: RootState) {
+interface OwnProps {
+  type: string;
+}
+
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (state.page === 'keyword') {
     return {data: state.keyword.wordmap};
   } else if (state.page === 'statistics') {
@@ -45,8 +49,15 @@ function mapStateToProps(state: RootState) {
     const statisticsData = statisticsList.keyword[statisticsList.current];
     return {data: statisticsData.wordmap};
   } else if (state.page === 'star') {
-    const {current} = state.star.keyword;
-    return {data: state.star.keyword.pie[current].wordmap};
+    const currentStar = state.star.keyword.current;
+    const currentPeriod = state.period.keyword.current;
+
+    return {
+      data:
+        ownProps.type === 'star'
+          ? state.star.keyword.pie[currentStar].wordmap
+          : state.period.keyword.pie[currentPeriod].wordmap,
+    };
   }
 }
 
@@ -64,7 +75,7 @@ function WordMap({data, type}: IWordMapProps) {
   const chartRef = useRef(null);
 
   useLayoutEffect(() => {
-    const chart = am4core.create('keyword-wordmap', am4plugins_forceDirected.ForceDirectedTree);
+    const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);
     const series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
     series.data = data;
     // Set up data fields
@@ -97,7 +108,7 @@ function WordMap({data, type}: IWordMapProps) {
         </>
       )}
 
-      <WordmapContainer id="keyword-wordmap" />
+      <WordmapContainer id={`${type}-wordmap`} />
     </Container>
   );
 }
