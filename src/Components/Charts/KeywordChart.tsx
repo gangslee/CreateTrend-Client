@@ -108,7 +108,7 @@ function KeywordChart({data, state, index, stateFunc}: IKeywordChartProps) {
     <Container type={state.page}>
       {state.page === 'keyword' && (
         <TitleContainer>
-          <Title>{usingData.chartType}</Title>
+          <Title>{usingData.type}</Title>
           <Title>TOP 10</Title>
         </TitleContainer>
       )}

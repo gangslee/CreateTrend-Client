@@ -42,12 +42,12 @@ interface OwnProps {
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (state.page === 'keyword') {
-    return {data: state.keyword.wordmap};
+    return {data: [state.keyword.wordmap]};
   } else if (state.page === 'statistics') {
     const statistics = state.statistics;
     const statisticsList = statistics.keywordChart[statistics.currentChart];
     const statisticsData = statisticsList.keyword[statisticsList.current];
-    return {data: statisticsData.wordmap};
+    return {data: [statisticsData.wordmap]};
   } else if (state.page === 'star') {
     const currentStar = state.star.keyword.current;
     const currentPeriod = state.period.keyword.current;
@@ -55,8 +55,8 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     return {
       data:
         ownProps.type === 'star'
-          ? state.star.keyword.pie[currentStar].wordmap
-          : state.period.keyword.pie[currentPeriod].wordmap,
+          ? [state.star.keyword.pie[currentStar].wordmap]
+          : [state.period.keyword.pie[currentPeriod].wordmap],
     };
   }
 }

@@ -65,7 +65,7 @@ function LineChart({data, index, type}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
   useLayoutEffect(() => {
-    const chart = am4core.create(useData.name, am4charts.XYChart);
+    const chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
 
     const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
@@ -114,18 +114,18 @@ function LineChart({data, index, type}: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [useData.data, useData.name, index, type]);
+  }, [useData.data, useData.type, index, type]);
 
   return (
     <Container type={type}>
       {type === 'keyword' && (
         <TitleContainer>
           <Title>리그오브레전드</Title>
-          <Title>{useData.name}</Title>
+          <Title>{useData.type}</Title>
         </TitleContainer>
       )}
 
-      <LineChartContainer id={useData.name} />
+      <LineChartContainer id={useData.type} />
     </Container>
   );
 }

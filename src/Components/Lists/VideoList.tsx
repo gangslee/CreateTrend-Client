@@ -81,7 +81,7 @@ const Info = styled.div`
 `;
 
 const VideoTitle = styled.div`
-  width: 35%;
+  width: 40%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -140,25 +140,29 @@ function VideoList({data, current, update, mode, type}: IVideoListProps) {
       {mode === 'analysis' ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image bgUrl={usingData.data[current].thumbnail} mode={mode} type={type} />
+            <Image bgUrl={usingData.data[current].thumbnail_url} mode={mode} type={type} />
             <InfoContainer>
               <Info type={type}>영상 제목</Info>
-              <Info type={type}>{usingData.data[current].name}</Info>
+              <Info type={type}>{usingData.data[current].video_name}</Info>
               <Info type={type}>관련 키워드</Info>
               <Info type={type}>
-                {usingData.data[current].keyword.map((word, index) =>
-                  index !== usingData.data[current].keyword.length - 1 ? `#${word}, ` : `#${word}`
-                )}
+                {usingData.data[current].videokeywordnew
+                  .slice(0, 5)
+                  .map((word, index) =>
+                    index !== usingData.data[current].video_name.length - 1
+                      ? `#${word.keyword}, `
+                      : `#${word.keyword}`
+                  )}
               </Info>
             </InfoContainer>
           </VideoContainer>
         </Slider>
       ) : (
         <>
-          {usingData.data.map((data, index) => (
-            <VideoContainer key={data.id}>
-              <Image bgUrl={usingData.data[index].thumbnail} mode={mode} />
-              <VideoTitle>{data.name}</VideoTitle>
+          {usingData.data.slice(0, 5).map((data, index) => (
+            <VideoContainer key={data.video_id}>
+              <Image bgUrl={usingData.data[index].thumbnail_url} mode={mode} />
+              <VideoTitle>{data.video_name}</VideoTitle>
             </VideoContainer>
           ))}
         </>

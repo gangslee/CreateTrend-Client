@@ -28,19 +28,19 @@ function getData(): IStarState {
         type: 'aside',
         data: [
           {
-            id: '257R-JkTmcA',
-            name: '시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
-            thumbnail: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
+            video_id: '257R-JkTmcA',
+            video_name: '시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
+            thumbnail_url: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
           },
           {
-            id: '9VzZ1G8X_I0',
-            name: '상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
-            thumbnail: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
+            video_id: '9VzZ1G8X_I0',
+            video_name: '상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
+            thumbnail_url: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
           },
           {
-            id: 'zS82ef7mQzw',
-            name: '분장을 벗은 영화 캐릭터들의 G리는 실제 모습들..',
-            thumbnail: 'https://i.ytimg.com/vi/zS82ef7mQzw/hqdefault.jpg',
+            video_id: 'zS82ef7mQzw',
+            video_name: '분장을 벗은 영화 캐릭터들의 G리는 실제 모습들..',
+            thumbnail_url: 'https://i.ytimg.com/vi/zS82ef7mQzw/hqdefault.jpg',
           },
         ],
       },
@@ -286,7 +286,7 @@ function getData(): IStarState {
     },
     line: [
       {
-        name: '인기도 추이',
+        type: '인기도 추이',
         data: [
           {date: '2020-08-01', value: 4500},
           {date: '2020-08-02', value: 2690},
@@ -311,34 +311,114 @@ function getData2(): IStarState {
         type: 'analysis',
         data: [
           {
-            id: '257R-JkTmcA',
-            name: 'p1시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
-            thumbnail: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
-            keyword: ['시속, 대재앙, 상상, 초월, 이상'],
+            video_id: '257R-JkTmcA',
+            video_name: 'p1시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
+            thumbnail_url: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
+            videokeywordnew: [
+              {
+                keyword: '시속',
+              },
+              {
+                keyword: '대재앙',
+              },
+              {
+                keyword: '상상',
+              },
+              {
+                keyword: '초월',
+              },
+              {
+                keyword: '이상',
+              },
+            ],
           },
           {
-            id: '9VzZ1G8X_I0',
-            name: 'p1상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
-            thumbnail: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
-            keyword: ['상위, 0.1, 재벌2세, 참교육, 상위'],
+            video_id: '9VzZ1G8X_I0',
+            video_name: 'p1상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
+            thumbnail_url: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
+            videokeywordnew: [
+              {
+                keyword: '상위',
+              },
+              {
+                keyword: '0.1',
+              },
+              {
+                keyword: '제벌2세',
+              },
+              {
+                keyword: '참교육',
+              },
+              {
+                keyword: '상위',
+              },
+            ],
           },
           {
-            id: 'zS82ef7mQzw',
-            name: 'p1분장을 벗은 영화 캐릭터들의 G리는 실제 모습들..',
-            thumbnail: 'https://i.ytimg.com/vi/zS82ef7mQzw/hqdefault.jpg',
-            keyword: ['분장, 벗은, 영화, 캐릭터, 실제'],
+            video_id: 'zS82ef7mQzw',
+            video_name: 'p1분장을 벗은 영화 캐릭터들의 G리는 실제 모습들..',
+            thumbnail_url: 'https://i.ytimg.com/vi/zS82ef7mQzw/hqdefault.jpg',
+            videokeywordnew: [
+              {
+                keyword: '분장',
+              },
+              {
+                keyword: '벗은',
+              },
+              {
+                keyword: '영화',
+              },
+              {
+                keyword: '캐릭터',
+              },
+              {
+                keyword: '실제',
+              },
+            ],
           },
           {
-            id: '257R-JkTmcA',
-            name: 'p1시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
-            thumbnail: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
-            keyword: ['달릴, 없다면, 죽어야하는, 상상, km'],
+            video_id: '257R-JkTmcA',
+            video_name: 'p1시속 1,665km이상 달릴 수 없다면 죽어야하는 상상초월의 대재앙..',
+            thumbnail_url: 'https://i.ytimg.com/vi/257R-JkTmcA/hqdefault.jpg',
+            videokeywordnew: [
+              {
+                keyword: '달릴',
+              },
+              {
+                keyword: '없다면',
+              },
+              {
+                keyword: '죽어야하는',
+              },
+              {
+                keyword: '상상',
+              },
+              {
+                keyword: 'km',
+              },
+            ],
           },
           {
-            id: '9VzZ1G8X_I0',
-            name: 'p1상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
-            thumbnail: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
-            keyword: ['재벌, 2세, 교육, 형사, 상위'],
+            video_id: '9VzZ1G8X_I0',
+            video_name: 'p1상위 0.1% 재벌2세 참교육하는 상위 0.001% 재벌 형사(?)',
+            thumbnail_url: 'https://i.ytimg.com/vi/9VzZ1G8X_I0/hqdefault.jpg',
+            videokeywordnew: [
+              {
+                keyword: '제벌',
+              },
+              {
+                keyword: '2세',
+              },
+              {
+                keyword: '교육',
+              },
+              {
+                keyword: '형사',
+              },
+              {
+                keyword: '상위',
+              },
+            ],
           },
         ],
       },

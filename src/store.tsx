@@ -9,7 +9,7 @@ export interface IWordMapData {
 }
 
 export interface ILineChartData {
-  name: string;
+  type: string;
   data: {
     date: string;
     value: number;
@@ -24,22 +24,25 @@ export interface IPieChartData {
 export interface IKeywordChartData {
   keyword: {
     name: string;
+    value: number;
     popular?: number;
     wordmap?: IWordMapData[];
     line?: ILineChartData[];
     video?: IVideoListData[];
   }[];
-  chartType?: string;
+  type?: string;
   current?: number;
 }
 
 export interface IVideoListData {
   type: string;
   data: {
-    id: string;
-    name: string;
-    thumbnail: string;
-    keyword?: string[];
+    video_id: string;
+    video_name: string;
+    thumbnail_url: string;
+    videokeywordnew?: {
+      keyword: string;
+    }[];
   }[];
   current?: number;
 }
@@ -169,20 +172,20 @@ const sliderSlice = createSlice({
   reducers: {
     sliderStateNext: (state, action) => {
       if (action.payload === 'keyword') {
-        state.keyword !== 4 ? (state.keyword += 1) : (state.keyword = 0);
+        state.keyword !== 9 ? (state.keyword += 1) : (state.keyword = 0);
       } else if (action.payload === 'statistics') {
-        state.statistics !== 4 ? (state.statistics += 1) : (state.statistics = 0);
+        state.statistics !== 9 ? (state.statistics += 1) : (state.statistics = 0);
       } else if (action.payload === 'star') {
-        state.star !== 4 ? (state.star += 1) : (state.star = 0);
+        state.star !== 9 ? (state.star += 1) : (state.star = 0);
       }
     },
     sliderStatePrev: (state, action) => {
       if (action.payload === 'keyword') {
-        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = 4);
+        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = 9);
       } else if (action.payload === 'statistics') {
-        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = 4);
+        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = 9);
       } else if (action.payload === 'star') {
-        state.star !== 0 ? (state.star -= 1) : (state.star = 4);
+        state.star !== 0 ? (state.star -= 1) : (state.star = 9);
       }
     },
   },
