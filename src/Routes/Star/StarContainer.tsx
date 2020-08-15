@@ -12,6 +12,7 @@ import {
 } from '../../store';
 import StarPresenter from './StarPresenter';
 import {getApi} from '../../api';
+import {start} from 'repl';
 
 // function getData(): IStarState {
 //   const data: IStarState = {
@@ -714,20 +715,24 @@ type Props = PropsFromRedux;
 
 function StarContainer({useAble, id, update, stateFuncs}: Props) {
   useEffect(() => {
-    const fetchData = async (id: string) => {
+    const fetchData = async (id: string, start: string, end: string) => {
       try {
-        const {data} = await getApi.star(id);
-        const sampleData2 = getData2();
-
-        update(data, sampleData2);
+        const starData = await (await getApi.star(id)).data;
+        const periodData = await (await getApi.period(id, start, end)).data;
+        update(starData, periodData);
+        console.log(starData, periodData);
       } catch (e) {
         console.log(e);
       } finally {
       }
     };
+    const today = new Date();
+    const end = today.toJSON().slice(0, 10);
+    today.setDate(today.getDate() - 50);
+    const start = today.toJSON().slice(0, 10);
 
-    fetchData(id);
-  }, [update]);
+    fetchData(id, start, end);
+  }, [update, id]);
 
   return <StarPresenter loading={useAble.star && useAble.period} funcs={stateFuncs} />;
 }

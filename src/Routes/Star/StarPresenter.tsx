@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import ChannelInfo from '../../Components/Container/ChannelInfo';
 import VideoList from '../../Components/Lists/VideoList';
 import PieChart from '../../Components/Charts/PieChart';
-import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 
 const Container = styled.div`
@@ -25,9 +24,9 @@ const ChartSection = styled.div`
   margin-bottom: 30px;
 `;
 
-const ChartContainer = styled.div`
-  width: 47%;
-`;
+// const ChartContainer = styled.div`
+//   width: 47%;
+// `;
 
 const LinechartContainer = styled.div`
   height: 300px;
@@ -56,7 +55,7 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
         <LinechartContainer>
           <LineChart type="star" />
         </LinechartContainer>
-        <VideoList mode="analysis" type="star" />
+        {/* <VideoList mode="analysis" type="star" /> */}
         <ChartSection>
           <PieChart stateFunc={funcs.starPie} type="period" />
         </ChartSection>
