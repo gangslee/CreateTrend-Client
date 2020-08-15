@@ -65,11 +65,13 @@ interface ILineChartProps extends Props {
 function LineChart({data, index, type, title}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
+  console.log(useData);
   useLayoutEffect(() => {
     const chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
 
-    const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+    const dateAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    dateAxis.dataFields.category = 'date';
     dateAxis.cursorTooltipEnabled = false;
     dateAxis.renderer.fontSize = 12;
     dateAxis.renderer.grid.template.disabled = true;
@@ -80,12 +82,12 @@ function LineChart({data, index, type, title}: ILineChartProps) {
     valueAxis.renderer.line.strokeWidth = 2;
 
     const series = chart.series.push(new am4charts.LineSeries());
-    series.name = 'Value';
+    // series.name = 'Value';
     series.stroke = am4core.color('#CDA2AB');
     series.strokeWidth = 3;
     series.dataFields.valueY = 'value';
-    series.dataFields.dateX = 'date';
-    series.tooltipText = '{dateX} :[bold] {valueY}[/]';
+    series.dataFields.categoryX = 'date';
+    series.tooltipText = '{categoryX} :[bold] {valueY}[/]';
 
     const bullet = series.bullets.push(new am4charts.CircleBullet());
     bullet.circle.stroke = am4core.color('#fff');
