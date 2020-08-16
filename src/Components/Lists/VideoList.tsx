@@ -99,7 +99,7 @@ const ErrorContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 150px;
 `;
 
 const Error = styled.span`
@@ -155,16 +155,16 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
 
   return (
     <Container>
+      <TitleContainer mode={mode}>
+        <Title>{title}</Title>
+        <Title>인기 영상</Title>
+      </TitleContainer>
       {usingData.data.length === 0 ? (
         <ErrorContainer>
           <Error>분석결과가 없습니다!</Error>
         </ErrorContainer>
       ) : (
         <>
-          <TitleContainer mode={mode}>
-            <Title>{title}</Title>
-            <Title>인기 영상</Title>
-          </TitleContainer>
           {mode === 'analysis' ? (
             <Slider onClick={handleOnClick}>
               <VideoContainer>

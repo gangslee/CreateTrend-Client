@@ -37,6 +37,19 @@ const LineChartContainer = styled.div`
   height: 85%;
 `;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 150px;
+`;
+
+const Error = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.lines};
@@ -131,8 +144,13 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
         <Title>{title}</Title>
         <Title>{useData.type}</Title>
       </TitleContainer>
-
-      <LineChartContainer id={useData.type} />
+      {useData.data.length === 0 ? (
+        <ErrorContainer>
+          <Error>분석결과가 없습니다!</Error>
+        </ErrorContainer>
+      ) : (
+        <LineChartContainer id={useData.type} />
+      )}
     </Container>
   );
 }
