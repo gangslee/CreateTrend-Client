@@ -13,14 +13,35 @@ am4core.useTheme(am4themes_animated);
 const Container = styled.div`
   width: 100%;
   height: 300px;
-  padding: 20px;
+  padding: 5px;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
 `;
 
-const WordmapContainer = styled.div`
+const PieChartContainer = styled.div`
   width: 100%;
+  height: 85%;
+`;
+
+const TitleContainer = styled.div`
+  margin: 10px 15px;
+`;
+
+const Title = styled.span`
+  font-size: 18px;
+  font-weight: 600;
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100%;
+`;
+
+const Error = styled.span`
+  font-size: 24px;
+  font-weight: 600;
 `;
 
 interface OwnProps {
@@ -42,9 +63,10 @@ type Props = PropsFromRedux;
 interface IPieChartProps extends Props {
   stateFunc: (n: number) => void;
   type: string;
+  title: string;
 }
 
-function PieChart({data, stateFunc, type}: IPieChartProps) {
+function PieChart({data, stateFunc, type, title}: IPieChartProps) {
   const chartRef = useRef(null);
   useEffect(() => {
     const chart = am4core.create(`${type}-pieChart`, am4charts.PieChart3D);
@@ -78,10 +100,25 @@ function PieChart({data, stateFunc, type}: IPieChartProps) {
       chart.dispose();
     };
   }, [data, stateFunc, type]);
-
+  console.log(data.length === 0);
   return (
     <Container>
-      <WordmapContainer id={`${type}-pieChart`} />
+      {data.length === 0 ? (
+        <ErrorContainer>
+          {type === 'period' ? (
+            <Error>분석결과가 없습니다! 범위를 재설정해주세요</Error>
+          ) : (
+            <Error>분석결과가 없습니다!</Error>
+          )}
+        </ErrorContainer>
+      ) : (
+        <>
+          <TitleContainer>
+            <Title>{title}</Title>
+          </TitleContainer>
+          <PieChartContainer id={`${type}-pieChart`} />
+        </>
+      )}
     </Container>
   );
 }

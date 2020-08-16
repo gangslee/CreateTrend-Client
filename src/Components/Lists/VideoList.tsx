@@ -140,7 +140,7 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
   };
 
   const usingData = data.filter((data) => data.type === mode)[0];
-
+  console.log(usingData.data.length);
   return (
     <Container>
       <TitleContainer mode={mode}>

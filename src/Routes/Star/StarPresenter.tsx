@@ -52,19 +52,19 @@ function StarPresenter({funcs, id, title}: IStarPresenterProps) {
       <AnalysisSection>
         <ChannelInfo />
         <ChartSection>
-          <PieChart stateFunc={funcs.starPie} type="star" />
+          <PieChart stateFunc={funcs.starPie} type="star" title="컨텐츠 분포도" />
         </ChartSection>
         <LinechartContainer>
-          <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
+          <LineChart type="star" stateFunc={funcs.periodLine} id={id} title={title} />
         </LinechartContainer>
         {/* <VideoList mode="analysis" type="star" /> */}
         <ChartSection>
-          <PieChart stateFunc={funcs.starPie} type="period" />
+          <PieChart stateFunc={funcs.starPie} type="period" title="기간 내 컨텐츠 분포도" />
         </ChartSection>
       </AnalysisSection>
 
       <VideoSection>
-        <VideoList mode="aside" type="star" />
+        <VideoList mode="aside" type="star" title={title} />
       </VideoSection>
     </Container>
   );

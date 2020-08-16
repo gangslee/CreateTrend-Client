@@ -17,7 +17,7 @@ const Container = styled.div`
   box-sizing: border-box;
   /* border-radius: 15px; */
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 10px 5px;
+  padding: 5px;
 `;
 
 const TitleContainer = styled.div`
@@ -34,16 +34,8 @@ const Title = styled.span`
 `;
 
 const LineChartContainer = styled.div`
-  height: 95%;
+  height: 85%;
 `;
-
-interface OwnProps {
-  match: {
-    params: {
-      id: string;
-    };
-  };
-}
 
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
@@ -135,12 +127,10 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
 
   return (
     <Container type={type}>
-      {type === 'keyword' && (
-        <TitleContainer>
-          <Title>{title}</Title>
-          <Title>{useData.type}</Title>
-        </TitleContainer>
-      )}
+      <TitleContainer>
+        <Title>{title}</Title>
+        <Title>{useData.type}</Title>
+      </TitleContainer>
 
       <LineChartContainer id={useData.type} />
     </Container>

@@ -53,6 +53,7 @@ export interface IKeywordData {
   keyword: IKeywordChartData[];
   video: IVideoListData[];
   useAble?: boolean;
+  none?: boolean;
 }
 
 const keywordData: IKeywordData = {
@@ -61,6 +62,7 @@ const keywordData: IKeywordData = {
   keyword: null,
   video: null,
   useAble: false,
+  none: true,
 };
 
 const keywordSlice = createSlice({
