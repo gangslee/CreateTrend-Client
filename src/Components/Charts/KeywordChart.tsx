@@ -71,6 +71,19 @@ const Keyword = styled.span`
   cursor: pointer;
 `;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 150px;
+`;
+
+const Error = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
 function mapStateToProps(state: RootState) {
   return {
     data:
@@ -112,20 +125,32 @@ function KeywordChart({data, state, index, stateFunc}: IKeywordChartProps) {
           <Title>TOP 10</Title>
         </TitleContainer>
       )}
-      {usingData.keyword.map((keyword, index) => (
-        <KeywordChartContainer current={usingData.current === index} type={state.page} key={index}>
-          <Rank>{index + 1}</Rank>
-          {state.page === 'keyword' ? (
-            <KeywordContainer>
-              <Keyword>{keyword.name}</Keyword>
-            </KeywordContainer>
-          ) : (
-            <KeywordContainer>
-              <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
-            </KeywordContainer>
-          )}
-        </KeywordChartContainer>
-      ))}
+      {usingData.keyword.length === 0 ? (
+        <ErrorContainer>
+          <Error>분석결과가 없습니다!</Error>
+        </ErrorContainer>
+      ) : (
+        <>
+          {usingData.keyword.map((keyword, index) => (
+            <KeywordChartContainer
+              current={usingData.current === index}
+              type={state.page}
+              key={index}
+            >
+              <Rank>{index + 1}</Rank>
+              {state.page === 'keyword' ? (
+                <KeywordContainer>
+                  <Keyword>{keyword.name}</Keyword>
+                </KeywordContainer>
+              ) : (
+                <KeywordContainer>
+                  <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
+                </KeywordContainer>
+              )}
+            </KeywordChartContainer>
+          ))}
+        </>
+      )}
     </Container>
   );
 }
