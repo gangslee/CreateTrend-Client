@@ -123,7 +123,6 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
         today.setDate(today.getDate() - 50);
         const start = today.toJSON().slice(0, 10);
         stateFunc(id, start, end);
-        console.log('out');
       });
     }
 

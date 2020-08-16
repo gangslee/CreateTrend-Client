@@ -108,9 +108,14 @@ function mapStateToProps(state: RootState) {
   }
 }
 
+interface ISliderState {
+  page: string;
+  len: number;
+}
+
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    update: (data: string, type: boolean) => {
+    update: (data: ISliderState, type: boolean) => {
       dispatch(type ? sliderStateNext(data) : sliderStatePrev(data));
     },
   };
@@ -131,7 +136,7 @@ interface IVideoListProps extends Props {
 function VideoList({data, current, update, mode, type, title}: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
     const direction = e.currentTarget.id === 'next' ? true : false;
-    update(type, direction);
+    update({page: type, len: usingData.data.length - 1}, direction);
   };
 
   const usingData = data.filter((data) => data.type === mode)[0];

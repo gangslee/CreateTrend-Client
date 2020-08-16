@@ -184,21 +184,21 @@ const sliderSlice = createSlice({
   },
   reducers: {
     sliderStateNext: (state, action) => {
-      if (action.payload === 'keyword') {
-        state.keyword !== 9 ? (state.keyword += 1) : (state.keyword = 0);
-      } else if (action.payload === 'statistics') {
-        state.statistics !== 9 ? (state.statistics += 1) : (state.statistics = 0);
-      } else if (action.payload === 'star') {
-        state.star !== 9 ? (state.star += 1) : (state.star = 0);
+      if (action.payload.page === 'keyword') {
+        state.keyword !== action.payload.len ? (state.keyword += 1) : (state.keyword = 0);
+      } else if (action.payload.page === 'statistics') {
+        state.statistics !== action.payload.len ? (state.statistics += 1) : (state.statistics = 0);
+      } else if (action.payload.page === 'star') {
+        state.star !== action.payload.len ? (state.star += 1) : (state.star = 0);
       }
     },
     sliderStatePrev: (state, action) => {
-      if (action.payload === 'keyword') {
-        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = 9);
-      } else if (action.payload === 'statistics') {
-        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = 9);
-      } else if (action.payload === 'star') {
-        state.star !== 0 ? (state.star -= 1) : (state.star = 9);
+      if (action.payload.page === 'keyword') {
+        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = action.payload.len);
+      } else if (action.payload.page === 'statistics') {
+        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = action.payload.len);
+      } else if (action.payload.page === 'star') {
+        state.star !== 0 ? (state.star -= 1) : (state.star = action.payload.len);
       }
     },
   },

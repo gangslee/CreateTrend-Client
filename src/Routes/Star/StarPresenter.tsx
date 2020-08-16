@@ -38,16 +38,16 @@ const VideoSection = styled.div`
 `;
 
 interface IStarPresenterProps {
-  loading: boolean;
   funcs: {
     starPie: (n: number) => void;
     periodLine: (id: string, start: string, end: string) => void;
   };
   id: string;
+  title: string;
 }
 
-function StarPresenter({loading, funcs, id}: IStarPresenterProps) {
-  return loading ? (
+function StarPresenter({funcs, id, title}: IStarPresenterProps) {
+  return (
     <Container>
       <AnalysisSection>
         <ChannelInfo />
@@ -67,8 +67,6 @@ function StarPresenter({loading, funcs, id}: IStarPresenterProps) {
         <VideoList mode="aside" type="star" />
       </VideoSection>
     </Container>
-  ) : (
-    <h1>NOT YET</h1>
   );
 }
 

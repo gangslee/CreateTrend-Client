@@ -32,6 +32,8 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
       star: state.star.useAble,
       period: state.period.useAble,
     },
+    starState: state.star,
+    starPeriod: state.period,
     id: id,
   };
 }
@@ -63,7 +65,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function StarContainer({useAble, id, update, stateFuncs}: Props) {
+function StarContainer({useAble, starState, id, update, stateFuncs}: Props) {
   useEffect(() => {
     const fetchData = async (id: string, start: string, end: string) => {
       try {
@@ -83,7 +85,11 @@ function StarContainer({useAble, id, update, stateFuncs}: Props) {
     fetchData(id, start, end);
   }, [update, id]);
 
-  return <StarPresenter loading={useAble.star && useAble.period} funcs={stateFuncs} id={id} />;
+  return useAble.star && useAble.period ? (
+    <StarPresenter funcs={stateFuncs} id={id} title={starState.channelInfo.channel_name} />
+  ) : (
+    <h1>NOT YET</h1>
+  );
 }
 
 export default connector(StarContainer);

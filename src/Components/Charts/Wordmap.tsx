@@ -42,12 +42,12 @@ interface OwnProps {
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (state.page === 'keyword') {
-    return {data: [state.keyword.wordmap]};
+    return {data: state.keyword.wordmap};
   } else if (state.page === 'statistics') {
     const statistics = state.statistics;
     const statisticsList = statistics.keywordChart[statistics.currentChart];
     const statisticsData = statisticsList.keyword[statisticsList.current];
-    return {data: [statisticsData.wordmap]};
+    return {data: statisticsData.wordmap};
   } else if (state.page === 'star') {
     const currentStar = state.star.keyword.current;
     const currentPeriod = state.period.keyword.current;
@@ -55,8 +55,8 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     return {
       data:
         ownProps.type === 'star'
-          ? [state.star.keyword.pie[currentStar].wordmap]
-          : [state.period.keyword.pie[currentPeriod].wordmap],
+          ? state.star.keyword.pie[currentStar].wordmap
+          : state.period.keyword.pie[currentPeriod].wordmap,
     };
   }
 }
@@ -78,7 +78,7 @@ function WordMap({data, type, title}: IWordMapProps) {
   useLayoutEffect(() => {
     const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);
     const series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
-    series.data = data;
+    series.data = [data];
     // Set up data fields
     series.dataFields.value = 'value';
     series.dataFields.name = 'name';

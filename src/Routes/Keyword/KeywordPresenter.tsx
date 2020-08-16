@@ -53,7 +53,7 @@ export default function KeywordPresenter({loading, search}: IKeywordPresenter) {
             </ChartContainer>
           </AnalysisSection>
           <VideoSection>
-            <VideoList mode="aside" type="keyword" title={search}></VideoList>
+            <VideoList mode="aside" type="keyword" title={search} />
           </VideoSection>
         </>
       ) : (

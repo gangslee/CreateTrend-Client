@@ -57,8 +57,8 @@ function PieChart({data, stateFunc, type}: IPieChartProps) {
     pieSeries.slices.template.stroke = am4core.color('#fff');
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
-    pieSeries.labels.template.disabled = true;
-    pieSeries.ticks.template.disabled = true;
+    // pieSeries.labels.template.disabled = true;
+    // pieSeries.ticks.template.disabled = true;
 
     pieSeries.slices.template.events.on('hit', (e) => {
       pieSeries.slices.each((item) => {
