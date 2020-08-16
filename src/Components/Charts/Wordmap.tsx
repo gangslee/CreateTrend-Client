@@ -3,6 +3,7 @@ import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState} from '../../store';
+
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
 
@@ -34,6 +35,19 @@ const Title = styled.span`
     color: #feb100;
     margin-right: 5px;
   }
+`;
+
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  height: 95%;
+`;
+
+const Error = styled.span`
+  font-size: 24px;
+  font-weight: 600;
 `;
 
 interface OwnProps {
@@ -108,8 +122,13 @@ function WordMap({data, type, title}: IWordMapProps) {
           <Title>인기 영상</Title>
         </>
       )}
-
-      <WordmapContainer id={`${type}-wordmap`} />
+      {data.children.length === 0 ? (
+        <ErrorContainer>
+          <Error>분석결과가 없습니다!</Error>
+        </ErrorContainer>
+      ) : (
+        <WordmapContainer id={`${type}-wordmap`} />
+      )}
     </Container>
   );
 }

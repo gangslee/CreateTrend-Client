@@ -26,7 +26,7 @@ export interface IKeywordChartData {
     name: string;
     value: number;
     popular?: number;
-    wordmap?: IWordMapData[];
+    wordmap?: IWordMapData;
     line?: ILineChartData[];
     video?: IVideoListData[];
   }[];
@@ -48,7 +48,7 @@ export interface IVideoListData {
 }
 
 export interface IKeywordData {
-  wordmap: IWordMapData[];
+  wordmap: IWordMapData;
   lines: ILineChartData[];
   keyword: IKeywordChartData[];
   video: IVideoListData[];
@@ -123,7 +123,7 @@ export interface IStarState {
     pie: {
       name: string;
       value: number;
-      wordmap: IWordMapData[];
+      wordmap: IWordMapData;
     }[];
     current: 0;
   };

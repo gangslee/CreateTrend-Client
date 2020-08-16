@@ -48,7 +48,7 @@ const VideoContainer = styled.div`
 const Image = styled.img`
   width: ${({mode}: ISCProps) => (mode === 'analysis' ? '35%' : '60%')};
   height: ${({mode, type}: ISCProps) =>
-    mode === 'analysis' ? (type === 'statistics' ? '200px' : '120px') : '85px'};
+    mode === 'analysis' ? (type === 'statistics' ? '200px' : '125px') : '85px'};
   margin-right: ${({mode}: ISCProps) => (mode === 'analysis' ? '20px' : '5px')};
   border-radius: 5px;
   background-image: url(${({bgUrl}: ISCProps) => bgUrl});

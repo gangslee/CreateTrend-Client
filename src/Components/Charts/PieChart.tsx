@@ -36,7 +36,7 @@ const ErrorContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150%;
+  height: 100%;
 `;
 
 const Error = styled.span`
