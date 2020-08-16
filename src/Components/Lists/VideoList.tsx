@@ -95,6 +95,18 @@ const VideoTitle = styled.div`
   -webkit-box-orient: vertical;
 `;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const Error = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.video, current: state.slider.keyword};
@@ -140,41 +152,49 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
   };
 
   const usingData = data.filter((data) => data.type === mode)[0];
-  console.log(usingData.data.length);
+
   return (
     <Container>
-      <TitleContainer mode={mode}>
-        <Title>{title}</Title>
-        <Title>인기 영상</Title>
-      </TitleContainer>
-      {mode === 'analysis' ? (
-        <Slider onClick={handleOnClick}>
-          <VideoContainer>
-            <Image bgUrl={usingData.data[current].thumbnail_url} mode={mode} type={type} />
-            <InfoContainer>
-              <Info type={type}>영상 제목</Info>
-              <Info type={type}>{usingData.data[current].video_name}</Info>
-              <Info type={type}>관련 키워드</Info>
-              <Info type={type}>
-                {usingData.data[current].videokeywordnew
-                  .slice(0, 5)
-                  .map((word, index) =>
-                    index !== usingData.data[current].video_name.length - 1
-                      ? `#${word.keyword}, `
-                      : `#${word.keyword}`
-                  )}
-              </Info>
-            </InfoContainer>
-          </VideoContainer>
-        </Slider>
+      {usingData.data.length === 0 ? (
+        <ErrorContainer>
+          <Error>분석결과가 없습니다!</Error>
+        </ErrorContainer>
       ) : (
         <>
-          {usingData.data.slice(0, 5).map((data, index) => (
-            <VideoContainer key={index}>
-              <Image bgUrl={usingData.data[index].thumbnail_url} mode={mode} />
-              <VideoTitle>{data.video_name}</VideoTitle>
-            </VideoContainer>
-          ))}
+          <TitleContainer mode={mode}>
+            <Title>{title}</Title>
+            <Title>인기 영상</Title>
+          </TitleContainer>
+          {mode === 'analysis' ? (
+            <Slider onClick={handleOnClick}>
+              <VideoContainer>
+                <Image bgUrl={usingData.data[current].thumbnail_url} mode={mode} type={type} />
+                <InfoContainer>
+                  <Info type={type}>영상 제목</Info>
+                  <Info type={type}>{usingData.data[current].video_name}</Info>
+                  <Info type={type}>관련 키워드</Info>
+                  <Info type={type}>
+                    {usingData.data[current].videokeywordnew
+                      .slice(0, 5)
+                      .map((word, index) =>
+                        index !== usingData.data[current].video_name.length - 1
+                          ? `#${word.keyword}, `
+                          : `#${word.keyword}`
+                      )}
+                  </Info>
+                </InfoContainer>
+              </VideoContainer>
+            </Slider>
+          ) : (
+            <>
+              {usingData.data.slice(0, 5).map((data, index) => (
+                <VideoContainer key={index}>
+                  <Image bgUrl={usingData.data[index].thumbnail_url} mode={mode} />
+                  <VideoTitle>{data.video_name}</VideoTitle>
+                </VideoContainer>
+              ))}
+            </>
+          )}
         </>
       )}
     </Container>
