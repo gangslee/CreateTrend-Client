@@ -37,6 +37,14 @@ const LineChartContainer = styled.div`
   height: 95%;
 `;
 
+interface OwnProps {
+  match: {
+    params: {
+      id: string;
+    };
+  };
+}
+
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.lines};
@@ -60,12 +68,14 @@ interface ILineChartProps extends Props {
   index?: number;
   type: string;
   title?: string;
+  id?: string;
+  stateFunc?: (id: string, start: string, end: string) => void;
 }
 
-function LineChart({data, index, type, title}: ILineChartProps) {
+function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = index ? data[index] : data[0];
-  console.log(useData);
+
   useLayoutEffect(() => {
     const chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
@@ -103,11 +113,16 @@ function LineChart({data, index, type, title}: ILineChartProps) {
           const axis = e.target.chart.xAxes.getIndex(0);
           const from = axis.getPositionLabel(axis.toAxisPosition(range.start));
           const to = axis.getPositionLabel(axis.toAxisPosition(range.end));
-          console.log('Selected from ' + from + ' to ' + to);
+          stateFunc(id, from.slice(0, 10), to.slice(0, 10));
         };
         range !== undefined ? calculate() : alert('Select Again');
       });
       chart.zoomOutButton.events.on('hit', () => {
+        const today = new Date();
+        const end = today.toJSON().slice(0, 10);
+        today.setDate(today.getDate() - 50);
+        const start = today.toJSON().slice(0, 10);
+        stateFunc(id, start, end);
         console.log('out');
       });
     }
@@ -117,7 +132,7 @@ function LineChart({data, index, type, title}: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [useData.data, useData.type, index, type]);
+  }, [useData, index, type, id, stateFunc]);
 
   return (
     <Container type={type}>

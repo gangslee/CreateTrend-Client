@@ -41,10 +41,12 @@ interface IStarPresenterProps {
   loading: boolean;
   funcs: {
     starPie: (n: number) => void;
+    periodLine: (id: string, start: string, end: string) => void;
   };
+  id: string;
 }
 
-function StarPresenter({loading, funcs}: IStarPresenterProps) {
+function StarPresenter({loading, funcs, id}: IStarPresenterProps) {
   return loading ? (
     <Container>
       <AnalysisSection>
@@ -53,7 +55,7 @@ function StarPresenter({loading, funcs}: IStarPresenterProps) {
           <PieChart stateFunc={funcs.starPie} type="star" />
         </ChartSection>
         <LinechartContainer>
-          <LineChart type="star" />
+          <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
         </LinechartContainer>
         {/* <VideoList mode="analysis" type="star" /> */}
         <ChartSection>

@@ -165,7 +165,7 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
       ) : (
         <>
           {usingData.data.slice(0, 5).map((data, index) => (
-            <VideoContainer key={data.video_id}>
+            <VideoContainer key={index}>
               <Image bgUrl={usingData.data[index].thumbnail_url} mode={mode} />
               <VideoTitle>{data.video_name}</VideoTitle>
             </VideoContainer>

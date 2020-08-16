@@ -110,6 +110,7 @@ const statisticsSlice = createSlice({
 
 export interface IStarState {
   channelInfo?: {
+    idx: number;
     thumbnail_url: string;
     channel_description: string;
     channel_name: string;
