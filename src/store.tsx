@@ -103,12 +103,26 @@ const statisticsSlice = createSlice({
         state.useAble = true;
       }
     },
+    keywordDetailUpdate: (state, action) => {
+      console.log(action.payload);
+      if (action.payload) {
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].popular =
+          action.payload.keyword[0].popular;
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].wordmap =
+          action.payload.keyword[0].wordmap;
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].line =
+          action.payload.keyword[0].lines;
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].video =
+          action.payload.keyword[0].video;
+        console.log(state.keywordChart[state.currentChart].keyword[state.currentKeyword].wordmap);
+      }
+    },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
       state.currentKeyword = 0;
     },
     keywordStateUpdate: (state, action) => {
-      state.keywordChart[state.currentChart].current = action.payload;
+      state.currentKeyword = action.payload;
     },
   },
 });
@@ -232,7 +246,12 @@ const store = configureStore({
 
 export const {keywordDataUpdate} = keywordSlice.actions;
 
-export const {statisticsDataUpdate, chartStateUpdate, keywordStateUpdate} = statisticsSlice.actions;
+export const {
+  statisticsDataUpdate,
+  keywordDetailUpdate,
+  chartStateUpdate,
+  keywordStateUpdate,
+} = statisticsSlice.actions;
 
 export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
 

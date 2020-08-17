@@ -9,6 +9,7 @@ import {
   currentPage,
   keywordStateUpdate,
   IKeywordChartData,
+  keywordDetailUpdate,
 } from '../../store';
 import ChannelPresenter from './StatisticsPresenter';
 import {getApi} from '../../api';
@@ -25,11 +26,13 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    update: (data: IKeywordChartData[]) => {
-      if (data) {
-        dispatch(currentPage('statistics'));
+    update: {
+      list: (data: IKeywordChartData[]) => {
         dispatch(statisticsDataUpdate(data));
-      }
+      },
+      keyword: (data: IKeywordChartData) => {
+        dispatch(keywordDetailUpdate(data));
+      },
     },
     stateFuncs: {
       chart: () => {
@@ -53,21 +56,23 @@ function ChannelContainer({useAble, currents, update, stateFuncs}: Props) {
     const fetchData = async () => {
       try {
         const statisticsData = (await getApi.statistics()).data;
+        update.list(statisticsData);
         const type = currents.chart === 0 ? '인기' : '영상화';
         const keywordData = (
           await getApi.statisticsKeyword(
             type,
-            statisticsData[currents.chart].data[currents.keyword].name
+            statisticsData[currents.chart].keyword[currents.keyword].name
           )
         ).data;
-        console.log(keywordData);
+
+        update.keyword(keywordData);
       } catch (e) {
         console.log(e);
       }
     };
 
     fetchData();
-  }, [update]);
+  }, [currents.chart, currents.keyword, update]);
 
   // return <ChannelPresenter funcs={stateFuncs} loading={useAble} />;
   return <h1>123</h1>;
