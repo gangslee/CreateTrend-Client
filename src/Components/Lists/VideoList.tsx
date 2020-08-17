@@ -46,9 +46,10 @@ const VideoContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${({mode}: ISCProps) => (mode === 'analysis' ? '35%' : '60%')};
+  width: ${({mode, type}: ISCProps) =>
+    mode === 'analysis' ? (type === 'statistics' ? '25%' : '35%') : '60%'};
   height: ${({mode, type}: ISCProps) =>
-    mode === 'analysis' ? (type === 'statistics' ? '200px' : '125px') : '85px'};
+    mode === 'analysis' ? (type === 'statistics' ? '150px' : '125px') : '85px'};
   margin-right: ${({mode}: ISCProps) => (mode === 'analysis' ? '20px' : '5px')};
   border-radius: 5px;
   background-image: url(${({bgUrl}: ISCProps) => bgUrl});
@@ -65,7 +66,7 @@ const InfoContainer = styled.div`
 `;
 
 const Info = styled.div`
-  font-size: ${({type}: ISCProps) => (type === 'statistics' ? '22px' : '14px')};
+  font-size: ${({type}: ISCProps) => (type === 'statistics' ? '14px' : '14px')};
   font-weight: 600;
   :nth-child(2) {
     margin-bottom: ${({type}: ISCProps) => (type === 'statistics' ? '20px' : '10px')};
@@ -111,10 +112,13 @@ function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.video, current: state.slider.keyword};
   } else if (state.page === 'statistics') {
-    const statistics = state.statistics;
-    const statisticsList = statistics.keywordChart[statistics.currentChart];
-    const statisticsData = statisticsList.keyword[statisticsList.current];
-    return {data: statisticsData.video, current: state.slider.statistics};
+    return {
+      data:
+        state.statistics.keywordChart[state.statistics.currentChart].keyword[
+          state.statistics.currentKeyword
+        ].video,
+      current: state.slider.statistics,
+    };
   } else if (state.page === 'star') {
     return {data: state.star.video.concat(state.period.video), current: state.slider.star};
   }

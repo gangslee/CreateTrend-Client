@@ -76,6 +76,9 @@ const keywordSlice = createSlice({
       state.video = action.payload.video;
       state.useAble = true;
     },
+    disableUseAbleKeyword: (state) => {
+      state.useAble = false;
+    },
   },
 });
 
@@ -100,26 +103,31 @@ const statisticsSlice = createSlice({
     statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
-        state.useAble = true;
       }
     },
     keywordDetailUpdate: (state, action) => {
-      console.log(action.payload);
       if (action.payload) {
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].popular =
-          action.payload.keyword[0].popular;
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].popular = Math.round(
+          action.payload.keyword[0].popular
+        );
         state.keywordChart[state.currentChart].keyword[state.currentKeyword].wordmap =
           action.payload.keyword[0].wordmap;
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].line =
-          action.payload.keyword[0].lines;
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].video =
-          action.payload.keyword[0].video;
-        console.log(state.keywordChart[state.currentChart].keyword[state.currentKeyword].wordmap);
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].line = [
+          action.payload.keyword[0].lines,
+        ];
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].video = [
+          action.payload.keyword[0].video,
+        ];
+        state.useAble = true;
       }
+    },
+    disableUseAbleStatistics: (state) => {
+      state.useAble = false;
     },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
       state.currentKeyword = 0;
+      console.log('1');
     },
     keywordStateUpdate: (state, action) => {
       state.currentKeyword = action.payload;
@@ -244,11 +252,12 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {keywordDataUpdate} = keywordSlice.actions;
+export const {keywordDataUpdate, disableUseAbleKeyword} = keywordSlice.actions;
 
 export const {
   statisticsDataUpdate,
   keywordDetailUpdate,
+  disableUseAbleStatistics,
   chartStateUpdate,
   keywordStateUpdate,
 } = statisticsSlice.actions;

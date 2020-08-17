@@ -58,10 +58,12 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (state.page === 'keyword') {
     return {data: state.keyword.wordmap};
   } else if (state.page === 'statistics') {
-    const statistics = state.statistics;
-    const statisticsList = statistics.keywordChart[statistics.currentChart];
-    const statisticsData = statisticsList.keyword[statisticsList.current];
-    return {data: statisticsData.wordmap};
+    return {
+      data:
+        state.statistics.keywordChart[state.statistics.currentChart].keyword[
+          state.statistics.currentKeyword
+        ].wordmap,
+    };
   } else if (state.page === 'star') {
     const currentStar = state.star.keyword.current;
     const currentPeriod = state.period.keyword.current;
@@ -88,7 +90,7 @@ interface IWordMapProps extends Props {
 
 function WordMap({data, type, title}: IWordMapProps) {
   const chartRef = useRef(null);
-
+  console.log(data);
   useLayoutEffect(() => {
     const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);
     const series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());

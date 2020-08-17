@@ -10,6 +10,7 @@ import {
   keywordStateUpdate,
   IKeywordChartData,
   keywordDetailUpdate,
+  disableUseAbleStatistics,
 } from '../../store';
 import ChannelPresenter from './StatisticsPresenter';
 import {getApi} from '../../api';
@@ -28,6 +29,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: {
       list: (data: IKeywordChartData[]) => {
+        dispatch(currentPage('statistics'));
         dispatch(statisticsDataUpdate(data));
       },
       keyword: (data: IKeywordChartData) => {
@@ -36,9 +38,11 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     },
     stateFuncs: {
       chart: () => {
+        dispatch(disableUseAbleStatistics());
         dispatch(chartStateUpdate());
       },
       keyword: (n: number) => {
+        dispatch(disableUseAbleStatistics());
         dispatch(keywordStateUpdate(n));
       },
     },
@@ -74,8 +78,8 @@ function ChannelContainer({useAble, currents, update, stateFuncs}: Props) {
     fetchData();
   }, [currents.chart, currents.keyword, update]);
 
-  // return <ChannelPresenter funcs={stateFuncs} loading={useAble} />;
-  return <h1>123</h1>;
+  return <ChannelPresenter funcs={stateFuncs} loading={useAble} />;
+  // return <h1>123</h1>;
 }
 
 export default connector(ChannelContainer);

@@ -7,10 +7,13 @@ function HomePresenter() {
       <h1>HomePresenter</h1>
       <ol>
         <li>
-          <Link to={'/keyword'}>Keyword</Link>
+          <Link to={'/keyword/롤챔스'}>Keyword</Link>
         </li>
         <li>
           <Link to={'/statistics'}>Statistics</Link>
+        </li>
+        <li>
+          <Link to={'/star/5'}>Statistics</Link>
         </li>
       </ol>
     </div>

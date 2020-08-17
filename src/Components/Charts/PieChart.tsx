@@ -71,7 +71,7 @@ function PieChart({data, stateFunc, type, title}: IPieChartProps) {
   useEffect(() => {
     const chart = am4core.create(`${type}-pieChart`, am4charts.PieChart3D);
     chart.innerRadius = am4core.percent(40);
-    chart.data = data;
+    chart.data = data.slice(0, 5);
 
     const pieSeries = chart.series.push(new am4charts.PieSeries3D());
     pieSeries.dataFields.value = 'value';

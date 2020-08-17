@@ -34,7 +34,7 @@ const Title = styled.span`
 `;
 
 const LineChartContainer = styled.div`
-  height: 85%;
+  height: 80%;
 `;
 
 const ErrorContainer = styled.div`
@@ -54,10 +54,12 @@ function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
     return {data: state.keyword.lines};
   } else if (state.page === 'statistics') {
-    const statistics = state.statistics;
-    const statisticsList = statistics.keywordChart[statistics.currentChart];
-    const statisticsData = statisticsList.keyword[statisticsList.current];
-    return {data: statisticsData.line};
+    return {
+      data:
+        state.statistics.keywordChart[state.statistics.currentChart].keyword[
+          state.statistics.currentKeyword
+        ].line,
+    };
   } else if (state.page === 'star') {
     return {data: state.star.line};
   }

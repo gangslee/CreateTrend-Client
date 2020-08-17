@@ -19,9 +19,9 @@ export const getApi = {
         keyword: keyword,
       },
     }),
-  star: (id: string) => api.get(`youtuber_search/channellist/${id}/`),
+  star: (id: string) => api.get(`youtuber_search/channel_list/${id}/`),
   period: (id: string, start: string, end: string) =>
-    api.get(`youtuber_search/channelperioddata/${id}/`, {
+    api.get(`youtuber_search/channel_period_data/${id}/`, {
       params: {
         start: start,
         end: end,

@@ -2,7 +2,8 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../store';
+import {RootState, RootDispatch, disableUseAbleKeyword} from '../../store';
+import {Link} from 'react-router-dom';
 
 type styleType = {
   type: string;
@@ -71,6 +72,11 @@ const Keyword = styled.span`
   cursor: pointer;
 `;
 
+const SLink = styled(Link)`
+  text-decoration: none;
+  color: #000;
+`;
+
 const ErrorContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -93,12 +99,16 @@ function mapStateToProps(state: RootState) {
     state: {
       page: state.page,
 
-      chart: state.statistics.currentChart,
+      keyword: state.statistics.currentKeyword,
     },
   };
 }
 
-const connector = connect(mapStateToProps);
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {disableUseable: () => dispatch(disableUseAbleKeyword())};
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -107,14 +117,19 @@ type Props = PropsFromRedux;
 interface IKeywordChartProps extends Props {
   index?: number;
   stateFunc?: (n: number) => void;
+  disableFunc?: () => void;
 }
 
-function KeywordChart({data, state, index, stateFunc}: IKeywordChartProps) {
+function KeywordChart({data, state, index, stateFunc, disableUseable}: IKeywordChartProps) {
   const usingData = state.page === 'keyword' ? data[index] : data[0];
 
   const handleKeywordClick = (e: React.MouseEvent) => {
     const idx = usingData.keyword.findIndex((data) => data.name === e.currentTarget.innerHTML);
     stateFunc(idx);
+  };
+
+  const handleSLinkClick = (e: React.MouseEvent) => {
+    disableUseable();
   };
 
   return (
@@ -132,15 +147,13 @@ function KeywordChart({data, state, index, stateFunc}: IKeywordChartProps) {
       ) : (
         <>
           {usingData.keyword.map((keyword, index) => (
-            <KeywordChartContainer
-              current={usingData.current === index}
-              type={state.page}
-              key={index}
-            >
+            <KeywordChartContainer current={state.keyword === index} type={state.page} key={index}>
               <Rank>{index + 1}</Rank>
               {state.page === 'keyword' ? (
                 <KeywordContainer>
-                  <Keyword>{keyword.name}</Keyword>
+                  <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
+                    <Keyword>{keyword.name}</Keyword>
+                  </SLink>
                 </KeywordContainer>
               ) : (
                 <KeywordContainer>

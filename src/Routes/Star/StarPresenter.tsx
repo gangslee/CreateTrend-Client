@@ -57,7 +57,7 @@ function StarPresenter({funcs, id, title}: IStarPresenterProps) {
         <LinechartContainer>
           <LineChart type="star" stateFunc={funcs.periodLine} id={id} title={title} />
         </LinechartContainer>
-        {/* <VideoList mode="analysis" type="star" /> */}
+        <VideoList mode="analysis" type="star" />
         <ChartSection>
           <PieChart stateFunc={funcs.starPie} type="period" title="기간 내 컨텐츠 분포도" />
         </ChartSection>
