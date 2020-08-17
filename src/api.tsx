@@ -11,6 +11,14 @@ export const getApi = {
         search: search,
       },
     }),
+  statistics: () => api.get('channel_analyze/'),
+  statisticsKeyword: (search: string, keyword: string) =>
+    api.get('channel_analyze/keyword_data/', {
+      params: {
+        search: search,
+        keyword: keyword,
+      },
+    }),
   star: (id: string) => api.get(`youtuber_search/channellist/${id}/`),
   period: (id: string, start: string, end: string) =>
     api.get(`youtuber_search/channelperioddata/${id}/`, {

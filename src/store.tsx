@@ -82,12 +82,14 @@ const keywordSlice = createSlice({
 interface IStatisticsState {
   keywordChart: IKeywordChartData[];
   currentChart?: number;
+  currentKeyword?: number;
   useAble?: boolean;
 }
 
 const statisticsState: IStatisticsState = {
   keywordChart: null,
   currentChart: 0,
+  currentKeyword: 0,
   useAble: false,
 };
 
@@ -103,6 +105,7 @@ const statisticsSlice = createSlice({
     },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
+      state.currentKeyword = 0;
     },
     keywordStateUpdate: (state, action) => {
       state.keywordChart[state.currentChart].current = action.payload;
