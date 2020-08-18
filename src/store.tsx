@@ -29,6 +29,7 @@ export interface IKeywordChartData {
     wordmap?: IWordMapData;
     line?: ILineChartData[];
     video?: IVideoListData[];
+    visit?: boolean;
   }[];
   type?: string;
   current?: number;
@@ -103,10 +104,12 @@ const statisticsSlice = createSlice({
     statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
+        state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
       }
     },
     keywordDetailUpdate: (state, action) => {
       if (action.payload) {
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].visit = true;
         state.keywordChart[state.currentChart].keyword[state.currentKeyword].popular = Math.round(
           action.payload.keyword[0].popular
         );

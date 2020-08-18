@@ -27,6 +27,7 @@ function mapStateToProps(state: RootState) {
           state.statistics.currentKeyword
         ].name
       : null,
+    data: state.statistics.keywordChart,
   };
 }
 
@@ -60,21 +61,28 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function ChannelContainer({useAble, currents, title, update, stateFuncs}: Props) {
+function ChannelContainer({useAble, currents, title, data, update, stateFuncs}: Props) {
+  console.log(data);
   useEffect(() => {
+    const type = currents.chart === 0 ? '인기' : '영상화';
     const fetchData = async () => {
       try {
-        const statisticsData = (await getApi.statistics()).data;
-        update.list(statisticsData);
-        const type = currents.chart === 0 ? '인기' : '영상화';
-        const keywordData = (
-          await getApi.statisticsKeyword(
-            type,
-            statisticsData[currents.chart].keyword[currents.keyword].name
-          )
-        ).data;
-
-        update.keyword(keywordData);
+        const statisticsData = data === null ? (await getApi.statistics()).data : data;
+        if (data === null) {
+          update.list(statisticsData);
+        }
+        if (
+          data === null ||
+          (data !== null && data[currents.chart].keyword[currents.keyword].visit === false)
+        ) {
+          const keywordData = (
+            await getApi.statisticsKeyword(
+              type,
+              statisticsData[currents.chart].keyword[currents.keyword].name
+            )
+          ).data;
+          update.keyword(keywordData);
+        }
       } catch (e) {
         console.log(e);
       }

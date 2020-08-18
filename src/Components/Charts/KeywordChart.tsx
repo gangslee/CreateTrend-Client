@@ -97,7 +97,7 @@ function mapStateToProps(state: RootState) {
         : [state.statistics.keywordChart[state.statistics.currentChart]],
     state: {
       page: state.page,
-
+      chart: state.statistics.currentChart,
       keyword: state.statistics.currentKeyword,
     },
   };
