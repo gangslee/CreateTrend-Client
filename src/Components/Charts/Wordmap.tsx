@@ -15,17 +15,16 @@ const Container = styled.div`
   height: ${({type}: containerType) => (type === 'keyword' ? '320px' : '100%')};
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-
+  padding: ${({type}: containerType) => (type === 'statistics' ? '10px' : '20px')};
   ${({type}: containerType) =>
     type === 'keyword' &&
     css`
       margin-bottom: 40px;
-      padding: 20px;
     `};
 `;
 
 const WordmapContainer = styled.div`
-  height: 95%;
+  height: ${({type}: containerType) => (type === 'statistics' ? '85%' : '95%')};
 `;
 
 const Title = styled.span`
@@ -118,18 +117,15 @@ function WordMap({data, type, title}: IWordMapProps) {
 
   return (
     <Container type={type}>
-      {type === 'keyword' && (
-        <>
-          <Title>{title}</Title>
-          <Title>인기 영상</Title>
-        </>
-      )}
+      <Title>{title}</Title>
+      <Title>워드맵</Title>
+
       {data.children.length === 0 ? (
         <ErrorContainer>
           <Error>분석결과가 없습니다!</Error>
         </ErrorContainer>
       ) : (
-        <WordmapContainer id={`${type}-wordmap`} />
+        <WordmapContainer id={`${type}-wordmap`} type={type} />
       )}
     </Container>
   );

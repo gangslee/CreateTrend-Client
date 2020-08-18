@@ -32,9 +32,8 @@ const Title = styled.span`
   font-size: 18px;
   font-weight: 600;
   margin-right: 5px;
-  :last-child {
+  :first-child {
     color: #feb100;
-    font-size: 25px;
   }
 `;
 
@@ -116,11 +115,12 @@ type Props = PropsFromRedux;
 
 interface IKeywordChartProps extends Props {
   index?: number;
+  title?: string;
   stateFunc?: (n: number) => void;
   disableFunc?: () => void;
 }
 
-function KeywordChart({data, state, index, stateFunc, disableUseable}: IKeywordChartProps) {
+function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IKeywordChartProps) {
   const usingData = state.page === 'keyword' ? data[index] : data[0];
 
   const handleKeywordClick = (e: React.MouseEvent) => {
@@ -136,8 +136,8 @@ function KeywordChart({data, state, index, stateFunc, disableUseable}: IKeywordC
     <Container type={state.page}>
       {state.page === 'keyword' && (
         <TitleContainer>
-          <Title>{usingData.type}</Title>
-          <Title>TOP 10</Title>
+          <Title>{title}</Title>
+          <Title>{` 관련 ${usingData.type}`}</Title>
         </TitleContainer>
       )}
       {usingData.keyword.length === 0 ? (

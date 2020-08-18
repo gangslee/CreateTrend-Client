@@ -155,6 +155,8 @@ export interface IStarState {
   line?: ILineChartData[];
   video: IVideoListData[];
   useAble?: boolean;
+  start?: string;
+  end?: string;
 }
 
 const starState: IStarState = {
@@ -188,6 +190,8 @@ const periodState: IStarState = {
   keyword: null,
   video: null,
   useAble: false,
+  start: null,
+  end: null,
 };
 
 const periodSlice = createSlice({
@@ -198,6 +202,10 @@ const periodSlice = createSlice({
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
       state.useAble = true;
+    },
+    periodDateUpdate: (state, action) => {
+      state.start = action.payload.start;
+      state.end = action.payload.end;
     },
   },
 });
@@ -264,7 +272,7 @@ export const {
 
 export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
 
-export const {periodDataUpdate} = periodSlice.actions;
+export const {periodDataUpdate, periodDateUpdate} = periodSlice.actions;
 
 export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 

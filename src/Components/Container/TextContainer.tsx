@@ -14,12 +14,18 @@ const Popular = styled.div`
   /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3); */
 `;
 
-const PopularTitle = styled.span`
-  font-size: 25px;
-`;
-
 const PopularContent = styled.span`
   font-size: 40px;
+`;
+
+const Title = styled.span`
+  font-size: 20px;
+  font-weight: 600;
+  :first-child {
+    color: #feb100;
+    font-size: 22px;
+    margin-right: 5px;
+  }
 `;
 
 function mapStateToProps(state: RootState) {
@@ -39,12 +45,14 @@ type Props = PropsFromRedux;
 
 interface ITextContainerProps extends Props {
   type: string;
+  title: string;
 }
 
-function TextContainer({type, popular}: ITextContainerProps) {
+function TextContainer({type, popular, title}: ITextContainerProps) {
   return (
     <Popular>
-      <PopularTitle>평균 인기도</PopularTitle>
+      <Title>{title}</Title>
+      <Title>평균 인기도</Title>
       <PopularContent>{popular}%</PopularContent>
     </Popular>
   );

@@ -22,6 +22,11 @@ function mapStateToProps(state: RootState) {
       chart: state.statistics.currentChart,
       keyword: state.statistics.currentKeyword,
     },
+    title: state.statistics.keywordChart
+      ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
+          state.statistics.currentKeyword
+        ].name
+      : null,
   };
 }
 
@@ -55,7 +60,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function ChannelContainer({useAble, currents, update, stateFuncs}: Props) {
+function ChannelContainer({useAble, currents, title, update, stateFuncs}: Props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -78,7 +83,7 @@ function ChannelContainer({useAble, currents, update, stateFuncs}: Props) {
     fetchData();
   }, [currents.chart, currents.keyword, update]);
 
-  return <ChannelPresenter funcs={stateFuncs} loading={useAble} />;
+  return <ChannelPresenter funcs={stateFuncs} loading={useAble} title={title} />;
   // return <h1>123</h1>;
 }
 

@@ -49,13 +49,14 @@ const WordmapContainer = styled.div`
 
 interface IChannelPresenterProps {
   loading: boolean;
+  title: string | null;
   funcs: {
     chart: () => void;
     keyword: (n: number) => void;
   };
 }
 
-function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
+function ChannelPresenter({loading, funcs, title}: IChannelPresenterProps) {
   return loading ? (
     <Container>
       <KeywordContainer>
@@ -65,17 +66,17 @@ function ChannelPresenter({loading, funcs}: IChannelPresenterProps) {
         </ChartContainer>
         <ResultContainer>
           <SubResultContainer>
-            <TextContainer type="popular" />
+            <TextContainer type="popular" title={title} />
             <WordmapContainer>
-              <Wordmap type="statistics" />
+              <Wordmap type="statistics" title={title} />
             </WordmapContainer>
           </SubResultContainer>
           <SubResultContainer>
-            <LineChart type="statistics" />
+            <LineChart type="statistics" title={title} />
           </SubResultContainer>
         </ResultContainer>
       </KeywordContainer>
-      <VideoList mode="analysis" type="statistics" />
+      <VideoList mode="analysis" type="statistics" title={title} />
     </Container>
   ) : (
     <div>123</div>

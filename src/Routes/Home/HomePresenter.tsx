@@ -13,7 +13,7 @@ function HomePresenter() {
           <Link to={'/statistics'}>Statistics</Link>
         </li>
         <li>
-          <Link to={'/star/5'}>Statistics</Link>
+          <Link to={'/star/5'}>Star</Link>
         </li>
       </ol>
     </div>

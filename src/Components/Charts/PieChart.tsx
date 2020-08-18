@@ -30,6 +30,10 @@ const TitleContainer = styled.div`
 const Title = styled.span`
   font-size: 18px;
   font-weight: 600;
+  :first-child {
+    color: #feb100;
+    margin-right: 5px;
+  }
 `;
 
 const ErrorContainer = styled.div`
@@ -115,6 +119,7 @@ function PieChart({data, stateFunc, type, title}: IPieChartProps) {
         <>
           <TitleContainer>
             <Title>{title}</Title>
+            <Title>{type === 'star' ? ' 컨텐츠 분포도' : ' 기간 내 컨텐츠 분포도'}</Title>
           </TitleContainer>
           <PieChartContainer id={`${type}-pieChart`} />
         </>

@@ -48,8 +48,8 @@ export default function KeywordPresenter({loading, search}: IKeywordPresenter) {
             </ChartContainer>
             <VideoList mode="analysis" type="keyword" title={search} />
             <ChartContainer>
-              <KeywordChart index={0} />
-              <KeywordChart index={1} />
+              <KeywordChart index={0} title={search} />
+              <KeywordChart index={1} title={search} />
             </ChartContainer>
           </AnalysisSection>
           <VideoSection>

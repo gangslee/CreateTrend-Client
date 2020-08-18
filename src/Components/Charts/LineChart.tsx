@@ -144,7 +144,7 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
     <Container type={type}>
       <TitleContainer>
         <Title>{title}</Title>
-        <Title>{useData.type}</Title>
+        <Title>{useData.type.replace('키워드', '추이')} 그래프</Title>
       </TitleContainer>
       {useData.data.length === 0 ? (
         <ErrorContainer>

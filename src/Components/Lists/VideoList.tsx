@@ -9,7 +9,7 @@ const Container = styled.div`
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   margin-bottom: 40px;
-  padding: 20px 10px;
+  padding: 10px;
 `;
 
 interface ISCProps {
@@ -161,7 +161,7 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
     <Container>
       <TitleContainer mode={mode}>
         <Title>{title}</Title>
-        <Title>인기 영상</Title>
+        <Title>{mode === 'analysis' ? '조회수 급상승 영상' : '인기 영상'}</Title>
       </TitleContainer>
       {usingData.data.length === 0 ? (
         <ErrorContainer>
