@@ -1,5 +1,5 @@
 import React, {useRef, useLayoutEffect} from 'react';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState} from '../../store';
@@ -10,18 +10,6 @@ import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDire
 type containerType = {
   type: string;
 };
-
-const Container = styled.div`
-  height: ${({type}: containerType) => (type === 'keyword' ? '320px' : '100%')};
-  box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: ${({type}: containerType) => (type === 'statistics' ? '10px' : '20px')};
-  ${({type}: containerType) =>
-    type === 'keyword' &&
-    css`
-      margin-bottom: 40px;
-    `};
-`;
 
 const WordmapContainer = styled.div`
   height: ${({type}: containerType) => (type === 'statistics' ? '85%' : '95%')};
@@ -119,7 +107,7 @@ function WordMap({data, type, title}: IWordMapProps) {
   }, [data, type]);
 
   return (
-    <Container type={type}>
+    <>
       <Title>{title}</Title>
       <Title>워드맵</Title>
       {data.children.length === 0 ? (
@@ -129,7 +117,7 @@ function WordMap({data, type, title}: IWordMapProps) {
       ) : (
         <WordmapContainer id={`${type}-wordmap`} type={type} />
       )}
-    </Container>
+    </>
   );
 }
 

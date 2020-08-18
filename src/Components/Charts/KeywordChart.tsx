@@ -10,18 +10,6 @@ type styleType = {
   current?: boolean;
 };
 
-const Container = styled.div`
-  ${({type}: styleType) =>
-    type === 'keyword' &&
-    css`
-      width: 48%;
-      box-sizing: border-box;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-    `};
-`;
-
 const TitleContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -135,7 +123,7 @@ function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IK
   };
 
   return (
-    <Container type={state.page}>
+    <>
       {data === null ? (
         <div>12312</div>
       ) : (
@@ -176,7 +164,7 @@ function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IK
           )}
         </>
       )}
-    </Container>
+    </>
   );
 }
 

@@ -10,14 +10,13 @@ import {
   keywordStateUpdate,
   IKeywordChartData,
   keywordDetailUpdate,
-  disableUseAbleStatistics,
 } from '../../store';
 import ChannelPresenter from './StatisticsPresenter';
 import {getApi} from '../../api';
 
 function mapStateToProps(state: RootState) {
   return {
-    useAble: state.statistics.useAble,
+    isChecked: state.statistics.isChecked,
     currents: {
       chart: state.statistics.currentChart,
       keyword: state.statistics.currentKeyword,
@@ -27,7 +26,7 @@ function mapStateToProps(state: RootState) {
           state.statistics.currentKeyword
         ].name
       : null,
-    data: state.statistics.keywordChart,
+    statisticsData: state.statistics.keywordChart,
   };
 }
 
@@ -44,11 +43,9 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     },
     stateFuncs: {
       chart: () => {
-        dispatch(disableUseAbleStatistics());
         dispatch(chartStateUpdate());
       },
       keyword: (n: number) => {
-        dispatch(disableUseAbleStatistics());
         dispatch(keywordStateUpdate(n));
       },
     },
@@ -61,38 +58,32 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function ChannelContainer({useAble, currents, title, data, update, stateFuncs}: Props) {
-  console.log('1');
+function ChannelContainer({isChecked, currents, title, statisticsData, update, stateFuncs}: Props) {
   useEffect(() => {
     const type = currents.chart === 0 ? '인기' : '영상화';
     const fetchData = async () => {
       try {
-        const statisticsData = data === null ? (await getApi.statistics()).data : data;
-        if (data === null) {
-          update.list(statisticsData);
-        }
-        if (
-          data === null ||
-          (data !== null && data[currents.chart].keyword[currents.keyword].visit === false)
-        ) {
-          const keywordData = (
-            await getApi.statisticsKeyword(
+        const {data} = isChecked
+          ? statisticsData[currents.chart].keyword[currents.keyword].visit === false &&
+            (await getApi.statisticsKeyword(
               type,
               statisticsData[currents.chart].keyword[currents.keyword].name
-            )
-          ).data;
-          update.keyword(keywordData);
-        }
+            ))
+          : await getApi.statistics();
+
+        isChecked
+          ? statisticsData[currents.chart].keyword[currents.keyword].visit === false &&
+            (await update.keyword(data))
+          : await update.list(data);
       } catch (e) {
         console.log(e);
       }
     };
 
     fetchData();
-  }, [currents.chart, currents.keyword, update]);
+  }, [currents.chart, currents.keyword, isChecked, update]);
 
   return <ChannelPresenter funcs={stateFuncs} title={title} />;
-  // return <h1>123</h1>;
 }
 
 export default connector(ChannelContainer);

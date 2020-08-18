@@ -58,7 +58,7 @@ function KeywordContainer({useAble, update, search}: Props) {
     fetchData(search);
   }, [update, search]);
 
-  return <KeywordPresenter loading={useAble} search={search} />;
+  return <KeywordPresenter search={search} />;
 }
 
 export default connector(KeywordContainer);

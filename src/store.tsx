@@ -54,7 +54,6 @@ export interface IKeywordData {
   keyword: IKeywordChartData[];
   video: IVideoListData[];
   useAble?: boolean;
-  none?: boolean;
 }
 
 const keywordData: IKeywordData = {
@@ -63,7 +62,6 @@ const keywordData: IKeywordData = {
   keyword: null,
   video: null,
   useAble: false,
-  none: true,
 };
 
 const keywordSlice = createSlice({
@@ -87,14 +85,14 @@ interface IStatisticsState {
   keywordChart: IKeywordChartData[];
   currentChart?: number;
   currentKeyword?: number;
-  useAble?: boolean;
+  isChecked?: boolean;
 }
 
 const statisticsState: IStatisticsState = {
   keywordChart: null,
   currentChart: 0,
   currentKeyword: 0,
-  useAble: false,
+  isChecked: false,
 };
 
 const statisticsSlice = createSlice({
@@ -105,7 +103,7 @@ const statisticsSlice = createSlice({
       if (action.payload) {
         state.keywordChart = action.payload;
         state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
-        state.useAble = true;
+        state.isChecked = true;
       }
     },
     keywordDetailUpdate: (state, action) => {
@@ -125,7 +123,7 @@ const statisticsSlice = createSlice({
       }
     },
     disableUseAbleStatistics: (state) => {
-      state.useAble = false;
+      state.isChecked = false;
     },
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);

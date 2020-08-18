@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import {connect, ConnectedProps} from 'react-redux';
 
 import Tab from '../../Components/Container/Tab';
@@ -10,7 +9,6 @@ import TextContainer from '../../Components/Container/TextContainer';
 import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import VideoList from '../../Components/Lists/VideoList';
-
 import {RootState} from '../../store';
 
 const Container = styled.div`
@@ -53,6 +51,18 @@ const SubResultContainer = styled.div`
 
 const WordmapContainer = styled.div`
   width: 70%;
+  height: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+`;
+
+const LineChartContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 5px;
 `;
 
 const VideoContainer = styled.div`
@@ -106,7 +116,9 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
                 </WordmapContainer>
               </SubResultContainer>
               <SubResultContainer>
-                <LineChart type="statistics" title={title} />
+                <LineChartContainer>
+                  <LineChart type="statistics" title={title} />
+                </LineChartContainer>
               </SubResultContainer>
             </>
           ) : (

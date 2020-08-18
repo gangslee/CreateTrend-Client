@@ -7,19 +7,6 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 
 import {RootState} from '../../store';
 
-type containerType = {
-  type: string;
-};
-
-const Container = styled.div`
-  width: ${({type}: containerType) => (type === 'keyword' ? '48%' : '100%')};
-  height: 100%;
-  box-sizing: border-box;
-  /* border-radius: 15px; */
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 5px;
-`;
-
 const TitleContainer = styled.div`
   margin: 10px 15px;
 `;
@@ -141,7 +128,7 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
   }, [useData, index, type, id, stateFunc]);
 
   return (
-    <Container type={type}>
+    <>
       <TitleContainer>
         <Title>{title}</Title>
         <Title>{useData.type.replace('키워드', '추이')} 그래프</Title>
@@ -153,7 +140,7 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
       ) : (
         <LineChartContainer id={useData.type} />
       )}
-    </Container>
+    </>
   );
 }
 
