@@ -5,13 +5,6 @@ import {connect, ConnectedProps} from 'react-redux';
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
 import Slider from '../Container/Slider';
 
-const Container = styled.div`
-  box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  margin-bottom: 40px;
-  padding: 10px;
-`;
-
 interface ISCProps {
   mode?: string;
   type?: string;
@@ -158,7 +151,7 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
   const usingData = data.filter((data) => data.type === mode)[0];
 
   return (
-    <Container>
+    <>
       <TitleContainer mode={mode}>
         <Title>{title}</Title>
         <Title>{mode === 'analysis' ? '조회수 급상승 영상' : '인기 영상'}</Title>
@@ -201,7 +194,7 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
           )}
         </>
       )}
-    </Container>
+    </>
   );
 }
 

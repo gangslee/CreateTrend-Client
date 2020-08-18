@@ -62,6 +62,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function ChannelContainer({useAble, currents, title, data, update, stateFuncs}: Props) {
+  console.log('1');
   useEffect(() => {
     const type = currents.chart === 0 ? '인기' : '영상화';
     const fetchData = async () => {
@@ -88,7 +89,7 @@ function ChannelContainer({useAble, currents, title, data, update, stateFuncs}: 
     };
 
     fetchData();
-  }, [currents.chart, currents.keyword, update, data]);
+  }, [currents.chart, currents.keyword, update]);
 
   return <ChannelPresenter funcs={stateFuncs} title={title} />;
   // return <h1>123</h1>;

@@ -4,11 +4,13 @@ import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import Tab from '../../Components/Container/Tab';
+import Loader from '../../Components/Container/Loader';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import TextContainer from '../../Components/Container/TextContainer';
 import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import VideoList from '../../Components/Lists/VideoList';
+
 import {RootState} from '../../store';
 
 const Container = styled.div`
@@ -26,7 +28,10 @@ const ChartContainer = styled.div`
   width: 25%;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  height: 470px;
+`;
+
+const KeywordChartContainer = styled.div`
+  height: 405px;
 `;
 
 const ResultContainer = styled.div`
@@ -48,7 +53,13 @@ const SubResultContainer = styled.div`
 
 const WordmapContainer = styled.div`
   width: 70%;
-  /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3); */
+`;
+
+const VideoContainer = styled.div`
+  height: 225px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 10px;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -78,19 +89,39 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
       <KeywordContainer>
         <ChartContainer>
           <Tab type="chart" stateFunc={funcs.chart} />
-          <KeywordChart stateFunc={funcs.keyword} />
+          <KeywordChartContainer>
+            {data.keywordChart !== null ? <KeywordChart stateFunc={funcs.keyword} /> : <Loader />}
+          </KeywordChartContainer>
         </ChartContainer>
         <ResultContainer>
-          <SubResultContainer>
-            {/* <TextContainer type="popular" title={title} /> */}
-            <WordmapContainer>{/* <Wordmap type="statistics" title={title} /> */}</WordmapContainer>
-          </SubResultContainer>
-          <SubResultContainer>
-            {/* <LineChart type="statistics" title={title} /> */}
-          </SubResultContainer>
+          {data.keywordChart !== null &&
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword].wordmap !== undefined &&
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular !== undefined &&
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword].line !== undefined ? (
+            <>
+              <SubResultContainer>
+                <TextContainer type="popular" title={title} />
+                <WordmapContainer>
+                  <Wordmap type="statistics" title={title} />
+                </WordmapContainer>
+              </SubResultContainer>
+              <SubResultContainer>
+                <LineChart type="statistics" title={title} />
+              </SubResultContainer>
+            </>
+          ) : (
+            <Loader />
+          )}
         </ResultContainer>
       </KeywordContainer>
-      {/* <VideoList mode="analysis" type="statistics" title={title} /> */}
+      <VideoContainer>
+        {data.keywordChart !== null &&
+        data.keywordChart[data.currentChart].keyword[data.currentKeyword].video !== undefined ? (
+          <VideoList mode="analysis" type="statistics" title={title} />
+        ) : (
+          <Loader />
+        )}
+      </VideoContainer>
     </Container>
   );
 }

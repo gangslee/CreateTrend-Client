@@ -134,7 +134,6 @@ function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IK
     disableUseable();
   };
 
-  console.log('1');
   return (
     <Container type={state.page}>
       {data === null ? (
