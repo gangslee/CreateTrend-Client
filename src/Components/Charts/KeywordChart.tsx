@@ -94,7 +94,9 @@ function mapStateToProps(state: RootState) {
     data:
       state.page === 'keyword'
         ? state.keyword.keyword
-        : [state.statistics.keywordChart[state.statistics.currentChart]],
+        : state.statistics.keywordChart !== null
+        ? [state.statistics.keywordChart[state.statistics.currentChart]]
+        : null,
     state: {
       page: state.page,
       chart: state.statistics.currentChart,
@@ -121,7 +123,7 @@ interface IKeywordChartProps extends Props {
 }
 
 function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IKeywordChartProps) {
-  const usingData = state.page === 'keyword' ? data[index] : data[0];
+  const usingData = data !== null && (state.page === 'keyword' ? data[index] : data[0]);
 
   const handleKeywordClick = (e: React.MouseEvent) => {
     const idx = usingData.keyword.findIndex((data) => data.name === e.currentTarget.innerHTML);
@@ -132,36 +134,47 @@ function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IK
     disableUseable();
   };
 
+  console.log('1');
   return (
     <Container type={state.page}>
-      {state.page === 'keyword' && (
-        <TitleContainer>
-          <Title>{title}</Title>
-          <Title>{` 관련 ${usingData.type}`}</Title>
-        </TitleContainer>
-      )}
-      {usingData.keyword.length === 0 ? (
-        <ErrorContainer>
-          <Error>분석결과가 없습니다!</Error>
-        </ErrorContainer>
+      {data === null ? (
+        <div>12312</div>
       ) : (
         <>
-          {usingData.keyword.map((keyword, index) => (
-            <KeywordChartContainer current={state.keyword === index} type={state.page} key={index}>
-              <Rank>{index + 1}</Rank>
-              {state.page === 'keyword' ? (
-                <KeywordContainer>
-                  <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
-                    <Keyword>{keyword.name}</Keyword>
-                  </SLink>
-                </KeywordContainer>
-              ) : (
-                <KeywordContainer>
-                  <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
-                </KeywordContainer>
-              )}
-            </KeywordChartContainer>
-          ))}
+          {state.page === 'keyword' && (
+            <TitleContainer>
+              <Title>{title}</Title>
+              <Title>{` 관련 ${usingData.type}`}</Title>
+            </TitleContainer>
+          )}
+          {usingData.keyword.length === 0 ? (
+            <ErrorContainer>
+              <Error>분석결과가 없습니다!</Error>
+            </ErrorContainer>
+          ) : (
+            <>
+              {usingData.keyword.map((keyword, index) => (
+                <KeywordChartContainer
+                  current={state.keyword === index}
+                  type={state.page}
+                  key={index}
+                >
+                  <Rank>{index + 1}</Rank>
+                  {state.page === 'keyword' ? (
+                    <KeywordContainer>
+                      <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
+                        <Keyword>{keyword.name}</Keyword>
+                      </SLink>
+                    </KeywordContainer>
+                  ) : (
+                    <KeywordContainer>
+                      <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
+                    </KeywordContainer>
+                  )}
+                </KeywordChartContainer>
+              ))}
+            </>
+          )}
         </>
       )}
     </Container>

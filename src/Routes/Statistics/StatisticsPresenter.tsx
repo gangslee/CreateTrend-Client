@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {connect, ConnectedProps} from 'react-redux';
+
 import Tab from '../../Components/Container/Tab';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import TextContainer from '../../Components/Container/TextContainer';
 import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import VideoList from '../../Components/Lists/VideoList';
+import {RootState} from '../../store';
 
 const Container = styled.div`
   width: 1040px;
@@ -23,6 +26,7 @@ const ChartContainer = styled.div`
   width: 25%;
   border: 1px solid #ddd;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  height: 470px;
 `;
 
 const ResultContainer = styled.div`
@@ -47,8 +51,19 @@ const WordmapContainer = styled.div`
   /* box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3); */
 `;
 
-interface IChannelPresenterProps {
-  loading: boolean;
+function mapStateToProps(state: RootState) {
+  return {
+    data: state.statistics,
+  };
+}
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+interface IChannelPresenterProps extends Props {
   title: string | null;
   funcs: {
     chart: () => void;
@@ -56,8 +71,9 @@ interface IChannelPresenterProps {
   };
 }
 
-function ChannelPresenter({loading, funcs, title}: IChannelPresenterProps) {
-  return loading ? (
+function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
+  console.log(data);
+  return (
     <Container>
       <KeywordContainer>
         <ChartContainer>
@@ -66,21 +82,17 @@ function ChannelPresenter({loading, funcs, title}: IChannelPresenterProps) {
         </ChartContainer>
         <ResultContainer>
           <SubResultContainer>
-            <TextContainer type="popular" title={title} />
-            <WordmapContainer>
-              <Wordmap type="statistics" title={title} />
-            </WordmapContainer>
+            {/* <TextContainer type="popular" title={title} /> */}
+            <WordmapContainer>{/* <Wordmap type="statistics" title={title} /> */}</WordmapContainer>
           </SubResultContainer>
           <SubResultContainer>
-            <LineChart type="statistics" title={title} />
+            {/* <LineChart type="statistics" title={title} /> */}
           </SubResultContainer>
         </ResultContainer>
       </KeywordContainer>
-      <VideoList mode="analysis" type="statistics" title={title} />
+      {/* <VideoList mode="analysis" type="statistics" title={title} /> */}
     </Container>
-  ) : (
-    <div>123</div>
   );
 }
 
-export default ChannelPresenter;
+export default connector(ChannelPresenter);

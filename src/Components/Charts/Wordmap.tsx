@@ -57,11 +57,22 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (state.page === 'keyword') {
     return {data: state.keyword.wordmap};
   } else if (state.page === 'statistics') {
+    console.log(state.statistics.keywordChart);
     return {
-      data:
-        state.statistics.keywordChart[state.statistics.currentChart].keyword[
-          state.statistics.currentKeyword
-        ].wordmap,
+      data: {
+        name: '',
+        children: [
+          {
+            name: 'string',
+            value: 1,
+          },
+        ],
+      },
+      // state.statistics.keywordChart !== null
+      //   ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
+      //       state.statistics.currentKeyword
+      //     ].wordmap
+      //   : null,
     };
   } else if (state.page === 'star') {
     const currentStar = state.star.keyword.current;
@@ -88,28 +99,31 @@ interface IWordMapProps extends Props {
 }
 
 function WordMap({data, type, title}: IWordMapProps) {
-  const chartRef = useRef(null);
   console.log(data);
+  const chartRef = useRef(null);
   useLayoutEffect(() => {
     const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);
     const series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
-    series.data = [data];
-    // Set up data fields
-    series.dataFields.value = 'value';
-    series.dataFields.name = 'name';
-    series.dataFields.children = 'children';
+    if (data !== null && data !== undefined) {
+      series.data = [data];
 
-    // Add labels
-    series.nodes.template.label.text = '{name}';
-    series.fontSize = type === 'keyword' ? 15 : 12;
-    // series.fontWeight = 'bold';
-    series.minRadius = am4core.percent(6);
-    series.maxRadius = am4core.percent(12);
-    series.nodes.template.tooltipText = '{name}';
-    series.nodes.template.label.hideOversized = true;
-    series.nodes.template.label.truncate = true;
+      // Set up data fields
+      series.dataFields.value = 'value';
+      series.dataFields.name = 'name';
+      series.dataFields.children = 'children';
 
+      // Add labels
+      series.nodes.template.label.text = '{name}';
+      series.fontSize = type === 'keyword' ? 15 : 12;
+      // series.fontWeight = 'bold';
+      series.minRadius = am4core.percent(6);
+      series.maxRadius = am4core.percent(12);
+      series.nodes.template.tooltipText = '{name}';
+      series.nodes.template.label.hideOversized = true;
+      series.nodes.template.label.truncate = true;
+    }
     chartRef.current = chart;
+
     return () => {
       chart.dispose();
     };
@@ -117,15 +131,20 @@ function WordMap({data, type, title}: IWordMapProps) {
 
   return (
     <Container type={type}>
-      <Title>{title}</Title>
-      <Title>워드맵</Title>
-
-      {data.children.length === 0 ? (
-        <ErrorContainer>
-          <Error>분석결과가 없습니다!</Error>
-        </ErrorContainer>
+      {data !== null && data !== undefined ? (
+        <>
+          <Title>{title}</Title>
+          <Title>워드맵</Title>
+          {data.children.length === 0 ? (
+            <ErrorContainer>
+              <Error>분석결과가 없습니다!</Error>
+            </ErrorContainer>
+          ) : (
+            <WordmapContainer id={`${type}-wordmap`} type={type} />
+          )}
+        </>
       ) : (
-        <WordmapContainer id={`${type}-wordmap`} type={type} />
+        <div>12</div>
       )}
     </Container>
   );

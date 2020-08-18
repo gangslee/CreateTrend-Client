@@ -105,6 +105,7 @@ const statisticsSlice = createSlice({
       if (action.payload) {
         state.keywordChart = action.payload;
         state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
+        state.useAble = true;
       }
     },
     keywordDetailUpdate: (state, action) => {
@@ -121,7 +122,6 @@ const statisticsSlice = createSlice({
         state.keywordChart[state.currentChart].keyword[state.currentKeyword].video = [
           action.payload.keyword[0].video,
         ];
-        state.useAble = true;
       }
     },
     disableUseAbleStatistics: (state) => {
@@ -130,7 +130,6 @@ const statisticsSlice = createSlice({
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
       state.currentKeyword = 0;
-      console.log('1');
     },
     keywordStateUpdate: (state, action) => {
       state.currentKeyword = action.payload;
