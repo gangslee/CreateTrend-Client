@@ -29,7 +29,7 @@ const ChartContainer = styled.div`
 `;
 
 const KeywordChartContainer = styled.div`
-  height: 405px;
+  height: 410px;
 `;
 
 const ResultContainer = styled.div`

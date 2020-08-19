@@ -10,14 +10,6 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
 am4core.useTheme(am4themes_animated);
 
-const Container = styled.div`
-  width: 100%;
-  height: 300px;
-  padding: 5px;
-  box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-`;
-
 const PieChartContainer = styled.div`
   width: 100%;
   height: 85%;
@@ -105,26 +97,22 @@ function PieChart({data, stateFunc, type, title}: IPieChartProps) {
     };
   }, [data, stateFunc, type]);
   console.log(data.length === 0);
-  return (
-    <Container>
-      {data.length === 0 ? (
-        <ErrorContainer>
-          {type === 'period' ? (
-            <Error>분석결과가 없습니다! 범위를 재설정해주세요</Error>
-          ) : (
-            <Error>분석결과가 없습니다!</Error>
-          )}
-        </ErrorContainer>
+  return data.length === 0 ? (
+    <ErrorContainer>
+      {type === 'period' ? (
+        <Error>분석결과가 없습니다! 범위를 재설정해주세요</Error>
       ) : (
-        <>
-          <TitleContainer>
-            <Title>{title}</Title>
-            <Title>{type === 'star' ? ' 컨텐츠 분포도' : ' 기간 내 컨텐츠 분포도'}</Title>
-          </TitleContainer>
-          <PieChartContainer id={`${type}-pieChart`} />
-        </>
+        <Error>분석결과가 없습니다!</Error>
       )}
-    </Container>
+    </ErrorContainer>
+  ) : (
+    <>
+      <TitleContainer>
+        <Title>{title}</Title>
+        <Title>{type === 'star' ? ' 컨텐츠 분포도' : ' 기간 내 컨텐츠 분포도'}</Title>
+      </TitleContainer>
+      <PieChartContainer id={`${type}-pieChart`} />
+    </>
   );
 }
 

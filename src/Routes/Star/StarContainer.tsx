@@ -91,15 +91,13 @@ function StarContainer({useAble, starState, periodDate, id, update, setDate, sta
     fetchData(id, start, end);
   }, [update, id, setDate]);
 
-  return useAble.star && useAble.period ? (
+  return (
     <StarPresenter
       funcs={stateFuncs}
       id={id}
-      title={starState.channelInfo.channel_name}
+      // title={starState.channelInfo.channel_name}
       period={`${periodDate.start} ~ ${periodDate.end}`}
     />
-  ) : (
-    <h1>NOT YET</h1>
   );
 }
 
