@@ -20,15 +20,15 @@
 
 > Keyword Page
 
-<p><img src="./Asset/../src/Asset/keywordScreenShot.png" /></p>
+<p><img src="./src/Asset/keywordScreenShot.png" /></p>
 
 > Statistics Page
 
-<p><img src="./Asset/../src/Asset/statisticsScreenShot.png" /></p>
+<p><img src="./src/Asset/statisticsScreenShot.png" /></p>
 
 > Star Page
 
-<p><img src="./Asset/../src/Asset/starScreenShot.png" /></p>
+<p><img src="./src/Asset/starScreenShot.png" /></p>
 
 ## 💭 How it Works
 
