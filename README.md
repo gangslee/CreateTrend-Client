@@ -5,13 +5,10 @@
 ## Summary
 
 ---
-
-- [CreateTrend(Front-End)](#createtrendfront-end)
   - [Summary](#summary)
   - [Example](#example)
   - [How it Works](#how-it-works)
   - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
   - [Installing & Starting](#installing--starting)
   - [Deployment](#deployment)
   - [Built With](#built-with)
