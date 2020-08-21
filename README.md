@@ -4,7 +4,7 @@
 
 ## Summary
 
----
+
   - [Summary](#summary)
   - [Example](#example)
   - [How it Works](#how-it-works)
@@ -17,7 +17,7 @@
 
 ## Example
 
----
+
 
 > Keyword Page
 
@@ -33,7 +33,7 @@
 
 ## How it Works
 
----
+
 
 1. 페이지를 로딩하거나 차트에서 특정 action을 취할 때 서버로 부터 API를 받아옵니다.
 
@@ -43,7 +43,7 @@
 
 ## Getting Started
 
----
+
 
 이 지침을 따르시면 로컬 PC에서 개발과 테스트를 위한 해당 프로젝트의 사본을 실행, 설치, 배포시킬 수 있습니다.
 
@@ -58,13 +58,13 @@
 
 ## Installing & Starting
 
----
+
 
 해당 프로젝트의 사본을 설치 및 실행하기 위해 다음 단계들을 거쳐야 합니다.
 
 - git을 통해 로컬에 프로젝트 Clone 하기
 
-  > 'https://git.swmgit.org/swmaestro/muna.git'를 통해 사용자의 로컬 PC로 프로젝트를 Clone 합니다.
+  > 'https://git.swmgit.org/swmaestro/muna.git' 를 통해 사용자의 로컬 PC로 프로젝트를 Clone 합니다.
 
 * Window의 경우 Git Bash 등을 통해 입력합니다.
 * Linux, MacOS 등등에서는 Terminal을 통해 입력합니다.
@@ -86,7 +86,7 @@
 
 ## Deployment
 
----
+
 
 > 로컬 프로젝트가 설치 된 위치에서 다음 명령어를 통해 프로젝트를 build 합니다.
 
@@ -98,7 +98,7 @@ npm run build
 
 ## Built With
 
----
+
 
 - [ReacttJS](https://ko.reactjs.org/) - 웹 프레임워크
 - [Redux](https://redux.js.org/) - 어플리케이션의 state 관리 라이브러리
@@ -106,13 +106,13 @@ npm run build
 
 ## Authors
 
----
+
 
 - **이경수(grandnet1225@gmail.com)** - [gangselee](https://13.125.91.162/swmaestro/muna)
 
 ## License
 
----
+
 
 [![License](https://img.shields.io/badge/license-mit-blue)](http://badges.mit-license.org)
 
