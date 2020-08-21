@@ -4,17 +4,14 @@
 
 ## 📝 Summary
 
-- [CreateTrend(Front-End)](#createtrendfront-end)
-  - [📝 Summary](#-summary)
-  - [📸 Example](#-example)
-  - [💭 How it Works](#-how-it-works)
-  - [🏁 Getting Started](#-getting-started)
-    - [Prerequisites](#prerequisites)
-  - [🔧 Installing & Starting](#-installing--starting)
-  - [🚀 Deployment](#-deployment)
-  - [⛏️ Built With](#️-built-with)
-  - [✍️ Authors](#️-authors)
-  - [📃 License](#-license)
+- [Example](📸#-example)
+- [How it Works](#💭-how-it-works)
+- [Getting Started](#🏁-getting-started)
+- [Installing & Starting](#🔧-installing--starting)
+- [Deployment](#🚀-deployment)
+- [Built With](#⛏️-Built-With)
+- [Authors](#✍️-Authors)
+- [License](#📃-license)
 
 ## 📸 Example
 
