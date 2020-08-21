@@ -2,18 +2,25 @@
 
 유튜브 크리에이터들위한 채널 성장 지원 솔루션을 제공하는 AI Assistant 개발 (Front-End Repository)
 
-## 📝 Summary
+## Summary
 
-- [Example](📸#-example)
-- [How it Works](#💭-how-it-works)
-- [Getting Started](#🏁-getting-started)
-- [Installing & Starting](#🔧-installing--starting)
-- [Deployment](#🚀-deployment)
-- [Built With](#⛏️-Built-With)
-- [Authors](#✍️-Authors)
-- [License](#📃-license)
+---
 
-## 📸 Example
+- [CreateTrend(Front-End)](#createtrendfront-end)
+  - [Summary](#summary)
+  - [Example](#example)
+  - [How it Works](#how-it-works)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+  - [Installing & Starting](#installing--starting)
+  - [Deployment](#deployment)
+  - [Built With](#built-with)
+  - [Authors](#authors)
+  - [License](#license)
+
+## Example
+
+---
 
 > Keyword Page
 
@@ -27,7 +34,9 @@
 
 <p><img src="./src/Asset/starScreenShot.png" /></p>
 
-## 💭 How it Works
+## How it Works
+
+---
 
 1. 페이지를 로딩하거나 차트에서 특정 action을 취할 때 서버로 부터 API를 받아옵니다.
 
@@ -35,7 +44,9 @@
 
 3. state가 갱신될 때 state의 값을 바탕으로 amcharts4를 통해 생성한 차트와 그래프들의 형태를 reload 시킵니다.
 
-## 🏁 Getting Started
+## Getting Started
+
+---
 
 이 지침을 따르시면 로컬 PC에서 개발과 테스트를 위한 해당 프로젝트의 사본을 실행, 설치, 배포시킬 수 있습니다.
 
@@ -48,7 +59,9 @@
 - Git (https://git-scm.com)
 ```
 
-## 🔧 Installing & Starting
+## Installing & Starting
+
+---
 
 해당 프로젝트의 사본을 설치 및 실행하기 위해 다음 단계들을 거쳐야 합니다.
 
@@ -74,7 +87,9 @@
   npm start
   ```
 
-## 🚀 Deployment
+## Deployment
+
+---
 
 > 로컬 프로젝트가 설치 된 위치에서 다음 명령어를 통해 프로젝트를 build 합니다.
 
@@ -84,17 +99,23 @@ npm run build
 
 - 생성된 build 산출물들을 웹 서버의 root directory에 복사 후 서버를 재실행 시켜야 합니다.
 
-## ⛏️ Built With
+## Built With
+
+---
 
 - [ReacttJS](https://ko.reactjs.org/) - 웹 프레임워크
 - [Redux](https://redux.js.org/) - 어플리케이션의 state 관리 라이브러리
 - [Amcharts4](https://www.amcharts.com/) - 동적인 차트 및 그래프 생성 라이브러리
 
-## ✍️ Authors
+## Authors
+
+---
 
 - **이경수(grandnet1225@gmail.com)** - [gangselee](https://13.125.91.162/swmaestro/muna)
 
-## 📃 License
+## License
+
+---
 
 [![License](https://img.shields.io/badge/license-mit-blue)](http://badges.mit-license.org)
 
