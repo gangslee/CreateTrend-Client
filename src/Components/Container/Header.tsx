@@ -19,6 +19,7 @@ const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0px auto;
+  padding: 0px 10px;
 `;
 
 const HalfContainer = styled.div`
