@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Container = styled.div`
   height: 100%;
@@ -16,7 +16,10 @@ const Spinner = styled.img`
 function Loader() {
   return (
     <Container>
-      <Spinner src={require('../../Asset/Spinner.gif')} alt="loading..." />
+      <Spinner
+        src={require("../../Asset/images/Spinner.gif")}
+        alt="loading..."
+      />
     </Container>
   );
 }

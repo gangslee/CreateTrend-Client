@@ -35,13 +35,13 @@ export default function Slider({ children, onClick }: ISliderProps) {
   return (
     <Container>
       <Arrow
-        bgUrl={require("../../Asset/back.png")}
+        bgUrl={require("../../Asset/images/back.png")}
         onClick={onClick}
         id="prev"
       />
       {children}
       <Arrow
-        bgUrl={require("../../Asset/next.png")}
+        bgUrl={require("../../Asset/images/next.png")}
         onClick={onClick}
         id="next"
       />
