@@ -1,6 +1,6 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import styled from 'styled-components';
+import React from "react";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Container = styled.div`
   width: 1200px;
@@ -30,7 +30,7 @@ const TitleRed = styled.span`
 
 const Subtitle = styled.span`
   display: inline-block;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 20px;
   font-weight: normal;
   font-stretch: normal;
@@ -42,7 +42,7 @@ const Subtitle = styled.span`
 `;
 
 const Temp = styled.div`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
 `;
 
 function HomePresenter() {
@@ -52,7 +52,9 @@ function HomePresenter() {
         <Title>
           <TitleRed>Youtube</TitleRed> AI assistant
         </Title>
-        <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
+        <Subtitle>
+          AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.
+        </Subtitle>
       </TitleContainer>
 
       {/* <Temp>리그오브레전드</Temp> */}
