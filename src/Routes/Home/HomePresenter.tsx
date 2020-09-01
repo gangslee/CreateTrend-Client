@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import SearchBar from "../../Components/Container/SearchBar";
 
 const Container = styled.div`
   width: 1200px;
@@ -56,8 +57,9 @@ function HomePresenter() {
           AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.
         </Subtitle>
       </TitleContainer>
-
-      {/* <Temp>리그오브레전드</Temp> */}
+      <div>
+        <SearchBar />
+      </div>
     </Container>
   );
 }
