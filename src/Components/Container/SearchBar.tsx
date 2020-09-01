@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
 const Form = styled.form`
   width: 990px;
@@ -16,7 +16,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   width: 900px;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-stretch: normal;
   font-style: normal;
   line-height: 16px;
@@ -30,17 +30,26 @@ const Input = styled.input`
 `;
 
 const IconContainer = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 70px;
   height: 100%;
   background-color: #dd0909;
+`;
+
+const Icon = styled.img`
+  width: 30px;
+  height: 30px;
 `;
 
 export default function SearchBar() {
   return (
     <Form>
       <Input />
-      <IconContainer></IconContainer>
+      <IconContainer>
+        <Icon src={require('../../Asset/images/Search.svg')} />
+      </IconContainer>
     </Form>
   );
 }

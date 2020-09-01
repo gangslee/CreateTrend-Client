@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="Search" width="30" height="30" viewBox="0 0 30 30">
+    <defs>
+        <style>
+            .cls-2{fill:#fff}
+        </style>
+    </defs>
+    <g id="그룹_18" data-name="그룹 18" transform="translate(3.4 3.007)">
+        <g id="그룹_16" data-name="그룹 16">
+            <path id="패스_536" d="M948.164 1523.534a11.367 11.367 0 1 1 11.368-11.367 11.38 11.38 0 0 1-11.368 11.367zm0-20.971a9.6 9.6 0 1 0 9.6 9.6 9.615 9.615 0 0 0-9.6-9.6z" class="cls-2" data-name="패스 536" transform="translate(-936.796 -1500.8)"/>
+        </g>
+        <g id="그룹_17" data-name="그룹 17" transform="translate(17.892 18.678)">
+            <path id="선_2" d="M0 0L4.45 4.45" class="cls-2" data-name="선 2" transform="translate(.623 .623)"/>
+            <path id="사각형_6" d="M0 0H1.762V6.293H0z" class="cls-2" data-name="사각형 6" transform="rotate(-45.004 1.504 .623)"/>
+        </g>
+    </g>
+</svg>

@@ -43,7 +43,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function KeywordContainer({useAble, update, search}: Props) {
+function KeywordContainer({update, search}: Props) {
   useEffect(() => {
     const fetchData = async (search: string) => {
       try {
