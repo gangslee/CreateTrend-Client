@@ -1,16 +1,15 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import SearchBar from '../../Components/Container/SearchBar';
 
 const Container = styled.div`
   width: 1200px;
   box-sizing: border-box;
-  margin: 50px auto;
+  margin: 0px auto;
+  padding-top: 180px;
 `;
 
 const TitleContainer = styled.div`
-  margin-top: 180px;
   text-align: center;
 `;
 
@@ -42,12 +41,17 @@ const Subtitle = styled.span`
   margin-top: 20px;
 `;
 
+const SForm = styled.form`
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+`;
+
 interface IHomePresenterProps {
-  update?: (str: string) => void;
-  submit?: (e: React.FormEvent) => void;
+  submit: (e: React.FormEvent) => void;
 }
 
-function HomePresenter({update, submit}: IHomePresenterProps) {
+function HomePresenter({submit}: IHomePresenterProps) {
   return (
     <Container>
       <TitleContainer>
@@ -56,9 +60,10 @@ function HomePresenter({update, submit}: IHomePresenterProps) {
         </Title>
         <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
       </TitleContainer>
-      <form onSubmit={submit}>
+
+      <SForm onSubmit={submit}>
         <SearchBar />
-      </form>
+      </SForm>
     </Container>
   );
 }

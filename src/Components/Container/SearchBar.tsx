@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
 
-const Form = styled.div`
+import {RootState, RootDispatch, searchTermUpdate} from '../../store';
+import {Link} from 'react-router-dom';
+
+const Container = styled.div`
   width: 990px;
   height: 65px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.2);
@@ -43,16 +47,42 @@ const Icon = styled.img`
   height: 30px;
 `;
 
-interface sb {}
+function mapStateToProps(state: RootState) {
+  return {
+    searchStates: {
+      searchTerm: state.home.searchTerm,
+      searchType: state.home.searchType,
+    },
+  };
+}
 
-export default function SearchBar(props: sb) {
-  console.log(props);
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    update: (str: string) => dispatch(searchTermUpdate(str)),
+  };
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+function SearchBar({searchStates, update}: Props) {
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    update(e.target.value);
+  };
+
   return (
-    <Form>
-      <Input />
+    <Container>
+      <Input onChange={handleOnChange} />
       <IconContainer>
-        <Icon src={require('../../Asset/images/Search.svg')} />
+        <Link to={`/${searchStates.searchType}/${searchStates.searchTerm}`}>
+          <Icon src={require('../../Asset/images/Search.svg')} />
+        </Link>
       </IconContainer>
-    </Form>
+    </Container>
   );
 }
+
+export default connector(SearchBar);
