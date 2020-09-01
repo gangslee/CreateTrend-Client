@@ -32,7 +32,6 @@ const Subtitle = styled.span`
   display: inline-block;
   font-family: 'S-CoreDream-4Regular';
   font-size: 20px;
-  font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.4;

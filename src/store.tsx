@@ -50,12 +50,12 @@ export interface IVideoListData {
 
 interface IHomeData {
   searchTerm: string;
-  searchType: string;
+  searchType: number;
 }
 
 const homeData: IHomeData = {
   searchTerm: '',
-  searchType: 'Keyword',
+  searchType: 0,
 };
 
 const homeSlice = createSlice({
@@ -64,6 +64,9 @@ const homeSlice = createSlice({
   reducers: {
     searchTermUpdate: (state, action) => {
       state.searchTerm = action.payload;
+    },
+    searchTypeUpdate: (state) => {
+      state.searchType === 0 ? (state.searchType = 1) : (state.searchType = 0);
     },
   },
 });
@@ -281,7 +284,7 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {searchTermUpdate} = homeSlice.actions;
+export const {searchTermUpdate, searchTypeUpdate} = homeSlice.actions;
 
 export const {keywordDataUpdate, disableUseAbleKeyword} = keywordSlice.actions;
 

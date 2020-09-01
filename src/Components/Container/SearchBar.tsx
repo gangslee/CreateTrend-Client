@@ -1,12 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
-
-import {RootState, RootDispatch, searchTermUpdate} from '../../store';
 import {Link} from 'react-router-dom';
+import Tab from '../Container/Tab';
+
+import {RootState, RootDispatch, searchTermUpdate, searchTypeUpdate} from '../../store';
 
 const Container = styled.div`
   width: 990px;
+  position: relative;
+`;
+
+const TabContainer = styled.div`
+  width: 260px;
+  height: 55px;
+  font-family: 'S-CoreDream-5Medium';
+  font-size: 14px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.36;
+  letter-spacing: normal;
+`;
+
+const InputContainer = styled.div`
+  position: absolute;
   height: 65px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.2);
   border: solid 2px #dd0909;
@@ -16,6 +33,8 @@ const Container = styled.div`
   padding-left: 20px;
   display: flex;
   align-items: center;
+  margin-top: -5px;
+  z-index: 2;
 `;
 
 const Input = styled.input`
@@ -58,7 +77,10 @@ function mapStateToProps(state: RootState) {
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    update: (str: string) => dispatch(searchTermUpdate(str)),
+    updates: {
+      searchTerm: (str: string) => dispatch(searchTermUpdate(str)),
+      serachType: () => dispatch(searchTypeUpdate()),
+    },
   };
 }
 
@@ -68,19 +90,26 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function SearchBar({searchStates, update}: Props) {
+function SearchBar({searchStates, updates}: Props) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    update(e.target.value);
+    updates.searchTerm(e.target.value);
   };
 
   return (
     <Container>
-      <Input onChange={handleOnChange} />
-      <IconContainer>
-        <Link to={`/${searchStates.searchType}/${searchStates.searchTerm}`}>
-          <Icon src={require('../../Asset/images/Search.svg')} />
-        </Link>
-      </IconContainer>
+      <TabContainer>
+        <Tab type="search" stateFunc={updates.serachType} />
+      </TabContainer>
+      <InputContainer>
+        <Input onChange={handleOnChange} />
+        <IconContainer>
+          <Link
+            to={`/${searchStates.searchType === 0 ? 'keyword' : 'star'}/${searchStates.searchTerm}`}
+          >
+            <Icon src={require('../../Asset/images/Search.svg')} />
+          </Link>
+        </IconContainer>
+      </InputContainer>
     </Container>
   );
 }

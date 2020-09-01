@@ -9,54 +9,56 @@ type styleType = {
 };
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  height: ${({type}: styleType) => (type === 'channel' ? '75px' : '55px')};
-
-  border: 1px solid #ddd;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   ${({type}: styleType) =>
-    type === 'channel'
+    type === 'chart'
       ? css`
-          box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-          margin-bottom: 30px;
+          border-bottom: 2px solid #ddd;
         `
       : css`
-          border-bottom: 2px solid #ddd;
+          display: flex;
+          justify-content: space-between;
         `};
 `;
 
 interface ITabContainerProps {
   current: boolean;
   onClick: (e: React.MouseEvent) => void;
+  type: string;
 }
 
 const TabContainer = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  height: 100%;
-  background-color: ${({current}: ITabContainerProps) => (current ? '#fff9eb' : '#fff')};
+  width: 49%;
+  background-color: ${({current}: ITabContainerProps) => (current ? '#dd0909' : '#fff')};
   cursor: pointer;
-  color: ${({current}: ITabContainerProps) => (current ? '#feb100' : '#ccc')};
-  :first-child {
-    border-right: 1px solid #ddd;
-  }
+  color: ${({current}: ITabContainerProps) => (current ? '#fff' : '#999')};
+  ${({type}: ITabContainerProps) =>
+    type === 'search' &&
+    css`
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      ${({current}: ITabContainerProps) =>
+        !current &&
+        css`
+          border: 1px solid #dbdbdb;
+        `}
+    `};
 `;
 
 const TabTitle = styled.span`
   display: inline-flex;
-  height: ${({type}: styleType) => (type === 'channel' ? '30px' : '22px')};
   align-items: center;
-  font-size: ${({type}: styleType) => (type === 'channel' ? '30px' : '22px')};
   font-weight: 600;
 `;
 
 function mapStateToProps(state: RootState) {
   return {
     state: {
-      chart: state.statistics.currentChart,
+      chart: state.page === 'home' ? state.home.searchType : state.statistics.currentChart,
     },
   };
 }
@@ -74,7 +76,7 @@ interface ITabProps extends Props {
 
 function Tab({state, stateFunc, type}: ITabProps) {
   const chartType = state.chart;
-  const titles = ['인기', '영상'];
+  const titles = type === 'chart' ? ['인기', '영상'] : ['키워드', '스타채널'];
   const currentType = titles[chartType];
 
   const handleOnClick = (e: React.MouseEvent) => {
@@ -86,8 +88,13 @@ function Tab({state, stateFunc, type}: ITabProps) {
   return (
     <Container type={type}>
       {titles.map((title) => (
-        <TabContainer key={title} current={currentType === title} onClick={handleOnClick}>
-          <TabTitle type={type}>{title}</TabTitle>
+        <TabContainer
+          key={title}
+          type={type}
+          current={currentType === title}
+          onClick={handleOnClick}
+        >
+          <TabTitle>{title}</TabTitle>
         </TabContainer>
       ))}
     </Container>

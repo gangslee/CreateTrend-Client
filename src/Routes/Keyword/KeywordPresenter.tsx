@@ -95,10 +95,10 @@ function KeywordPresenter({search, data}: IKeywordPresenter) {
         </WordMapContainer>
 
         <ChartContainer>
-          {[0, 1].map((idx) => (
-            <LineChartContainer>
+          {[0, 1].map((idx, index) => (
+            <LineChartContainer key={idx}>
               {data.wordmap !== null ? (
-                <LineChart key={idx} index={idx} type="keyword" title={search} />
+                <LineChart index={idx} type="keyword" title={search} />
               ) : (
                 <Loader />
               )}
@@ -114,12 +114,8 @@ function KeywordPresenter({search, data}: IKeywordPresenter) {
         </VideoContainer>
         <ChartContainer>
           {[0, 1].map((idx) => (
-            <KeywordChartContainer>
-              {data.wordmap !== null ? (
-                <KeywordChart key={idx} index={idx} title={search} />
-              ) : (
-                <Loader />
-              )}
+            <KeywordChartContainer key={idx}>
+              {data.wordmap !== null ? <KeywordChart index={idx} title={search} /> : <Loader />}
             </KeywordChartContainer>
           ))}
           {/* <KeywordChart index={0} title={search} /> */}
