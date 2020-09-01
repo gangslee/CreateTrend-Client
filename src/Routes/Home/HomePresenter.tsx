@@ -42,7 +42,12 @@ const Subtitle = styled.span`
   margin-top: 20px;
 `;
 
-function HomePresenter() {
+interface IHomePresenterProps {
+  update?: (str: string) => void;
+  submit?: (e: React.FormEvent) => void;
+}
+
+function HomePresenter({update, submit}: IHomePresenterProps) {
   return (
     <Container>
       <TitleContainer>
@@ -51,9 +56,9 @@ function HomePresenter() {
         </Title>
         <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
       </TitleContainer>
-      <div>
+      <form onSubmit={submit}>
         <SearchBar />
-      </div>
+      </form>
     </Container>
   );
 }

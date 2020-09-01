@@ -1,12 +1,21 @@
 import React, {useLayoutEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootDispatch, currentPage} from '../../store';
+import {RootState, RootDispatch, currentPage, searchTermUpdate} from '../../store';
 import HomePresenter from '../Home/HomePresenter';
+
+function mapStateToProps(state: RootState) {
+  return {
+    searchTerm: state.home.searchTerm,
+  };
+}
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     setPage: () => dispatch(currentPage('home')),
+    searchTerms: {
+      update: (str: string) => dispatch(searchTermUpdate(str)),
+    },
   };
 }
 
@@ -23,9 +32,13 @@ interface IHomeContainerProps extends Props {
 }
 
 function HomeContainer(props: IHomeContainerProps) {
-  props.history.push('/statistics');
+  const submitSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    props.history.push(`/keyword/${props.searchTerms}`);
+  };
+
   useLayoutEffect(() => {});
-  return <HomePresenter />;
+  return <HomePresenter submit={submitSearch} />;
 }
 
 export default connector(HomeContainer);

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Form = styled.form`
+const Form = styled.div`
   width: 990px;
   height: 65px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.2);
@@ -43,7 +43,10 @@ const Icon = styled.img`
   height: 30px;
 `;
 
-export default function SearchBar() {
+interface sb {}
+
+export default function SearchBar(props: sb) {
+  console.log(props);
   return (
     <Form>
       <Input />
