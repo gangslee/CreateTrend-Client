@@ -271,11 +271,13 @@ const pageSlice = createSlice({
   },
 });
 
-const HeaderSlice = createSlice({
+const headerSlice = createSlice({
   name: 'headerReducer',
   initialState: {isOpen: false},
   reducers: {
-    setIsOpen: (state, action) => (state = action.payload),
+    setIsOpen: (state, action) => {
+      state.isOpen = action.payload;
+    },
   },
 });
 
@@ -287,7 +289,7 @@ const cReducer = combineReducers({
   period: periodSlice.reducer,
   slider: sliderSlice.reducer,
   page: pageSlice.reducer,
-  header: HeaderSlice.reducer,
+  header: headerSlice.reducer,
 });
 
 const store = configureStore({
@@ -313,6 +315,8 @@ export const {periodDataUpdate, periodDateUpdate} = periodSlice.actions;
 export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
+
+export const {setIsOpen} = headerSlice.actions;
 
 export default store;
 

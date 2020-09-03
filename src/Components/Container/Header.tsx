@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
+
+import {RootState, RootDispatch, setIsOpen} from '../../store';
+import Dialog from './Dialog';
 
 const Container = styled.div`
   position: fixed;
@@ -62,25 +66,55 @@ const Divider = styled.div`
   background-image: linear-gradient(to right, #950707 0%, #fb4242);
 `;
 
-export default withRouter(() => (
-  <Container>
-    <HeaderContainer>
-      <HalfContainer>
-        <Link to="/">
-          <Logo src={require('../../Asset/images/logo.svg')} />
-        </Link>
+function mapStateToProps(state: RootState) {
+  return {
+    states: {
+      isOpen: state.header.isOpen,
+    },
+  };
+}
 
-        <LeftItem>이용권 구매</LeftItem>
-        <Link to="/statistics">
-          <LeftItem>채널 분석</LeftItem>
-        </Link>
-      </HalfContainer>
-      <HalfContainer>
-        <RightItem>로그인</RightItem>
-        <RightItem>|</RightItem>
-        <RightItem>회원가입</RightItem>
-      </HalfContainer>
-    </HeaderContainer>
-    <Divider />
-  </Container>
-));
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    isOpen: (isOpen: boolean) => dispatch(setIsOpen(isOpen)),
+  };
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+function Header({states, isOpen}: Props) {
+  const handleOnClick = (e: React.MouseEvent) => {
+    isOpen(true);
+    console.log('111');
+    console.log(states.isOpen);
+  };
+  return (
+    <Container>
+      {states.isOpen ? <Dialog /> : null}
+      <HeaderContainer>
+        <HalfContainer>
+          <Link to="/">
+            <Logo src={require('../../Asset/images/logo.svg')} />
+          </Link>
+
+          <LeftItem>이용권 구매</LeftItem>
+          <LeftItem>
+            <Link to="/statistics">채널 분석</Link>
+          </LeftItem>
+        </HalfContainer>
+        <HalfContainer>
+          <RightItem onClick={handleOnClick}>로그인</RightItem>
+          <RightItem>|</RightItem>
+          <RightItem>회원가입</RightItem>
+        </HalfContainer>
+      </HeaderContainer>
+      <Divider />
+    </Container>
+  );
+}
+
+export default withRouter(connector(Header));
