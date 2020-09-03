@@ -8,10 +8,10 @@ import {RootState, RootDispatch, searchTermUpdate, searchTypeUpdate} from '../..
 
 const Container = styled.div`
   width: 990px;
-  position: relative;
 `;
 
 const TabContainer = styled.div`
+  z-index: 1;
   width: 260px;
   height: 55px;
   font-family: 'S-CoreDream-5Medium';
@@ -23,7 +23,7 @@ const TabContainer = styled.div`
 `;
 
 const InputContainer = styled.div`
-  position: absolute;
+  position: relative;
   height: 65px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.2);
   border: solid 2px #dd0909;
@@ -34,7 +34,6 @@ const InputContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: -5px;
-  z-index: 2;
 `;
 
 const Input = styled.input`
@@ -47,9 +46,6 @@ const Input = styled.input`
   font-size: 16px;
   color: #222;
   border: none;
-  :focus {
-    outline: none;
-  }
 `;
 
 const IconContainer = styled.div`
