@@ -1,4 +1,5 @@
 import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
+import {create} from '@amcharts/amcharts4/core';
 
 export interface IWordMapData {
   name: string;
@@ -270,6 +271,14 @@ const pageSlice = createSlice({
   },
 });
 
+const HeaderSlice = createSlice({
+  name: 'headerReducer',
+  initialState: {isOpen: false},
+  reducers: {
+    setIsOpen: (state, action) => (state = action.payload),
+  },
+});
+
 const cReducer = combineReducers({
   home: homeSlice.reducer,
   keyword: keywordSlice.reducer,
@@ -278,6 +287,7 @@ const cReducer = combineReducers({
   period: periodSlice.reducer,
   slider: sliderSlice.reducer,
   page: pageSlice.reducer,
+  header: HeaderSlice.reducer,
 });
 
 const store = configureStore({
