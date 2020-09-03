@@ -46,9 +46,6 @@ const Input = styled.input`
   font-size: 16px;
   color: #222;
   border: none;
-  :focus {
-    outline: none;
-  }
 `;
 
 const IconContainer = styled.div`

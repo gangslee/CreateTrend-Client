@@ -105,6 +105,7 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
         </ChartContainer>
         <ResultContainer>
           {data.keywordChart !== null &&
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
           data.keywordChart[data.currentChart].keyword[data.currentKeyword].wordmap !== undefined &&
           data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular !== undefined &&
           data.keywordChart[data.currentChart].keyword[data.currentKeyword].line !== undefined ? (
@@ -128,6 +129,7 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
       </KeywordContainer>
       <VideoContainer>
         {data.keywordChart !== null &&
+        data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
         data.keywordChart[data.currentChart].keyword[data.currentKeyword].video !== undefined ? (
           <VideoList mode="analysis" type="statistics" title={title} />
         ) : (

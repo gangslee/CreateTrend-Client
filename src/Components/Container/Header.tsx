@@ -1,9 +1,9 @@
-import React, {useLayoutEffect} from 'react';
+import React from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, setIsOpen} from '../../store';
+import {RootState, RootDispatch, setIsOpenSignIn} from '../../store';
 import Dialog from './Dialog';
 
 const Container = styled.div`
@@ -69,14 +69,16 @@ const Divider = styled.div`
 function mapStateToProps(state: RootState) {
   return {
     states: {
-      isOpen: state.header.isOpen,
+      signIn: state.header.isOpenSignIn,
     },
   };
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    isOpen: (isOpen: boolean) => dispatch(setIsOpen(isOpen)),
+    dispatches: {
+      signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
+    },
   };
 }
 
@@ -86,15 +88,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function Header({states, isOpen}: Props) {
+function Header({states, dispatches}: Props) {
   const handleOnClick = (e: React.MouseEvent) => {
-    isOpen(true);
-    console.log('111');
-    console.log(states.isOpen);
+    dispatches.signIn(true);
   };
   return (
     <Container>
-      {states.isOpen ? <Dialog /> : null}
+      {states.signIn ? <Dialog type="signIn" /> : null}
       <HeaderContainer>
         <HalfContainer>
           <Link to="/">
@@ -106,6 +106,7 @@ function Header({states, isOpen}: Props) {
             <Link to="/statistics">채널 분석</Link>
           </LeftItem>
         </HalfContainer>
+
         <HalfContainer>
           <RightItem onClick={handleOnClick}>로그인</RightItem>
           <RightItem>|</RightItem>

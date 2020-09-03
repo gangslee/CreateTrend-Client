@@ -1,5 +1,4 @@
 import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
-import {create} from '@amcharts/amcharts4/core';
 
 export interface IWordMapData {
   name: string;
@@ -273,10 +272,13 @@ const pageSlice = createSlice({
 
 const headerSlice = createSlice({
   name: 'headerReducer',
-  initialState: {isOpen: false},
+  initialState: {isOpenSignIn: false, isOpenSignUp: false},
   reducers: {
-    setIsOpen: (state, action) => {
-      state.isOpen = action.payload;
+    setIsOpenSignIn: (state, action) => {
+      state.isOpenSignIn = action.payload;
+    },
+    setIsOpenSignUp: (state, action) => {
+      state.isOpenSignUp = action.payload;
     },
   },
 });
@@ -316,7 +318,7 @@ export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 
-export const {setIsOpen} = headerSlice.actions;
+export const {setIsOpenSignIn, setIsOpenSignUp} = headerSlice.actions;
 
 export default store;
 

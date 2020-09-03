@@ -37,6 +37,9 @@ const globalStyles = createGlobalStyle`
         background-image:url(${bg});
         font-family: "Lato", sans-serif;    
     }
+    input:focus{
+        outline: none;
+    }
 `;
 
 export default globalStyles;

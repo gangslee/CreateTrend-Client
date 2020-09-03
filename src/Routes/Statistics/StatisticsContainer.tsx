@@ -15,17 +15,20 @@ import ChannelPresenter from './StatisticsPresenter';
 import {getApi} from '../../api';
 
 function mapStateToProps(state: RootState) {
+  console.log(state.statistics.keywordChart);
   return {
     isChecked: state.statistics.isChecked,
     currents: {
       chart: state.statistics.currentChart,
       keyword: state.statistics.currentKeyword,
     },
-    title: state.statistics.keywordChart
-      ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
-          state.statistics.currentKeyword
-        ].name
-      : null,
+    title:
+      state.statistics.keywordChart &&
+      state.statistics.keywordChart[state.statistics.currentChart].keyword.length > 0
+        ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
+            state.statistics.currentKeyword
+          ].name
+        : null,
     statisticsData: state.statistics.keywordChart,
   };
 }
@@ -61,6 +64,7 @@ type Props = PropsFromRedux;
 function ChannelContainer({isChecked, currents, title, statisticsData, update, stateFuncs}: Props) {
   useEffect(() => {
     const type = currents.chart === 0 ? '인기' : '영상화';
+
     const fetchData = async () => {
       try {
         const {data} = isChecked
