@@ -270,6 +270,19 @@ const pageSlice = createSlice({
   },
 });
 
+const headerSlice = createSlice({
+  name: 'headerReducer',
+  initialState: {isOpenSignIn: false, isOpenSignUp: false},
+  reducers: {
+    setIsOpenSignIn: (state, action) => {
+      state.isOpenSignIn = action.payload;
+    },
+    setIsOpenSignUp: (state, action) => {
+      state.isOpenSignUp = action.payload;
+    },
+  },
+});
+
 const cReducer = combineReducers({
   home: homeSlice.reducer,
   keyword: keywordSlice.reducer,
@@ -278,6 +291,7 @@ const cReducer = combineReducers({
   period: periodSlice.reducer,
   slider: sliderSlice.reducer,
   page: pageSlice.reducer,
+  header: headerSlice.reducer,
 });
 
 const store = configureStore({
@@ -303,6 +317,8 @@ export const {periodDataUpdate, periodDateUpdate} = periodSlice.actions;
 export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
+
+export const {setIsOpenSignIn, setIsOpenSignUp} = headerSlice.actions;
 
 export default store;
 
