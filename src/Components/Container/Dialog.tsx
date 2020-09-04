@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, setIsOpenSignIn} from '../../store';
+import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp} from '../../store';
 
 const Container = styled.div`
   width: 350px;
   background-color: #fff;
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 30px 5px;
+  padding: 20px 5px;
   text-align: center;
 `;
 
@@ -131,6 +131,7 @@ function mapStateToProps(state: RootState) {
   return {
     states: {
       signIn: state.header.isOpenSignIn,
+      signUp: state.header.isOpenSignUp,
     },
   };
 }
@@ -139,6 +140,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     dispatches: {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
+      signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
     },
   };
 }
@@ -155,11 +157,11 @@ interface IDialogProps extends Props {
 
 function Dialog({type, states, dispatches}: IDialogProps) {
   const handleCloseModal = () => {
-    dispatches.signIn(false);
+    type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
   };
   return (
     <Modal
-      isOpen={states.signIn}
+      isOpen={type === 'signIn' ? states.signIn : states.signUp}
       style={modalStyles}
       ariaHideApp={false}
       onRequestClose={handleCloseModal}
