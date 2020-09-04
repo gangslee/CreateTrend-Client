@@ -45,6 +45,7 @@ const LeftItem = styled.span`
   font-family: 'S-CoreDream-6Bold';
   line-height: 1.44;
   color: #222;
+  cursor: pointer;
   :last-child {
     margin-left: 50px;
   }
@@ -56,6 +57,7 @@ const RightItem = styled.span`
   line-height: 1.36;
   color: #666;
   letter-spacing: normal;
+  cursor: pointer;
   :nth-child(2) {
     margin: 0px 17.5px;
   }
@@ -94,7 +96,8 @@ function Header({states, dispatches}: Props) {
   };
   return (
     <Container>
-      {states.signIn ? <Dialog type="signIn" /> : null}
+      {/* {states.signIn ? <Dialog type="signIn" /> : null} */}
+      <Dialog type="signIn" />
       <HeaderContainer>
         <HalfContainer>
           <Link to="/">
