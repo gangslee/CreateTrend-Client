@@ -276,9 +276,11 @@ const headerSlice = createSlice({
   reducers: {
     setIsOpenSignIn: (state, action) => {
       state.isOpenSignIn = action.payload;
+      state.isOpenSignUp = false;
     },
     setIsOpenSignUp: (state, action) => {
       state.isOpenSignUp = action.payload;
+      state.isOpenSignIn = false;
     },
   },
 });

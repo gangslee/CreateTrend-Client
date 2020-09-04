@@ -1,23 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import Modal from 'react-modal';
+import {connect, ConnectedProps} from 'react-redux';
+
+import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp} from '../../store';
 
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.4);
-  position: relative;
-  z-index: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const DialogContainer = styled.div`
-  width: 390px;
+  width: 350px;
   background-color: #fff;
   border-radius: 10px;
   box-sizing: border-box;
-  padding: 35px 25px;
+  padding: 20px 5px;
   text-align: center;
 `;
 
@@ -71,16 +64,110 @@ const SInput = styled.input`
   }
 `;
 
-const SBt = styled.button``;
+const SBt = styled.button`
+  background-color: #dd0909;
+  font-size: 15px;
+  font-family: 'S-CoreDream-6Bold';
+  width: 100%;
+  border-radius: 10px;
+  color: white;
+  line-height: 3;
+  transition: background 0.5s ease;
+  cursor: pointer;
+  :active,
+  :hover {
+    background-color: #c90000;
+  }
+  margin-top: 10px;
+`;
 
-interface IDialogProps {
+const GoogleBt = styled.button`
+  width: 100%;
+  height: 48px;
+  margin-top: 20px;
+  box-shadow: 3px 3px 8px 0 rgba(95, 111, 174, 0.1);
+  border: solid 1px #dbe0f5;
+  border-radius: 10px;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  :active,
+  :hover {
+    border: solid 2px #dbe0f5;
+  }
+`;
+
+const GoogleSymbol = styled.img`
+  width: 28.6px;
+  height: 28.6px;
+  margin-right: 20px;
+`;
+
+const GoogleSpan = styled.span`
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 15px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+`;
+
+const modalStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    borderRadius: '10px',
+  },
+  overlay: {background: 'rgba(0,0,0,0.4)'},
+};
+
+function mapStateToProps(state: RootState) {
+  return {
+    states: {
+      signIn: state.header.isOpenSignIn,
+      signUp: state.header.isOpenSignUp,
+    },
+  };
+}
+
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    dispatches: {
+      signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
+      signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
+    },
+  };
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+interface IDialogProps extends Props {
   type: string;
 }
 
-function Dialog({type}: IDialogProps) {
+function Dialog({type, states, dispatches}: IDialogProps) {
+  const handleCloseModal = () => {
+    type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
+  };
   return (
-    <Container>
-      <DialogContainer>
+    <Modal
+      isOpen={type === 'signIn' ? states.signIn : states.signUp}
+      style={modalStyles}
+      ariaHideApp={false}
+      onRequestClose={handleCloseModal}
+      shouldCloseOnEsc={false}
+    >
+      <Container>
         <DialogTitle>{type === 'signIn' ? '로그인' : '회원가입'}</DialogTitle>
         <SForm>
           <InputContainer>
@@ -97,10 +184,15 @@ function Dialog({type}: IDialogProps) {
               <SInput />
             </InputContainer>
           )}
+          <SBt>{type === 'signIn' ? '로그인' : '회원가입'}</SBt>
+          <GoogleBt>
+            <GoogleSymbol src={require('../../Asset/images/Google_symbol.svg')} />
+            <GoogleSpan>구글 계정으로 로그인</GoogleSpan>
+          </GoogleBt>
         </SForm>
-      </DialogContainer>
-    </Container>
+      </Container>
+    </Modal>
   );
 }
 
-export default Dialog;
+export default connector(Dialog);

@@ -40,6 +40,12 @@ const globalStyles = createGlobalStyle`
     input:focus{
         outline: none;
     }
+    button{
+        border:none;
+        :focus{
+            outline:none;
+        }
+    }
 `;
 
 export default globalStyles;

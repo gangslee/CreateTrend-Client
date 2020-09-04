@@ -3,7 +3,7 @@ import {Link, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, setIsOpenSignIn} from '../../store';
+import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp} from '../../store';
 import Dialog from './Dialog';
 
 const Container = styled.div`
@@ -45,6 +45,7 @@ const LeftItem = styled.span`
   font-family: 'S-CoreDream-6Bold';
   line-height: 1.44;
   color: #222;
+  cursor: pointer;
   :last-child {
     margin-left: 50px;
   }
@@ -56,6 +57,7 @@ const RightItem = styled.span`
   line-height: 1.36;
   color: #666;
   letter-spacing: normal;
+  cursor: pointer;
   :nth-child(2) {
     margin: 0px 17.5px;
   }
@@ -70,6 +72,7 @@ function mapStateToProps(state: RootState) {
   return {
     states: {
       signIn: state.header.isOpenSignIn,
+      signUp: state.header.isOpenSignUp,
     },
   };
 }
@@ -78,6 +81,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     dispatches: {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
+      signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
     },
   };
 }
@@ -89,12 +93,16 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function Header({states, dispatches}: Props) {
-  const handleOnClick = (e: React.MouseEvent) => {
+  const handleOnClickSignIn = (e: React.MouseEvent) => {
     dispatches.signIn(true);
+  };
+  const handleOnClickSignUp = (e: React.MouseEvent) => {
+    dispatches.signUp(true);
   };
   return (
     <Container>
-      {states.signIn ? <Dialog type="signIn" /> : null}
+      {/* {states.signIn ? <Dialog type="signIn" /> : null} */}
+      <Dialog type={(states.signIn && 'signIn') || (states.signUp && 'signUp')} />
       <HeaderContainer>
         <HalfContainer>
           <Link to="/">
@@ -108,9 +116,9 @@ function Header({states, dispatches}: Props) {
         </HalfContainer>
 
         <HalfContainer>
-          <RightItem onClick={handleOnClick}>로그인</RightItem>
+          <RightItem onClick={handleOnClickSignIn}>로그인</RightItem>
           <RightItem>|</RightItem>
-          <RightItem>회원가입</RightItem>
+          <RightItem onClick={handleOnClickSignUp}>회원가입</RightItem>
         </HalfContainer>
       </HeaderContainer>
       <Divider />
