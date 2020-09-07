@@ -63,6 +63,11 @@ const RightItem = styled.span`
   }
 `;
 
+const UserIcon = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
 const Divider = styled.div`
   height: 3px;
   background-image: linear-gradient(to right, #950707 0%, #fb4242);
@@ -73,6 +78,7 @@ function mapStateToProps(state: RootState) {
     states: {
       signIn: state.header.isOpenSignIn,
       signUp: state.header.isOpenSignUp,
+      logIn: state.header.isLogIn,
     },
   };
 }
@@ -116,9 +122,15 @@ function Header({states, dispatches}: Props) {
         </HalfContainer>
 
         <HalfContainer>
-          <RightItem onClick={handleOnClickSignIn}>로그인</RightItem>
-          <RightItem>|</RightItem>
-          <RightItem onClick={handleOnClickSignUp}>회원가입</RightItem>
+          {states.logIn ? (
+            <UserIcon src={require('../../Asset/images/Login_Myinfo_icon.svg')} />
+          ) : (
+            <>
+              <RightItem onClick={handleOnClickSignIn}>로그인</RightItem>
+              <RightItem>|</RightItem>
+              <RightItem onClick={handleOnClickSignUp}>회원가입</RightItem>
+            </>
+          )}
         </HalfContainer>
       </HeaderContainer>
       <Divider />
