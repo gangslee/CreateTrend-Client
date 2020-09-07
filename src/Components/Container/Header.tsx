@@ -3,7 +3,14 @@ import {Link, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp} from '../../store';
+import {
+  RootState,
+  RootDispatch,
+  setIsOpenSignIn,
+  setIsOpenSignUp,
+  setIsOpenUserMenu,
+  setIsLogIn,
+} from '../../store';
 import Dialog from './Dialog';
 
 const Container = styled.div`
@@ -31,6 +38,7 @@ const HalfContainer = styled.div`
   align-items: center;
   font-stretch: normal;
   letter-spacing: normal;
+  position: relative;
 `;
 
 const Logo = styled.img`
@@ -66,11 +74,104 @@ const RightItem = styled.span`
 const UserIcon = styled.img`
   width: 40px;
   height: 40px;
+  cursor: pointer;
 `;
 
 const Divider = styled.div`
   height: 3px;
   background-image: linear-gradient(to right, #950707 0%, #fb4242);
+`;
+
+const UserMenuContainer = styled.div`
+  width: 390px;
+  height: 310px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 5px 20px 0 rgba(95, 111, 174, 0.2);
+  box-sizing: border-box;
+  padding: 0px 25px;
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: #222;
+`;
+
+const UserMenuHalfContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: 'S-CoreDream-4Regular';
+  padding: 25px 0px;
+  :first-child {
+    border-bottom: 1px solid #dbe0f5;
+  }
+`;
+
+const UserAvatar = styled.img`
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
+`;
+
+const UserInfoContainer = styled.div``;
+
+const UserInfoHalfContainer = styled.div`
+  margin-bottom: 10px;
+`;
+
+const UserName = styled.span`
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 18px;
+  line-height: 1.39;
+  margin-right: 10px;
+`;
+
+const UserMemberShipState = styled.span`
+  font-size: 12px;
+  line-height: 1.33;
+`;
+
+const UserMemberShipStateRed = styled.span`
+  font-size: 14px;
+  color: #d10909;
+`;
+
+const UserEmail = styled.span`
+  font-size: 15px;
+  line-height: 1.4;
+  color: #999999;
+`;
+
+const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+`;
+
+const MenuIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  cursor: pointer;
+`;
+
+const MenuTitle = styled.span`
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+`;
+
+const SignOutBt = styled.button`
+  width: 100%;
+  height: 50px;
+  background-color: #f4f6fb;
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 16px;
+  line-height: 1.44;
+  border-radius: 10px;
+  cursor: pointer;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -79,6 +180,7 @@ function mapStateToProps(state: RootState) {
       signIn: state.header.isOpenSignIn,
       signUp: state.header.isOpenSignUp,
       logIn: state.header.isLogIn,
+      userMenu: state.header.isOpenUserMenu,
     },
   };
 }
@@ -88,6 +190,8 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     dispatches: {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
       signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
+      userMenu: (isOpen: boolean) => dispatch(setIsOpenUserMenu(isOpen)),
+      setLogIn: (isLogIn: boolean) => dispatch(setIsLogIn(isLogIn)),
     },
   };
 }
@@ -105,9 +209,22 @@ function Header({states, dispatches}: Props) {
   const handleOnClickSignUp = (e: React.MouseEvent) => {
     dispatches.signUp(true);
   };
+  const handleOnClickUserIcon = (e: React.MouseEvent) => {
+    dispatches.userMenu(true);
+    document.addEventListener('click', closeUserMenu);
+  };
+  const closeUserMenu = (e: MouseEvent): any => {
+    dispatches.userMenu(false);
+    document.removeEventListener('click', closeUserMenu);
+  };
+  const handleOnClickSignOut = (e: React.MouseEvent) => {
+    dispatches.userMenu(false);
+    document.removeEventListener('click', closeUserMenu);
+    dispatches.setLogIn(false);
+  };
+
   return (
     <Container>
-      {/* {states.signIn ? <Dialog type="signIn" /> : null} */}
       <Dialog type={(states.signIn && 'signIn') || (states.signUp && 'signUp')} />
       <HeaderContainer>
         <HalfContainer>
@@ -122,8 +239,43 @@ function Header({states, dispatches}: Props) {
         </HalfContainer>
 
         <HalfContainer>
+          {states.userMenu && (
+            <UserMenuContainer>
+              <UserMenuHalfContainer>
+                <UserAvatar src={require('../../Asset/images/Login_Myinfo_icon.svg')} />
+                <UserInfoContainer>
+                  <UserInfoHalfContainer>
+                    <UserName>이경수</UserName>
+                    <UserMemberShipState>
+                      <UserMemberShipStateRed>멤버쉽 이용중</UserMemberShipStateRed> (20-08-21까지)
+                    </UserMemberShipState>
+                  </UserInfoHalfContainer>
+                  <UserEmail>abcd1234@email.com</UserEmail>
+                </UserInfoContainer>
+              </UserMenuHalfContainer>
+
+              <UserMenuHalfContainer>
+                <MenuContainer>
+                  <MenuIcon src={require('../../Asset/images/Channel analysis_icon.svg')} />
+                  <MenuTitle>내 채널 분석</MenuTitle>
+                </MenuContainer>
+                <MenuContainer>
+                  <MenuIcon src={require('../../Asset/images/Info_icon.svg')} />
+                  <MenuTitle>내 정보</MenuTitle>
+                </MenuContainer>
+                <MenuContainer>
+                  <MenuIcon src={require('../../Asset/images/Customer Service_icon.svg')} />
+                  <MenuTitle>고객센터</MenuTitle>
+                </MenuContainer>
+              </UserMenuHalfContainer>
+              <SignOutBt onClick={handleOnClickSignOut}>로그아웃</SignOutBt>
+            </UserMenuContainer>
+          )}
           {states.logIn ? (
-            <UserIcon src={require('../../Asset/images/Login_Myinfo_icon.svg')} />
+            <UserIcon
+              src={require('../../Asset/images/Login_Myinfo_icon.svg')}
+              onClick={handleOnClickUserIcon}
+            />
           ) : (
             <>
               <RightItem onClick={handleOnClickSignIn}>로그인</RightItem>

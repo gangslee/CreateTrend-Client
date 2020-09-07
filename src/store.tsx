@@ -272,7 +272,7 @@ const pageSlice = createSlice({
 
 const headerSlice = createSlice({
   name: 'headerReducer',
-  initialState: {isOpenSignIn: false, isOpenSignUp: false, isLogIn: false},
+  initialState: {isOpenSignIn: false, isOpenSignUp: false, isOpenUserMenu: false, isLogIn: false},
   reducers: {
     setIsOpenSignIn: (state, action) => {
       state.isOpenSignIn = action.payload;
@@ -284,6 +284,9 @@ const headerSlice = createSlice({
     },
     setIsLogIn: (state, action) => {
       state.isLogIn = action.payload;
+    },
+    setIsOpenUserMenu: (state, action) => {
+      state.isOpenUserMenu = action.payload;
     },
   },
 });
@@ -323,7 +326,12 @@ export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
 export const {currentPage} = pageSlice.actions;
 
-export const {setIsOpenSignIn, setIsOpenSignUp, setIsLogIn} = headerSlice.actions;
+export const {
+  setIsOpenSignIn,
+  setIsOpenSignUp,
+  setIsLogIn,
+  setIsOpenUserMenu,
+} = headerSlice.actions;
 
 export default store;
 

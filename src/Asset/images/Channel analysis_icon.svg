@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="41.5" height="41.5" viewBox="0 0 41.5 41.5">
+    <defs>
+        <style>
+            .cls-5{fill:#fff}.cls-4{fill:#222}
+        </style>
+    </defs>
+    <g id="Channel_analysis_icon" data-name="Channel analysis_icon" transform="translate(-2237.744 -5426.815)">
+        <g id="그룹_9216" data-name="그룹 9216">
+            <g id="그룹_9211" data-name="그룹 9211" opacity="0.3">
+                <path id="사각형_3752" fill="#d10909" d="M0 0H5.742V24.48H0z" data-name="사각형 3752" transform="translate(2241.81 5438.942)"/>
+            </g>
+            <g id="그룹_9215" data-name="그룹 9215">
+                <g id="그룹_9212" data-name="그룹 9212">
+                    <path id="패스_15073" d="M2275.859 5464.718h-35.5V5437.3h35.5zm-34-1.5h32.5V5438.8h-32.5z" class="cls-4" data-name="패스 15073"/>
+                </g>
+                <g id="그룹_9213" data-name="그룹 9213">
+                    <path id="패스_15074" d="M2245.919 5456.656l5.916-8.365 8.47 7.658 9.993-9.481" class="cls-5" data-name="패스 15074"/>
+                    <path id="패스_15075" d="M2246.531 5457.088l-1.225-.866 6.405-9.055 8.581 7.759 9.489-9 1.033 1.088-10.5 9.96-8.358-7.558z" class="cls-4" data-name="패스 15075"/>
+                </g>
+                <g id="그룹_9214" data-name="그룹 9214">
+                    <path id="패스_15076" d="M2253.448 5432.2l4.9 5.844 5.208-6.883" class="cls-5" data-name="패스 15076"/>
+                    <path id="패스_15077" d="M2258.348 5438.8a.751.751 0 0 1-.576-.269l-4.9-5.845 1.15-.963 4.294 5.123 4.641-6.131 1.2.9-5.208 6.883a.748.748 0 0 1-.579.3z" class="cls-4" data-name="패스 15077"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
