@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp} from '../../store';
+import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp, setIsLogIn} from '../../store';
 
 const Container = styled.div`
   width: 350px;
@@ -124,7 +124,9 @@ const modalStyles = {
     transform: 'translate(-50%, -50%)',
     borderRadius: '10px',
   },
-  overlay: {background: 'rgba(0,0,0,0.4)'},
+  overlay: {
+    background: 'rgba(0,0,0,0.4)',
+  },
 };
 
 function mapStateToProps(state: RootState) {
@@ -141,6 +143,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     dispatches: {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
       signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
+      logIn: (isLogIn: boolean) => dispatch(setIsLogIn(isLogIn)),
     },
   };
 }
@@ -159,6 +162,13 @@ function Dialog({type, states, dispatches}: IDialogProps) {
   const handleCloseModal = () => {
     type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
   };
+
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
+    dispatches.logIn(true);
+  };
+
   return (
     <Modal
       isOpen={type === 'signIn' ? states.signIn : states.signUp}
@@ -169,7 +179,7 @@ function Dialog({type, states, dispatches}: IDialogProps) {
     >
       <Container>
         <DialogTitle>{type === 'signIn' ? '로그인' : '회원가입'}</DialogTitle>
-        <SForm>
+        <SForm onSubmit={handleOnSubmit}>
           <InputContainer>
             <InputTitle>이메일</InputTitle>
             <SInput />
