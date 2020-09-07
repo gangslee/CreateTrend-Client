@@ -124,7 +124,9 @@ const modalStyles = {
     transform: 'translate(-50%, -50%)',
     borderRadius: '10px',
   },
-  overlay: {background: 'rgba(0,0,0,0.4)'},
+  overlay: {
+    background: 'rgba(0,0,0,0.4)',
+  },
 };
 
 function mapStateToProps(state: RootState) {
