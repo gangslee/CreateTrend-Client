@@ -272,7 +272,13 @@ const pageSlice = createSlice({
 
 const headerSlice = createSlice({
   name: 'headerReducer',
-  initialState: {isOpenSignIn: false, isOpenSignUp: false, isOpenUserMenu: false, isLogIn: false},
+  initialState: {
+    isOpenSignIn: false,
+    isOpenSignUp: false,
+    isOpenUserMenu: false,
+    isLogIn: false,
+    isMembership: true,
+  },
   reducers: {
     setIsOpenSignIn: (state, action) => {
       state.isOpenSignIn = action.payload;

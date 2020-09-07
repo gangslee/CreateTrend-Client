@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
@@ -153,13 +153,14 @@ const MenuContainer = styled.div`
 const MenuIcon = styled.img`
   width: 40px;
   height: 40px;
-  margin-bottom: 10px;
   cursor: pointer;
 `;
 
 const MenuTitle = styled.span`
+  display: inline-block;
   font-size: 15px;
   line-height: 1.4;
+  margin-top: 10px;
   cursor: pointer;
 `;
 
@@ -174,6 +175,23 @@ const SignOutBt = styled.button`
   cursor: pointer;
 `;
 
+const NoMembershipContainer = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0px;
+  border: solid 1px #333;
+`;
+
+const NoMembership = styled.span`
+  display: inline-block;
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 15px;
+  line-height: 1.4;
+  margin-left: 5px;
+`;
+
 function mapStateToProps(state: RootState) {
   return {
     states: {
@@ -181,6 +199,7 @@ function mapStateToProps(state: RootState) {
       signUp: state.header.isOpenSignUp,
       logIn: state.header.isLogIn,
       userMenu: state.header.isOpenUserMenu,
+      membership: state.header.isMembership,
     },
   };
 }
@@ -203,6 +222,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function Header({states, dispatches}: Props) {
+  const wrapperRef = useRef(null);
+
   const handleOnClickSignIn = (e: React.MouseEvent) => {
     dispatches.signIn(true);
   };
@@ -213,9 +234,12 @@ function Header({states, dispatches}: Props) {
     dispatches.userMenu(true);
     document.addEventListener('click', closeUserMenu);
   };
-  const closeUserMenu = (e: MouseEvent): any => {
-    dispatches.userMenu(false);
-    document.removeEventListener('click', closeUserMenu);
+
+  const closeUserMenu = (e: MouseEvent) => {
+    if (!(wrapperRef.current && wrapperRef.current.contains(e.target))) {
+      dispatches.userMenu(false);
+      document.removeEventListener('click', closeUserMenu);
+    }
   };
   const handleOnClickSignOut = (e: React.MouseEvent) => {
     dispatches.userMenu(false);
@@ -240,34 +264,43 @@ function Header({states, dispatches}: Props) {
 
         <HalfContainer>
           {states.userMenu && (
-            <UserMenuContainer>
+            <UserMenuContainer ref={wrapperRef}>
               <UserMenuHalfContainer>
                 <UserAvatar src={require('../../Asset/images/Login_Myinfo_icon.svg')} />
                 <UserInfoContainer>
                   <UserInfoHalfContainer>
                     <UserName>이경수</UserName>
-                    <UserMemberShipState>
-                      <UserMemberShipStateRed>멤버쉽 이용중</UserMemberShipStateRed> (20-08-21까지)
-                    </UserMemberShipState>
+                    {states.membership && (
+                      <UserMemberShipState>
+                        <UserMemberShipStateRed>멤버쉽 이용중</UserMemberShipStateRed>{' '}
+                        (20-08-21까지)
+                      </UserMemberShipState>
+                    )}
                   </UserInfoHalfContainer>
                   <UserEmail>abcd1234@email.com</UserEmail>
                 </UserInfoContainer>
               </UserMenuHalfContainer>
-
-              <UserMenuHalfContainer>
-                <MenuContainer>
-                  <MenuIcon src={require('../../Asset/images/Channel analysis_icon.svg')} />
-                  <MenuTitle>내 채널 분석</MenuTitle>
-                </MenuContainer>
-                <MenuContainer>
-                  <MenuIcon src={require('../../Asset/images/Info_icon.svg')} />
-                  <MenuTitle>내 정보</MenuTitle>
-                </MenuContainer>
-                <MenuContainer>
-                  <MenuIcon src={require('../../Asset/images/Customer Service_icon.svg')} />
-                  <MenuTitle>고객센터</MenuTitle>
-                </MenuContainer>
-              </UserMenuHalfContainer>
+              {states.membership ? (
+                <UserMenuHalfContainer>
+                  <MenuContainer>
+                    <MenuIcon src={require('../../Asset/images/Channel analysis_icon.svg')} />
+                    <MenuTitle>내 채널 분석</MenuTitle>
+                  </MenuContainer>
+                  <MenuContainer>
+                    <MenuIcon src={require('../../Asset/images/Info_icon.svg')} />
+                    <MenuTitle>내 정보</MenuTitle>
+                  </MenuContainer>
+                  <MenuContainer>
+                    <MenuIcon src={require('../../Asset/images/Customer Service_icon.svg')} />
+                    <MenuTitle>고객센터</MenuTitle>
+                  </MenuContainer>
+                </UserMenuHalfContainer>
+              ) : (
+                <NoMembershipContainer>
+                  <MenuIcon src={require('../../Asset/images/No_membership_icon.svg')} />
+                  <NoMembership>이용권을 구매해주세요</NoMembership>
+                </NoMembershipContainer>
+              )}
               <SignOutBt onClick={handleOnClickSignOut}>로그아웃</SignOutBt>
             </UserMenuContainer>
           )}
