@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, keywordDataUpdate, IKeywordData, currentPage} from '../../store';
@@ -44,7 +44,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function KeywordContainer({update, search}: Props) {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchData = async (search: string) => {
       try {
         const {data} = await getApi.keyword(search);

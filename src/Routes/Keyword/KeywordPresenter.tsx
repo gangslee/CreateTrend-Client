@@ -27,6 +27,7 @@ const WordMapContainer = styled.div`
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   padding: 20px;
   margin-bottom: 40px;
+  background-color: #fff;
 `;
 
 const LineChartContainer = styled.div`
@@ -35,6 +36,7 @@ const LineChartContainer = styled.div`
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   padding: 5px;
+  background-color: #fff;
 `;
 
 interface IVideoProps {
@@ -47,6 +49,7 @@ const VideoContainer = styled.div`
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   padding: 10px;
   margin-bottom: 40px;
+  background-color: #fff;
   ${({mode}: IVideoProps) =>
     mode === 'aside' &&
     css`
@@ -61,11 +64,13 @@ const KeywordChartContainer = styled.div`
   padding: 15px 20px;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
 `;
 
 const ChartContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: #fff;
   :not(:last-child) {
     margin-bottom: 40px;
   }
