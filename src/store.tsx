@@ -5,7 +5,9 @@ export interface IWordMapData {
   children: {
     name: string;
     value: number;
+    color?: string;
   }[];
+  color?: string;
 }
 
 export interface ILineChartData {
