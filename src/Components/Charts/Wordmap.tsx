@@ -106,18 +106,12 @@ function WordMap({data, type, title}: IWordMapProps) {
     };
   }, [data, type]);
 
-  return (
-    <>
-      <Title>{title}</Title>
-      <Title>워드맵</Title>
-      {data.children.length === 0 ? (
-        <ErrorContainer>
-          <Error>분석결과가 없습니다!</Error>
-        </ErrorContainer>
-      ) : (
-        <WordmapContainer id={`${type}-wordmap`} type={type} />
-      )}
-    </>
+  return data.children.length === 0 ? (
+    <ErrorContainer>
+      <Error>분석결과가 없습니다!</Error>
+    </ErrorContainer>
+  ) : (
+    <WordmapContainer id={`${type}-wordmap`} type={type} />
   );
 }
 
