@@ -8,13 +8,23 @@ import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
 import {RootState} from '../../store';
+import bg from '../../Asset/images/bg2.svg';
+
+const BgContainer = styled.div`
+  background-image: url(${bg});
+  padding-left: 80px;
+  margin-left: -80px;
+  margin-top: -80px;
+  padding-top: 200px;
+  padding-bottom: 50px;
+`;
 
 const Container = styled.div`
   width: 1040px;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
-  margin: 50px auto;
+  margin: 0px auto;
 `;
 
 const AnalysisSection = styled.div`
@@ -93,48 +103,48 @@ interface IKeywordPresenter extends Props {
 
 function KeywordPresenter({search, data}: IKeywordPresenter) {
   return (
-    <Container>
-      <AnalysisSection>
-        <WordMapContainer>
-          {data.wordmap !== null ? <WordMap type="keyword" title={search} /> : <Loader />}
-        </WordMapContainer>
+    <BgContainer>
+      <Container>
+        <AnalysisSection>
+          <WordMapContainer>
+            {data.wordmap !== null ? <WordMap type="keyword" title={search} /> : <Loader />}
+          </WordMapContainer>
 
-        <ChartContainer>
-          {[0, 1].map((idx, index) => (
-            <LineChartContainer key={idx}>
-              {data.wordmap !== null ? (
-                <LineChart index={idx} type="keyword" title={search} />
-              ) : (
-                <Loader />
-              )}
-            </LineChartContainer>
-          ))}
-        </ChartContainer>
-        <VideoContainer mode="analysis">
+          <ChartContainer>
+            {[0, 1].map((idx, index) => (
+              <LineChartContainer key={idx}>
+                {data.wordmap !== null ? (
+                  <LineChart index={idx} type="keyword" title={search} />
+                ) : (
+                  <Loader />
+                )}
+              </LineChartContainer>
+            ))}
+          </ChartContainer>
+          <VideoContainer mode="analysis">
+            {data.video !== null ? (
+              <VideoList mode="analysis" type="keyword" title={search} />
+            ) : (
+              <Loader />
+            )}
+          </VideoContainer>
+          <ChartContainer>
+            {[0, 1].map((idx) => (
+              <KeywordChartContainer key={idx}>
+                {data.wordmap !== null ? <KeywordChart index={idx} title={search} /> : <Loader />}
+              </KeywordChartContainer>
+            ))}
+          </ChartContainer>
+        </AnalysisSection>
+        <VideoContainer mode="aside">
           {data.video !== null ? (
-            <VideoList mode="analysis" type="keyword" title={search} />
+            <VideoList mode="aside" type="keyword" title={search} />
           ) : (
             <Loader />
           )}
         </VideoContainer>
-        <ChartContainer>
-          {[0, 1].map((idx) => (
-            <KeywordChartContainer key={idx}>
-              {data.wordmap !== null ? <KeywordChart index={idx} title={search} /> : <Loader />}
-            </KeywordChartContainer>
-          ))}
-          {/* <KeywordChart index={0} title={search} /> */}
-          {/* <KeywordChart index={1} title={search} /> */}
-        </ChartContainer>
-      </AnalysisSection>
-      <VideoContainer mode="aside">
-        {data.video !== null ? (
-          <VideoList mode="aside" type="keyword" title={search} />
-        ) : (
-          <Loader />
-        )}
-      </VideoContainer>
-    </Container>
+      </Container>
+    </BgContainer>
   );
 }
 

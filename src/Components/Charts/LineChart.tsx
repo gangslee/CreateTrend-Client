@@ -71,62 +71,66 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
   const useData = index ? data[index] : data[0];
 
   useLayoutEffect(() => {
-    const chart = am4core.create(useData.type, am4charts.XYChart);
+    console.log(useData.type);
+    let chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
+    if (useData.data.length > 0) {
+      const dateAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      dateAxis.dataFields.category = 'date';
+      dateAxis.cursorTooltipEnabled = false;
+      dateAxis.renderer.fontSize = 12;
+      dateAxis.renderer.grid.template.disabled = true;
 
-    const dateAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    dateAxis.dataFields.category = 'date';
-    dateAxis.cursorTooltipEnabled = false;
-    dateAxis.renderer.fontSize = 12;
-    dateAxis.renderer.grid.template.disabled = true;
+      const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.cursorTooltipEnabled = false;
+      valueAxis.renderer.fontSize = 12;
+      valueAxis.renderer.line.strokeWidth = 2;
 
-    const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.cursorTooltipEnabled = false;
-    valueAxis.renderer.fontSize = 12;
-    valueAxis.renderer.line.strokeWidth = 2;
+      const series = chart.series.push(new am4charts.LineSeries());
+      // series.name = 'Value';
+      series.stroke = am4core.color('#CDA2AB');
+      series.strokeWidth = 3;
+      series.dataFields.valueY = 'value';
+      series.dataFields.categoryX = 'date';
+      series.tooltipText = '{categoryX} :[bold] {valueY}[/]';
 
-    const series = chart.series.push(new am4charts.LineSeries());
-    // series.name = 'Value';
-    series.stroke = am4core.color('#CDA2AB');
-    series.strokeWidth = 3;
-    series.dataFields.valueY = 'value';
-    series.dataFields.categoryX = 'date';
-    series.tooltipText = '{categoryX} :[bold] {valueY}[/]';
+      const bullet = series.bullets.push(new am4charts.CircleBullet());
+      bullet.circle.stroke = am4core.color('#fff');
+      bullet.circle.strokeWidth = 2;
 
-    const bullet = series.bullets.push(new am4charts.CircleBullet());
-    bullet.circle.stroke = am4core.color('#fff');
-    bullet.circle.strokeWidth = 2;
+      chart.cursor = new am4charts.XYCursor();
+      chart.cursor.behavior = type === 'star' ? 'zoomX' : 'none';
+      if (type === 'star') {
+        chart.cursor.events.on('zoomended', function (e) {
+          const range = e.target.xRange;
 
-    chart.cursor = new am4charts.XYCursor();
-    chart.cursor.behavior = type === 'star' ? 'zoomX' : 'none';
-    if (type === 'star') {
-      chart.cursor.events.on('zoomended', function (e) {
-        const range = e.target.xRange;
-
-        const calculate = () => {
-          const axis = e.target.chart.xAxes.getIndex(0);
-          const from = axis.getPositionLabel(axis.toAxisPosition(range.start));
-          const to = axis.getPositionLabel(axis.toAxisPosition(range.end));
-          stateFunc(id, from.slice(0, 10), to.slice(0, 10));
-        };
-        range !== undefined ? calculate() : alert('Select Again');
-      });
-      chart.zoomOutButton.events.on('hit', () => {
-        const today = new Date();
-        const end = today.toJSON().slice(0, 10);
-        today.setDate(today.getDate() - 50);
-        const start = today.toJSON().slice(0, 10);
-        stateFunc(id, start, end);
-      });
+          const calculate = () => {
+            const axis = e.target.chart.xAxes.getIndex(0);
+            const from = axis.getPositionLabel(axis.toAxisPosition(range.start));
+            const to = axis.getPositionLabel(axis.toAxisPosition(range.end));
+            stateFunc(id, from.slice(0, 10), to.slice(0, 10));
+          };
+          range !== undefined ? calculate() : alert('Select Again');
+        });
+        chart.zoomOutButton.events.on('hit', () => {
+          const today = new Date();
+          const end = today.toJSON().slice(0, 10);
+          today.setDate(today.getDate() - 50);
+          const start = today.toJSON().slice(0, 10);
+          stateFunc(id, start, end);
+        });
+      }
+    } else {
+      chart.dispose();
+      chartRef.current = null;
     }
-
     chartRef.current = chart;
 
     return () => {
       chart.dispose();
     };
   }, [useData, index, type, id, stateFunc]);
-
+  console.log(useData.type, useData.data);
   return (
     <>
       <TitleContainer>
@@ -136,6 +140,7 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
       {useData.data.length === 0 ? (
         <ErrorContainer>
           <Error>분석결과가 없습니다!</Error>
+          <span id={useData.type} />
         </ErrorContainer>
       ) : (
         <LineChartContainer id={useData.type} />
