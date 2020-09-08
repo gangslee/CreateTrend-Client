@@ -2,6 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchBar from '../../Components/Container/SearchBar';
 
+import bg from '../../Asset/images/bg1.svg';
+
+const BgContainer = styled.div`
+  background-image: url(${bg});
+  width: 100%;
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: contain;
+  padding-top: 70px;
+`;
+
 const Container = styled.div`
   width: 1200px;
   box-sizing: border-box;
@@ -52,18 +64,20 @@ interface IHomePresenterProps {
 
 function HomePresenter({submit}: IHomePresenterProps) {
   return (
-    <Container>
-      <TitleContainer>
-        <Title>
-          <TitleRed>Youtube</TitleRed> AI assistant
-        </Title>
-        <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
-      </TitleContainer>
+    <BgContainer>
+      <Container>
+        <TitleContainer>
+          <Title>
+            <TitleRed>Youtube</TitleRed> AI assistant
+          </Title>
+          <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
+        </TitleContainer>
 
-      <SForm onSubmit={submit}>
-        <SearchBar />
-      </SForm>
-    </Container>
+        <SForm onSubmit={submit}>
+          <SearchBar />
+        </SForm>
+      </Container>
+    </BgContainer>
   );
 }
 

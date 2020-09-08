@@ -30,7 +30,6 @@ interface IHomeContainerProps extends Props {
 }
 
 function HomeContainer(props: IHomeContainerProps) {
-  console.log(props);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     props.history.push(`/${props.searchType === 0 ? 'keyword' : 'star'}/${props.searchTerm}`);

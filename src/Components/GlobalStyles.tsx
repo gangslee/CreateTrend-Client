@@ -1,6 +1,5 @@
 import {createGlobalStyle} from 'styled-components';
 import reset from 'styled-reset';
-import bg from '../Asset/images/bg.svg';
 
 const globalStyles = createGlobalStyle`
     ${reset}
@@ -33,8 +32,8 @@ const globalStyles = createGlobalStyle`
     }
 
     body{
-        padding-top:70px;
-        background-image:url(${bg});
+        
+        
         font-family: "Lato", sans-serif;    
     }
     input:focus{
