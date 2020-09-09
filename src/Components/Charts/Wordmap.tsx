@@ -64,10 +64,9 @@ type Props = PropsFromRedux;
 
 interface IWordMapProps extends Props {
   type: string;
-  title?: string;
 }
 
-function WordMap({data, type, title}: IWordMapProps) {
+function WordMap({data, type}: IWordMapProps) {
   const chartRef = useRef(null);
   useLayoutEffect(() => {
     const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);

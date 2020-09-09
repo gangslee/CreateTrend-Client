@@ -84,21 +84,55 @@ const Subtitle = styled.span`
   margin-bottom: 20px;
 `;
 
-const WordMapContainer = styled.div`
+const RadioBt = styled.input.attrs({
+  type: 'radio',
+})`
+  display: none;
+`;
+
+const RadioLabel = styled.label`
+  color: #666;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+
+  ::before {
+    content: ' ';
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #dbe0f5;
+    background-color: #fff;
+    margin-right: 5px;
+    box-shadow: 0 3px 6px 0 rgba(95, 111, 174, 0.2);
+  }
+`;
+
+const RadioContainer = styled.div`
+  position: relative;
+  vertical-align: middle;
+  float: right;
+  margin-left: 20px;
+  input[type='radio']:checked + label:after {
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    content: ' ';
+    top: 8px;
+    left: 7px;
+    position: absolute;
+    background: #d10909;
+  }
+`;
+
+const SubtitleContainer = styled.div``;
+
+const GraphContainer = styled.div`
   height: 330px;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
   padding: 5px;
   margin-bottom: 40px;
-  background-color: #fff;
-`;
-
-const LineChartContainer = styled.div`
-  width: 48%;
-  height: 215px;
-  box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 5px;
   background-color: #fff;
 `;
 
@@ -179,21 +213,29 @@ function KeywordPresenter({search, data}: IKeywordPresenter) {
           <Subtitle>
             <TitleRed>{search}</TitleRed> 워드맵
           </Subtitle>
-          <WordMapContainer>
-            {data.wordmap !== null ? <WordMap type="keyword" title={search} /> : <Loader />}
-          </WordMapContainer>
 
-          <ChartContainer>
-            {[0, 1].map((idx, index) => (
-              <LineChartContainer key={idx}>
-                {data.wordmap !== null ? (
-                  <LineChart index={idx} type="keyword" title={search} />
-                ) : (
-                  <Loader />
-                )}
-              </LineChartContainer>
-            ))}
-          </ChartContainer>
+          <GraphContainer>
+            {data.wordmap !== null ? <WordMap type="keyword" /> : <Loader />}
+          </GraphContainer>
+          <SubtitleContainer>
+            <Subtitle>
+              <TitleRed>{search}</TitleRed> 추이
+            </Subtitle>
+
+            <RadioContainer>
+              <RadioBt id="333" value="인기도 추이" name="chartType" />
+              <RadioLabel htmlFor="333"> 인기도 추이</RadioLabel>
+            </RadioContainer>
+            <RadioContainer>
+              <RadioBt id="123" value="영상화 추이" name="chartType" />
+              <RadioLabel htmlFor="123">영상화 추이</RadioLabel>
+            </RadioContainer>
+          </SubtitleContainer>
+
+          <GraphContainer>
+            {data.lines !== null ? <LineChart type="keyword" title={search} /> : <Loader />}
+          </GraphContainer>
+
           <VideoContainer mode="analysis">
             {data.video !== null ? (
               <VideoList mode="analysis" type="keyword" title={search} />

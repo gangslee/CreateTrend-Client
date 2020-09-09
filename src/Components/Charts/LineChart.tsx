@@ -7,21 +7,9 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 
 import {RootState} from '../../store';
 
-const TitleContainer = styled.div`
-  margin: 10px 15px;
-`;
-
-const Title = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  :first-child {
-    color: #feb100;
-    margin-right: 5px;
-  }
-`;
-
 const LineChartContainer = styled.div`
-  height: 80%;
+  height: 100%;
+  padding-top: 50px;
 `;
 
 const ErrorContainer = styled.div`
@@ -59,16 +47,15 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface ILineChartProps extends Props {
-  index?: number;
   type: string;
   title?: string;
   id?: string;
   stateFunc?: (id: string, start: string, end: string) => void;
 }
 
-function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
+function LineChart({data, type, title, id, stateFunc}: ILineChartProps) {
   const chartRef = useRef(null);
-  const useData = index ? data[index] : data[0];
+  const useData = data[0];
 
   useLayoutEffect(() => {
     console.log(useData.type);
@@ -88,14 +75,21 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
 
       const series = chart.series.push(new am4charts.LineSeries());
       // series.name = 'Value';
-      series.stroke = am4core.color('#CDA2AB');
+      series.stroke = am4core.color('#d10909');
       series.strokeWidth = 3;
       series.dataFields.valueY = 'value';
       series.dataFields.categoryX = 'date';
-      series.tooltipText = '{categoryX} :[bold] {valueY}[/]';
+
+      series.tooltipHTML = `<div style="padding:10px;"><div style="font-size:17px;margin-bottom:5px;">{value}건</div><span style="font-size:16px;color:#999;">{date}</span></div>`;
+      series.tooltip.getFillFromObject = false;
+      series.tooltip.background.fill = am4core.color('#fff');
+      series.tooltip.background.strokeWidth = 2;
+      series.tooltip.background.stroke = am4core.color('#d10909');
+      series.tooltip.label.fill = am4core.color('#222');
 
       const bullet = series.bullets.push(new am4charts.CircleBullet());
-      bullet.circle.stroke = am4core.color('#fff');
+      bullet.circle.stroke = am4core.color('#d10909');
+      bullet.circle.fill = am4core.color('#fff');
       bullet.circle.strokeWidth = 2;
 
       chart.cursor = new am4charts.XYCursor();
@@ -129,23 +123,15 @@ function LineChart({data, index, type, title, id, stateFunc}: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [useData, index, type, id, stateFunc]);
+  }, [useData, type, id, stateFunc]);
   console.log(useData.type, useData.data);
-  return (
-    <>
-      <TitleContainer>
-        <Title>{title}</Title>
-        <Title>{useData.type.replace('키워드', '추이')} 그래프</Title>
-      </TitleContainer>
-      {useData.data.length === 0 ? (
-        <ErrorContainer>
-          <Error>분석결과가 없습니다!</Error>
-          <span id={useData.type} />
-        </ErrorContainer>
-      ) : (
-        <LineChartContainer id={useData.type} />
-      )}
-    </>
+  return useData.data.length === 0 ? (
+    <ErrorContainer>
+      <Error>분석결과가 없습니다!</Error>
+      <span id={useData.type} />
+    </ErrorContainer>
+  ) : (
+    <LineChartContainer id={useData.type} />
   );
 }
 
