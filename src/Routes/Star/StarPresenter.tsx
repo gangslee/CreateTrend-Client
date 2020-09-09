@@ -96,12 +96,7 @@ function StarPresenter({funcs, id, period, data}: IStarPresenterProps) {
         </ChartSection>
         <ChartSection>
           {data.star.channelInfo != null ? (
-            <LineChart
-              type="star"
-              stateFunc={funcs.periodLine}
-              id={id}
-              title={data.star.channelInfo.channel_name}
-            />
+            <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
           ) : (
             <Loader />
           )}

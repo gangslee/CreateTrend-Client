@@ -21,7 +21,6 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   } = ownProps;
 
   return {
-    useAble: state.keyword.useAble,
     search: search,
   };
 }

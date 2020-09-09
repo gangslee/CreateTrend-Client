@@ -27,7 +27,7 @@ const Error = styled.span`
 
 function mapStateToProps(state: RootState) {
   if (state.page === 'keyword') {
-    return {data: state.keyword.lines};
+    return {data: [state.keyword.lines[state.keyword.currentChart]]};
   } else if (state.page === 'statistics') {
     return {
       data:
@@ -48,17 +48,15 @@ type Props = PropsFromRedux;
 
 interface ILineChartProps extends Props {
   type: string;
-  title?: string;
   id?: string;
   stateFunc?: (id: string, start: string, end: string) => void;
 }
 
-function LineChart({data, type, title, id, stateFunc}: ILineChartProps) {
+function LineChart({data, type, id, stateFunc}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = data[0];
 
   useLayoutEffect(() => {
-    console.log(useData.type);
     let chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
     if (useData.data.length > 0) {
@@ -124,7 +122,7 @@ function LineChart({data, type, title, id, stateFunc}: ILineChartProps) {
       chart.dispose();
     };
   }, [useData, type, id, stateFunc]);
-  console.log(useData.type, useData.data);
+
   return useData.data.length === 0 ? (
     <ErrorContainer>
       <Error>분석결과가 없습니다!</Error>

@@ -78,7 +78,7 @@ export interface IKeywordData {
   lines: ILineChartData[];
   keyword: IKeywordChartData[];
   video: IVideoListData[];
-  useAble?: boolean;
+  currentChart: number;
 }
 
 const keywordData: IKeywordData = {
@@ -86,7 +86,7 @@ const keywordData: IKeywordData = {
   lines: null,
   keyword: null,
   video: null,
-  useAble: false,
+  currentChart: 0,
 };
 
 const keywordSlice = createSlice({
@@ -98,10 +98,9 @@ const keywordSlice = createSlice({
       state.lines = action.payload.lines;
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
-      state.useAble = true;
     },
-    disableUseAbleKeyword: (state) => {
-      state.useAble = false;
+    setRadioState: (state) => {
+      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
     },
   },
 });
@@ -316,7 +315,7 @@ const store = configureStore({
 
 export const {searchTermUpdate, searchTypeUpdate} = homeSlice.actions;
 
-export const {keywordDataUpdate, disableUseAbleKeyword} = keywordSlice.actions;
+export const {keywordDataUpdate, setRadioState} = keywordSlice.actions;
 
 export const {
   statisticsDataUpdate,

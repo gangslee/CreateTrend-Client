@@ -118,7 +118,7 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
               </SubResultContainer>
               <SubResultContainer>
                 <LineChartContainer>
-                  <LineChart type="statistics" title={title} />
+                  <LineChart type="statistics" />
                 </LineChartContainer>
               </SubResultContainer>
             </>

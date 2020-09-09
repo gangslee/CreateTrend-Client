@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, disableUseAbleKeyword} from '../../store';
+import {RootState, RootDispatch} from '../../store';
 import {Link} from 'react-router-dom';
 
 type styleType = {
@@ -94,7 +94,7 @@ function mapStateToProps(state: RootState) {
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
-  return {disableUseable: () => dispatch(disableUseAbleKeyword())};
+  return {};
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -110,7 +110,7 @@ interface IKeywordChartProps extends Props {
   disableFunc?: () => void;
 }
 
-function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IKeywordChartProps) {
+function KeywordChart({data, state, index, title, stateFunc}: IKeywordChartProps) {
   const usingData = data !== null && (state.page === 'keyword' ? data[index] : data[0]);
 
   const handleKeywordClick = (e: React.MouseEvent) => {
@@ -118,9 +118,7 @@ function KeywordChart({data, state, index, title, stateFunc, disableUseable}: IK
     stateFunc(idx);
   };
 
-  const handleSLinkClick = (e: React.MouseEvent) => {
-    disableUseable();
-  };
+  const handleSLinkClick = (e: React.MouseEvent) => {};
 
   return (
     <>

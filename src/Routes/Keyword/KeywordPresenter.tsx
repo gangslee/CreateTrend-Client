@@ -7,7 +7,7 @@ import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
-import {RootState} from '../../store';
+import {RootState, RootDispatch, setRadioState} from '../../store';
 import bg from '../../Asset/images/bg2.svg';
 import SearchBar from '../../Components/Container/SearchBar';
 
@@ -178,7 +178,17 @@ function mapStateToProps(state: RootState) {
   };
 }
 
-const connector = connect(mapStateToProps);
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    dispatches: {
+      radio: () => {
+        dispatch(setRadioState());
+      },
+    },
+  };
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -187,7 +197,12 @@ interface IKeywordPresenter extends Props {
   search: string;
 }
 
-function KeywordPresenter({search, data}: IKeywordPresenter) {
+function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
+  const handleOnClickRadio = (e: React.MouseEvent) => {
+    ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
+      (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
+      dispatches.radio();
+  };
   return (
     <BgContainer>
       <Slogan>
@@ -208,6 +223,7 @@ function KeywordPresenter({search, data}: IKeywordPresenter) {
           <TitleRed>{search}</TitleRed> 키워드 검색 결과
         </Title>
       </TitleContainer>
+
       <Container>
         <AnalysisSection>
           <Subtitle>
@@ -217,24 +233,41 @@ function KeywordPresenter({search, data}: IKeywordPresenter) {
           <GraphContainer>
             {data.wordmap !== null ? <WordMap type="keyword" /> : <Loader />}
           </GraphContainer>
+
           <SubtitleContainer>
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
             </Subtitle>
 
             <RadioContainer>
-              <RadioBt id="333" value="인기도 추이" name="chartType" />
-              <RadioLabel htmlFor="333"> 인기도 추이</RadioLabel>
+              <RadioBt
+                id="popularChart"
+                value="인기도 추이"
+                name="chartType"
+                defaultChecked={1 === data.currentChart}
+                onClick={handleOnClickRadio}
+              />
+              <RadioLabel htmlFor="popularChart"> 인기도 추이</RadioLabel>
             </RadioContainer>
             <RadioContainer>
-              <RadioBt id="123" value="영상화 추이" name="chartType" />
-              <RadioLabel htmlFor="123">영상화 추이</RadioLabel>
+              <RadioBt
+                id="videoChart"
+                value="영상화 추이"
+                name="chartType"
+                defaultChecked={0 === data.currentChart}
+                onClick={handleOnClickRadio}
+              />
+              <RadioLabel htmlFor="videoChart">영상화 추이</RadioLabel>
             </RadioContainer>
           </SubtitleContainer>
 
           <GraphContainer>
-            {data.lines !== null ? <LineChart type="keyword" title={search} /> : <Loader />}
+            {data.lines !== null ? <LineChart type="keyword" /> : <Loader />}
           </GraphContainer>
+
+          <Subtitle>
+            <TitleRed>{search}</TitleRed> 조회수 급상승 영상
+          </Subtitle>
 
           <VideoContainer mode="analysis">
             {data.video !== null ? (
