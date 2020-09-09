@@ -130,7 +130,9 @@ const SubtitleContainer = styled.div``;
 const GraphContainer = styled.div`
   height: 330px;
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ecf1ff;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
+  border-radius: 10px;
   padding: 5px;
   margin-bottom: 40px;
   background-color: #fff;
@@ -141,17 +143,23 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div`
-  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '200px' : '580px')};
+  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '580px')};
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: 2px solid #ecf1ff;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   padding: 10px;
   margin-bottom: 40px;
   background-color: #fff;
   ${({mode}: IVideoProps) =>
-    mode === 'aside' &&
-    css`
-      width: 380px;
-    `};
+    mode === 'analysis'
+      ? css`
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        `
+      : css`
+          width: 380px;
+        `};
 `;
 
 const KeywordChartContainer = styled.div`
