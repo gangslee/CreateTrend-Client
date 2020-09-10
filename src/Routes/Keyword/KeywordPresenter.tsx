@@ -77,11 +77,21 @@ const AnalysisSection = styled.div`
   width: 790px;
 `;
 
+const SubtitleContainer = styled.div`
+  display: inline-block;
+`;
+
 const Subtitle = styled.span`
   display: inline-block;
   font-size: 22px;
   line-height: 1.36;
   margin-bottom: 20px;
+`;
+
+const SForm = styled.form`
+  float: right;
+  display: inline-flex;
+  align-items: center;
 `;
 
 const RadioBt = styled.input.attrs({
@@ -111,7 +121,7 @@ const RadioLabel = styled.label`
 const RadioContainer = styled.div`
   position: relative;
   vertical-align: middle;
-  float: right;
+
   margin-left: 20px;
   input[type='radio']:checked + label:after {
     border-radius: 50%;
@@ -125,7 +135,54 @@ const RadioContainer = styled.div`
   }
 `;
 
-const SubtitleContainer = styled.div``;
+const Notice = styled.div`
+  display: none;
+  width: 225px;
+  height: 90px;
+  box-shadow: 5px 5px 10px 0 rgba(95, 111, 174, 0.3);
+  background-color: #d10909;
+  position: absolute;
+  top: 25px;
+  left: 40px;
+  border-radius: 10px;
+  border-top-left-radius: 0;
+  padding: 20px 25px;
+  font-family: 'S-CoreDream-4Regular';
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 1.67;
+  color: #fff;
+`;
+
+const NoticeIcon = styled.span`
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #b8c0e1;
+  border-radius: 50%;
+  margin-left: 10px;
+  color: #fff;
+  font-size: 16px;
+  line-height: 2;
+  text-align: center;
+  font-family: 'S-CoreDream-5Medium';
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const NoticeContainer = styled.div`
+  display: inline-block;
+  position: relative;
+  &:hover {
+    ${Notice} {
+      display: inline-block;
+      transition: all 1s ease-in-out;
+    }
+  }
+`;
 
 const GraphContainer = styled.div`
   height: 330px;
@@ -145,7 +202,9 @@ interface IVideoProps {
 const VideoContainer = styled.div`
   height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '580px')};
   box-sizing: border-box;
+
   border: 2px solid #ecf1ff;
+  border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   padding: 10px;
   margin-bottom: 40px;
@@ -211,6 +270,8 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
   };
+  // const [hover, setHover] = useState(false);
+  console.log('111');
   return (
     <BgContainer>
       <Slogan>
@@ -245,18 +306,13 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
           <SubtitleContainer>
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
+              <NoticeContainer>
+                <NoticeIcon>?</NoticeIcon>
+                <Notice>원하는 키워드를 선택하여 동향을 파악해 보세요.</Notice>
+              </NoticeContainer>
             </Subtitle>
-
-            <RadioContainer>
-              <RadioBt
-                id="popularChart"
-                value="인기도 추이"
-                name="chartType"
-                defaultChecked={1 === data.currentChart}
-                onClick={handleOnClickRadio}
-              />
-              <RadioLabel htmlFor="popularChart"> 인기도 추이</RadioLabel>
-            </RadioContainer>
+          </SubtitleContainer>
+          <SForm>
             <RadioContainer>
               <RadioBt
                 id="videoChart"
@@ -267,7 +323,17 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
               />
               <RadioLabel htmlFor="videoChart">영상화 추이</RadioLabel>
             </RadioContainer>
-          </SubtitleContainer>
+            <RadioContainer>
+              <RadioBt
+                id="popularChart"
+                value="인기도 추이"
+                name="chartType"
+                defaultChecked={1 === data.currentChart}
+                onClick={handleOnClickRadio}
+              />
+              <RadioLabel htmlFor="popularChart"> 인기도 추이</RadioLabel>
+            </RadioContainer>
+          </SForm>
 
           <GraphContainer>
             {data.lines !== null ? <LineChart type="keyword" /> : <Loader />}
