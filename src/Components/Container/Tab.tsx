@@ -57,8 +57,9 @@ const TabTitle = styled.span`
 
 function mapStateToProps(state: RootState) {
   return {
-    state: {
-      chart: state.page === 'home' ? state.home.searchType : state.statistics.currentChart,
+    states: {
+      chart: state.statistics.currentChart,
+      search: state.home.searchType,
     },
   };
 }
@@ -74,8 +75,8 @@ interface ITabProps extends Props {
   stateFunc: () => void;
 }
 
-function Tab({state, stateFunc, type}: ITabProps) {
-  const chartType = state.chart;
+function Tab({states, stateFunc, type}: ITabProps) {
+  const chartType = type === 'chart' ? states.chart : states.search;
   const titles = type === 'chart' ? ['인기', '영상'] : ['키워드', '스타채널'];
   const currentType = titles[chartType];
 

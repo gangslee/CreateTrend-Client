@@ -32,8 +32,6 @@ const globalStyles = createGlobalStyle`
     }
 
     body{
-        
-        
         font-family: "Lato", sans-serif;    
     }
     input:focus{

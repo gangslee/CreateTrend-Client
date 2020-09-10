@@ -12,16 +12,7 @@ type containerType = {
 };
 
 const WordmapContainer = styled.div`
-  height: ${({type}: containerType) => (type === 'statistics' ? '85%' : '95%')};
-`;
-
-const Title = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  :first-child {
-    color: #feb100;
-    margin-right: 5px;
-  }
+  height: ${({type}: containerType) => (type === 'statistics' ? '85%' : '100%')};
 `;
 
 const ErrorContainer = styled.div`
@@ -73,31 +64,37 @@ type Props = PropsFromRedux;
 
 interface IWordMapProps extends Props {
   type: string;
-  title?: string;
 }
 
-function WordMap({data, type, title}: IWordMapProps) {
+function WordMap({data, type}: IWordMapProps) {
   const chartRef = useRef(null);
   useLayoutEffect(() => {
     const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);
     const series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
-
     series.data = [data];
 
     // Set up data fields
     series.dataFields.value = 'value';
     series.dataFields.name = 'name';
     series.dataFields.children = 'children';
+    series.dataFields.color = 'color';
 
     // Add labels
     series.nodes.template.label.text = '{name}';
+    // series.nodes.template.label.fill = am4core.color('#000');
+    // series.nodes.template.circle.strokeWidth = 4;
+    // series.nodes.template.circle.fill = am4core.color('#fff');
+    series.nodes.template.outerCircle.strokeWidth = 4;
     series.fontSize = type === 'keyword' ? 15 : 12;
+
     // series.fontWeight = 'bold';
     series.minRadius = am4core.percent(6);
-    series.maxRadius = am4core.percent(12);
+    series.maxRadius = am4core.percent(13);
     series.nodes.template.tooltipText = '{name}';
     series.nodes.template.label.hideOversized = true;
     series.nodes.template.label.truncate = true;
+
+    series.nodes.template.togglable = false;
 
     chartRef.current = chart;
 
@@ -106,18 +103,12 @@ function WordMap({data, type, title}: IWordMapProps) {
     };
   }, [data, type]);
 
-  return (
-    <>
-      <Title>{title}</Title>
-      <Title>워드맵</Title>
-      {data.children.length === 0 ? (
-        <ErrorContainer>
-          <Error>분석결과가 없습니다!</Error>
-        </ErrorContainer>
-      ) : (
-        <WordmapContainer id={`${type}-wordmap`} type={type} />
-      )}
-    </>
+  return data.children.length === 0 ? (
+    <ErrorContainer>
+      <Error>분석결과가 없습니다!</Error>
+    </ErrorContainer>
+  ) : (
+    <WordmapContainer id={`${type}-wordmap`} type={type} />
   );
 }
 
