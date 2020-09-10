@@ -62,6 +62,9 @@ const Keyword = styled.div`
   font-weight: normal;
   text-align: center;
   cursor: pointer;
+  &:hover {
+    color: #d10909;
+  }
 `;
 
 const SLink = styled(Link)`

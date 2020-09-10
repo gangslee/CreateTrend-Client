@@ -35,7 +35,7 @@ const SloganRed = styled.span`
   color: #dd0909;
 `;
 
-const SearchBarContainer = styled.div`
+const SearchBarContainer = styled.form`
   display: flex;
   justify-content: center;
 `;
@@ -263,9 +263,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 interface IKeywordPresenter extends Props {
   search: string;
+  submit: (e: React.FormEvent) => void;
 }
 
-function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
+function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter) {
   const handleOnClickRadio = (e: React.MouseEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
@@ -278,7 +279,7 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
       <Slogan>
         "궁금한 <SloganRed>키워드</SloganRed>를 검색해 보세요"
       </Slogan>
-      <SearchBarContainer>
+      <SearchBarContainer onSubmit={submit}>
         <SearchBar />
       </SearchBarContainer>
 
