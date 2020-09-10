@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch} from '../../store';
+import {RootState, RootDispatch, callLoader} from '../../store';
 import {Link} from 'react-router-dom';
 
 type styleType = {
@@ -10,27 +10,26 @@ type styleType = {
   current?: boolean;
 };
 
-const TitleContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Subtitle = styled.div`
+  font-size: 22px;
+  line-height: 1.36;
+  text-align: center;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #222;
 `;
 
-const Title = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  margin-right: 5px;
-  :first-child {
-    color: #feb100;
-  }
+const TitleRed = styled.span`
+  color: #d10909;
 `;
 
 const KeywordChartContainer = styled.div`
   display: flex;
+  padding: 0px 25px;
   align-items: center;
-  margin: 5px 0px;
-  padding: 5px 10px;
-  font-size: ${({type}: styleType) => (type === 'keyword' ? '16px' : '18px')};
+  line-height: 2.67;
+  font-stretch: normal;
+  letter-spacing: normal;
+  font-size: ${({type}: styleType) => (type === 'keyword' ? '15px' : '18px')};
   font-weight: 600;
   :not(:last-child) {
     border-bottom: 2px solid #ddd;
@@ -43,19 +42,25 @@ const KeywordChartContainer = styled.div`
     `};
 `;
 
-const Rank = styled.div`
-  display: inline-block;
+const Rank = styled.span`
   width: 10%;
+  font-family: 'NotoSans';
+  font-weight: bold;
+  display: inline-block;
   text-align: center;
+  margin-right: 15px;
 `;
 
 const KeywordContainer = styled.div`
-  display: inline-block;
-  width: 89%;
+  width: 100%;
   text-align: center;
 `;
 
-const Keyword = styled.span`
+const Keyword = styled.div`
+  font-family: 'S-CoreDream-4Regular';
+  color: #222;
+  font-weight: normal;
+  text-align: center;
   cursor: pointer;
 `;
 
@@ -94,7 +99,13 @@ function mapStateToProps(state: RootState) {
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
-  return {};
+  return {
+    dispatches: {
+      callLoader: () => {
+        dispatch(callLoader());
+      },
+    },
+  };
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -110,7 +121,7 @@ interface IKeywordChartProps extends Props {
   disableFunc?: () => void;
 }
 
-function KeywordChart({data, state, index, title, stateFunc}: IKeywordChartProps) {
+function KeywordChart({data, state, dispatches, index, title, stateFunc}: IKeywordChartProps) {
   const usingData = data !== null && (state.page === 'keyword' ? data[index] : data[0]);
 
   const handleKeywordClick = (e: React.MouseEvent) => {
@@ -118,48 +129,39 @@ function KeywordChart({data, state, index, title, stateFunc}: IKeywordChartProps
     stateFunc(idx);
   };
 
-  const handleSLinkClick = (e: React.MouseEvent) => {};
+  const handleSLinkClick = (e: React.MouseEvent) => {
+    dispatches.callLoader();
+  };
 
   return (
     <>
-      {data === null ? (
-        <div>12312</div>
+      {state.page === 'keyword' && (
+        <Subtitle>
+          {usingData.type} <TitleRed>TOP 10</TitleRed>
+        </Subtitle>
+      )}
+      {usingData.keyword.length === 0 ? (
+        <ErrorContainer>
+          <Error>분석결과가 없습니다!</Error>
+        </ErrorContainer>
       ) : (
         <>
-          {state.page === 'keyword' && (
-            <TitleContainer>
-              <Title>{title}</Title>
-              <Title>{` 관련 ${usingData.type}`}</Title>
-            </TitleContainer>
-          )}
-          {usingData.keyword.length === 0 ? (
-            <ErrorContainer>
-              <Error>분석결과가 없습니다!</Error>
-            </ErrorContainer>
-          ) : (
-            <>
-              {usingData.keyword.map((keyword, index) => (
-                <KeywordChartContainer
-                  current={state.keyword === index}
-                  type={state.page}
-                  key={index}
-                >
-                  <Rank>{index + 1}</Rank>
-                  {state.page === 'keyword' ? (
-                    <KeywordContainer>
-                      <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
-                        <Keyword>{keyword.name}</Keyword>
-                      </SLink>
-                    </KeywordContainer>
-                  ) : (
-                    <KeywordContainer>
-                      <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
-                    </KeywordContainer>
-                  )}
-                </KeywordChartContainer>
-              ))}
-            </>
-          )}
+          {usingData.keyword.map((keyword, index) => (
+            <KeywordChartContainer current={state.keyword === index} type={state.page} key={index}>
+              <Rank>{index + 1}</Rank>
+              {state.page === 'keyword' ? (
+                <KeywordContainer>
+                  <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
+                    <Keyword>{keyword.name}</Keyword>
+                  </SLink>
+                </KeywordContainer>
+              ) : (
+                <KeywordContainer>
+                  <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
+                </KeywordContainer>
+              )}
+            </KeywordChartContainer>
+          ))}
         </>
       )}
     </>

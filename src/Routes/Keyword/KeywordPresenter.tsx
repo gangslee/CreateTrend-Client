@@ -43,7 +43,7 @@ const SearchBarContainer = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
-  width: 1220px;
+  width: 1200px;
   margin: 50px auto;
   padding: 20px 0px;
   border-bottom: 1px solid #dbe0f5;
@@ -77,6 +77,10 @@ const AnalysisSection = styled.div`
   width: 790px;
 `;
 
+const AsideSection = styled.div`
+  width: 380px;
+`;
+
 const SubtitleContainer = styled.div`
   display: inline-block;
 `;
@@ -86,6 +90,7 @@ const Subtitle = styled.span`
   font-size: 22px;
   line-height: 1.36;
   margin-bottom: 20px;
+  margin-right: 10px;
 `;
 
 const SForm = styled.form`
@@ -143,7 +148,7 @@ const Notice = styled.div`
   background-color: #d10909;
   position: absolute;
   top: 25px;
-  left: 40px;
+  left: 30px;
   border-radius: 10px;
   border-top-left-radius: 0;
   padding: 20px 25px;
@@ -160,7 +165,6 @@ const NoticeIcon = styled.span`
   height: 30px;
   background-color: #b8c0e1;
   border-radius: 50%;
-  margin-left: 10px;
   color: #fff;
   font-size: 16px;
   line-height: 2;
@@ -200,34 +204,31 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div`
-  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '580px')};
+  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '610px')};
   box-sizing: border-box;
-
   border: 2px solid #ecf1ff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: 10px;
+  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '10px' : '15px 10px')};
   margin-bottom: 40px;
   background-color: #fff;
   ${({mode}: IVideoProps) =>
-    mode === 'analysis'
-      ? css`
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        `
-      : css`
-          width: 380px;
-        `};
+    mode === 'analysis' &&
+    css`
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    `}
 `;
 
 const KeywordChartContainer = styled.div`
-  height: 430px;
+  height: 560px;
   width: 48%;
   box-sizing: border-box;
-  padding: 15px 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 45px 25px;
+  border: 2px solid #ecf1ff;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   background-color: #fff;
 `;
 
@@ -270,7 +271,7 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
   };
-  // const [hover, setHover] = useState(false);
+
   console.log('111');
   return (
     <BgContainer>
@@ -306,11 +307,11 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
           <SubtitleContainer>
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
-              <NoticeContainer>
-                <NoticeIcon>?</NoticeIcon>
-                <Notice>원하는 키워드를 선택하여 동향을 파악해 보세요.</Notice>
-              </NoticeContainer>
             </Subtitle>
+            <NoticeContainer>
+              <NoticeIcon>?</NoticeIcon>
+              <Notice>원하는 키워드를 선택하여 동향을 파악해 보세요.</Notice>
+            </NoticeContainer>
           </SubtitleContainer>
           <SForm>
             <RadioContainer>
@@ -358,13 +359,19 @@ function KeywordPresenter({search, data, dispatches}: IKeywordPresenter) {
             ))}
           </ChartContainer>
         </AnalysisSection>
-        <VideoContainer mode="aside">
-          {data.video !== null ? (
-            <VideoList mode="aside" type="keyword" title={search} />
-          ) : (
-            <Loader />
-          )}
-        </VideoContainer>
+
+        <AsideSection>
+          <Subtitle>
+            <TitleRed>{search}</TitleRed> 인기 영상
+          </Subtitle>
+          <VideoContainer mode="aside">
+            {data.video !== null ? (
+              <VideoList mode="aside" type="keyword" title={search} />
+            ) : (
+              <Loader />
+            )}
+          </VideoContainer>
+        </AsideSection>
       </Container>
     </BgContainer>
   );

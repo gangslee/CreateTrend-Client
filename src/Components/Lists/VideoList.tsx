@@ -1,13 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
 import Slider from '../Container/Slider';
 
-interface ISCProps {
+interface IVideoListStyleProps {
   mode?: string;
-  type?: string;
   bgUrl?: string;
 }
 
@@ -20,17 +19,18 @@ const VideoContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${({mode, type}: ISCProps) => (mode === 'analysis' ? '45%' : '60%')};
-  height: ${({mode, type}: ISCProps) => (mode === 'analysis' ? '180px' : '85px')};
-  margin-right: ${({mode}: ISCProps) => (mode === 'analysis' ? '20px' : '5px')};
+  width: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '45%' : '55%')};
+  height: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '180px' : '95px')};
+  margin-right: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '20px' : '15px')};
   border-radius: 10px;
-  background-image: url(${({bgUrl}: ISCProps) => bgUrl});
+  background-image: url(${({bgUrl}: IVideoListStyleProps) => bgUrl});
   background-size: cover;
   background-position: center center;
   &:hover {
     opacity: 0.7;
   }
   transition: opacity 0.3s linear, background-image 0.3s linear;
+  cursor: pointer;
 `;
 
 const InfoContainer = styled.div`
@@ -68,13 +68,17 @@ const Info = styled.div`
 `;
 
 const VideoTitle = styled.div`
-  width: 40%;
+  width: 44%;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  font-size: 14px;
-  font-weight: 600;
-  -webkit-line-clamp: 3;
+  font-family: 'S-CoreDream-4Regular';
+  font-size: 15px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
 `;
 
@@ -148,7 +152,7 @@ function VideoList({data, current, update, mode, type, title}: IVideoListProps) 
       {mode === 'analysis' ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image bgUrl={usingData.data[current].thumbnail_url} mode={mode} type={type} />
+            <Image bgUrl={usingData.data[current].thumbnail_url} mode={mode} />
             <InfoContainer>
               <Info>영상 제목</Info>
               <Info>{usingData.data[current].video_name}</Info>

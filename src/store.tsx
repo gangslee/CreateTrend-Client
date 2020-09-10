@@ -102,6 +102,13 @@ const keywordSlice = createSlice({
     setRadioState: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
     },
+    callLoader: (state) => {
+      state.keyword = null;
+      state.lines = null;
+      state.video = null;
+      state.wordmap = null;
+      state.currentChart = 0;
+    },
   },
 });
 
@@ -315,7 +322,7 @@ const store = configureStore({
 
 export const {searchTermUpdate, searchTypeUpdate} = homeSlice.actions;
 
-export const {keywordDataUpdate, setRadioState} = keywordSlice.actions;
+export const {keywordDataUpdate, setRadioState, callLoader} = keywordSlice.actions;
 
 export const {
   statisticsDataUpdate,
