@@ -94,22 +94,28 @@ const Error = styled.span`
   font-weight: 600;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      data: {
-        keyword: state.keyword,
-        statistics: state.statistics,
-        star: state.star,
-        period: state.period,
+interface OwnProps {
+  type: string;
+}
+
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
+  if (ownProps.type === 'keyword') {
+    return {states: {data: state.keyword.video, current: state.slider.keyword}};
+  } else if (state.page === 'statistics') {
+    return {
+      states: {
+        data:
+          state.statistics.keywordChart[state.statistics.currentChart].keyword[
+            state.statistics.currentKeyword
+          ].video,
+        current: state.slider.statistics,
       },
-      sliderCurrent: {
-        keyword: state.slider.keyword,
-        statistics: state.slider.statistics,
-        star: state.slider.star,
-      },
-    },
-  };
+    };
+  } else if (state.page === 'star') {
+    return {
+      states: {data: state.star.video.concat(state.period.video), current: state.slider.star},
+    };
+  }
 }
 
 interface ISliderState {
@@ -143,22 +149,9 @@ function VideoList({states, update, mode, type}: IVideoListProps) {
     update({page: type, len: usingData.data.length - 1}, direction);
   };
 
-  const data =
-    (type === 'keyword' && states.data.keyword.video) ||
-    (type === 'statistics' &&
-      states.data.statistics.keywordChart[states.data.statistics.currentChart].keyword[
-        states.data.statistics.currentKeyword
-      ].video) ||
-    (type === 'star' && states.data.star.video.concat(states.data.period.video));
+  const usingData = states.data.filter((data) => data.type === mode)[0];
 
-  const usingData = data.filter((data) => data.type === mode)[0];
-
-  const current =
-    type === 'keyword'
-      ? states.sliderCurrent.keyword
-      : type === 'statistics'
-      ? states.sliderCurrent.statistics
-      : states.sliderCurrent.star;
+  const current = states.current;
 
   return usingData.data.length === 0 ? (
     <ErrorContainer>

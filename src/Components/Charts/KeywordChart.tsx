@@ -85,15 +85,20 @@ const Error = styled.span`
   font-weight: 600;
 `;
 
-function mapStateToProps(state: RootState) {
+interface OwnProps {
+  type: string;
+}
+
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    data:
-      state.page === 'keyword'
-        ? state.keyword.keyword
-        : state.statistics.keywordChart !== null
-        ? [state.statistics.keywordChart[state.statistics.currentChart]]
-        : null,
-    state: {
+    states: {
+      data:
+        ownProps.type === 'keyword'
+          ? state.keyword.keyword
+          : state.statistics.keywordChart !== null
+          ? [state.statistics.keywordChart[state.statistics.currentChart]]
+          : null,
+
       page: state.page,
       chart: state.statistics.currentChart,
       keyword: state.statistics.currentKeyword,
@@ -120,12 +125,14 @@ type Props = PropsFromRedux;
 interface IKeywordChartProps extends Props {
   index?: number;
   title?: string;
+  type?: string;
   stateFunc?: (n: number) => void;
   disableFunc?: () => void;
 }
 
-function KeywordChart({data, state, dispatches, index, title, stateFunc}: IKeywordChartProps) {
-  const usingData = data !== null && (state.page === 'keyword' ? data[index] : data[0]);
+function KeywordChart({states, dispatches, index, type, title, stateFunc}: IKeywordChartProps) {
+  const usingData =
+    states.data !== null && (type === 'keyword' ? states.data[index] : states.data[0]);
 
   const handleKeywordClick = (e: React.MouseEvent) => {
     const idx = usingData.keyword.findIndex((data) => data.name === e.currentTarget.innerHTML);
@@ -138,7 +145,7 @@ function KeywordChart({data, state, dispatches, index, title, stateFunc}: IKeywo
 
   return (
     <>
-      {state.page === 'keyword' && (
+      {type === 'keyword' && (
         <Subtitle>
           {usingData.type} <TitleRed>TOP 10</TitleRed>
         </Subtitle>
@@ -150,9 +157,13 @@ function KeywordChart({data, state, dispatches, index, title, stateFunc}: IKeywo
       ) : (
         <>
           {usingData.keyword.map((keyword, index) => (
-            <KeywordChartContainer current={state.keyword === index} type={state.page} key={index}>
+            <KeywordChartContainer
+              current={states.keyword === index}
+              type={states.page}
+              key={index}
+            >
               <Rank>{index + 1}</Rank>
-              {state.page === 'keyword' ? (
+              {states.page === 'keyword' ? (
                 <KeywordContainer>
                   <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
                     <Keyword>{keyword.name}</Keyword>

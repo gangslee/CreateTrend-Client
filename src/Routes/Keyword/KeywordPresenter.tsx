@@ -304,7 +304,7 @@ function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter)
             {data.wordmap !== null ? <WordMap type="keyword" /> : <Loader />}
           </GraphContainer>
 
-          {/* <SubtitleContainer>
+          <SubtitleContainer>
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
             </Subtitle>
@@ -354,10 +354,14 @@ function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter)
           <ChartContainer>
             {[0, 1].map((idx) => (
               <KeywordChartContainer key={idx}>
-                {data.wordmap !== null ? <KeywordChart index={idx} title={search} /> : <Loader />}
+                {data.wordmap !== null ? (
+                  <KeywordChart index={idx} title={search} type="keyword" />
+                ) : (
+                  <Loader />
+                )}
               </KeywordChartContainer>
             ))}
-          </ChartContainer> */}
+          </ChartContainer>
         </AnalysisSection>
 
         <AsideSection>

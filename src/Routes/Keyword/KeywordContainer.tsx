@@ -80,7 +80,7 @@ function KeywordContainer({states, dispatches, search}: IKeywordContainerProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (search === states.searchTerm) {
+    if (search === states.searchTerm && states.searchType === 0) {
       dispatches.callLoader();
       const data = await getApi.keyword(search);
       data === null ? console.log('keyword API error') : dispatches.update(data);
