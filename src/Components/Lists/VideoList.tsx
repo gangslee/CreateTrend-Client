@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
@@ -95,19 +95,21 @@ const Error = styled.span`
 `;
 
 function mapStateToProps(state: RootState) {
-  if (state.page === 'keyword') {
-    return {data: state.keyword.video, current: state.slider.keyword};
-  } else if (state.page === 'statistics') {
-    return {
-      data:
-        state.statistics.keywordChart[state.statistics.currentChart].keyword[
-          state.statistics.currentKeyword
-        ].video,
-      current: state.slider.statistics,
-    };
-  } else if (state.page === 'star') {
-    return {data: state.star.video.concat(state.period.video), current: state.slider.star};
-  }
+  return {
+    states: {
+      data: {
+        keyword: state.keyword,
+        statistics: state.statistics,
+        star: state.star,
+        period: state.period,
+      },
+      sliderCurrent: {
+        keyword: state.slider.keyword,
+        statistics: state.slider.statistics,
+        star: state.slider.star,
+      },
+    },
+  };
 }
 
 interface ISliderState {
@@ -135,13 +137,28 @@ interface IVideoListProps extends Props {
   title?: string;
 }
 
-function VideoList({data, current, update, mode, type, title}: IVideoListProps) {
+function VideoList({states, update, mode, type}: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
     const direction = e.currentTarget.id === 'next' ? true : false;
     update({page: type, len: usingData.data.length - 1}, direction);
   };
 
+  const data =
+    (type === 'keyword' && states.data.keyword.video) ||
+    (type === 'statistics' &&
+      states.data.statistics.keywordChart[states.data.statistics.currentChart].keyword[
+        states.data.statistics.currentKeyword
+      ].video) ||
+    (type === 'star' && states.data.star.video.concat(states.data.period.video));
+
   const usingData = data.filter((data) => data.type === mode)[0];
+
+  const current =
+    type === 'keyword'
+      ? states.sliderCurrent.keyword
+      : type === 'statistics'
+      ? states.sliderCurrent.statistics
+      : states.sliderCurrent.star;
 
   return usingData.data.length === 0 ? (
     <ErrorContainer>

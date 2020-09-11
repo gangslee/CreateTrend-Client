@@ -273,7 +273,6 @@ function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter)
       dispatches.radio();
   };
 
-  console.log('111');
   return (
     <BgContainer>
       <Slogan>
@@ -305,7 +304,7 @@ function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter)
             {data.wordmap !== null ? <WordMap type="keyword" /> : <Loader />}
           </GraphContainer>
 
-          <SubtitleContainer>
+          {/* <SubtitleContainer>
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
             </Subtitle>
@@ -358,7 +357,7 @@ function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter)
                 {data.wordmap !== null ? <KeywordChart index={idx} title={search} /> : <Loader />}
               </KeywordChartContainer>
             ))}
-          </ChartContainer>
+          </ChartContainer> */}
         </AnalysisSection>
 
         <AsideSection>
