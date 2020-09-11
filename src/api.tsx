@@ -4,13 +4,25 @@ const api = axios.create({
   baseURL: 'http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/',
 });
 
+const makeRequest = (path: string, params = {}) =>
+  axios.get(`http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`, {
+    params: {
+      ...params,
+    },
+  });
+
+const getData = async (path: string, params = {}) => {
+  try {
+    const {data} = await makeRequest(path, params);
+    return data;
+  } catch (e) {
+    return null;
+  }
+};
+
 export const getApi = {
-  keyword: (search: string) =>
-    api.get('keyword_search/', {
-      params: {
-        search: search,
-      },
-    }),
+  keyword: (search: string) => getData(`keyword_search/`, {search: search}),
+
   statistics: () => api.get('channel_analyze/'),
   statisticsKeyword: (search: string, keyword: string) =>
     api.get('channel_analyze/keyword_data/', {

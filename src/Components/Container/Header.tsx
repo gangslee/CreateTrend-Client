@@ -10,6 +10,7 @@ import {
   setIsOpenSignUp,
   setIsOpenUserMenu,
   setIsLogIn,
+  searchTermUpdate,
 } from '../../store';
 import Dialog from './Dialog';
 
@@ -211,6 +212,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
       userMenu: (isOpen: boolean) => dispatch(setIsOpenUserMenu(isOpen)),
       setLogIn: (isLogIn: boolean) => dispatch(setIsLogIn(isLogIn)),
+      clearSearchBar: () => dispatch(searchTermUpdate('')),
     },
   };
 }
@@ -223,6 +225,10 @@ type Props = PropsFromRedux;
 
 function Header({states, dispatches}: Props) {
   const wrapperRef = useRef(null);
+
+  const handleOnClickLogo = (e: React.MouseEvent) => {
+    dispatches.clearSearchBar();
+  };
 
   const handleOnClickSignIn = (e: React.MouseEvent) => {
     dispatches.signIn(true);
@@ -252,7 +258,7 @@ function Header({states, dispatches}: Props) {
       <Dialog type={(states.signIn && 'signIn') || (states.signUp && 'signUp')} />
       <HeaderContainer>
         <HalfContainer>
-          <Link to="/">
+          <Link to="/" onClick={handleOnClickLogo}>
             <Logo src={require('../../Asset/images/logo.svg')} />
           </Link>
 

@@ -263,24 +263,28 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 interface IKeywordPresenter extends Props {
   search: string;
-  submit: (e: React.FormEvent) => void;
+  searchKeyword: () => void;
 }
 
-function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter) {
+function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPresenter) {
   const handleOnClickRadio = (e: React.MouseEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
   };
 
-  console.log('111');
+  const handleOnSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    searchKeyword();
+  };
+
   return (
     <BgContainer>
       <Slogan>
         "궁금한 <SloganRed>키워드</SloganRed>를 검색해 보세요"
       </Slogan>
-      <SearchBarContainer onSubmit={submit}>
-        <SearchBar />
+      <SearchBarContainer onSubmit={handleOnSubmit}>
+        <SearchBar searchKeyword={searchKeyword} />
       </SearchBarContainer>
 
       <TitleContainer>
@@ -355,7 +359,11 @@ function KeywordPresenter({data, dispatches, search, submit}: IKeywordPresenter)
           <ChartContainer>
             {[0, 1].map((idx) => (
               <KeywordChartContainer key={idx}>
-                {data.wordmap !== null ? <KeywordChart index={idx} title={search} /> : <Loader />}
+                {data.wordmap !== null ? (
+                  <KeywordChart index={idx} title={search} type="keyword" />
+                ) : (
+                  <Loader />
+                )}
               </KeywordChartContainer>
             ))}
           </ChartContainer>

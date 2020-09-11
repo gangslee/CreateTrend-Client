@@ -25,18 +25,24 @@ const Error = styled.span`
   font-weight: 600;
 `;
 
-function mapStateToProps(state: RootState) {
-  if (state.page === 'keyword') {
-    return {data: [state.keyword.lines[state.keyword.currentChart]]};
+interface OwnProps {
+  type: string;
+}
+
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
+  if (ownProps.type === 'keyword') {
+    return {states: {data: [state.keyword.lines[state.keyword.currentChart]]}};
   } else if (state.page === 'statistics') {
     return {
-      data:
-        state.statistics.keywordChart[state.statistics.currentChart].keyword[
-          state.statistics.currentKeyword
-        ].line,
+      states: {
+        data:
+          state.statistics.keywordChart[state.statistics.currentChart].keyword[
+            state.statistics.currentKeyword
+          ].line,
+      },
     };
   } else if (state.page === 'star') {
-    return {data: state.star.line};
+    return {states: {data: state.star.line}};
   }
 }
 
@@ -52,9 +58,9 @@ interface ILineChartProps extends Props {
   stateFunc?: (id: string, start: string, end: string) => void;
 }
 
-function LineChart({data, type, id, stateFunc}: ILineChartProps) {
+function LineChart({states, type, id, stateFunc}: ILineChartProps) {
   const chartRef = useRef(null);
-  const useData = data[0];
+  const useData = states.data[0];
 
   useLayoutEffect(() => {
     let chart = am4core.create(useData.type, am4charts.XYChart);

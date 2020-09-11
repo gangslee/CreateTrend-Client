@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, currentPage, callLoader} from '../../store';
+import {RootState, RootDispatch, callLoader} from '../../store';
 import HomePresenter from '../Home/HomePresenter';
 
 function mapStateToProps(state: RootState) {
@@ -16,7 +16,6 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     dispatches: {
-      setPage: () => dispatch(currentPage('home')),
       callLoader: () => {
         dispatch(callLoader());
       },
@@ -37,13 +36,12 @@ interface IHomeContainerProps extends Props {
 }
 
 function HomeContainer({states, dispatches, history}: IHomeContainerProps) {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const searchKeyword = () => {
     dispatches.callLoader();
     history.push(`/${states.searchType === 0 ? 'keyword' : 'star'}/${states.searchTerm}`);
   };
-  dispatches.setPage();
-  return <HomePresenter submit={handleSubmit} />;
+
+  return <HomePresenter searchKeyword={searchKeyword} />;
 }
 
 export default connector(HomeContainer);

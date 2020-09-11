@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
 import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
@@ -94,19 +94,27 @@ const Error = styled.span`
   font-weight: 600;
 `;
 
-function mapStateToProps(state: RootState) {
-  if (state.page === 'keyword') {
-    return {data: state.keyword.video, current: state.slider.keyword};
+interface OwnProps {
+  type: string;
+}
+
+function mapStateToProps(state: RootState, ownProps: OwnProps) {
+  if (ownProps.type === 'keyword') {
+    return {states: {data: state.keyword.video, current: state.slider.keyword}};
   } else if (state.page === 'statistics') {
     return {
-      data:
-        state.statistics.keywordChart[state.statistics.currentChart].keyword[
-          state.statistics.currentKeyword
-        ].video,
-      current: state.slider.statistics,
+      states: {
+        data:
+          state.statistics.keywordChart[state.statistics.currentChart].keyword[
+            state.statistics.currentKeyword
+          ].video,
+        current: state.slider.statistics,
+      },
     };
   } else if (state.page === 'star') {
-    return {data: state.star.video.concat(state.period.video), current: state.slider.star};
+    return {
+      states: {data: state.star.video.concat(state.period.video), current: state.slider.star},
+    };
   }
 }
 
@@ -135,13 +143,15 @@ interface IVideoListProps extends Props {
   title?: string;
 }
 
-function VideoList({data, current, update, mode, type, title}: IVideoListProps) {
+function VideoList({states, update, mode, type}: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
     const direction = e.currentTarget.id === 'next' ? true : false;
     update({page: type, len: usingData.data.length - 1}, direction);
   };
 
-  const usingData = data.filter((data) => data.type === mode)[0];
+  const usingData = states.data.filter((data) => data.type === mode)[0];
+
+  const current = states.current;
 
   return usingData.data.length === 0 ? (
     <ErrorContainer>

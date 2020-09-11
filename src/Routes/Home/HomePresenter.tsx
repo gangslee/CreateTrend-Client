@@ -59,10 +59,15 @@ const SForm = styled.form`
 `;
 
 interface IHomePresenterProps {
-  submit: (e: React.FormEvent) => void;
+  searchKeyword: () => void;
 }
 
-function HomePresenter({submit}: IHomePresenterProps) {
+function HomePresenter({searchKeyword}: IHomePresenterProps) {
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    searchKeyword();
+  };
+
   return (
     <BgContainer>
       <Container>
@@ -73,8 +78,8 @@ function HomePresenter({submit}: IHomePresenterProps) {
           <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
         </TitleContainer>
 
-        <SForm onSubmit={submit}>
-          <SearchBar />
+        <SForm onSubmit={handleOnSubmit}>
+          <SearchBar searchKeyword={searchKeyword} />
         </SForm>
       </Container>
     </BgContainer>

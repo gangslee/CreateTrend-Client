@@ -100,7 +100,11 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
         <ChartContainer>
           <Tab type="chart" stateFunc={funcs.chart} />
           <KeywordChartContainer>
-            {data.keywordChart !== null ? <KeywordChart stateFunc={funcs.keyword} /> : <Loader />}
+            {data.keywordChart !== null ? (
+              <KeywordChart stateFunc={funcs.keyword} type="statistics" />
+            ) : (
+              <Loader />
+            )}
           </KeywordChartContainer>
         </ChartContainer>
         <ResultContainer>
