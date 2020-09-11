@@ -78,8 +78,7 @@ function KeywordContainer({states, dispatches, search}: IKeywordContainerProps) 
 
   const history = useHistory();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const searchKeyword = async () => {
     if (search === states.searchTerm && states.searchType === 0) {
       dispatches.callLoader();
       const data = await getApi.keyword(search);
@@ -88,7 +87,8 @@ function KeywordContainer({states, dispatches, search}: IKeywordContainerProps) 
       history.push(`/${states.searchType === 0 ? 'keyword' : 'star'}/${states.searchTerm}`);
     }
   };
-  return <KeywordPresenter search={search} submit={handleSubmit} />;
+
+  return <KeywordPresenter search={search} searchKeyword={searchKeyword} />;
 }
 
 export default connector(KeywordContainer);

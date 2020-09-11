@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useLayoutEffect} from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
@@ -60,6 +60,7 @@ const IconContainer = styled.div`
 const Icon = styled.img`
   width: 30px;
   height: 30px;
+  cursor: pointer;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -86,9 +87,17 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function SearchBar({searchStates, updates}: Props) {
+interface ISearchBarProps extends Props {
+  searchKeyword: () => void;
+}
+
+function SearchBar({searchStates, updates, searchKeyword}: ISearchBarProps) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updates.searchTerm(e.target.value);
+  };
+
+  const handleOnClickSearchIcon = async (e: React.MouseEvent) => {
+    searchKeyword();
   };
 
   return (
@@ -97,13 +106,9 @@ function SearchBar({searchStates, updates}: Props) {
         <Tab type="search" stateFunc={updates.serachType} />
       </TabContainer>
       <InputContainer>
-        <Input onChange={handleOnChange} />
+        <Input onChange={handleOnChange} value={searchStates.searchTerm} />
         <IconContainer>
-          <Link
-            to={`/${searchStates.searchType === 0 ? 'keyword' : 'star'}/${searchStates.searchTerm}`}
-          >
-            <Icon src={require('../../Asset/images/Search.svg')} />
-          </Link>
+          <Icon src={require('../../Asset/images/Search.svg')} onClick={handleOnClickSearchIcon} />
         </IconContainer>
       </InputContainer>
     </Container>
