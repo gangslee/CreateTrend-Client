@@ -267,7 +267,7 @@ interface IKeywordPresenter extends Props {
 }
 
 function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPresenter) {
-  const handleOnClickRadio = (e: React.MouseEvent) => {
+  const handleOnChange = (e: React.ChangeEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
@@ -324,8 +324,8 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
                 id="videoChart"
                 value="영상화 추이"
                 name="chartType"
-                defaultChecked={0 === data.currentChart}
-                onClick={handleOnClickRadio}
+                checked={0 === data.currentChart}
+                onChange={handleOnChange}
               />
               <RadioLabel htmlFor="videoChart">영상화 추이</RadioLabel>
             </RadioContainer>
@@ -334,8 +334,8 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
                 id="popularChart"
                 value="인기도 추이"
                 name="chartType"
-                defaultChecked={1 === data.currentChart}
-                onClick={handleOnClickRadio}
+                checked={1 === data.currentChart}
+                onChange={handleOnChange}
               />
               <RadioLabel htmlFor="popularChart"> 인기도 추이</RadioLabel>
             </RadioContainer>

@@ -98,6 +98,7 @@ const keywordSlice = createSlice({
       state.lines = action.payload.lines;
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
+      state.currentChart = 0;
     },
     setRadioState: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
