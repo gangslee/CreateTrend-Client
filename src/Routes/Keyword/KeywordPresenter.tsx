@@ -120,6 +120,7 @@ const RadioLabel = styled.label`
     background-color: #fff;
     margin-right: 5px;
     box-shadow: 0 3px 6px 0 rgba(95, 111, 174, 0.2);
+    cursor: pointer;
   }
 `;
 
@@ -137,6 +138,7 @@ const RadioContainer = styled.div`
     left: 7px;
     position: absolute;
     background: #d10909;
+    cursor: pointer;
   }
 `;
 
