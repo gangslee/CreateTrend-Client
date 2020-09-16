@@ -1,15 +1,16 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Modal from 'react-modal';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {
+import store, {
   RootState,
   RootDispatch,
   setIsOpenSignIn,
   setIsOpenSignUp,
   setIsLogIn,
 } from '../../store/store';
+import {login} from '../../actions/auth';
 
 const Container = styled.div`
   width: 350px;
@@ -173,9 +174,21 @@ function Dialog({type, states, dispatches}: IDialogProps) {
     e.preventDefault();
     type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
     dispatches.logIn(true);
+    login(inputState.email, inputState.password, store.dispatch);
   };
 
-  const handleOnChange = (e: React.ChangeEvent) => {};
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInpuState({
+      ...inputState,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const [inputState, setInpuState] = useState({
+    email: '',
+    password: '',
+    password2: '',
+  });
 
   return (
     <Modal
@@ -190,11 +203,11 @@ function Dialog({type, states, dispatches}: IDialogProps) {
         <SForm onSubmit={handleOnSubmit}>
           <InputContainer>
             <InputTitle>이메일</InputTitle>
-            <SInput type="email" name="email" />
+            <SInput name="email" onChange={handleOnChange} />
           </InputContainer>
           <InputContainer>
             <InputTitle>비밀번호</InputTitle>
-            <SInput type="password" name="password" />
+            <SInput type="password" name="password" onChange={handleOnChange} />
           </InputContainer>
           {type === 'signUp' && (
             <InputContainer>
