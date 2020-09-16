@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import Modal from 'react-modal';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, setIsOpenSignIn, setIsOpenSignUp, setIsLogIn} from '../../store';
+import {
+  RootState,
+  RootDispatch,
+  setIsOpenSignIn,
+  setIsOpenSignUp,
+  setIsLogIn,
+} from '../../store/store';
 
 const Container = styled.div`
   width: 350px;
@@ -169,6 +175,8 @@ function Dialog({type, states, dispatches}: IDialogProps) {
     dispatches.logIn(true);
   };
 
+  const handleOnChange = (e: React.ChangeEvent) => {};
+
   return (
     <Modal
       isOpen={type === 'signIn' ? states.signIn : states.signUp}
@@ -182,11 +190,11 @@ function Dialog({type, states, dispatches}: IDialogProps) {
         <SForm onSubmit={handleOnSubmit}>
           <InputContainer>
             <InputTitle>이메일</InputTitle>
-            <SInput />
+            <SInput type="email" name="email" />
           </InputContainer>
           <InputContainer>
             <InputTitle>비밀번호</InputTitle>
-            <SInput />
+            <SInput type="password" name="password" />
           </InputContainer>
           {type === 'signUp' && (
             <InputContainer>

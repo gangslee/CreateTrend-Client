@@ -9,9 +9,9 @@ import {
   IKeywordData,
   currentPage,
   callLoader,
-} from '../../store';
+} from '../../store/store';
 import KeywordPresenter from './KeywordPresenter';
-import {getApi} from '../../api';
+import {getApi} from '../../actions/api';
 
 interface OwnProps {
   match: {

@@ -7,7 +7,7 @@ import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
-import {RootState, RootDispatch, setRadioState} from '../../store';
+import {RootState, RootDispatch, setRadioState} from '../../store/store';
 import bg from '../../Asset/images/bg2.svg';
 import SearchBar from '../../Components/Container/SearchBar';
 

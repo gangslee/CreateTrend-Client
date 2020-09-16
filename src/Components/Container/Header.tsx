@@ -11,7 +11,7 @@ import {
   setIsOpenUserMenu,
   setIsLogIn,
   searchTermUpdate,
-} from '../../store';
+} from '../../store/store';
 import Dialog from './Dialog';
 
 const Container = styled.div`

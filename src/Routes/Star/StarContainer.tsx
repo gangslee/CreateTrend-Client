@@ -10,9 +10,9 @@ import {
   currentPage,
   IStarState,
   periodDateUpdate,
-} from '../../store';
+} from '../../store/store';
 import StarPresenter from './StarPresenter';
-import {getApi} from '../../api';
+import {getApi} from '../../actions/api';
 
 interface OwnProps {
   match: {

@@ -10,9 +10,9 @@ import {
   keywordStateUpdate,
   IKeywordChartData,
   keywordDetailUpdate,
-} from '../../store';
+} from '../../store/store';
 import ChannelPresenter from './StatisticsPresenter';
-import {getApi} from '../../api';
+import {getApi} from '../../actions/api';
 
 function mapStateToProps(state: RootState) {
   console.log(state.statistics.keywordChart);

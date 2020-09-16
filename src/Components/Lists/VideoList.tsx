@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store';
+import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store/store';
 import Slider from '../Container/Slider';
 
 interface IVideoListStyleProps {

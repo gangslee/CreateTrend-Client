@@ -1,4 +1,5 @@
 import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
+import {AuthSlice} from './reducers/auth';
 
 export interface IWordMapData {
   name: string;
@@ -315,6 +316,7 @@ const cReducer = combineReducers({
   slider: sliderSlice.reducer,
   page: pageSlice.reducer,
   header: headerSlice.reducer,
+  auth: AuthSlice.reducer,
 });
 
 const store = configureStore({

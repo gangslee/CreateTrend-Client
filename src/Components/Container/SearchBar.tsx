@@ -4,7 +4,7 @@ import {connect, ConnectedProps} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Tab from '../Container/Tab';
 
-import {RootState, RootDispatch, searchTermUpdate, searchTypeUpdate} from '../../store';
+import {RootState, RootDispatch, searchTermUpdate, searchTypeUpdate} from '../../store/store';
 
 const Container = styled.div`
   width: 990px;

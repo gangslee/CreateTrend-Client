@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../store';
+import {RootState} from '../../store/store';
 
 type styleType = {
   type: string;

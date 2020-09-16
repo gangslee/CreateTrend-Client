@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, callLoader} from '../../store';
+import {RootState, RootDispatch, callLoader} from '../../store/store';
 import HomePresenter from '../Home/HomePresenter';
 
 function mapStateToProps(state: RootState) {
