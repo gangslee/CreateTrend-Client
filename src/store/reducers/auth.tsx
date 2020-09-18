@@ -26,14 +26,14 @@ export const AuthSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload;
     },
-    authError: (state) => {
+    removeToken: (state) => {
       localStorage.removeItem("token");
       state.token = null;
       state.user = null;
       state.isAuthenticated = false;
       state.isLoading = false;
     },
-    loginSuccess: (state, action) => {
+    setToken: (state, action) => {
       localStorage.setItem("token", action.payload.token);
       console.log(action.payload.token);
       state.isAuthenticated = true;
@@ -45,6 +45,6 @@ export const AuthSlice = createSlice({
 export const {
   userLoading,
   userLoaded,
-  authError,
-  loginSuccess,
+  removeToken,
+  setToken,
 } = AuthSlice.actions;
