@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface IinitialStateProps {
   token: string;
@@ -8,14 +8,14 @@ interface IinitialStateProps {
 }
 
 const initialState: IinitialStateProps = {
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   isAuthenticated: null,
   isLoading: false,
   user: null,
 };
 
 export const AuthSlice = createSlice({
-  name: 'authReducer',
+  name: "authReducer",
   initialState,
   reducers: {
     userLoading: (state) => {
@@ -27,13 +27,24 @@ export const AuthSlice = createSlice({
       state.user = action.payload;
     },
     authError: (state) => {
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       state.token = null;
       state.user = null;
       state.isAuthenticated = false;
       state.isLoading = false;
     },
+    loginSuccess: (state, action) => {
+      localStorage.setItem("token", action.payload.token);
+      console.log(action.payload.token);
+      state.isAuthenticated = true;
+      state.isLoading = false;
+    },
   },
 });
 
-export const {userLoading, userLoaded, authError} = AuthSlice.actions;
+export const {
+  userLoading,
+  userLoaded,
+  authError,
+  loginSuccess,
+} = AuthSlice.actions;

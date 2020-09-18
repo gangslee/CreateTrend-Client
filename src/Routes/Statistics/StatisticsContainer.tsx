@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
 import {
   RootState,
@@ -10,9 +10,9 @@ import {
   keywordStateUpdate,
   IKeywordChartData,
   keywordDetailUpdate,
-} from '../../store/store';
-import ChannelPresenter from './StatisticsPresenter';
-import {getApi} from '../../actions/api';
+} from "../../store/store";
+import ChannelPresenter from "./StatisticsPresenter";
+import { getApi } from "../../actions/dataAPI";
 
 function mapStateToProps(state: RootState) {
   console.log(state.statistics.keywordChart);
@@ -24,7 +24,8 @@ function mapStateToProps(state: RootState) {
     },
     title:
       state.statistics.keywordChart &&
-      state.statistics.keywordChart[state.statistics.currentChart].keyword.length > 0
+      state.statistics.keywordChart[state.statistics.currentChart].keyword
+        .length > 0
         ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
             state.statistics.currentKeyword
           ].name
@@ -37,7 +38,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     update: {
       list: (data: IKeywordChartData[]) => {
-        dispatch(currentPage('statistics'));
+        dispatch(currentPage("statistics"));
         dispatch(statisticsDataUpdate(data));
       },
       keyword: (data: IKeywordChartData) => {
@@ -61,14 +62,22 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function ChannelContainer({isChecked, currents, title, statisticsData, update, stateFuncs}: Props) {
+function ChannelContainer({
+  isChecked,
+  currents,
+  title,
+  statisticsData,
+  update,
+  stateFuncs,
+}: Props) {
   useEffect(() => {
-    const type = currents.chart === 0 ? '인기' : '영상화';
+    const type = currents.chart === 0 ? "인기" : "영상화";
 
     const fetchData = async () => {
       try {
-        const {data} = isChecked
-          ? statisticsData[currents.chart].keyword[currents.keyword].visit === false &&
+        const { data } = isChecked
+          ? statisticsData[currents.chart].keyword[currents.keyword].visit ===
+              false &&
             (await getApi.statisticsKeyword(
               type,
               statisticsData[currents.chart].keyword[currents.keyword].name
@@ -76,8 +85,8 @@ function ChannelContainer({isChecked, currents, title, statisticsData, update, s
           : await getApi.statistics();
 
         isChecked
-          ? statisticsData[currents.chart].keyword[currents.keyword].visit === false &&
-            (await update.keyword(data))
+          ? statisticsData[currents.chart].keyword[currents.keyword].visit ===
+              false && (await update.keyword(data))
           : await update.list(data);
       } catch (e) {
         console.log(e);
