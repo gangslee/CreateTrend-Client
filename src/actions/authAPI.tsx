@@ -11,9 +11,15 @@ const makeRequest = (
         `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
         config
       )
-    : axios.post(
+    : type === "POST"
+    ? axios.post(
         `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
         body,
+        config
+      )
+    : axios.put(
+        `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
+        {},
         config
       );
 
@@ -30,6 +36,7 @@ const getData = async (
         : await makeRequest(path, config, type);
     return data;
   } catch (e) {
+    console.log(e);
     return null;
   }
 };
@@ -37,6 +44,10 @@ const getData = async (
 export const getApi = {
   auth: (config: AxiosRequestConfig) =>
     getData("accounts/auth/user/", config, "GET"),
-  login: (config: AxiosRequestConfig, body: string) =>
+  signIn: (config: AxiosRequestConfig, body: string) =>
     getData("accounts/auth/login/", config, "POST", body),
+  signUp: (config: AxiosRequestConfig, body: string) =>
+    getData("accounts/auth/register/", config, "POST", body),
+  userInfoInit: (config: AxiosRequestConfig) =>
+    getData("accounts/auth/userinfo/update/", config, "PUT"),
 };

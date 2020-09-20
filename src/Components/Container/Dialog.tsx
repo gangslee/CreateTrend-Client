@@ -1,16 +1,15 @@
-import React, {useState} from 'react';
-import styled from 'styled-components';
-import Modal from 'react-modal';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useState } from "react";
+import styled from "styled-components";
+import Modal from "react-modal";
+import { connect, ConnectedProps } from "react-redux";
 
 import store, {
   RootState,
   RootDispatch,
   setIsOpenSignIn,
   setIsOpenSignUp,
-  setIsLogIn,
-} from '../../store/store';
-import {login} from '../../actions/auth';
+} from "../../store/store";
+import { signIn, signUp } from "../../actions/auth";
 
 const Container = styled.div`
   width: 350px;
@@ -22,7 +21,7 @@ const Container = styled.div`
 `;
 
 const DialogTitle = styled.span`
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 32px;
   font-weight: bold;
   font-stretch: normal;
@@ -45,7 +44,7 @@ const InputContainer = styled.div`
 `;
 
 const InputTitle = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -65,7 +64,7 @@ const SInput = styled.input`
   font-size: 18px;
   line-height: 1.4;
   padding: 10px 15px;
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   :focus {
     background-color: #fafaff;
   }
@@ -74,7 +73,7 @@ const SInput = styled.input`
 const SBt = styled.button`
   background-color: #dd0909;
   font-size: 15px;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   width: 100%;
   border-radius: 10px;
   color: white;
@@ -113,7 +112,7 @@ const GoogleSymbol = styled.img`
 `;
 
 const GoogleSpan = styled.span`
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 15px;
   font-stretch: normal;
   font-style: normal;
@@ -123,16 +122,16 @@ const GoogleSpan = styled.span`
 
 const modalStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    borderRadius: '10px',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "10px",
   },
   overlay: {
-    background: 'rgba(0,0,0,0.4)',
+    background: "rgba(0,0,0,0.4)",
   },
 };
 
@@ -150,7 +149,6 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     dispatches: {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
       signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
-      logIn: (isLogIn: boolean) => dispatch(setIsLogIn(isLogIn)),
     },
   };
 }
@@ -165,41 +163,51 @@ interface IDialogProps extends Props {
   type: string;
 }
 
-function Dialog({type, states, dispatches}: IDialogProps) {
+function Dialog({ type, states, dispatches }: IDialogProps) {
   const handleCloseModal = () => {
-    type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
+    type === "signIn" ? dispatches.signIn(false) : dispatches.signUp(false);
   };
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    type === 'signIn' ? dispatches.signIn(false) : dispatches.signUp(false);
-    dispatches.logIn(true);
-    login(inputState.email, inputState.password, store.dispatch);
+    if (type === "signIn") {
+      dispatches.signIn(false);
+      signIn(inputState.email, inputState.password, store.dispatch);
+    } else if (type === "signUp") {
+      if (inputState.password === inputState.passwordCheck) {
+        dispatches.signUp(false);
+        signUp(inputState.email, inputState.password, store.dispatch);
+      } else {
+        console.log(inputState);
+        alert("password not match");
+      }
+    }
   };
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInpuState({
+    setInputState({
       ...inputState,
       [e.target.name]: e.target.value,
     });
+    console.log(e.target.name);
   };
 
-  const [inputState, setInpuState] = useState({
-    email: '',
-    password: '',
-    password2: '',
+  const [inputState, setInputState] = useState({
+    email: "",
+    password: "",
+    passwordCheck: "",
   });
 
   return (
     <Modal
-      isOpen={type === 'signIn' ? states.signIn : states.signUp}
+      isOpen={type === "signIn" ? states.signIn : states.signUp}
       style={modalStyles}
       ariaHideApp={false}
       onRequestClose={handleCloseModal}
       shouldCloseOnEsc={false}
     >
       <Container>
-        <DialogTitle>{type === 'signIn' ? '로그인' : '회원가입'}</DialogTitle>
+        <DialogTitle>{type === "signIn" ? "로그인" : "회원가입"}</DialogTitle>
         <SForm onSubmit={handleOnSubmit}>
           <InputContainer>
             <InputTitle>이메일</InputTitle>
@@ -209,15 +217,21 @@ function Dialog({type, states, dispatches}: IDialogProps) {
             <InputTitle>비밀번호</InputTitle>
             <SInput type="password" name="password" onChange={handleOnChange} />
           </InputContainer>
-          {type === 'signUp' && (
+          {type === "signUp" && (
             <InputContainer>
               <InputTitle>비밀번호 확인</InputTitle>
-              <SInput />
+              <SInput
+                type="password"
+                name="passwordCheck"
+                onChange={handleOnChange}
+              />
             </InputContainer>
           )}
-          <SBt>{type === 'signIn' ? '로그인' : '회원가입'}</SBt>
+          <SBt>{type === "signIn" ? "로그인" : "회원가입"}</SBt>
           <GoogleBt>
-            <GoogleSymbol src={require('../../Asset/images/Google_symbol.svg')} />
+            <GoogleSymbol
+              src={require("../../Asset/images/Google_symbol.svg")}
+            />
             <GoogleSpan>구글 계정으로 로그인</GoogleSpan>
           </GoogleBt>
         </SForm>

@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from "axios";
 
-import { RootState, RootDispatch } from "../store/store";
+import store, { RootState, RootDispatch } from "../store/store";
 import {
   userLoading,
   removeToken,
@@ -33,7 +33,7 @@ export const loadUser = async (state: RootState, dispatch: RootDispatch) => {
   }
 };
 
-export const login = async (
+export const signIn = async (
   username: string,
   password: string,
   dispatch: RootDispatch
@@ -45,12 +45,12 @@ export const login = async (
   };
 
   const body = JSON.stringify({ username, password });
-  const data = await getApi.login(config, body);
+  const data = await getApi.signIn(config, body);
 
   data === null ? dispatch(removeToken()) : dispatch(setToken(data));
 };
 
-export const logout = async (state: RootState, dispatch: RootDispatch) => {
+export const signOut = async (state: RootState, dispatch: RootDispatch) => {
   const token = state.auth.token;
 
   const config: AxiosRequestConfig = {
@@ -64,4 +64,32 @@ export const logout = async (state: RootState, dispatch: RootDispatch) => {
   }
 
   dispatch(removeToken());
+};
+
+export const signUp = async (
+  username: string,
+  password: string,
+  dispatch: RootDispatch
+) => {
+  const config: AxiosRequestConfig = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const body = JSON.stringify({ username, password });
+
+  const signUpData = await getApi.signUp(config, body);
+  signUpData === null
+    ? dispatch(removeToken())
+    : dispatch(setToken(signUpData));
+
+  const token = store.getState().auth.token;
+
+  if (token) {
+    config.headers["Authorization"] = `Token ${token}`;
+  }
+  console.log(config);
+  const userInfoData = await getApi.userInfoInit(config);
+  userInfoData ? console.log("good") : console.log("errorrr");
 };

@@ -9,11 +9,10 @@ import store, {
   setIsOpenSignIn,
   setIsOpenSignUp,
   setIsOpenUserMenu,
-  setIsLogIn,
   searchTermUpdate,
 } from "../../store/store";
 import Dialog from "./Dialog";
-import { logout } from "../../actions/auth";
+import { signOut } from "../../actions/auth";
 
 const Container = styled.div`
   position: fixed;
@@ -212,7 +211,6 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
       signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
       userMenu: (isOpen: boolean) => dispatch(setIsOpenUserMenu(isOpen)),
-      setLogIn: (isLogIn: boolean) => dispatch(setIsLogIn(isLogIn)),
       clearSearchBar: () => dispatch(searchTermUpdate("")),
     },
   };
@@ -251,7 +249,7 @@ function Header({ states, dispatches }: Props) {
   const handleOnClickSignOut = (e: React.MouseEvent) => {
     dispatches.userMenu(false);
     document.removeEventListener("click", closeUserMenu);
-    logout(store.getState(), store.dispatch);
+    signOut(store.getState(), store.dispatch);
   };
 
   return (
