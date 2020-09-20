@@ -9,7 +9,7 @@ import TextContainer from '../../Components/Container/TextContainer';
 import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import VideoList from '../../Components/Lists/VideoList';
-import {RootState} from '../../store';
+import {RootState} from '../../store/store';
 
 const Container = styled.div`
   width: 1040px;

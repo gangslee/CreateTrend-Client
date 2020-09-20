@@ -2,7 +2,7 @@ import React, {useRef, useLayoutEffect} from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../store';
+import {RootState} from '../../store/store';
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';

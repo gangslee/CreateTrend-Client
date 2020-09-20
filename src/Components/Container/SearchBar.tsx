@@ -1,10 +1,14 @@
-import React, {useLayoutEffect} from 'react';
-import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
-import {Link} from 'react-router-dom';
-import Tab from '../Container/Tab';
+import React from "react";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
+import Tab from "../Container/Tab";
 
-import {RootState, RootDispatch, searchTermUpdate, searchTypeUpdate} from '../../store';
+import {
+  RootState,
+  RootDispatch,
+  searchTermUpdate,
+  searchTypeUpdate,
+} from "../../store/store";
 
 const Container = styled.div`
   width: 990px;
@@ -14,7 +18,7 @@ const TabContainer = styled.div`
   z-index: 1;
   width: 260px;
   height: 55px;
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-size: 14px;
   font-stretch: normal;
   font-style: normal;
@@ -38,7 +42,7 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   width: 900px;
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-stretch: normal;
   font-style: normal;
   line-height: 16px;
@@ -91,7 +95,7 @@ interface ISearchBarProps extends Props {
   searchKeyword: () => void;
 }
 
-function SearchBar({searchStates, updates, searchKeyword}: ISearchBarProps) {
+function SearchBar({ searchStates, updates, searchKeyword }: ISearchBarProps) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updates.searchTerm(e.target.value);
   };
@@ -108,7 +112,10 @@ function SearchBar({searchStates, updates, searchKeyword}: ISearchBarProps) {
       <InputContainer>
         <Input onChange={handleOnChange} value={searchStates.searchTerm} />
         <IconContainer>
-          <Icon src={require('../../Asset/images/Search.svg')} onClick={handleOnClickSearchIcon} />
+          <Icon
+            src={require("../../Asset/images/Search.svg")}
+            onClick={handleOnClickSearchIcon}
+          />
         </IconContainer>
       </InputContainer>
     </Container>

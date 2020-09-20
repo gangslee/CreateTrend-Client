@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../store';
+import {RootState} from '../../store/store';
 
 const Container = styled.div`
   box-sizing: border-box;

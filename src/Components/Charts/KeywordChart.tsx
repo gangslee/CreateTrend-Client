@@ -2,7 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState, RootDispatch, callLoader} from '../../store';
+import {RootState, RootDispatch, callLoader} from '../../store/store';
 import {Link} from 'react-router-dom';
 
 type styleType = {

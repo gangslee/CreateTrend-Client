@@ -7,7 +7,7 @@ import ChannelInfo from '../../Components/Container/ChannelInfo';
 import VideoList from '../../Components/Lists/VideoList';
 import PieChart from '../../Components/Charts/PieChart';
 import LineChart from '../../Components/Charts/LineChart';
-import {RootState} from '../../store';
+import {RootState} from '../../store/store';
 
 const Container = styled.div`
   width: 1040px;

@@ -2,7 +2,7 @@ import React, {useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
-import {RootState} from '../../store';
+import {RootState} from '../../store/store';
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
