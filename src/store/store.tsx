@@ -1,5 +1,5 @@
-import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
-import { AuthSlice } from "./reducers/auth";
+import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
+import {authSlice} from './reducers/auth';
 
 export interface IWordMapData {
   name: string;
@@ -57,12 +57,12 @@ interface IHomeData {
 }
 
 const homeData: IHomeData = {
-  searchTerm: "",
+  searchTerm: '',
   searchType: 0,
 };
 
 const homeSlice = createSlice({
-  name: "HomeReducer",
+  name: 'HomeReducer',
   initialState: homeData,
   reducers: {
     searchTermUpdate: (state, action) => {
@@ -91,7 +91,7 @@ const keywordData: IKeywordData = {
 };
 
 const keywordSlice = createSlice({
-  name: "keywordReducer",
+  name: 'keywordReducer',
   initialState: keywordData,
   reducers: {
     keywordDataUpdate: (state, action) => {
@@ -102,9 +102,7 @@ const keywordSlice = createSlice({
       state.currentChart = 0;
     },
     setRadioState: (state) => {
-      state.currentChart === 0
-        ? (state.currentChart = 1)
-        : (state.currentChart = 0);
+      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
     },
     callLoader: (state) => {
       state.keyword = null;
@@ -131,44 +129,37 @@ const statisticsState: IStatisticsState = {
 };
 
 const statisticsSlice = createSlice({
-  name: "statisticsReducer",
+  name: 'statisticsReducer',
   initialState: statisticsState,
   reducers: {
     statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
-        state.keywordChart.map((data) =>
-          data.keyword.map((word) => (word.visit = false))
-        );
+        state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
         state.isChecked = true;
       }
     },
     keywordDetailUpdate: (state, action) => {
       if (action.payload) {
-        state.keywordChart[state.currentChart].keyword[
-          state.currentKeyword
-        ].visit = true;
-        state.keywordChart[state.currentChart].keyword[
-          state.currentKeyword
-        ].popular = Math.round(action.payload.keyword[0].popular);
-        state.keywordChart[state.currentChart].keyword[
-          state.currentKeyword
-        ].wordmap = action.payload.keyword[0].wordmap;
-        state.keywordChart[state.currentChart].keyword[
-          state.currentKeyword
-        ].line = [action.payload.keyword[0].lines];
-        state.keywordChart[state.currentChart].keyword[
-          state.currentKeyword
-        ].video = [action.payload.keyword[0].video];
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].visit = true;
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].popular = Math.round(
+          action.payload.keyword[0].popular
+        );
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].wordmap =
+          action.payload.keyword[0].wordmap;
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].line = [
+          action.payload.keyword[0].lines,
+        ];
+        state.keywordChart[state.currentChart].keyword[state.currentKeyword].video = [
+          action.payload.keyword[0].video,
+        ];
       }
     },
     disableUseAbleStatistics: (state) => {
       state.isChecked = false;
     },
     chartStateUpdate: (state) => {
-      state.currentChart === 0
-        ? (state.currentChart = 1)
-        : (state.currentChart = 0);
+      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
       state.currentKeyword = 0;
     },
     keywordStateUpdate: (state, action) => {
@@ -210,7 +201,7 @@ const starState: IStarState = {
 };
 
 const starSlice = createSlice({
-  name: "starReducer",
+  name: 'starReducer',
   initialState: starState,
   reducers: {
     starDataUpdate: (state, action) => {
@@ -237,7 +228,7 @@ const periodState: IStarState = {
 };
 
 const periodSlice = createSlice({
-  name: "periodReducer",
+  name: 'periodReducer',
   initialState: periodState,
   reducers: {
     periodDataUpdate: (state, action) => {
@@ -253,7 +244,7 @@ const periodSlice = createSlice({
 });
 
 const sliderSlice = createSlice({
-  name: "sliderReducer",
+  name: 'sliderReducer',
   initialState: {
     keyword: 0,
     statistics: 0,
@@ -261,48 +252,36 @@ const sliderSlice = createSlice({
   },
   reducers: {
     sliderStateNext: (state, action) => {
-      if (action.payload.page === "keyword") {
-        state.keyword !== action.payload.len
-          ? (state.keyword += 1)
-          : (state.keyword = 0);
-      } else if (action.payload.page === "statistics") {
-        state.statistics !== action.payload.len
-          ? (state.statistics += 1)
-          : (state.statistics = 0);
-      } else if (action.payload.page === "star") {
-        state.star !== action.payload.len
-          ? (state.star += 1)
-          : (state.star = 0);
+      if (action.payload.page === 'keyword') {
+        state.keyword !== action.payload.len ? (state.keyword += 1) : (state.keyword = 0);
+      } else if (action.payload.page === 'statistics') {
+        state.statistics !== action.payload.len ? (state.statistics += 1) : (state.statistics = 0);
+      } else if (action.payload.page === 'star') {
+        state.star !== action.payload.len ? (state.star += 1) : (state.star = 0);
       }
     },
     sliderStatePrev: (state, action) => {
-      if (action.payload.page === "keyword") {
-        state.keyword !== 0
-          ? (state.keyword -= 1)
-          : (state.keyword = action.payload.len);
-      } else if (action.payload.page === "statistics") {
-        state.statistics !== 0
-          ? (state.statistics -= 1)
-          : (state.statistics = action.payload.len);
-      } else if (action.payload.page === "star") {
-        state.star !== 0
-          ? (state.star -= 1)
-          : (state.star = action.payload.len);
+      if (action.payload.page === 'keyword') {
+        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = action.payload.len);
+      } else if (action.payload.page === 'statistics') {
+        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = action.payload.len);
+      } else if (action.payload.page === 'star') {
+        state.star !== 0 ? (state.star -= 1) : (state.star = action.payload.len);
       }
     },
   },
 });
 
 const pageSlice = createSlice({
-  name: "pageReducer",
-  initialState: "home",
+  name: 'pageReducer',
+  initialState: 'home',
   reducers: {
     currentPage: (state, action) => (state = action.payload),
   },
 });
 
 const headerSlice = createSlice({
-  name: "headerReducer",
+  name: 'headerReducer',
   initialState: {
     isOpenSignIn: false,
     isOpenSignUp: false,
@@ -334,20 +313,16 @@ const cReducer = combineReducers({
   slider: sliderSlice.reducer,
   page: pageSlice.reducer,
   header: headerSlice.reducer,
-  auth: AuthSlice.reducer,
+  auth: authSlice.reducer,
 });
 
 const store = configureStore({
   reducer: cReducer,
 });
 
-export const { searchTermUpdate, searchTypeUpdate } = homeSlice.actions;
+export const {searchTermUpdate, searchTypeUpdate} = homeSlice.actions;
 
-export const {
-  keywordDataUpdate,
-  setRadioState,
-  callLoader,
-} = keywordSlice.actions;
+export const {keywordDataUpdate, setRadioState, callLoader} = keywordSlice.actions;
 
 export const {
   statisticsDataUpdate,
@@ -357,19 +332,15 @@ export const {
   keywordStateUpdate,
 } = statisticsSlice.actions;
 
-export const { starDataUpdate, starPieSliceStateUpdate } = starSlice.actions;
+export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
 
-export const { periodDataUpdate, periodDateUpdate } = periodSlice.actions;
+export const {periodDataUpdate, periodDateUpdate} = periodSlice.actions;
 
-export const { sliderStateNext, sliderStatePrev } = sliderSlice.actions;
+export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
-export const { currentPage } = pageSlice.actions;
+export const {currentPage} = pageSlice.actions;
 
-export const {
-  setIsOpenSignIn,
-  setIsOpenSignUp,
-  setIsOpenUserMenu,
-} = headerSlice.actions;
+export const {setIsOpenSignIn, setIsOpenSignUp, setIsOpenUserMenu} = headerSlice.actions;
 
 export default store;
 
