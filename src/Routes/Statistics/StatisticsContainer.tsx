@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import React, {useLayoutEffect} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
 import {
   RootState,
@@ -10,47 +10,44 @@ import {
   keywordStateUpdate,
   IKeywordChartData,
   keywordDetailUpdate,
-} from "../../store/store";
-import ChannelPresenter from "./StatisticsPresenter";
-import { getApi } from "../../actions/dataAPI";
+} from '../../store/store';
+import ChannelPresenter from './StatisticsPresenter';
+import {getApi} from '../../actions/dataAPI';
 
 function mapStateToProps(state: RootState) {
-  console.log(state.statistics.keywordChart);
   return {
-    isChecked: state.statistics.isChecked,
-    currents: {
-      chart: state.statistics.currentChart,
-      keyword: state.statistics.currentKeyword,
-    },
-    title:
-      state.statistics.keywordChart &&
-      state.statistics.keywordChart[state.statistics.currentChart].keyword
-        .length > 0
+    states: {
+      data: state.statistics,
+      currentData: state.statistics.keywordChart
         ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
             state.statistics.currentKeyword
-          ].name
+          ]
         : null,
-    statisticsData: state.statistics.keywordChart,
+    },
   };
 }
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
-    update: {
-      list: (data: IKeywordChartData[]) => {
-        dispatch(currentPage("statistics"));
-        dispatch(statisticsDataUpdate(data));
+    dispatches: {
+      update: {
+        list: (data: IKeywordChartData[]) => {
+          dispatch(statisticsDataUpdate(data));
+        },
+        keyword: (data: IKeywordChartData) => {
+          dispatch(keywordDetailUpdate(data));
+        },
+        page: () => {
+          dispatch(currentPage('statistics'));
+        },
       },
-      keyword: (data: IKeywordChartData) => {
-        dispatch(keywordDetailUpdate(data));
-      },
-    },
-    stateFuncs: {
-      chart: () => {
-        dispatch(chartStateUpdate());
-      },
-      keyword: (n: number) => {
-        dispatch(keywordStateUpdate(n));
+      stateFuncs: {
+        chart: () => {
+          dispatch(chartStateUpdate());
+        },
+        keyword: (n: number) => {
+          dispatch(keywordStateUpdate(n));
+        },
       },
     },
   };
@@ -62,41 +59,38 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function ChannelContainer({
-  isChecked,
-  currents,
-  title,
-  statisticsData,
-  update,
-  stateFuncs,
-}: Props) {
-  useEffect(() => {
-    const type = currents.chart === 0 ? "인기" : "영상화";
+function StatisticsContainer({states, dispatches}: Props) {
+  const type = states.data.currentChart === 0 ? '인기' : '영상화';
 
+  useLayoutEffect(() => {
+    const getChartData = async () => {
+      const {data} = await getApi.statistics();
+      dispatches.update.list(data);
+    };
+
+    const getKeywordData = async () => {
+      if (!states.currentData.visit) {
+        const {data} = await getApi.statisticsKeyword(type, states.currentData.name);
+        dispatches.update.keyword(data);
+      }
+    };
     const fetchData = async () => {
       try {
-        const { data } = isChecked
-          ? statisticsData[currents.chart].keyword[currents.keyword].visit ===
-              false &&
-            (await getApi.statisticsKeyword(
-              type,
-              statisticsData[currents.chart].keyword[currents.keyword].name
-            ))
-          : await getApi.statistics();
-
-        isChecked
-          ? statisticsData[currents.chart].keyword[currents.keyword].visit ===
-              false && (await update.keyword(data))
-          : await update.list(data);
+        states.data.isChecked ? getKeywordData() : getChartData();
       } catch (e) {
         console.log(e);
       }
     };
 
     fetchData();
-  }, [currents.chart, currents.keyword, isChecked, update]);
+  });
 
-  return <ChannelPresenter funcs={stateFuncs} title={title} />;
+  return (
+    <ChannelPresenter
+      funcs={dispatches.stateFuncs}
+      title={states.data.keywordChart && states.currentData.name}
+    />
+  );
 }
 
-export default connector(ChannelContainer);
+export default connector(StatisticsContainer);

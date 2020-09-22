@@ -8,21 +8,8 @@ import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
 import {RootState, RootDispatch, setRadioState} from '../../store/store';
-import bg from '../../Asset/images/bg2.svg';
 import SearchBar from '../../Components/Container/SearchBar';
-
-const BgContainer = styled.div`
-  background-image: url(${bg});
-  padding-left: 80px;
-  margin-left: -80px;
-  margin-top: -80px;
-  padding-top: 150px;
-  padding-bottom: 50px;
-  font-family: 'S-CoreDream-6Bold';
-  font-stretch: normal;
-  letter-spacing: normal;
-  color: #222;
-`;
+import {BGSecond} from '../../Components/Container/BGContiner';
 
 const Slogan = styled.div`
   font-family: 'S-CoreDream-5Medium';
@@ -281,7 +268,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
   };
 
   return (
-    <BgContainer>
+    <BGSecond>
       <Slogan>
         "궁금한 <SloganRed>키워드</SloganRed>를 검색해 보세요"
       </Slogan>
@@ -384,7 +371,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
           </VideoContainer>
         </AsideSection>
       </Container>
-    </BgContainer>
+    </BGSecond>
   );
 }
 

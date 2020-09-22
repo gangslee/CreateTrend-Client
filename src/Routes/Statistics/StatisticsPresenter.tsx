@@ -10,6 +10,7 @@ import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import VideoList from '../../Components/Lists/VideoList';
 import {RootState} from '../../store/store';
+import {BGSecond} from '../../Components/Container/BGContiner';
 
 const Container = styled.div`
   width: 1040px;
@@ -93,54 +94,57 @@ interface IChannelPresenterProps extends Props {
 }
 
 function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
-  console.log(data);
   return (
-    <Container>
-      <KeywordContainer>
-        <ChartContainer>
-          <Tab type="chart" stateFunc={funcs.chart} />
-          <KeywordChartContainer>
-            {data.keywordChart !== null ? (
-              <KeywordChart stateFunc={funcs.keyword} type="statistics" />
+    <BGSecond>
+      <Container>
+        <KeywordContainer>
+          <ChartContainer>
+            <Tab type="chart" stateFunc={funcs.chart} />
+            <KeywordChartContainer>
+              {data.keywordChart !== null ? (
+                <KeywordChart stateFunc={funcs.keyword} type="statistics" />
+              ) : (
+                <Loader />
+              )}
+            </KeywordChartContainer>
+          </ChartContainer>
+          <ResultContainer>
+            {data.keywordChart !== null &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword].wordmap !==
+              undefined &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular !==
+              undefined &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword].line !== undefined ? (
+              <>
+                <SubResultContainer>
+                  <TextContainer type="popular" title={title} />
+                  <WordmapContainer>
+                    <Wordmap type="statistics" />
+                  </WordmapContainer>
+                </SubResultContainer>
+                <SubResultContainer>
+                  <LineChartContainer>
+                    <LineChart type="statistics" />
+                  </LineChartContainer>
+                </SubResultContainer>
+              </>
             ) : (
               <Loader />
             )}
-          </KeywordChartContainer>
-        </ChartContainer>
-        <ResultContainer>
+          </ResultContainer>
+        </KeywordContainer>
+        <VideoContainer>
           {data.keywordChart !== null &&
           data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword].wordmap !== undefined &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular !== undefined &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword].line !== undefined ? (
-            <>
-              <SubResultContainer>
-                <TextContainer type="popular" title={title} />
-                <WordmapContainer>
-                  <Wordmap type="statistics" />
-                </WordmapContainer>
-              </SubResultContainer>
-              <SubResultContainer>
-                <LineChartContainer>
-                  <LineChart type="statistics" />
-                </LineChartContainer>
-              </SubResultContainer>
-            </>
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword].video !== undefined ? (
+            <VideoList mode="analysis" type="statistics" title={title} />
           ) : (
             <Loader />
           )}
-        </ResultContainer>
-      </KeywordContainer>
-      <VideoContainer>
-        {data.keywordChart !== null &&
-        data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
-        data.keywordChart[data.currentChart].keyword[data.currentKeyword].video !== undefined ? (
-          <VideoList mode="analysis" type="statistics" title={title} />
-        ) : (
-          <Loader />
-        )}
-      </VideoContainer>
-    </Container>
+        </VideoContainer>
+      </Container>
+    </BGSecond>
   );
 }
 
