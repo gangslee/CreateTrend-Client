@@ -1,17 +1,12 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, {AxiosRequestConfig} from 'axios';
 
-const makeRequest = (
-  path: string,
-  config: AxiosRequestConfig,
-  type: string,
-  body?: string
-) =>
-  type === "GET"
+const makeRequest = (path: string, config: AxiosRequestConfig, type: string, body?: string) =>
+  type === 'GET'
     ? axios.get(
         `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
         config
       )
-    : type === "POST"
+    : type === 'POST'
     ? axios.post(
         `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
         body,
@@ -23,17 +18,13 @@ const makeRequest = (
         config
       );
 
-const getData = async (
-  path: string,
-  config: AxiosRequestConfig,
-  type: string,
-  body?: string
-) => {
+const getData = async (path: string, config: AxiosRequestConfig, type: string, body?: string) => {
   try {
-    const { data } =
+    const {data} =
       body !== undefined
         ? await makeRequest(path, config, type, body)
         : await makeRequest(path, config, type);
+
     return data;
   } catch (e) {
     console.log(e);
@@ -42,12 +33,12 @@ const getData = async (
 };
 
 export const getApi = {
-  auth: (config: AxiosRequestConfig) =>
-    getData("accounts/auth/user/", config, "GET"),
+  auth: (config: AxiosRequestConfig) => getData('accounts/auth/user/', config, 'GET'),
   signIn: (config: AxiosRequestConfig, body: string) =>
-    getData("accounts/auth/login/", config, "POST", body),
+    getData('accounts/auth/login/', config, 'POST', body),
+  signOut: (config: AxiosRequestConfig) => getData('accounts/auth/logout/', config, 'POST', null),
   signUp: (config: AxiosRequestConfig, body: string) =>
-    getData("accounts/auth/register/", config, "POST", body),
+    getData('accounts/auth/register/', config, 'POST', body),
   userInfoInit: (config: AxiosRequestConfig) =>
-    getData("accounts/auth/userinfo/update/", config, "PUT"),
+    getData('accounts/auth/userinfo/update/', config, 'PUT'),
 };
