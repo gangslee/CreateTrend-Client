@@ -13,7 +13,7 @@ import {RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
 
 const Container = styled.div`
-  width: 1040px;
+  width: 1200px;
   margin: 50px auto;
 `;
 
@@ -21,23 +21,29 @@ const KeywordContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 30px;
+  height: 700px;
 `;
 
 const ChartContainer = styled.div`
-  width: 25%;
-  border: 1px solid #ddd;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  width: 330px;
+  border: 2px solid #ecf1ff;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
+  background-color: #ffffff;
 `;
 
-const KeywordChartContainer = styled.div`
-  height: 410px;
+const TabContainer = styled.div`
+  height: 60px;
+  font-size: 20px;
+  margin-bottom: 10px;
 `;
+
+const KeywordChartContainer = styled.div``;
 
 const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 73%;
+  width: 840px;
   border: 1px solid #ddd;
   box-sizing: border-box;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -99,7 +105,9 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
       <Container>
         <KeywordContainer>
           <ChartContainer>
-            <Tab type="chart" stateFunc={funcs.chart} />
+            <TabContainer>
+              <Tab type="chart" stateFunc={funcs.chart} />
+            </TabContainer>
             <KeywordChartContainer>
               {data.keywordChart !== null ? (
                 <KeywordChart stateFunc={funcs.keyword} type="statistics" />

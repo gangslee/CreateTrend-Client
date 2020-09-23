@@ -348,11 +348,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
           <ChartContainer>
             {[0, 1].map((idx) => (
               <KeywordChartContainer key={idx}>
-                {data.wordmap !== null ? (
-                  <KeywordChart index={idx} title={search} type="keyword" />
-                ) : (
-                  <Loader />
-                )}
+                {data.wordmap !== null ? <KeywordChart index={idx} type="keyword" /> : <Loader />}
               </KeywordChartContainer>
             ))}
           </ChartContainer>

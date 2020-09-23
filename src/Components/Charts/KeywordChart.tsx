@@ -24,41 +24,50 @@ const TitleRed = styled.span`
 
 const KeywordChartContainer = styled.div`
   display: flex;
-  padding: 0px 25px;
   align-items: center;
-  line-height: 2.67;
+  padding: 0px 25px;
+  box-sizing: border-box;
+  line-height: ${({type}: styleType) => (type === 'keyword' ? '2.67' : '60px')};
+  font-family: 'S-CoreDream-4Regular';
   font-stretch: normal;
   letter-spacing: normal;
   font-size: ${({type}: styleType) => (type === 'keyword' ? '15px' : '18px')};
   font-weight: 600;
-  :not(:last-child) {
-    border-bottom: 2px solid #ddd;
-  }
   ${({type, current}: styleType) =>
     type === 'statistics' &&
     current &&
     css`
-      color: #feb100;
+      color: #d10909;
+      font-family: 'S-CoreDream-6Bold';
+      border: solid 2px #d10909;
+      border-bottom: 2px solid #d10909;
+      padding: 2px 23px;
     `};
 `;
 
+const KeywordContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
 const Rank = styled.span`
-  width: 10%;
+  width: 15%;
   font-family: 'NotoSans';
   font-weight: bold;
   display: inline-block;
   text-align: center;
   margin-right: 15px;
-`;
-
-const KeywordContainer = styled.div`
-  width: 100%;
-  text-align: center;
+  color: #222;
+  ${({type}: styleType) =>
+    type === 'statistics' &&
+    css`
+      font-size: 25px;
+    `}
 `;
 
 const Keyword = styled.div`
-  font-family: 'S-CoreDream-4Regular';
-  color: #222;
+  width: 89%;
   font-weight: normal;
   text-align: center;
   cursor: pointer;
@@ -124,13 +133,12 @@ type Props = PropsFromRedux;
 
 interface IKeywordChartProps extends Props {
   index?: number;
-  title?: string;
   type?: string;
   stateFunc?: (n: number) => void;
   disableFunc?: () => void;
 }
 
-function KeywordChart({states, dispatches, index, type, title, stateFunc}: IKeywordChartProps) {
+function KeywordChart({states, dispatches, index, type, stateFunc}: IKeywordChartProps) {
   const usingData =
     states.data !== null && (type === 'keyword' ? states.data[index] : states.data[0]);
 
@@ -157,20 +165,18 @@ function KeywordChart({states, dispatches, index, type, title, stateFunc}: IKeyw
       ) : (
         <>
           {usingData.keyword.map((keyword, index) => (
-            <KeywordChartContainer
-              current={states.keyword === index}
-              type={states.page}
-              key={index}
-            >
-              <Rank>{index + 1}</Rank>
+            <KeywordChartContainer current={states.keyword === index} type={type} key={index}>
+              {/* <Rank type={type}>{index + 1}</Rank> */}
               {states.page === 'keyword' ? (
                 <KeywordContainer>
+                  <Rank type={type}>{index + 1}</Rank>
                   <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
                     <Keyword>{keyword.name}</Keyword>
                   </SLink>
                 </KeywordContainer>
               ) : (
                 <KeywordContainer>
+                  <Rank type={type}>{index + 1}</Rank>
                   <Keyword onClick={handleKeywordClick}>{keyword.name}</Keyword>
                 </KeywordContainer>
               )}
