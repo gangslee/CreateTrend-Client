@@ -41,4 +41,5 @@ export const getApi = {
     getData('accounts/auth/register/', config, 'POST', body),
   userInfoInit: (config: AxiosRequestConfig) =>
     getData('accounts/auth/userinfo/update/', config, 'PUT'),
+  getUserInfo: (config: AxiosRequestConfig) => getData('accounts/auth/user/', config, 'GET'),
 };
