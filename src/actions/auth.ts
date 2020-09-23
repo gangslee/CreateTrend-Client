@@ -35,7 +35,12 @@ export const signIn = async (username: string, password: string, dispatch: RootD
   const body = JSON.stringify({username, password});
   const data = await getApi.signIn(config, body);
 
-  data === null ? dispatch(removeToken()) : dispatch(setToken(data));
+  if (data) {
+    dispatch(setToken(data));
+    dispatch(userLoaded(data));
+  } else {
+    dispatch(removeToken());
+  }
 };
 
 export const signOut = async (state: RootState, dispatch: RootDispatch) => {
@@ -65,6 +70,7 @@ export const signUp = async (username: string, password: string, dispatch: RootD
   const body = JSON.stringify({username, password});
 
   const signUpData = await getApi.signUp(config, body);
+
   signUpData === null ? dispatch(removeToken()) : dispatch(setToken(signUpData));
 
   const token = store.getState().auth.token;
@@ -73,6 +79,11 @@ export const signUp = async (username: string, password: string, dispatch: RootD
     config.headers['Authorization'] = `Token ${token}`;
   }
 
-  const userInfoData = await getApi.userInfoInit(config);
-  userInfoData ? console.log('good') : console.log('errorrr');
+  const infoInitData = await getApi.userInfoInit(config);
+  if (!infoInitData) {
+    console.log('User info init API error');
+  }
+
+  const userInfoData = await getApi.getUserInfo(config);
+  userInfoData ? dispatch(userLoaded(userInfoData)) : console.log('eeeeerorrr');
 };

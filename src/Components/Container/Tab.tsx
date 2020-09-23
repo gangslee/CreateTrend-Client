@@ -14,7 +14,7 @@ const Container = styled.div`
   ${({type}: styleType) =>
     type === 'chart'
       ? css`
-          border-bottom: 2px solid #ddd;
+          border-bottom: 1px solid #dbe0f5;
         `
       : css`
           display: flex;
@@ -33,6 +33,7 @@ const TabContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 49%;
+  height: 100%;
   background-color: ${({current}: ITabContainerProps) => (current ? '#dd0909' : '#fff')};
   cursor: pointer;
   color: ${({current}: ITabContainerProps) => (current ? '#fff' : '#999')};

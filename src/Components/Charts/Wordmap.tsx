@@ -12,7 +12,7 @@ type containerType = {
 };
 
 const WordmapContainer = styled.div`
-  height: ${({type}: containerType) => (type === 'statistics' ? '85%' : '100%')};
+  height: ${({type}: containerType) => (type === 'statistics' ? '100%' : '100%')};
 `;
 
 const ErrorContainer = styled.div`
@@ -35,8 +35,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (ownProps.type === 'keyword') {
     return {data: state.keyword.wordmap};
-  } else if (state.page === 'statistics') {
-    console.log(state.statistics.keywordChart);
+  } else if (ownProps.type === 'statistics') {
     return {
       data:
         state.statistics.keywordChart[state.statistics.currentChart].keyword[

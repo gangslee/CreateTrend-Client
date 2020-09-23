@@ -9,7 +9,6 @@ import {RootState} from '../../store/store';
 
 const LineChartContainer = styled.div`
   height: 100%;
-  padding-top: 50px;
 `;
 
 const ErrorContainer = styled.div`
@@ -32,7 +31,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (ownProps.type === 'keyword') {
     return {states: {data: [state.keyword.lines[state.keyword.currentChart]]}};
-  } else if (state.page === 'statistics') {
+  } else if (ownProps.type === 'statistics') {
     return {
       states: {
         data:
@@ -61,7 +60,7 @@ interface ILineChartProps extends Props {
 function LineChart({states, type, id, stateFunc}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = states.data[0];
-
+  const unit = useData.type === '인기도 추이' ? '%' : '건';
   useLayoutEffect(() => {
     let chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
@@ -84,7 +83,7 @@ function LineChart({states, type, id, stateFunc}: ILineChartProps) {
       series.dataFields.valueY = 'value';
       series.dataFields.categoryX = 'date';
 
-      series.tooltipHTML = `<div style="padding:10px;"><div style="font-size:17px;margin-bottom:5px;">{value}건</div><span style="font-size:16px;color:#999;">{date}</span></div>`;
+      series.tooltipHTML = `<div style="padding:10px;"><div style="font-size:17px;margin-bottom:5px;">{value}${unit}</div><span style="font-size:16px;color:#999;">{date}</span></div>`;
       series.tooltip.getFillFromObject = false;
       series.tooltip.background.fill = am4core.color('#fff');
       series.tooltip.background.strokeWidth = 2;
@@ -127,7 +126,7 @@ function LineChart({states, type, id, stateFunc}: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [useData, type, id, stateFunc]);
+  }, [useData, type, id, stateFunc, unit]);
 
   return useData.data.length === 0 ? (
     <ErrorContainer>
