@@ -141,18 +141,21 @@ const statisticsSlice = createSlice({
     },
     keywordDetailUpdate: (state, action) => {
       if (action.payload) {
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].visit = true;
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].popular = Math.round(
-          action.payload.keyword[0].popular
-        );
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].wordmap =
-          action.payload.keyword[0].wordmap;
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].line = [
-          action.payload.keyword[0].lines,
-        ];
-        state.keywordChart[state.currentChart].keyword[state.currentKeyword].video = [
-          action.payload.keyword[0].video,
-        ];
+        state.keywordChart[action.payload.currentChart].keyword[
+          action.payload.currentKeyword
+        ].visit = true;
+        state.keywordChart[action.payload.currentChart].keyword[
+          action.payload.currentKeyword
+        ].popular = Math.round(action.payload.data.keyword[0].popular);
+        state.keywordChart[action.payload.currentChart].keyword[
+          action.payload.currentKeyword
+        ].wordmap = action.payload.data.keyword[0].wordmap;
+        state.keywordChart[action.payload.currentChart].keyword[
+          action.payload.currentKeyword
+        ].line = [action.payload.data.keyword[0].lines];
+        state.keywordChart[action.payload.currentChart].keyword[
+          action.payload.currentKeyword
+        ].video = [action.payload.data.keyword[0].video];
       }
     },
     disableUseAbleStatistics: (state) => {

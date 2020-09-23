@@ -135,10 +135,10 @@ interface IKeywordChartProps extends Props {
   index?: number;
   type?: string;
   stateFunc?: (n: number) => void;
-  disableFunc?: () => void;
+  clickWord?: (word: string) => void;
 }
 
-function KeywordChart({states, dispatches, index, type, stateFunc}: IKeywordChartProps) {
+function KeywordChart({states, dispatches, index, type, stateFunc, clickWord}: IKeywordChartProps) {
   const usingData =
     states.data !== null && (type === 'keyword' ? states.data[index] : states.data[0]);
 
@@ -147,8 +147,8 @@ function KeywordChart({states, dispatches, index, type, stateFunc}: IKeywordChar
     stateFunc(idx);
   };
 
-  const handleSLinkClick = (e: React.MouseEvent) => {
-    dispatches.callLoader();
+  const handleSLinkClick = (e: React.MouseEvent<HTMLElement>) => {
+    clickWord(e.currentTarget.innerHTML);
   };
 
   return (
@@ -166,13 +166,14 @@ function KeywordChart({states, dispatches, index, type, stateFunc}: IKeywordChar
         <>
           {usingData.keyword.map((keyword, index) => (
             <KeywordChartContainer current={states.keyword === index} type={type} key={index}>
-              {/* <Rank type={type}>{index + 1}</Rank> */}
-              {states.page === 'keyword' ? (
+              {type === 'keyword' ? (
                 <KeywordContainer>
                   <Rank type={type}>{index + 1}</Rank>
-                  <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
-                    <Keyword>{keyword.name}</Keyword>
-                  </SLink>
+                  <Keyword>
+                    <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
+                      {keyword.name}
+                    </SLink>
+                  </Keyword>
                 </KeywordContainer>
               ) : (
                 <KeywordContainer>

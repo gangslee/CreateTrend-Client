@@ -12,7 +12,7 @@ type containerType = {
 };
 
 const WordmapContainer = styled.div`
-  height: ${({type}: containerType) => (type === 'statistics' ? '85%' : '100%')};
+  height: ${({type}: containerType) => (type === 'statistics' ? '100%' : '100%')};
 `;
 
 const ErrorContainer = styled.div`

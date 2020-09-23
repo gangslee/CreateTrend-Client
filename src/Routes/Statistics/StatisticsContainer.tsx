@@ -34,8 +34,8 @@ function mapDispatchToProps(dispatch: RootDispatch) {
         list: (data: IKeywordChartData[]) => {
           dispatch(statisticsDataUpdate(data));
         },
-        keyword: (data: IKeywordChartData) => {
-          dispatch(keywordDetailUpdate(data));
+        keyword: (data: IKeywordChartData, currentChart: number, currentKeyword: number) => {
+          dispatch(keywordDetailUpdate({data, currentChart, currentKeyword}));
         },
         page: () => {
           dispatch(currentPage('statistics'));
@@ -63,28 +63,28 @@ function StatisticsContainer({states, dispatches}: Props) {
   const type = states.data.currentChart === 0 ? '인기' : '영상화';
 
   useLayoutEffect(() => {
-    console.log('123');
     const getChartData = async () => {
-      const {data} = await getApi.statistics();
+      const data = await getApi.statistics();
       dispatches.update.list(data);
     };
 
     const getKeywordData = async () => {
       if (!states.currentData.visit) {
-        const {data} = await getApi.statisticsKeyword(type, states.currentData.name);
-        dispatches.update.keyword(data);
+        const data = await getApi.statisticsKeyword(type, states.currentData.name);
+        console.log(data);
+        dispatches.update.keyword(data, states.data.currentChart, states.data.currentKeyword);
       }
     };
     const fetchData = async () => {
       try {
         states.data.isChecked ? getKeywordData() : getChartData();
       } catch (e) {
-        console.log(e);
+        console.log('Statistics Container fetch error');
       }
     };
 
     fetchData();
-  }, [dispatches.update, states.currentData, states.data.isChecked, type]);
+  }, [dispatches.update, states.currentData, states.data, type]);
 
   return (
     <ChannelPresenter
