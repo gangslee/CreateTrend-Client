@@ -101,7 +101,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (ownProps.type === 'keyword') {
     return {states: {data: state.keyword.video, current: state.slider.keyword}};
-  } else if (state.page === 'statistics') {
+  } else if (ownProps.type === 'statistics') {
     return {
       states: {
         data:

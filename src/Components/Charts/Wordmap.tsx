@@ -35,8 +35,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (ownProps.type === 'keyword') {
     return {data: state.keyword.wordmap};
-  } else if (state.page === 'statistics') {
-    console.log(state.statistics.keywordChart);
+  } else if (ownProps.type === 'statistics') {
     return {
       data:
         state.statistics.keywordChart[state.statistics.currentChart].keyword[

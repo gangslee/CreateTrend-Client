@@ -70,6 +70,7 @@ export const signUp = async (username: string, password: string, dispatch: RootD
   const body = JSON.stringify({username, password});
 
   const signUpData = await getApi.signUp(config, body);
+
   signUpData === null ? dispatch(removeToken()) : dispatch(setToken(signUpData));
 
   const token = store.getState().auth.token;

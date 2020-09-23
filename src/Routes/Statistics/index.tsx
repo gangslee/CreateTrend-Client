@@ -1,3 +1,3 @@
-import ChannelContainer from './StatisticsContainer';
+import StatisticsContainer from './StatisticsContainer';
 
-export default ChannelContainer;
+export default StatisticsContainer;
