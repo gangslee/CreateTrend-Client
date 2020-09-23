@@ -65,6 +65,7 @@ export const signUp = async (username: string, password: string, dispatch: RootD
   const body = JSON.stringify({username, password});
 
   const signUpData = await getApi.signUp(config, body);
+
   signUpData === null ? dispatch(removeToken()) : dispatch(setToken(signUpData));
 
   const token = store.getState().auth.token;
@@ -74,5 +75,7 @@ export const signUp = async (username: string, password: string, dispatch: RootD
   }
 
   const userInfoData = await getApi.userInfoInit(config);
-  userInfoData ? console.log('good') : console.log('errorrr');
+  if (!userInfoData) {
+    console.log('User info data init error');
+  }
 };

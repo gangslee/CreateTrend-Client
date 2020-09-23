@@ -63,6 +63,7 @@ function StatisticsContainer({states, dispatches}: Props) {
   const type = states.data.currentChart === 0 ? '인기' : '영상화';
 
   useLayoutEffect(() => {
+    console.log('123');
     const getChartData = async () => {
       const {data} = await getApi.statistics();
       dispatches.update.list(data);
@@ -83,7 +84,7 @@ function StatisticsContainer({states, dispatches}: Props) {
     };
 
     fetchData();
-  });
+  }, [dispatches.update, states.currentData, states.data.isChecked, type]);
 
   return (
     <ChannelPresenter
