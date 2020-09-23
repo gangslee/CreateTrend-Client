@@ -11,12 +11,9 @@ const makeRequest = (path: string, params = {}) =>
     },
   });
 
-const getData = async (path: string, params = {}, type: string, body?: string) => {
+const getData = async (path: string, type: string, params = {}, body?: string) => {
   try {
-    body !== undefined ? console.log('post') : console.log('get');
-
     const {data} = await makeRequest(path, params);
-
     return data;
   } catch (e) {
     return null;
@@ -24,15 +21,12 @@ const getData = async (path: string, params = {}, type: string, body?: string) =
 };
 
 export const getApi = {
-  keyword: (search: string) => getData(`keyword_search/`, {search}, 'GET'),
-
-  statistics: () => api.get('channel_analyze/'),
+  keyword: (search: string) => getData(`keyword_search/`, 'GET', {search}),
+  statistics: () => getData('channel_analyze/', 'GET'),
   statisticsKeyword: (search: string, keyword: string) =>
-    api.get('channel_analyze/keyword_data/', {
-      params: {
-        search: search,
-        keyword: keyword,
-      },
+    getData('channel_analyze/keyword_data/', 'GET', {
+      search,
+      keyword,
     }),
   star: (id: string) => api.get(`youtuber_search/channel_list/${id}/`),
   period: (id: string, start: string, end: string) =>

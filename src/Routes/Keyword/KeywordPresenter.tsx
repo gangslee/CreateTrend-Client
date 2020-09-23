@@ -177,15 +177,24 @@ const NoticeContainer = styled.div`
   }
 `;
 
+interface ITypeProps {
+  setPadding: boolean;
+}
+
 const GraphContainer = styled.div`
   height: 330px;
-  box-sizing: border-box;
   border: 2px solid #ecf1ff;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
   padding: 5px;
+
   margin-bottom: 40px;
   background-color: #fff;
+  ${({setPadding}: ITypeProps) =>
+    setPadding &&
+    css`
+      padding-top: 45px;
+    `}
 `;
 
 interface IVideoProps {
@@ -211,10 +220,10 @@ const VideoContainer = styled.div`
 `;
 
 const KeywordChartContainer = styled.div`
-  height: 560px;
+  height: 530px;
   width: 48%;
   box-sizing: border-box;
-  padding: 45px 25px;
+  padding: 35px 25px;
   border: 2px solid #ecf1ff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
@@ -253,9 +262,10 @@ type Props = PropsFromRedux;
 interface IKeywordPresenter extends Props {
   search: string;
   searchKeyword: () => void;
+  clickWord: (word: string) => void;
 }
 
-function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPresenter) {
+function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: IKeywordPresenter) {
   const handleOnChange = (e: React.ChangeEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
@@ -278,9 +288,10 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
 
       <TitleContainer>
         <TitleIcon
-          src={require('../../Asset/images/tag.png')}
+          src={require('../../Asset/images/hashtag.png')}
           srcSet={
-            (require('../../Asset/images/tag@2x.png'), require('../../Asset/images/tag@3x.png'))
+            (require('../../Asset/images/hashtag@2x.png'),
+            require('../../Asset/images/hashtag@3x.png'))
           }
         />
         <Title>
@@ -294,7 +305,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
             <TitleRed>{search}</TitleRed> 워드맵
           </Subtitle>
 
-          <GraphContainer>
+          <GraphContainer setPadding={false}>
             {data.wordmap !== null ? <WordMap type="keyword" /> : <Loader />}
           </GraphContainer>
 
@@ -330,7 +341,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
             </RadioContainer>
           </SForm>
 
-          <GraphContainer>
+          <GraphContainer setPadding={true}>
             {data.lines !== null ? <LineChart type="keyword" /> : <Loader />}
           </GraphContainer>
 
@@ -349,7 +360,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword}: IKeywordPre
             {[0, 1].map((idx) => (
               <KeywordChartContainer key={idx}>
                 {data.wordmap !== null ? (
-                  <KeywordChart index={idx} title={search} type="keyword" />
+                  <KeywordChart index={idx} type="keyword" clickWord={clickWord} />
                 ) : (
                   <Loader />
                 )}
