@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
 
@@ -72,6 +72,14 @@ const RightItem = styled.span`
   }
 `;
 
+interface ISLinkProps {
+  location: string;
+}
+
+const SLink = styled(Link)`
+  color: ${({location}: ISLinkProps) => (location === '/statistics' ? '#d10909' : '#222')};
+`;
+
 const UserIcon = styled.img`
   width: 40px;
   height: 40px;
@@ -80,7 +88,7 @@ const UserIcon = styled.img`
 
 const Divider = styled.div`
   height: 3px;
-  background-image: linear-gradient(to right, #950707 0%, #fb4242);
+  background-color: #d10909;
 `;
 
 const UserMenuContainer = styled.div`
@@ -220,9 +228,9 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type Props = PropsFromRedux;
+type Props = PropsFromRedux & RouteComponentProps;
 
-function Header({states, dispatches}: Props) {
+function Header({states, dispatches, history}: Props) {
   const wrapperRef = useRef(null);
 
   const handleOnClickLogo = (e: React.MouseEvent) => {
@@ -263,7 +271,9 @@ function Header({states, dispatches}: Props) {
 
           <LeftItem>이용권 구매</LeftItem>
           <LeftItem>
-            <Link to="/statistics">통계 분석</Link>
+            <SLink to="/statistics" location="/statistics">
+              통계 분석
+            </SLink>
           </LeftItem>
         </HalfContainer>
 
