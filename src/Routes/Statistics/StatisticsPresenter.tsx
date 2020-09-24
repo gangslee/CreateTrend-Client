@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {connect, ConnectedProps} from 'react-redux';
+import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import Tab from '../../Components/Container/Tab';
 import Loader from '../../Components/Container/Loader';
@@ -42,7 +44,7 @@ const ResultContainer = styled.div`
   width: 840px;
   box-sizing: border-box;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: 30px 25px;
+  padding: 25px;
   background-color: white;
 `;
 
@@ -59,9 +61,8 @@ const Subtitle = styled.span`
   font-family: 'S-CoreDream-6Bold';
   font-size: 22px;
   line-height: 1.36;
-  margin-right: 10px;
-  :not(:last-child) {
-    margin-bottom: 20px;z
+  :nth-child(2) {
+    margin-bottom: 10px;
   }
 `;
 
@@ -78,18 +79,43 @@ const TitleIcon = styled.img`
 const SubResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 260px;
+  height: 280px;
   :not(:last-child) {
     margin-bottom: 30px;
   }
+  :last-child {
+    margin-top: 10px;
+  }
+`;
+
+const CircleContainer = styled.div`
+  width: 29%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 35px;
+`;
+
+const PopularText = styled.span`
+  font-family: 'S-CoreDream-4Regular';
+  font-size: 20px;
+  line-height: 1.4;
+  color: #999;
+  display: inline-block;
+  margin-bottom: 10px;
+`;
+
+const SCircle = styled(CircularProgressbar)`
+  width: 170px;
+  height: 170px;
 `;
 
 const WordmapContainer = styled.div`
-  width: 500px;
+  width: 70%;
   height: 100%;
   box-sizing: border-box;
-
-  padding: 10px;
 `;
 
 const LineChartContainer = styled.div`
@@ -163,6 +189,18 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
                   <TitleRed>{title}</TitleRed> 인기도 & 워드맵
                 </Subtitle>
                 <SubResultContainer>
+                  <CircleContainer>
+                    <PopularText>평균 인기도</PopularText>
+                    <SCircle
+                      value={
+                        data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular
+                      }
+                      text={`${
+                        data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular
+                      }%`}
+                      styles={buildStyles({pathColor: '#d10909', textColor: '#222'})}
+                    />
+                  </CircleContainer>
                   <WordmapContainer>
                     <Wordmap type="statistics" />
                   </WordmapContainer>
