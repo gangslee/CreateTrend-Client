@@ -271,7 +271,7 @@ function Header({states, dispatches, history}: Props) {
 
           <LeftItem>이용권 구매</LeftItem>
           <LeftItem>
-            <SLink to="/statistics" location="/statistics">
+            <SLink to="/statistics" location={history.location.pathname}>
               통계 분석
             </SLink>
           </LeftItem>
