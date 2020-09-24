@@ -73,11 +73,11 @@ const RightItem = styled.span`
 `;
 
 interface ISLinkProps {
-  isColor: boolean;
+  location: string;
 }
 
 const SLink = styled(Link)`
-  color: ${({isColor}: ISLinkProps) => (isColor ? '#d10909' : '#222')};
+  color: ${({location}: ISLinkProps) => (location === '/statistics' ? '#d10909' : '#222')};
 `;
 
 const UserIcon = styled.img`
@@ -271,7 +271,7 @@ function Header({states, dispatches, history}: Props) {
 
           <LeftItem>이용권 구매</LeftItem>
           <LeftItem>
-            <SLink to="/statistics" isColor={history.location.pathname === '/statistics'}>
+            <SLink to="/statistics" location="/statistics">
               통계 분석
             </SLink>
           </LeftItem>

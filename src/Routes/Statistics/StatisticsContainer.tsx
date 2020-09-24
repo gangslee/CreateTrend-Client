@@ -71,7 +71,6 @@ function StatisticsContainer({states, dispatches}: Props) {
     const getKeywordData = async () => {
       if (!states.currentData.visit) {
         const data = await getApi.statisticsKeyword(type, states.currentData.name);
-        console.log(data);
         dispatches.update.keyword(data, states.data.currentChart, states.data.currentKeyword);
       }
     };
