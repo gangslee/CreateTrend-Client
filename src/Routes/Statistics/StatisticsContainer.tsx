@@ -11,7 +11,7 @@ import {
   IKeywordChartData,
   keywordDetailUpdate,
 } from '../../store/store';
-import ChannelPresenter from './StatisticsPresenter';
+import StatisticsPresenter from './StatisticsPresenter';
 import {getApi} from '../../actions/dataAPI';
 
 function mapStateToProps(state: RootState) {
@@ -87,7 +87,7 @@ function StatisticsContainer({states, dispatches}: Props) {
   }, [dispatches.update, states.currentData, states.data, type]);
 
   return (
-    <ChannelPresenter
+    <StatisticsPresenter
       funcs={dispatches.stateFuncs}
       title={states.data.keywordChart && states.currentData.name}
     />

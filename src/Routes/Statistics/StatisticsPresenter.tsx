@@ -13,6 +13,17 @@ import VideoList from '../../Components/Lists/VideoList';
 import {RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
 
+const Slogan = styled.div`
+  font-family: 'S-CoreDream-5Medium';
+  font-size: 30px;
+  text-align: center;
+  margin: 70px 0px;
+`;
+
+const SloganRed = styled.span`
+  color: #dd0909;
+`;
+
 const Container = styled.div`
   width: 1200px;
   margin: 50px auto;
@@ -54,6 +65,12 @@ const TitleContainer = styled.div`
   width: 1200px;
   margin-top: 40px;
   padding: 20px 0px;
+`;
+
+const Title = styled.span`
+  font-size: 25px;
+  color: #333;
+  line-height: 1.4;
 `;
 
 const Subtitle = styled.span`
@@ -159,9 +176,12 @@ interface IChannelPresenterProps extends Props {
   };
 }
 
-function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
+function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
   return (
     <BGSecond>
+      <Slogan>
+        "지금 <SloganRed>가장 HOT</SloganRed>한 주제들을 한눈에 보세요"
+      </Slogan>
       <Container>
         <KeywordContainer>
           <ChartContainer>
@@ -227,9 +247,9 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
               require('../../Asset/images/youtubeIcon@3x.png'))
             }
           />
-          <Subtitle>
+          <Title>
             <TitleRed>{title}</TitleRed> 조회수 급상승 영상
-          </Subtitle>
+          </Title>
         </TitleContainer>
         <VideoContainer>
           {data.keywordChart !== null &&
@@ -245,4 +265,4 @@ function ChannelPresenter({funcs, title, data}: IChannelPresenterProps) {
   );
 }
 
-export default connector(ChannelPresenter);
+export default connector(StatisticsPresenter);
