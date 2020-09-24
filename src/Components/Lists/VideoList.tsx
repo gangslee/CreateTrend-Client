@@ -46,11 +46,6 @@ const Info = styled.div`
   }
   :nth-child(even) {
     font-family: 'S-CoreDream-4Regular';
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
   }
   :nth-child(odd) {
     color: #d10909;
@@ -60,7 +55,6 @@ const Info = styled.div`
   :last-child {
     color: #5577ff;
   }
-  overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;

@@ -1,4 +1,5 @@
 import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
+
 import {authSlice} from './reducers/auth';
 
 export interface IWordMapData {
