@@ -1,6 +1,24 @@
 import React from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-export default function SearchYoutuberPresenter() {
+import { RootState } from "../../store/store";
+
+function mapStateToProps(state: RootState) {
+  return {
+    states: {
+      data: state.searchYoutuber.data,
+    },
+  };
+}
+
+const connector = connect(mapStateToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+function SearchYoutuberPresenter({ states }: Props) {
+  console.log(states);
   return (
     <>
       <h1>SearchYoutuberPresenter</h1>
@@ -13,3 +31,5 @@ export default function SearchYoutuberPresenter() {
     </>
   );
 }
+
+export default connector(SearchYoutuberPresenter);

@@ -1,7 +1,5 @@
-import { AxiosRequestConfig } from "axios";
-
-import store, { RootState, RootDispatch } from "../store/store";
-import {} from "../store/reducers/auth";
+import { setData } from "../store/reducers/searchYoutuber";
+import { RootState, RootDispatch } from "../store/store";
 import { getApi } from "./dataAPI";
 
 export const fetchData = async (
@@ -10,4 +8,5 @@ export const fetchData = async (
   searchTerm: string
 ) => {
   const { results } = await getApi.searchYoutuber(searchTerm);
+  dispatch(setData(results));
 };
