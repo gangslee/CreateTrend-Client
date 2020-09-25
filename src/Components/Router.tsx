@@ -21,7 +21,10 @@ export default () => (
         <Route path="/" exact component={Home} />
         <Route path="/keyword/:search" component={Keyword} />
         <Route path="/statistics" component={Statistics} />
-        <Route path="/searchyoutuber/:id" component={SearchYoutuber} />
+        <Route
+          path="/searchyoutuber/:youtuber_name"
+          component={SearchYoutuber}
+        />
         <Route path="/star/:id" component={Star} />
         <Redirect from="*" to="/" />
       </Switch>
