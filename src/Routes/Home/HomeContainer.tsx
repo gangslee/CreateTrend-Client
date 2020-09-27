@@ -1,8 +1,8 @@
-import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import React from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-import {RootState, RootDispatch, callLoader} from '../../store/store';
-import HomePresenter from './HomePresenter';
+import { RootState, RootDispatch, callLoader } from "../../store/store";
+import HomePresenter from "./HomePresenter";
 
 function mapStateToProps(state: RootState) {
   return {
@@ -35,10 +35,14 @@ interface IHomeContainerProps extends Props {
   };
 }
 
-function HomeContainer({states, dispatches, history}: IHomeContainerProps) {
+function HomeContainer({ states, dispatches, history }: IHomeContainerProps) {
   const searchKeyword = () => {
     dispatches.callLoader();
-    history.push(`/${states.searchType === 0 ? 'keyword' : 'star'}/${states.searchTerm}`);
+    history.push(
+      `/${states.searchType === 0 ? "keyword" : "searchyoutuber"}/${
+        states.searchTerm
+      }`
+    );
   };
 
   return <HomePresenter searchKeyword={searchKeyword} />;

@@ -84,7 +84,9 @@ function KeywordContainer({states, dispatches, search}: IKeywordContainerProps) 
       const data = await getApi.keyword(search);
       data === null ? console.log('keyword API error') : dispatches.update(data);
     } else {
-      history.push(`/${states.searchType === 0 ? 'keyword' : 'star'}/${states.searchTerm}`);
+      history.push(
+        `/${states.searchType === 0 ? 'keyword' : 'searchYoutuber'}/${states.searchTerm}`
+      );
     }
   };
 
