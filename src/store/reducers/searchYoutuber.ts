@@ -7,11 +7,16 @@ interface IinitialStateProps {
     channel_name: string;
     channel_start_date: string;
     subscriber_num: number;
+    max_views_count: number;
+    video_counts: number;
+    recent_videos: string[];
   }[];
+  page: number;
 }
 
 const initialState: IinitialStateProps = {
   data: null,
+  page: 1,
 };
 
 export const searchYoutuberSlice = createSlice({
