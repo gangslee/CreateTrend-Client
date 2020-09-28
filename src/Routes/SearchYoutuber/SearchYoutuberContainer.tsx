@@ -41,7 +41,12 @@ function SearchYoutuberContainer({states, match, history}: Props) {
     }
   };
 
-  return <SearchYoutuberPresenter searchKeyword={searchKeyword} />;
+  return (
+    <SearchYoutuberPresenter
+      youtuberName={match.params.youtuber_name}
+      searchKeyword={searchKeyword}
+    />
+  );
 }
 
 export default connector(SearchYoutuberContainer);
