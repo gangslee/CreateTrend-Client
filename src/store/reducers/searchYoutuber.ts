@@ -13,19 +13,27 @@ interface IinitialStateProps {
     recent_videos: string[];
   }[];
   page: number;
+  isLoading: boolean;
+  error: string;
 }
 
 const initialState: IinitialStateProps = {
   data: null,
   page: 1,
+  isLoading: true,
+  error: null,
 };
 
 export const searchYoutuberSlice = createSlice({
   name: 'searchYoutuberReducer',
   initialState,
   reducers: {
+    setLoading: (state) => {
+      state.isLoading = true;
+    },
     setData: (state, action) => {
       state.data = action.payload;
+      state.isLoading = false;
     },
     currentPagination: (state, action) => {
       state.page = action.payload;
@@ -40,6 +48,7 @@ export const searchYoutuberSlice = createSlice({
 });
 
 export const {
+  setLoading,
   setData,
   nextPagination,
   prevPagination,

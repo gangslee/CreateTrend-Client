@@ -193,6 +193,7 @@ function mapStateToProps(state: RootState) {
     states: {
       data: state.searchYoutuber.data,
       page: state.searchYoutuber.page,
+      loading: state.searchYoutuber.isLoading,
     },
   };
 }
@@ -238,7 +239,11 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
             <TitleRed>{youtuberName}</TitleRed> 키워드 검색 결과
           </Title>
         </TitleContainer>
-        {states.data ? (
+        {states.loading ? (
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
+        ) : (
           <>
             <SubtitleContainer>
               <Subtitle>검색결과</Subtitle>
@@ -331,10 +336,6 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
             ))}
             <Pagination />
           </>
-        ) : (
-          <LoaderContainer>
-            <Loader />
-          </LoaderContainer>
         )}
       </Container>
     </BGSecond>
