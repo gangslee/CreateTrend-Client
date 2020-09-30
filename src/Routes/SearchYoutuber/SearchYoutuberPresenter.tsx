@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import {RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
 import SearchBar from '../../Components/Container/SearchBar';
+import Pagination from '../../Components/Container/Pagination';
+import Loader from '../../Components/Container/Loader';
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
@@ -180,6 +182,12 @@ const Thumbnail = styled.img`
   border-radius: 5px;
 `;
 
+const LoaderContainer = styled.div`
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+`;
+
 function mapStateToProps(state: RootState) {
   return {
     states: {
@@ -201,7 +209,7 @@ interface ISearchYoutuberProps extends Props {
 }
 
 function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchYoutuberProps) {
-  const start = states.data && 0 + 5 * (states.page - 1);
+  const start = states.data && 0 + 4 * (states.page - 1);
   const end = states.data && (states.data.length - 1 >= start + 3 ? start + 4 : states.data.length);
 
   const handleOnSubmit = (e: React.FormEvent) => {
@@ -230,7 +238,7 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
             <TitleRed>{youtuberName}</TitleRed> 키워드 검색 결과
           </Title>
         </TitleContainer>
-        {states.data && (
+        {states.data ? (
           <>
             <SubtitleContainer>
               <Subtitle>검색결과</Subtitle>
@@ -321,7 +329,12 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
                 </ThumbnailContainer>
               </ResultContainer>
             ))}
+            <Pagination />
           </>
+        ) : (
+          <LoaderContainer>
+            <Loader />
+          </LoaderContainer>
         )}
       </Container>
     </BGSecond>

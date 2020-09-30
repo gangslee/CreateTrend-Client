@@ -27,7 +27,21 @@ export const searchYoutuberSlice = createSlice({
     setData: (state, action) => {
       state.data = action.payload;
     },
+    currentPagination: (state, action) => {
+      state.page = action.payload;
+    },
+    nextPagination: (state) => {
+      state.page = state.page % 10 === 0 ? state.page + 1 : (state.page / 10 + 1) * 10 + 1;
+    },
+    prevPagination: (state) => {
+      state.page = state.page % 10 === 0 ? state.page - 19 : (state.page / 10 - 1) * 10 + 1;
+    },
   },
 });
 
-export const {setData} = searchYoutuberSlice.actions;
+export const {
+  setData,
+  nextPagination,
+  prevPagination,
+  currentPagination,
+} = searchYoutuberSlice.actions;
