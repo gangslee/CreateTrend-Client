@@ -12,6 +12,7 @@ import {
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 30px;
 `;
 
 const BtContainer = styled.div``;

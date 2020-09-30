@@ -40,7 +40,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
           ].line,
       },
     };
-  } else if (state.page === 'star') {
+  } else if (ownProps.type === 'star') {
     return {states: {data: state.star.line}};
   }
 }

@@ -105,7 +105,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
         current: state.slider.statistics,
       },
     };
-  } else if (state.page === 'star') {
+  } else if (ownProps.type === 'star') {
     return {
       states: {data: state.star.video.concat(state.period.video), current: state.slider.star},
     };

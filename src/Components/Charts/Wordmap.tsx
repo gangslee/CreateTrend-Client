@@ -42,7 +42,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
           state.statistics.currentKeyword
         ].wordmap,
     };
-  } else if (state.page === 'star') {
+  } else if (ownProps.type === 'star') {
     const currentStar = state.star.keyword.current;
     const currentPeriod = state.period.keyword.current;
 
