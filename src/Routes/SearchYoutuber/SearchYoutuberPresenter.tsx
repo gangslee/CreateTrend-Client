@@ -61,23 +61,28 @@ const SubtitleContainer = styled.div`
 `;
 
 const Subtitle = styled.span`
-  display: inline-block;
   font-size: 22px;
   line-height: 1.36;
+`;
+
+const EllipsTitle = styled.span`
+  display: inline-block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Count = styled.span`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 40px;
-  height: 30px;
+  padding: 8px 10px;
   border-radius: 30px;
-  margin-left: 15px;
-  font-size: 14px;
+  margin-left: 10px;
+  font-size: 16px;
   color: #fff;
   background-color: #d10909;
-  text-align: center;
 `;
 
 const ResultContainer = styled.div`
@@ -107,14 +112,14 @@ const ChannelInfoContainer = styled.div`
   display: inline-block;
   height: 100%;
   padding-top: 15px;
-  padding-bottom: 45px;
+  padding-bottom: 30px;
 `;
 
 const ChannelInfoLineContainer = styled.div`
   display: flex;
   align-items: center;
-  height: 85%;
-  box-sizing: border-box;
+  height: 75%;
+  padding-bottom: 10px;
 `;
 
 const Icon = styled.img`
@@ -235,7 +240,9 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
               <ResultContainer key={data.idx}>
                 <Avatar src={data.thumbnail_url} />
                 <ChannelInfoContainer>
-                  <Subtitle>{data.channel_name}</Subtitle>
+                  <Subtitle>
+                    <EllipsTitle>{data.channel_name}</EllipsTitle>
+                  </Subtitle>
                   <ChannelInfoLineContainer>
                     <Icon
                       src={require('../../Asset/images/view_icon.png')}
