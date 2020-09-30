@@ -1,7 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from '@reduxjs/toolkit';
 
 interface IinitialStateProps {
   data: {
+    idx: number;
     thumbnail_url: string;
     channel_description: string;
     channel_name: string;
@@ -20,7 +21,7 @@ const initialState: IinitialStateProps = {
 };
 
 export const searchYoutuberSlice = createSlice({
-  name: "searchYoutuberReducer",
+  name: 'searchYoutuberReducer',
   initialState,
   reducers: {
     setData: (state, action) => {
@@ -29,4 +30,4 @@ export const searchYoutuberSlice = createSlice({
   },
 });
 
-export const { setData } = searchYoutuberSlice.actions;
+export const {setData} = searchYoutuberSlice.actions;
