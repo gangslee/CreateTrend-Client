@@ -8,23 +8,44 @@ import VideoList from '../../Components/Lists/VideoList';
 import PieChart from '../../Components/Charts/PieChart';
 import LineChart from '../../Components/Charts/LineChart';
 import {RootState} from '../../store/store';
+import {BGSecond} from '../../Components/Container/BGContiner';
 
 const Container = styled.div`
-  width: 1040px;
+  width: 1220px;
+  margin: 50px auto;
+  box-sizing: border-box;
+  padding-top: 10px;
+`;
+
+const ChannelName = styled.span`
+  font-size: 35px;
+  line-height: 1.4;
+`;
+
+const SearchPeriod = styled.div`
+  font-family: 'S-CoreDream-4Regular';
+  font-size: 18px;
+  line-height: 1.39;
+  color: #999;
+  margin: 20px 0px;
+`;
+
+const ResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  box-sizing: border-box;
-  margin: 50px auto;
+  margin-top: 30px;
 `;
 
 const AnalysisSection = styled.div`
-  width: 700px;
+  width: 790px;
 `;
 
 const ChannelContainer = styled.div`
-  height: 200px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
+  height: 725px;
+  padding: 30px 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   box-sizing: border-box;
   margin-bottom: 40px;
 `;
@@ -42,22 +63,24 @@ interface IVideoProps {
   mode: string;
 }
 
-const VideoContainer = styled.div`
-  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '200px' : '580px')};
+const VideoContainer = styled.div<IVideoProps>`
+  height: ${({mode}) => (mode === 'analysis' ? '200px' : '725px')};
+  background-color: #fff;
   box-sizing: border-box;
-  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.3);
-  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
+  padding: 30px 25px;
   margin-bottom: 40px;
-  ${({mode}: IVideoProps) =>
+  ${({mode}) =>
     mode === 'aside' &&
     css`
-      width: 290px;
+      width: 380px;
     `};
 `;
 
 function mapStateToProps(state: RootState) {
   return {
-    data: {star: state.star, period: state.period},
+    states: {star: state.star, period: state.period},
   };
 }
 
@@ -76,54 +99,66 @@ interface IStarPresenterProps extends Props {
   period: string;
 }
 
-function StarPresenter({funcs, id, period, data}: IStarPresenterProps) {
+function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
   return (
-    <Container>
-      <AnalysisSection>
-        <ChannelContainer>
-          {data.star.channelInfo != null ? <ChannelInfo /> : <Loader />}
-        </ChannelContainer>
-        <ChartSection>
-          {data.star.channelInfo != null ? (
-            <PieChart
-              stateFunc={funcs.starPie}
-              type="star"
-              title={data.star.channelInfo.channel_name}
-            />
-          ) : (
-            <Loader />
-          )}
-        </ChartSection>
-        <ChartSection>
-          {data.star.channelInfo != null ? (
-            <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
-          ) : (
-            <Loader />
-          )}
-        </ChartSection>
-        <VideoContainer mode="analysis">
-          {data.period.video != null ? (
-            <VideoList mode="analysis" type="star" title={period} />
-          ) : (
-            <Loader />
-          )}
-        </VideoContainer>
-        <ChartSection>
-          {data.period.video != null ? (
-            <PieChart stateFunc={funcs.starPie} type="period" title={period} />
-          ) : (
-            <Loader />
-          )}
-        </ChartSection>
-      </AnalysisSection>
-      <VideoContainer mode="aside">
-        {data.period.video != null ? (
-          <VideoList mode="aside" type="star" title={data.star.channelInfo.channel_name} />
-        ) : (
-          <Loader />
+    <BGSecond>
+      <Container>
+        {states.star.channelInfo && (
+          <ChannelName>{states.star.channelInfo.channel_name}</ChannelName>
         )}
-      </VideoContainer>
-    </Container>
+
+        <SearchPeriod>
+          검색기간 : {states.period && `${states.period.start} ~ ${states.period.end}`}
+        </SearchPeriod>
+
+        <ResultContainer>
+          <AnalysisSection>
+            <ChannelContainer>
+              {states.star.channelInfo != null ? <ChannelInfo /> : <Loader />}
+            </ChannelContainer>
+            <ChartSection>
+              {states.star.channelInfo != null ? (
+                <PieChart
+                  stateFunc={funcs.starPie}
+                  type="star"
+                  title={states.star.channelInfo.channel_name}
+                />
+              ) : (
+                <Loader />
+              )}
+            </ChartSection>
+            <ChartSection>
+              {states.star.channelInfo != null ? (
+                <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
+              ) : (
+                <Loader />
+              )}
+            </ChartSection>
+            <VideoContainer mode="analysis">
+              {states.period.video != null ? (
+                <VideoList mode="analysis" type="star" title={period} />
+              ) : (
+                <Loader />
+              )}
+            </VideoContainer>
+            <ChartSection>
+              {states.period.video != null ? (
+                <PieChart stateFunc={funcs.starPie} type="period" title={period} />
+              ) : (
+                <Loader />
+              )}
+            </ChartSection>
+          </AnalysisSection>
+          <VideoContainer mode="aside">
+            {states.period.video != null ? (
+              <VideoList mode="aside" type="star" title={states.star.channelInfo.channel_name} />
+            ) : (
+              <Loader />
+            )}
+          </VideoContainer>
+        </ResultContainer>
+      </Container>
+    </BGSecond>
   );
 }
 
