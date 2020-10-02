@@ -202,12 +202,12 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div`
-  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '610px')};
+  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '750px')};
   box-sizing: border-box;
   border: 2px solid #ecf1ff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '10px' : '15px 10px')};
+  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '10px' : '50px 20px')};
   margin-bottom: 40px;
   background-color: #fff;
   ${({mode}: IVideoProps) =>

@@ -327,6 +327,7 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
                                 1
                               )}만`
                             : `${(data.max_views_count / data.video_counts)
+                                .toFixed(0)
                                 .toString()
                                 .replace(REGEX, ',')}`}
                         </DetailInfoItem>

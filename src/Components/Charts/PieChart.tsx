@@ -12,20 +12,7 @@ am4core.useTheme(am4themes_animated);
 
 const PieChartContainer = styled.div`
   width: 100%;
-  height: 85%;
-`;
-
-const TitleContainer = styled.div`
-  margin: 10px 15px;
-`;
-
-const Title = styled.span`
-  font-size: 18px;
-  font-weight: 600;
-  :first-child {
-    color: #feb100;
-    margin-right: 5px;
-  }
+  height: 100%;
 `;
 
 const ErrorContainer = styled.div`
@@ -59,10 +46,9 @@ type Props = PropsFromRedux;
 interface IPieChartProps extends Props {
   stateFunc: (n: number) => void;
   type: string;
-  title: string;
 }
 
-function PieChart({data, stateFunc, type, title}: IPieChartProps) {
+function PieChart({data, stateFunc, type}: IPieChartProps) {
   const chartRef = useRef(null);
   useEffect(() => {
     const chart = am4core.create(`${type}-pieChart`, am4charts.PieChart3D);
@@ -75,8 +61,10 @@ function PieChart({data, stateFunc, type, title}: IPieChartProps) {
     pieSeries.slices.template.stroke = am4core.color('#fff');
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
-    // pieSeries.labels.template.disabled = true;
-    // pieSeries.ticks.template.disabled = true;
+    if (type === 'star') {
+      pieSeries.labels.template.disabled = true;
+      pieSeries.ticks.template.disabled = true;
+    }
 
     pieSeries.slices.template.events.on('hit', (e) => {
       pieSeries.slices.each((item) => {
@@ -106,13 +94,7 @@ function PieChart({data, stateFunc, type, title}: IPieChartProps) {
       )}
     </ErrorContainer>
   ) : (
-    <>
-      <TitleContainer>
-        <Title>{title}</Title>
-        <Title>{type === 'star' ? ' 컨텐츠 분포도' : ' 기간 내 컨텐츠 분포도'}</Title>
-      </TitleContainer>
-      <PieChartContainer id={`${type}-pieChart`} />
-    </>
+    <PieChartContainer id={`${type}-pieChart`} />
   );
 }
 

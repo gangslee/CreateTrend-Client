@@ -7,7 +7,6 @@ import Slider from '../Container/Slider';
 
 interface IVideoListStyleProps {
   mode?: string;
-  bgUrl?: string;
 }
 
 const VideoContainer = styled.div`
@@ -20,12 +19,10 @@ const VideoContainer = styled.div`
 
 const Image = styled.img`
   width: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '45%' : '55%')};
-  height: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '180px' : '95px')};
+  height: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '180px' : '110px')};
   margin-right: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '20px' : '15px')};
   border-radius: 10px;
-  background-image: url(${({bgUrl}: IVideoListStyleProps) => bgUrl});
-  background-size: cover;
-  background-position: center center;
+
   &:hover {
     opacity: 0.7;
   }
@@ -156,7 +153,7 @@ function VideoList({states, update, mode, type}: IVideoListProps) {
       {mode === 'analysis' ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image bgUrl={usingData.data[current].thumbnail_url} mode={mode} />
+            <Image src={usingData.data[current].thumbnail_url} mode={mode} />
             <InfoContainer>
               <Info>영상 제목</Info>
               <Info>{usingData.data[current].video_name}</Info>
@@ -173,7 +170,8 @@ function VideoList({states, update, mode, type}: IVideoListProps) {
         <>
           {usingData.data.slice(0, 5).map((data, index) => (
             <VideoContainer key={index}>
-              <Image bgUrl={usingData.data[index].thumbnail_url} mode={mode} />
+              <Image src={usingData.data[index].thumbnail_url} mode={mode} />
+
               <VideoTitle>{data.video_name}</VideoTitle>
             </VideoContainer>
           ))}
