@@ -198,7 +198,7 @@ export interface IStarState {
   };
   line?: ILineChartData[];
   video: IVideoListData[];
-  useAble?: boolean;
+  isLoading?: boolean;
   start?: string;
   end?: string;
 }
@@ -208,7 +208,7 @@ const starState: IStarState = {
   keyword: null,
   line: null,
   video: null,
-  useAble: false,
+  isLoading: true,
 };
 
 const starSlice = createSlice({
@@ -220,12 +220,15 @@ const starSlice = createSlice({
       state.keyword = action.payload.keyword;
       state.line = [action.payload.line];
       state.video = [action.payload.video];
-      state.useAble = true;
+      state.isLoading = false;
     },
     starPieSliceStateUpdate: (state, action) => {
       if (state.keyword.current !== action.payload) {
         state.keyword.current = action.payload;
       }
+    },
+    setLoading: (state) => {
+      state.isLoading = true;
     },
   },
 });
@@ -233,7 +236,7 @@ const starSlice = createSlice({
 const periodState: IStarState = {
   keyword: null,
   video: null,
-  useAble: false,
+  isLoading: true,
   start: null,
   end: null,
 };
@@ -245,7 +248,7 @@ const periodSlice = createSlice({
     periodDataUpdate: (state, action) => {
       state.keyword = action.payload.keyword;
       state.video = action.payload.video;
-      state.useAble = true;
+      state.isLoading = false;
     },
     periodDateUpdate: (state, action) => {
       state.start = action.payload.start;

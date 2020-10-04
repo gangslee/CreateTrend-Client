@@ -29,10 +29,6 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     },
   } = ownProps;
   return {
-    useAble: {
-      star: state.star.useAble,
-      period: state.period.useAble,
-    },
     starState: state.star,
     periodDate: state.period,
     id: id,
@@ -71,7 +67,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 function StarContainer({
-  useAble,
   starState,
   periodDate,
   id,

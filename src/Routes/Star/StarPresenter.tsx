@@ -211,6 +211,13 @@ const VideoContainer = styled.div<IVideoProps>`
     `};
 `;
 
+const LoaderContainer = styled.div`
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+`;
+
 function mapStateToProps(state: RootState) {
   return {
     states: { star: state.star, period: state.period },
@@ -237,134 +244,118 @@ function StarPresenter({ funcs, id, period, states }: IStarPresenterProps) {
     states.star.channelInfo && states.star.channelInfo.channel_name;
   return (
     <BGSecond>
-      <Container>
-        {states.star.channelInfo && <ChannelName>{channelName}</ChannelName>}
+      {states.star.isLoading || states.period.isLoading ? (
+        <LoaderContainer>
+          <Loader />
+        </LoaderContainer>
+      ) : (
+        <Container>
+          <ChannelName>{channelName}</ChannelName>
 
-        <SearchPeriod>
-          검색기간 :{" "}
-          {states.period && `${states.period.start} ~ ${states.period.end}`}
-        </SearchPeriod>
+          <SearchPeriod>
+            검색기간 :{`${states.period.start} ~ ${states.period.end}`}
+          </SearchPeriod>
 
-        <ResultContainer>
-          <AnalysisSection>
-            <ChannelContainer>
-              <Subtitle>채널 소개</Subtitle>
-              {states.star.channelInfo != null ? (
-                <>
-                  <ChannelInfoContainer>
-                    <Avatar src={states.star.channelInfo.thumbnail_url} />
-                    <InfoContainer>
-                      <InfoTitle>채널명</InfoTitle>
-                      <InfoItem>{channelName}</InfoItem>
-                    </InfoContainer>
-                    <Divider />
-                    <InfoContainer>
-                      <InfoTitle>채널 개설일</InfoTitle>
-                      <InfoItem>
-                        {states.star.channelInfo.channel_start_date}
-                      </InfoItem>
-                    </InfoContainer>
-                    <Divider />
-                    <InfoContainer>
-                      <InfoTitle>구독자수</InfoTitle>
-                      <InfoItem>
-                        {states.star.channelInfo.subscriber === 0
-                          ? "비공개"
-                          : states.star.channelInfo.subscriber >=
+          <ResultContainer>
+            <AnalysisSection>
+              <ChannelContainer>
+                <Subtitle>채널 소개</Subtitle>
+
+                <ChannelInfoContainer>
+                  <Avatar src={states.star.channelInfo.thumbnail_url} />
+                  <InfoContainer>
+                    <InfoTitle>채널명</InfoTitle>
+                    <InfoItem>{channelName}</InfoItem>
+                  </InfoContainer>
+                  <Divider />
+                  <InfoContainer>
+                    <InfoTitle>채널 개설일</InfoTitle>
+                    <InfoItem>
+                      {states.star.channelInfo.channel_start_date}
+                    </InfoItem>
+                  </InfoContainer>
+                  <Divider />
+                  <InfoContainer>
+                    <InfoTitle>구독자수</InfoTitle>
+                    <InfoItem>
+                      {states.star.channelInfo.subscriber === 0
+                        ? "비공개"
+                        : states.star.channelInfo.subscriber >=
+                          HUNDREAD_MILLIONS
+                        ? `${(
+                            states.star.channelInfo.subscriber /
                             HUNDREAD_MILLIONS
-                          ? `${(
-                              states.star.channelInfo.subscriber /
-                              HUNDREAD_MILLIONS
-                            ).toFixed(1)}억명`
-                          : states.star.channelInfo.subscriber >= TEN_THOUSANDS
-                          ? `${(
-                              states.star.channelInfo.subscriber / TEN_THOUSANDS
-                            ).toFixed(1)}만명`
-                          : `${states.star.channelInfo.subscriber
-                              .toString()
-                              .replace(REGEX, ",")}명`}
-                      </InfoItem>
-                    </InfoContainer>
-                  </ChannelInfoContainer>
-                  <DescContainer>
-                    {states.star.channelInfo.channel_description}
-                  </DescContainer>
-                  <ChannelInfoContainer>
-                    <PieContainer>
-                      <Subtitle>콘텐츠 분포도</Subtitle>
-                      <PieChartContainer>
-                        <PieChart stateFunc={funcs.starPie} type="star" />
-                      </PieChartContainer>
-                    </PieContainer>
-                    <WordMapContainer>
-                      <Subtitle>채널 워드맵</Subtitle>
-                    </WordMapContainer>
-                  </ChannelInfoContainer>
-                </>
-              ) : (
-                <Loader />
-              )}
-            </ChannelContainer>
-          </AnalysisSection>
+                          ).toFixed(1)}억명`
+                        : states.star.channelInfo.subscriber >= TEN_THOUSANDS
+                        ? `${(
+                            states.star.channelInfo.subscriber / TEN_THOUSANDS
+                          ).toFixed(1)}만명`
+                        : `${states.star.channelInfo.subscriber
+                            .toString()
+                            .replace(REGEX, ",")}명`}
+                    </InfoItem>
+                  </InfoContainer>
+                </ChannelInfoContainer>
+                <DescContainer>
+                  {states.star.channelInfo.channel_description}
+                </DescContainer>
+                <ChannelInfoContainer>
+                  <PieContainer>
+                    <Subtitle>콘텐츠 분포도</Subtitle>
+                    <PieChartContainer>
+                      <PieChart stateFunc={funcs.starPie} type="star" />
+                    </PieChartContainer>
+                  </PieContainer>
+                  <WordMapContainer>
+                    <Subtitle>채널 워드맵</Subtitle>
+                  </WordMapContainer>
+                </ChannelInfoContainer>
+              </ChannelContainer>
+            </AnalysisSection>
 
-          <VideoContainer mode="aside">
-            {states.period.video != null ? (
-              <>
-                <Subtitle>채널 최고 조회수 영상</Subtitle>
-                <VideoList mode="aside" type="star" title={channelName} />
-              </>
-            ) : (
-              <Loader />
-            )}
-          </VideoContainer>
-        </ResultContainer>
-        <TitleContainer>
-          <Title>
-            <TitleRed>{channelName}</TitleRed> 구독자수 추이
-          </Title>
-        </TitleContainer>
-        <GraphContainer>
-          <RightContainer>
-            <SearchPeriod>
-              {states.period && `${states.period.start} ~ ${states.period.end}`}
-            </SearchPeriod>
-          </RightContainer>
-          <LineChartContainer>
-            {states.star.channelInfo != null ? (
-              <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
-            ) : (
-              <Loader />
-            )}
-          </LineChartContainer>
-        </GraphContainer>
-
-        <BottomSection>
-          <AnalysisSection>
-            <Subtitle>
-              기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
-            </Subtitle>
-            <VideoContainer mode="analysis">
-              {states.period.video != null ? (
-                <VideoList mode="analysis" type="star" title={period} />
-              ) : (
-                <Loader />
-              )}
+            <VideoContainer mode="aside">
+              <Subtitle>채널 최고 조회수 영상</Subtitle>
+              <VideoList mode="aside" type="star" title={channelName} />
             </VideoContainer>
-          </AnalysisSection>
-          <AsideSection>
-            <Subtitle>
-              기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
-            </Subtitle>
-            <PieSection>
-              {states.period.video != null ? (
+          </ResultContainer>
+
+          <TitleContainer>
+            <Title>
+              <TitleRed>{channelName}</TitleRed> 구독자수 추이
+            </Title>
+          </TitleContainer>
+
+          <GraphContainer>
+            <RightContainer>
+              <SearchPeriod>
+                {`${states.period.start} ~ ${states.period.end}`}
+              </SearchPeriod>
+            </RightContainer>
+            <LineChartContainer>
+              <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
+            </LineChartContainer>
+          </GraphContainer>
+
+          <BottomSection>
+            <AnalysisSection>
+              <Subtitle>
+                기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
+              </Subtitle>
+              <VideoContainer mode="analysis">
+                <VideoList mode="analysis" type="star" title={period} />
+              </VideoContainer>
+            </AnalysisSection>
+            <AsideSection>
+              <Subtitle>
+                기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
+              </Subtitle>
+              <PieSection>
                 <PieChart stateFunc={funcs.starPie} type="period" />
-              ) : (
-                <Loader />
-              )}
-            </PieSection>
-          </AsideSection>
-        </BottomSection>
-      </Container>
+              </PieSection>
+            </AsideSection>
+          </BottomSection>
+        </Container>
+      )}
     </BGSecond>
   );
 }
