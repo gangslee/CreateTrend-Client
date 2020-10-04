@@ -1,12 +1,12 @@
-import React, {useRef, useEffect} from 'react';
-import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useRef, useEffect } from "react";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import {RootState} from '../../store/store';
+import { RootState } from "../../store/store";
 
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4charts from '@amcharts/amcharts4/charts';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
+import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
 am4core.useTheme(am4themes_animated);
 
@@ -33,7 +33,10 @@ interface OwnProps {
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
-    data: ownProps.type === 'star' ? state.star.keyword.pie : state.period.keyword.pie,
+    data:
+      ownProps.type === "star"
+        ? state.star.keyword.pie
+        : state.period.keyword.pie,
   };
 }
 
@@ -48,7 +51,7 @@ interface IPieChartProps extends Props {
   type: string;
 }
 
-function PieChart({data, stateFunc, type}: IPieChartProps) {
+function PieChart({ data, stateFunc, type }: IPieChartProps) {
   const chartRef = useRef(null);
   useEffect(() => {
     const chart = am4core.create(`${type}-pieChart`, am4charts.PieChart3D);
@@ -56,24 +59,26 @@ function PieChart({data, stateFunc, type}: IPieChartProps) {
     chart.data = data.slice(0, 5);
 
     const pieSeries = chart.series.push(new am4charts.PieSeries3D());
-    pieSeries.dataFields.value = 'value';
-    pieSeries.dataFields.category = 'name';
-    pieSeries.slices.template.stroke = am4core.color('#fff');
+    pieSeries.dataFields.value = "value";
+    pieSeries.dataFields.category = "name";
+    pieSeries.slices.template.stroke = am4core.color("#fff");
     pieSeries.slices.template.strokeWidth = 2;
     pieSeries.slices.template.strokeOpacity = 1;
-    if (type === 'star') {
-      pieSeries.labels.template.disabled = true;
-      pieSeries.ticks.template.disabled = true;
-    }
+    // if (type === 'star') {
+    pieSeries.labels.template.disabled = true;
+    pieSeries.ticks.template.disabled = true;
+    // }
 
-    pieSeries.slices.template.events.on('hit', (e) => {
+    pieSeries.slices.template.events.on("hit", (e) => {
       pieSeries.slices.each((item) => {
         if (item.isActive && item !== e.target) {
           item.isActive = false;
         }
       });
       if (e.target.isActive) {
-        const idx = data.findIndex((data) => data.name === e.target.dataItem.properties.category);
+        const idx = data.findIndex(
+          (data) => data.name === e.target.dataItem.properties.category
+        );
         stateFunc(idx);
       }
     });
@@ -87,10 +92,16 @@ function PieChart({data, stateFunc, type}: IPieChartProps) {
   console.log(data.length === 0);
   return data.length === 0 ? (
     <ErrorContainer>
-      {type === 'period' ? (
-        <Error>분석결과가 없습니다! 범위를 재설정해주세요</Error>
+      {type === "period" ? (
+        <>
+          <Error>분석결과가 없습니다! 범위를 재설정해주세요</Error>
+          <span id={`${type}-pieChart`} />
+        </>
       ) : (
-        <Error>분석결과가 없습니다!</Error>
+        <>
+          <Error>분석결과가 없습니다!</Error>
+          <span id={`${type}-pieChart`} />
+        </>
       )}
     </ErrorContainer>
   ) : (

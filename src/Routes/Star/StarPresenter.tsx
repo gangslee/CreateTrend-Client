@@ -1,13 +1,13 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React from "react";
+import styled, { css } from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import Loader from '../../Components/Container/Loader';
-import VideoList from '../../Components/Lists/VideoList';
-import PieChart from '../../Components/Charts/PieChart';
-import LineChart from '../../Components/Charts/LineChart';
-import {RootState} from '../../store/store';
-import {BGSecond} from '../../Components/Container/BGContiner';
+import Loader from "../../Components/Container/Loader";
+import VideoList from "../../Components/Lists/VideoList";
+import PieChart from "../../Components/Charts/PieChart";
+import LineChart from "../../Components/Charts/LineChart";
+import { RootState } from "../../store/store";
+import { BGSecond } from "../../Components/Container/BGContiner";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
@@ -26,7 +26,7 @@ const ChannelName = styled.span`
 `;
 
 const SearchPeriod = styled.div`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 18px;
   line-height: 1.39;
   color: #999;
@@ -41,6 +41,12 @@ const ResultContainer = styled.div`
 
 const AnalysisSection = styled.div`
   width: 790px;
+  display: inline-block;
+`;
+
+const AsideSection = styled.div`
+  width: 380px;
+  display: inline-block;
 `;
 
 const ChannelContainer = styled.div`
@@ -50,7 +56,6 @@ const ChannelContainer = styled.div`
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   box-sizing: border-box;
-  margin-bottom: 40px;
 `;
 
 const Subtitle = styled.span`
@@ -87,7 +92,7 @@ const Divider = styled.div`
 `;
 
 const InfoTitle = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 13px;
   line-height: 2.69;
   color: #999;
@@ -102,7 +107,7 @@ const DescContainer = styled.div`
   border-radius: 10px;
   background-color: #f6f7fb;
   padding: 25px 40px;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 15px;
   line-height: 1.67;
   margin: 25px 0px;
@@ -121,6 +126,7 @@ const PieContainer = styled.div`
 
 const PieChartContainer = styled.div`
   height: 260px;
+  background-color: #fff;
 `;
 
 const WordMapContainer = styled.div`
@@ -133,15 +139,58 @@ const WordMapContainer = styled.div`
   border: solid 1px #dbe0f5;
 `;
 
-const ChartSection = styled.div`
-  width: 100%;
-  height: 300px;
-  padding: 5px;
-  box-sizing: border-box;
+const TitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 1200px;
+  margin: 40px auto;
+  padding: 20px 0px;
+  border-bottom: 1px solid #dbe0f5;
+`;
+
+const Title = styled.span`
+  font-size: 25px;
+  color: #333;
+  line-height: 1.4;
+`;
+
+const TitleRed = styled.span`
+  color: #d10909;
+`;
+
+const GraphContainer = styled.div`
+  height: 520px;
+  border: 2px solid #ecf1ff;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
-  background-color: #fff;
+  padding: 20px 30px;
+
   margin-bottom: 40px;
+  background-color: #fff;
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const LineChartContainer = styled.div`
+  height: 400px;
+`;
+
+const BottomSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const PieSection = styled.div`
+  height: 260px;
+  padding: 20px 10px;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
+  background-color: #fff;
 `;
 
 interface IVideoProps {
@@ -149,15 +198,14 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div<IVideoProps>`
-  height: ${({mode}) => (mode === 'analysis' ? '200px' : '750px')};
+  height: ${({ mode }) => (mode === "analysis" ? "260px" : "750px")};
   background-color: #fff;
   box-sizing: border-box;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   padding: 30px 25px;
-  margin-bottom: 40px;
-  ${({mode}) =>
-    mode === 'aside' &&
+  ${({ mode }) =>
+    mode === "aside" &&
     css`
       width: 380px;
     `};
@@ -165,7 +213,7 @@ const VideoContainer = styled.div<IVideoProps>`
 
 function mapStateToProps(state: RootState) {
   return {
-    states: {star: state.star, period: state.period},
+    states: { star: state.star, period: state.period },
   };
 }
 
@@ -184,16 +232,17 @@ interface IStarPresenterProps extends Props {
   period: string;
 }
 
-function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
+function StarPresenter({ funcs, id, period, states }: IStarPresenterProps) {
+  const channelName =
+    states.star.channelInfo && states.star.channelInfo.channel_name;
   return (
     <BGSecond>
       <Container>
-        {states.star.channelInfo && (
-          <ChannelName>{states.star.channelInfo.channel_name}</ChannelName>
-        )}
+        {states.star.channelInfo && <ChannelName>{channelName}</ChannelName>}
 
         <SearchPeriod>
-          검색기간 : {states.period && `${states.period.start} ~ ${states.period.end}`}
+          검색기간 :{" "}
+          {states.period && `${states.period.start} ~ ${states.period.end}`}
         </SearchPeriod>
 
         <ResultContainer>
@@ -206,32 +255,40 @@ function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
                     <Avatar src={states.star.channelInfo.thumbnail_url} />
                     <InfoContainer>
                       <InfoTitle>채널명</InfoTitle>
-                      <InfoItem>{states.star.channelInfo.channel_name}</InfoItem>
+                      <InfoItem>{channelName}</InfoItem>
                     </InfoContainer>
                     <Divider />
                     <InfoContainer>
                       <InfoTitle>채널 개설일</InfoTitle>
-                      <InfoItem>{states.star.channelInfo.channel_start_date}</InfoItem>
+                      <InfoItem>
+                        {states.star.channelInfo.channel_start_date}
+                      </InfoItem>
                     </InfoContainer>
                     <Divider />
                     <InfoContainer>
                       <InfoTitle>구독자수</InfoTitle>
                       <InfoItem>
                         {states.star.channelInfo.subscriber === 0
-                          ? '비공개'
-                          : states.star.channelInfo.subscriber >= HUNDREAD_MILLIONS
-                          ? `${(states.star.channelInfo.subscriber / HUNDREAD_MILLIONS).toFixed(
-                              1
-                            )}억명`
+                          ? "비공개"
+                          : states.star.channelInfo.subscriber >=
+                            HUNDREAD_MILLIONS
+                          ? `${(
+                              states.star.channelInfo.subscriber /
+                              HUNDREAD_MILLIONS
+                            ).toFixed(1)}억명`
                           : states.star.channelInfo.subscriber >= TEN_THOUSANDS
-                          ? `${(states.star.channelInfo.subscriber / TEN_THOUSANDS).toFixed(1)}만명`
+                          ? `${(
+                              states.star.channelInfo.subscriber / TEN_THOUSANDS
+                            ).toFixed(1)}만명`
                           : `${states.star.channelInfo.subscriber
                               .toString()
-                              .replace(REGEX, ',')}명`}
+                              .replace(REGEX, ",")}명`}
                       </InfoItem>
                     </InfoContainer>
                   </ChannelInfoContainer>
-                  <DescContainer>{states.star.channelInfo.channel_description}</DescContainer>
+                  <DescContainer>
+                    {states.star.channelInfo.channel_description}
+                  </DescContainer>
                   <ChannelInfoContainer>
                     <PieContainer>
                       <Subtitle>콘텐츠 분포도</Subtitle>
@@ -249,38 +306,64 @@ function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
               )}
             </ChannelContainer>
           </AnalysisSection>
+
           <VideoContainer mode="aside">
             {states.period.video != null ? (
               <>
                 <Subtitle>채널 최고 조회수 영상</Subtitle>
-                <VideoList mode="aside" type="star" title={states.star.channelInfo.channel_name} />
+                <VideoList mode="aside" type="star" title={channelName} />
               </>
             ) : (
               <Loader />
             )}
           </VideoContainer>
         </ResultContainer>
-        <ChartSection>
-          {states.star.channelInfo != null ? (
-            <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
-          ) : (
-            <Loader />
-          )}
-        </ChartSection>
-        <VideoContainer mode="analysis">
-          {states.period.video != null ? (
-            <VideoList mode="analysis" type="star" title={period} />
-          ) : (
-            <Loader />
-          )}
-        </VideoContainer>
-        <ChartSection>
-          {states.period.video != null ? (
-            <PieChart stateFunc={funcs.starPie} type="period" />
-          ) : (
-            <Loader />
-          )}
-        </ChartSection>
+        <TitleContainer>
+          <Title>
+            <TitleRed>{channelName}</TitleRed> 구독자수 추이
+          </Title>
+        </TitleContainer>
+        <GraphContainer>
+          <RightContainer>
+            <SearchPeriod>
+              {states.period && `${states.period.start} ~ ${states.period.end}`}
+            </SearchPeriod>
+          </RightContainer>
+          <LineChartContainer>
+            {states.star.channelInfo != null ? (
+              <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
+            ) : (
+              <Loader />
+            )}
+          </LineChartContainer>
+        </GraphContainer>
+
+        <BottomSection>
+          <AnalysisSection>
+            <Subtitle>
+              기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
+            </Subtitle>
+            <VideoContainer mode="analysis">
+              {states.period.video != null ? (
+                <VideoList mode="analysis" type="star" title={period} />
+              ) : (
+                <Loader />
+              )}
+            </VideoContainer>
+          </AnalysisSection>
+          <AsideSection>
+            <Subtitle>
+              기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
+            </Subtitle>
+            <PieSection>
+              {states.period.video != null ? (
+                <PieChart stateFunc={funcs.starPie} type="period" />
+              ) : (
+                <Loader />
+              )}
+            </PieSection>
+          </AsideSection>
+        </BottomSection>
       </Container>
     </BGSecond>
   );
