@@ -89,7 +89,7 @@ function PieChart({ data, stateFunc, type }: IPieChartProps) {
       chart.dispose();
     };
   }, [data, stateFunc, type]);
-  console.log(data.length === 0);
+
   return data.length === 0 ? (
     <ErrorContainer>
       {type === "period" ? (

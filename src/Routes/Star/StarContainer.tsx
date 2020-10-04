@@ -12,7 +12,7 @@ import {
   periodDateUpdate,
 } from "../../store/store";
 import StarPresenter from "./StarPresenter";
-import { getApi } from "../../actions/dataAPI";
+import { getApi } from "../../actions/API/dataAPI";
 
 interface OwnProps {
   match: {
@@ -78,8 +78,8 @@ function StarContainer({
     const fetchData = async (id: string, start: string, end: string) => {
       try {
         setDate(start, end);
-        const starData = await (await getApi.star(id)).data;
-        const periodData = await (await getApi.period(id, start, end)).data;
+        const starData = await getApi.star(id);
+        const periodData = await getApi.period(id, start, end);
         update(starData, periodData);
       } catch (e) {
         console.log(e);

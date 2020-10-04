@@ -7,7 +7,7 @@ import {
   setToken,
   userLoaded,
 } from "../store/reducers/auth";
-import { getApi } from "./authAPI";
+import { getApi } from "./API/authAPI";
 
 export const loadUser = async (state: RootState, dispatch: RootDispatch) => {
   dispatch(userLoading);

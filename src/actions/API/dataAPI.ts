@@ -1,10 +1,5 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL:
-    "http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/",
-});
-
 const makeRequest = (path: string, params = {}) =>
   axios.get(
     `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
@@ -15,12 +10,7 @@ const makeRequest = (path: string, params = {}) =>
     }
   );
 
-const getData = async (
-  path: string,
-  type: string,
-  params = {},
-  body?: string
-) => {
+const getData = async (path: string, type: string, params = {}) => {
   try {
     const { data } = await makeRequest(path, params);
     return data;
@@ -39,12 +29,10 @@ export const getApi = {
     }),
   searchYoutuber: (youtuber_name: string) =>
     getData("youtuber_search/channel_list/", "GET", { youtuber_name }),
-  star: (id: string) => api.get(`youtuber_search/channel_list/${id}/`),
+  star: (id: string) => getData(`youtuber_search/channel_list/${id}/`, "GET"),
   period: (id: string, start: string, end: string) =>
-    api.get(`youtuber_search/channel_period_data/${id}/`, {
-      params: {
-        start: start,
-        end: end,
-      },
+    getData(`youtuber_search/channel_period_data/${id}/`, "GET", {
+      start,
+      end,
     }),
 };
