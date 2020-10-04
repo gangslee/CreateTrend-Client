@@ -1,7 +1,7 @@
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import { RootState, RootDispatch, callLoader } from "../../store/store";
+import { RootState } from "../../store/store";
 import HomePresenter from "./HomePresenter";
 
 function mapStateToProps(state: RootState) {
@@ -13,17 +13,7 @@ function mapStateToProps(state: RootState) {
   };
 }
 
-function mapDispatchToProps(dispatch: RootDispatch) {
-  return {
-    dispatches: {
-      callLoader: () => {
-        dispatch(callLoader());
-      },
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -35,9 +25,8 @@ interface IHomeContainerProps extends Props {
   };
 }
 
-function HomeContainer({ states, dispatches, history }: IHomeContainerProps) {
+function HomeContainer({ states, history }: IHomeContainerProps) {
   const searchKeyword = () => {
-    dispatches.callLoader();
     history.push(
       `/${states.searchType === 0 ? "keyword" : "searchyoutuber"}/${
         states.searchTerm

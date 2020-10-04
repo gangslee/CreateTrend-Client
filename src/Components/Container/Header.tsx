@@ -1,7 +1,7 @@
-import React, {useRef} from 'react';
-import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
-import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useRef } from "react";
+import { Link, withRouter, RouteComponentProps } from "react-router-dom";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
 import store, {
   RootState,
@@ -9,10 +9,10 @@ import store, {
   setIsOpenSignIn,
   setIsOpenSignUp,
   setIsOpenUserMenu,
-  searchTermUpdate,
-} from '../../store/store';
-import Dialog from './Dialog';
-import {signOut} from '../../actions/auth';
+} from "../../store/store";
+import Dialog from "./Dialog";
+import { signOut } from "../../actions/auth";
+import { searchTermUpdate } from "../../store/reducers/home";
 
 const Container = styled.div`
   position: fixed;
@@ -51,7 +51,7 @@ const Logo = styled.img`
 
 const LeftItem = styled.span`
   font-size: 16px;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   line-height: 1.44;
   color: #222;
   cursor: pointer;
@@ -62,7 +62,7 @@ const LeftItem = styled.span`
 
 const RightItem = styled.span`
   font-size: 14px;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   line-height: 1.36;
   color: #666;
   letter-spacing: normal;
@@ -77,7 +77,8 @@ interface ISLinkProps {
 }
 
 const SLink = styled(Link)`
-  color: ${({location}: ISLinkProps) => (location === '/statistics' ? '#d10909' : '#222')};
+  color: ${({ location }: ISLinkProps) =>
+    location === "/statistics" ? "#d10909" : "#222"};
 `;
 
 const UserIcon = styled.img`
@@ -110,7 +111,7 @@ const UserMenuContainer = styled.div`
 const UserMenuHalfContainer = styled.div`
   display: flex;
   align-items: center;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   padding: 25px 0px;
   :first-child {
     border-bottom: 1px solid #dbe0f5;
@@ -130,7 +131,7 @@ const UserInfoHalfContainer = styled.div`
 `;
 
 const UserName = styled.span`
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 18px;
   line-height: 1.39;
   margin-right: 10px;
@@ -177,7 +178,7 @@ const SignOutBt = styled.button`
   width: 100%;
   height: 50px;
   background-color: #f4f6fb;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 16px;
   line-height: 1.44;
   border-radius: 10px;
@@ -195,7 +196,7 @@ const NoMembershipContainer = styled.div`
 
 const NoMembership = styled.span`
   display: inline-block;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 15px;
   line-height: 1.4;
   margin-left: 5px;
@@ -208,7 +209,9 @@ function mapStateToProps(state: RootState) {
       signUp: state.header.isOpenSignUp,
       isAuthenticated: state.auth.isAuthenticated,
       userMenu: state.header.isOpenUserMenu,
-      membership: state.auth.user ? state.auth.user.userinfo.on_subscribe : null,
+      membership: state.auth.user
+        ? state.auth.user.userinfo.on_subscribe
+        : null,
     },
   };
 }
@@ -219,7 +222,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       signIn: (isOpen: boolean) => dispatch(setIsOpenSignIn(isOpen)),
       signUp: (isOpen: boolean) => dispatch(setIsOpenSignUp(isOpen)),
       userMenu: (isOpen: boolean) => dispatch(setIsOpenUserMenu(isOpen)),
-      clearSearchBar: () => dispatch(searchTermUpdate('')),
+      clearSearchBar: () => dispatch(searchTermUpdate("")),
     },
   };
 }
@@ -230,7 +233,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & RouteComponentProps;
 
-function Header({states, dispatches, history}: Props) {
+function Header({ states, dispatches, history }: Props) {
   const wrapperRef = useRef(null);
 
   const handleOnClickLogo = (e: React.MouseEvent) => {
@@ -245,28 +248,30 @@ function Header({states, dispatches, history}: Props) {
   };
   const handleOnClickUserIcon = (e: React.MouseEvent) => {
     dispatches.userMenu(true);
-    document.addEventListener('click', closeUserMenu);
+    document.addEventListener("click", closeUserMenu);
   };
 
   const closeUserMenu = (e: MouseEvent) => {
     if (!(wrapperRef.current && wrapperRef.current.contains(e.target))) {
       dispatches.userMenu(false);
-      document.removeEventListener('click', closeUserMenu);
+      document.removeEventListener("click", closeUserMenu);
     }
   };
   const handleOnClickSignOut = (e: React.MouseEvent) => {
     dispatches.userMenu(false);
-    document.removeEventListener('click', closeUserMenu);
+    document.removeEventListener("click", closeUserMenu);
     signOut(store.getState(), store.dispatch);
   };
 
   return (
     <Container>
-      <Dialog type={(states.signIn && 'signIn') || (states.signUp && 'signUp')} />
+      <Dialog
+        type={(states.signIn && "signIn") || (states.signUp && "signUp")}
+      />
       <HeaderContainer>
         <HalfContainer>
           <Link to="/" onClick={handleOnClickLogo}>
-            <Logo src={require('../../Asset/images/logo.svg')} />
+            <Logo src={require("../../Asset/images/logo.svg")} />
           </Link>
 
           <LeftItem>이용권 구매</LeftItem>
@@ -281,13 +286,17 @@ function Header({states, dispatches, history}: Props) {
           {states.userMenu && (
             <UserMenuContainer ref={wrapperRef}>
               <UserMenuHalfContainer>
-                <UserAvatar src={require('../../Asset/images/Login_Myinfo_icon.svg')} />
+                <UserAvatar
+                  src={require("../../Asset/images/Login_Myinfo_icon.svg")}
+                />
                 <UserInfoContainer>
                   <UserInfoHalfContainer>
                     <UserName>이경수</UserName>
                     {states.membership && (
                       <UserMemberShipState>
-                        <UserMemberShipStateRed>멤버쉽 이용중</UserMemberShipStateRed>{' '}
+                        <UserMemberShipStateRed>
+                          멤버쉽 이용중
+                        </UserMemberShipStateRed>{" "}
                         (20-08-21까지)
                       </UserMemberShipState>
                     )}
@@ -298,21 +307,29 @@ function Header({states, dispatches, history}: Props) {
               {states.membership ? (
                 <UserMenuHalfContainer>
                   <MenuContainer>
-                    <MenuIcon src={require('../../Asset/images/Channel analysis_icon.svg')} />
+                    <MenuIcon
+                      src={require("../../Asset/images/Channel analysis_icon.svg")}
+                    />
                     <MenuTitle>내 채널 분석</MenuTitle>
                   </MenuContainer>
                   <MenuContainer>
-                    <MenuIcon src={require('../../Asset/images/Info_icon.svg')} />
+                    <MenuIcon
+                      src={require("../../Asset/images/Info_icon.svg")}
+                    />
                     <MenuTitle>내 정보</MenuTitle>
                   </MenuContainer>
                   <MenuContainer>
-                    <MenuIcon src={require('../../Asset/images/Customer Service_icon.svg')} />
+                    <MenuIcon
+                      src={require("../../Asset/images/Customer Service_icon.svg")}
+                    />
                     <MenuTitle>고객센터</MenuTitle>
                   </MenuContainer>
                 </UserMenuHalfContainer>
               ) : (
                 <NoMembershipContainer>
-                  <MenuIcon src={require('../../Asset/images/No_membership_icon.svg')} />
+                  <MenuIcon
+                    src={require("../../Asset/images/No_membership_icon.svg")}
+                  />
                   <NoMembership>이용권을 구매해주세요</NoMembership>
                 </NoMembershipContainer>
               )}
@@ -321,7 +338,7 @@ function Header({states, dispatches, history}: Props) {
           )}
           {states.isAuthenticated ? (
             <UserIcon
-              src={require('../../Asset/images/Login_Myinfo_icon.svg')}
+              src={require("../../Asset/images/Login_Myinfo_icon.svg")}
               onClick={handleOnClickUserIcon}
             />
           ) : (

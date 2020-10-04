@@ -3,12 +3,8 @@ import styled from "styled-components";
 import { connect, ConnectedProps } from "react-redux";
 import Tab from "../Container/Tab";
 
-import {
-  RootState,
-  RootDispatch,
-  searchTermUpdate,
-  searchTypeUpdate,
-} from "../../store/store";
+import { RootState, RootDispatch } from "../../store/store";
+import { searchTermUpdate, searchTypeUpdate } from "../../store/reducers/home";
 
 const Container = styled.div`
   width: 990px;

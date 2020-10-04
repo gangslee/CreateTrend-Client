@@ -1,6 +1,7 @@
 import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
 
 import { authSlice } from "./reducers/auth";
+import { homeSlice } from "./reducers/home";
 import { searchYoutuberSlice } from "./reducers/searchYoutuber";
 
 export interface IWordMapData {
@@ -52,29 +53,6 @@ export interface IVideoListData {
   }[];
   current?: number;
 }
-
-interface IHomeData {
-  searchTerm: string;
-  searchType: number;
-}
-
-const homeData: IHomeData = {
-  searchTerm: "",
-  searchType: 0,
-};
-
-const homeSlice = createSlice({
-  name: "HomeReducer",
-  initialState: homeData,
-  reducers: {
-    searchTermUpdate: (state, action) => {
-      state.searchTerm = action.payload;
-    },
-    searchTypeUpdate: (state) => {
-      state.searchType === 0 ? (state.searchType = 1) : (state.searchType = 0);
-    },
-  },
-});
 
 export interface IKeywordData {
   wordmap: IWordMapData;
@@ -346,8 +324,6 @@ const cReducer = combineReducers({
 const store = configureStore({
   reducer: cReducer,
 });
-
-export const { searchTermUpdate, searchTypeUpdate } = homeSlice.actions;
 
 export const {
   keywordDataUpdate,
