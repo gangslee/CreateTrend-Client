@@ -5,6 +5,8 @@ import {homeSlice} from './reducers/home';
 import {keywordSlice} from './reducers/keyword';
 import {statisticsSlice} from './reducers/statistics';
 import {searchYoutuberSlice} from './reducers/searchYoutuber';
+import {periodSlice} from './reducers/period';
+import {starSlice} from './reducers/star';
 
 export interface IWordMapData {
   name: string;
@@ -55,84 +57,6 @@ export interface IVideoListData {
   }[];
   current?: number;
 }
-
-export interface IStarState {
-  channelInfo?: {
-    idx: number;
-    thumbnail_url: string;
-    channel_description: string;
-    channel_name: string;
-    channel_start_date: string;
-    subscriber: number;
-  };
-  keyword: {
-    pie: {
-      name: string;
-      value: number;
-      wordmap: IWordMapData;
-    }[];
-    current: 0;
-  };
-  line?: ILineChartData[];
-  video: IVideoListData[];
-  isLoading?: boolean;
-  start?: string;
-  end?: string;
-}
-
-const starState: IStarState = {
-  channelInfo: null,
-  keyword: null,
-  line: null,
-  video: null,
-  isLoading: true,
-};
-
-const starSlice = createSlice({
-  name: 'starReducer',
-  initialState: starState,
-  reducers: {
-    starDataUpdate: (state, action) => {
-      state.channelInfo = action.payload.channelInfo;
-      state.keyword = action.payload.keyword;
-      state.line = [action.payload.line];
-      state.video = [action.payload.video];
-      state.isLoading = false;
-    },
-    starPieSliceStateUpdate: (state, action) => {
-      if (state.keyword.current !== action.payload) {
-        state.keyword.current = action.payload;
-      }
-    },
-    setLoading: (state) => {
-      state.isLoading = true;
-    },
-  },
-});
-
-const periodState: IStarState = {
-  keyword: null,
-  video: null,
-  isLoading: true,
-  start: null,
-  end: null,
-};
-
-const periodSlice = createSlice({
-  name: 'periodReducer',
-  initialState: periodState,
-  reducers: {
-    periodDataUpdate: (state, action) => {
-      state.keyword = action.payload.keyword;
-      state.video = action.payload.video;
-      state.isLoading = false;
-    },
-    periodDateUpdate: (state, action) => {
-      state.start = action.payload.start;
-      state.end = action.payload.end;
-    },
-  },
-});
 
 const sliderSlice = createSlice({
   name: 'sliderReducer',
@@ -211,10 +135,6 @@ const cReducer = combineReducers({
 const store = configureStore({
   reducer: cReducer,
 });
-
-export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
-
-export const {periodDataUpdate, periodDateUpdate} = periodSlice.actions;
 
 export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
 
