@@ -1,17 +1,11 @@
-import React, { useLayoutEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { useHistory } from "react-router";
+import React, {useLayoutEffect} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
+import {useHistory} from 'react-router';
 
-import {
-  RootState,
-  RootDispatch,
-  keywordDataUpdate,
-  IKeywordData,
-  currentPage,
-  callLoader,
-} from "../../store/store";
-import KeywordPresenter from "./KeywordPresenter";
-import { getApi } from "../../actions/API/dataAPI";
+import {RootState, RootDispatch, currentPage} from '../../store/store';
+import {IKeywordData, keywordDataUpdate, callLoader} from '../../store/reducers/keyword';
+import KeywordPresenter from './KeywordPresenter';
+import {getApi} from '../../actions/API/dataAPI';
 
 interface OwnProps {
   match: {
@@ -24,7 +18,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   const {
     match: {
-      params: { search },
+      params: {search},
     },
   } = ownProps;
 
@@ -42,7 +36,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
     dispatches: {
       update: (data: IKeywordData) => {
         if (data) {
-          dispatch(currentPage("keyword"));
+          dispatch(currentPage('keyword'));
           dispatch(keywordDataUpdate(data));
         }
       },
@@ -61,22 +55,16 @@ type Props = PropsFromRedux;
 
 interface IKeywordContainerProps extends Props {
   match: {
-    params: { search: string };
+    params: {search: string};
   };
 }
 
-function KeywordContainer({
-  states,
-  dispatches,
-  search,
-}: IKeywordContainerProps) {
+function KeywordContainer({states, dispatches, search}: IKeywordContainerProps) {
   useLayoutEffect(() => {
     dispatches.callLoader();
     const fetchData = async (search: string) => {
       const data = await getApi.keyword(search);
-      data === null
-        ? console.log("keyword API error")
-        : dispatches.update(data);
+      data === null ? console.log('keyword API error') : dispatches.update(data);
     };
 
     fetchData(search);
@@ -88,14 +76,10 @@ function KeywordContainer({
     if (search === states.searchTerm && states.searchType === 0) {
       dispatches.callLoader();
       const data = await getApi.keyword(search);
-      data === null
-        ? console.log("keyword API error")
-        : dispatches.update(data);
+      data === null ? console.log('keyword API error') : dispatches.update(data);
     } else {
       history.push(
-        `/${states.searchType === 0 ? "keyword" : "searchYoutuber"}/${
-          states.searchTerm
-        }`
+        `/${states.searchType === 0 ? 'keyword' : 'searchYoutuber'}/${states.searchTerm}`
       );
     }
   };
@@ -104,21 +88,13 @@ function KeywordContainer({
     if (search === word) {
       dispatches.callLoader();
       const data = await getApi.keyword(search);
-      data === null
-        ? console.log("keyword API error")
-        : dispatches.update(data);
+      data === null ? console.log('keyword API error') : dispatches.update(data);
     } else {
       history.push(`/keyword/${word}`);
     }
   };
 
-  return (
-    <KeywordPresenter
-      search={search}
-      searchKeyword={searchKeyword}
-      clickWord={clickWord}
-    />
-  );
+  return <KeywordPresenter search={search} searchKeyword={searchKeyword} clickWord={clickWord} />;
 }
 
 export default connector(KeywordContainer);
