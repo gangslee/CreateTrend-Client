@@ -3,6 +3,7 @@ import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
 import {authSlice} from './reducers/auth';
 import {homeSlice} from './reducers/home';
 import {keywordSlice} from './reducers/keyword';
+import {statisticsSlice} from './reducers/statistics';
 import {searchYoutuberSlice} from './reducers/searchYoutuber';
 
 export interface IWordMapData {
@@ -54,63 +55,6 @@ export interface IVideoListData {
   }[];
   current?: number;
 }
-
-interface IStatisticsState {
-  keywordChart: IKeywordChartData[];
-  currentChart?: number;
-  currentKeyword?: number;
-  isChecked?: boolean;
-}
-
-const statisticsState: IStatisticsState = {
-  keywordChart: null,
-  currentChart: 0,
-  currentKeyword: 0,
-  isChecked: false,
-};
-
-const statisticsSlice = createSlice({
-  name: 'statisticsReducer',
-  initialState: statisticsState,
-  reducers: {
-    statisticsDataUpdate: (state, action) => {
-      if (action.payload) {
-        state.keywordChart = action.payload;
-        state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
-        state.isChecked = true;
-      }
-    },
-    keywordDetailUpdate: (state, action) => {
-      if (action.payload) {
-        state.keywordChart[action.payload.currentChart].keyword[
-          action.payload.currentKeyword
-        ].visit = true;
-        state.keywordChart[action.payload.currentChart].keyword[
-          action.payload.currentKeyword
-        ].popular = Math.round(action.payload.data.keyword[0].popular);
-        state.keywordChart[action.payload.currentChart].keyword[
-          action.payload.currentKeyword
-        ].wordmap = action.payload.data.keyword[0].wordmap;
-        state.keywordChart[action.payload.currentChart].keyword[
-          action.payload.currentKeyword
-        ].line = [action.payload.data.keyword[0].lines];
-        state.keywordChart[action.payload.currentChart].keyword[
-          action.payload.currentKeyword
-        ].video = [action.payload.data.keyword[0].video];
-      }
-    },
-    disableUseAbleStatistics: (state) => {
-      state.isChecked = false;
-    },
-    chartStateUpdate: (state) => {
-      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
-      state.currentKeyword = 0;
-    },
-    keywordStateUpdate: (state, action) => {
-      state.currentKeyword = action.payload;
-    },
-  },
-});
 
 export interface IStarState {
   channelInfo?: {
@@ -267,14 +211,6 @@ const cReducer = combineReducers({
 const store = configureStore({
   reducer: cReducer,
 });
-
-export const {
-  statisticsDataUpdate,
-  keywordDetailUpdate,
-  disableUseAbleStatistics,
-  chartStateUpdate,
-  keywordStateUpdate,
-} = statisticsSlice.actions;
 
 export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
 
