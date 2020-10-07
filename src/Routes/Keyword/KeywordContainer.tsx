@@ -1,33 +1,13 @@
 import React, { useLayoutEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { useHistory } from "react-router";
+import { RouteComponentProps, useHistory } from "react-router";
 
-import { RootState, RootDispatch } from "../../store/store";
-import {
-  IKeywordData,
-  keywordDataUpdate,
-  callLoader,
-} from "../../store/reducers/keyword";
+import store, { RootState } from "../../store/store";
 import KeywordPresenter from "./KeywordPresenter";
-import { getApi } from "../../actions/API/dataAPI";
+import { fetchData } from "../../actions/keyword";
 
-interface OwnProps {
-  match: {
-    params: {
-      search: string;
-    };
-  };
-}
-
-function mapStateToProps(state: RootState, ownProps: OwnProps) {
-  const {
-    match: {
-      params: { search },
-    },
-  } = ownProps;
-
+function mapStateToProps(state: RootState) {
   return {
-    search: search,
     states: {
       searchTerm: state.home.searchTerm,
       searchType: state.home.searchType,
@@ -35,59 +15,27 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   };
 }
 
-function mapDispatchToProps(dispatch: RootDispatch) {
-  return {
-    dispatches: {
-      update: (data: IKeywordData) => {
-        if (data) {
-          dispatch(keywordDataUpdate(data));
-        }
-      },
-      callLoader: () => {
-        dispatch(callLoader());
-      },
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type Props = PropsFromRedux;
-
-interface IKeywordContainerProps extends Props {
-  match: {
-    params: { search: string };
-  };
+interface IParamsProps {
+  search: string;
 }
 
-function KeywordContainer({
-  states,
-  dispatches,
-  search,
-}: IKeywordContainerProps) {
-  useLayoutEffect(() => {
-    dispatches.callLoader();
-    const fetchData = async (search: string) => {
-      const data = await getApi.keyword(search);
-      data === null
-        ? console.log("keyword API error")
-        : dispatches.update(data);
-    };
+type Props = PropsFromRedux & RouteComponentProps<IParamsProps>;
 
-    fetchData(search);
-  }, [dispatches, search]);
+function KeywordContainer({ states, match }: Props) {
+  const { search } = match.params;
+  useLayoutEffect(() => {
+    fetchData(store.dispatch, search);
+  }, [search]);
 
   const history = useHistory();
 
-  const searchKeyword = async () => {
+  const searchKeyword = () => {
     if (search === states.searchTerm && states.searchType === 0) {
-      dispatches.callLoader();
-      const data = await getApi.keyword(search);
-      data === null
-        ? console.log("keyword API error")
-        : dispatches.update(data);
+      fetchData(store.dispatch, search);
     } else {
       history.push(
         `/${states.searchType === 0 ? "keyword" : "searchYoutuber"}/${
@@ -97,13 +45,9 @@ function KeywordContainer({
     }
   };
 
-  const clickWord = async (word: string) => {
+  const clickWord = (word: string) => {
     if (search === word) {
-      dispatches.callLoader();
-      const data = await getApi.keyword(search);
-      data === null
-        ? console.log("keyword API error")
-        : dispatches.update(data);
+      fetchData(store.dispatch, search);
     } else {
       history.push(`/keyword/${word}`);
     }

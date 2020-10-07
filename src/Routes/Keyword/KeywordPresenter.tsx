@@ -1,19 +1,19 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React from "react";
+import styled, { css } from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import Loader from '../../Components/Container/Loader';
-import WordMap from '../../Components/Charts/Wordmap';
-import LineChart from '../../Components/Charts/LineChart';
-import KeywordChart from '../../Components/Charts/KeywordChart';
-import VideoList from '../../Components/Lists/VideoList';
-import {RootState, RootDispatch} from '../../store/store';
-import {setRadioState} from '../../store/reducers/keyword';
-import SearchBar from '../../Components/Container/SearchBar';
-import {BGSecond} from '../../Components/Container/BGContiner';
+import Loader from "../../Components/Container/Loader";
+import WordMap from "../../Components/Charts/Wordmap";
+import LineChart from "../../Components/Charts/LineChart";
+import KeywordChart from "../../Components/Charts/KeywordChart";
+import VideoList from "../../Components/Lists/VideoList";
+import { RootState, RootDispatch } from "../../store/store";
+import { setRadioState } from "../../store/reducers/keyword";
+import SearchBar from "../../Components/Container/SearchBar";
+import { BGSecond } from "../../Components/Container/BGContiner";
 
 const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-size: 30px;
   text-align: center;
   margin: 70px 0px;
@@ -88,7 +88,7 @@ const SForm = styled.form`
 `;
 
 const RadioBt = styled.input.attrs({
-  type: 'radio',
+  type: "radio",
 })`
   display: none;
 `;
@@ -100,7 +100,7 @@ const RadioLabel = styled.label`
   align-items: center;
 
   ::before {
-    content: ' ';
+    content: " ";
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -117,11 +117,11 @@ const RadioContainer = styled.div`
   vertical-align: middle;
 
   margin-left: 20px;
-  input[type='radio']:checked + label:after {
+  input[type="radio"]:checked + label:after {
     border-radius: 50%;
     width: 15px;
     height: 15px;
-    content: ' ';
+    content: " ";
     top: 8px;
     left: 7px;
     position: absolute;
@@ -142,7 +142,7 @@ const Notice = styled.div`
   border-radius: 10px;
   border-top-left-radius: 0;
   padding: 20px 25px;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-weight: normal;
   font-size: 15px;
   line-height: 1.67;
@@ -159,7 +159,7 @@ const NoticeIcon = styled.span`
   font-size: 16px;
   line-height: 2;
   text-align: center;
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
   &:hover {
@@ -191,7 +191,7 @@ const GraphContainer = styled.div`
 
   margin-bottom: 40px;
   background-color: #fff;
-  ${({setPadding}: ITypeProps) =>
+  ${({ setPadding }: ITypeProps) =>
     setPadding &&
     css`
       padding-top: 45px;
@@ -203,16 +203,18 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div`
-  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '750px')};
+  height: ${({ mode }: IVideoProps) =>
+    mode === "analysis" ? "250px" : "750px"};
   box-sizing: border-box;
   border: 2px solid #ecf1ff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '10px' : '50px 20px')};
+  padding: ${({ mode }: IVideoProps) =>
+    mode === "analysis" ? "10px" : "50px 20px"};
   margin-bottom: 40px;
   background-color: #fff;
-  ${({mode}: IVideoProps) =>
-    mode === 'analysis' &&
+  ${({ mode }: IVideoProps) =>
+    mode === "analysis" &&
     css`
       display: flex;
       justify-content: center;
@@ -266,10 +268,18 @@ interface IKeywordPresenter extends Props {
   clickWord: (word: string) => void;
 }
 
-function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: IKeywordPresenter) {
+function KeywordPresenter({
+  data,
+  dispatches,
+  search,
+  searchKeyword,
+  clickWord,
+}: IKeywordPresenter) {
   const handleOnChange = (e: React.ChangeEvent) => {
-    ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
-      (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
+    ((e.currentTarget.getAttribute("value") === "영상화 추이" &&
+      data.currentChart === 1) ||
+      (e.currentTarget.getAttribute("value") === "인기도 추이" &&
+        data.currentChart === 0)) &&
       dispatches.radio();
   };
 
@@ -289,10 +299,10 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
 
       <TitleContainer>
         <TitleIcon
-          src={require('../../Asset/images/hashtag.png')}
+          src={require("../../Asset/images/hashtag.png")}
           srcSet={
-            (require('../../Asset/images/hashtag@2x.png'),
-            require('../../Asset/images/hashtag@3x.png'))
+            (require("../../Asset/images/hashtag@2x.png"),
+            require("../../Asset/images/hashtag@3x.png"))
           }
         />
         <Title>
@@ -307,7 +317,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           </Subtitle>
 
           <GraphContainer setPadding={false}>
-            {data.wordmap !== null ? <WordMap type="keyword" /> : <Loader />}
+            {data.isLoading ? <Loader /> : <WordMap type="keyword" />}
           </GraphContainer>
 
           <SubtitleContainer>
@@ -343,7 +353,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           </SForm>
 
           <GraphContainer setPadding={true}>
-            {data.lines !== null ? <LineChart type="keyword" /> : <Loader />}
+            {data.isLoading ? <Loader /> : <LineChart type="keyword" />}
           </GraphContainer>
 
           <Subtitle>
@@ -351,19 +361,23 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           </Subtitle>
 
           <VideoContainer mode="analysis">
-            {data.video !== null ? (
-              <VideoList mode="analysis" type="keyword" title={search} />
-            ) : (
+            {data.isLoading ? (
               <Loader />
+            ) : (
+              <VideoList mode="analysis" type="keyword" title={search} />
             )}
           </VideoContainer>
           <ChartContainer>
             {[0, 1].map((idx) => (
               <KeywordChartContainer key={idx}>
-                {data.wordmap !== null ? (
-                  <KeywordChart index={idx} type="keyword" clickWord={clickWord} />
-                ) : (
+                {data.isLoading ? (
                   <Loader />
+                ) : (
+                  <KeywordChart
+                    index={idx}
+                    type="keyword"
+                    clickWord={clickWord}
+                  />
                 )}
               </KeywordChartContainer>
             ))}
@@ -375,10 +389,10 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
             <TitleRed>{search}</TitleRed> 인기 영상
           </Subtitle>
           <VideoContainer mode="aside">
-            {data.video !== null ? (
-              <VideoList mode="aside" type="keyword" title={search} />
-            ) : (
+            {data.isLoading ? (
               <Loader />
+            ) : (
+              <VideoList mode="aside" type="keyword" title={search} />
             )}
           </VideoContainer>
         </AsideSection>
