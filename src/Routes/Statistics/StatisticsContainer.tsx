@@ -1,7 +1,8 @@
 import React, { useLayoutEffect } from "react";
 import { connect, ConnectedProps } from "react-redux";
 
-import { RootState, RootDispatch, IKeywordChartData } from "../../store/store";
+import { RootState, RootDispatch } from "../../store/store";
+import { IKeywordChartData } from "../../store/types";
 import {
   statisticsDataUpdate,
   chartStateUpdate,

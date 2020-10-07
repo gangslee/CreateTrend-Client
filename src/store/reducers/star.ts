@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IWordMapData, ILineChartData, IVideoListData} from '../store';
+import { createSlice } from "@reduxjs/toolkit";
+import { IWordMapData, ILineChartData, IVideoListData } from "../types";
 
 export interface IStarState {
   channelInfo?: {
@@ -34,7 +34,7 @@ const initialState: IStarState = {
 };
 
 export const starSlice = createSlice({
-  name: 'starReducer',
+  name: "starReducer",
   initialState,
   reducers: {
     starDataUpdate: (state, action) => {
@@ -55,4 +55,4 @@ export const starSlice = createSlice({
   },
 });
 
-export const {starDataUpdate, starPieSliceStateUpdate} = starSlice.actions;
+export const { starDataUpdate, starPieSliceStateUpdate } = starSlice.actions;

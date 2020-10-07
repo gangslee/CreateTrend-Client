@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IWordMapData, IVideoListData} from '../store';
+import { createSlice } from "@reduxjs/toolkit";
+import { IWordMapData, IVideoListData } from "../types";
 
 interface IinitialStateProps {
   keyword: {
@@ -25,7 +25,7 @@ const initialState: IinitialStateProps = {
 };
 
 export const periodSlice = createSlice({
-  name: 'periodReducer',
+  name: "periodReducer",
   initialState,
   reducers: {
     periodDataUpdate: (state, action) => {
@@ -40,4 +40,4 @@ export const periodSlice = createSlice({
   },
 });
 
-export const {periodDataUpdate, periodDateUpdate} = periodSlice.actions;
+export const { periodDataUpdate, periodDateUpdate } = periodSlice.actions;

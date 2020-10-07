@@ -1,5 +1,5 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IKeywordChartData} from '../store';
+import { createSlice } from "@reduxjs/toolkit";
+import { IKeywordChartData } from "../types";
 
 interface IinitialStateProps {
   keywordChart: IKeywordChartData[];
@@ -16,13 +16,15 @@ const initialState: IinitialStateProps = {
 };
 
 export const statisticsSlice = createSlice({
-  name: 'statisticsReducer',
+  name: "statisticsReducer",
   initialState,
   reducers: {
     statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
-        state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
+        state.keywordChart.map((data) =>
+          data.keyword.map((word) => (word.visit = false))
+        );
         state.isChecked = true;
       }
     },
@@ -49,7 +51,9 @@ export const statisticsSlice = createSlice({
       state.isChecked = false;
     },
     chartStateUpdate: (state) => {
-      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
+      state.currentChart === 0
+        ? (state.currentChart = 1)
+        : (state.currentChart = 0);
       state.currentKeyword = 0;
     },
     keywordStateUpdate: (state, action) => {

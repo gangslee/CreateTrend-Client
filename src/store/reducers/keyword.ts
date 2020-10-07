@@ -1,5 +1,10 @@
-import {createSlice} from '@reduxjs/toolkit';
-import {IWordMapData, ILineChartData, IKeywordChartData, IVideoListData} from '../store';
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  IWordMapData,
+  ILineChartData,
+  IKeywordChartData,
+  IVideoListData,
+} from "../types";
 
 export interface IKeywordData {
   wordmap: IWordMapData;
@@ -18,7 +23,7 @@ const initialState: IKeywordData = {
 };
 
 export const keywordSlice = createSlice({
-  name: 'keywordReducer',
+  name: "keywordReducer",
   initialState,
   reducers: {
     keywordDataUpdate: (state, action) => {
@@ -29,7 +34,9 @@ export const keywordSlice = createSlice({
       state.currentChart = 0;
     },
     setRadioState: (state) => {
-      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
+      state.currentChart === 0
+        ? (state.currentChart = 1)
+        : (state.currentChart = 0);
     },
     callLoader: (state) => {
       state.keyword = null;
@@ -41,4 +48,8 @@ export const keywordSlice = createSlice({
   },
 });
 
-export const {keywordDataUpdate, setRadioState, callLoader} = keywordSlice.actions;
+export const {
+  keywordDataUpdate,
+  setRadioState,
+  callLoader,
+} = keywordSlice.actions;
