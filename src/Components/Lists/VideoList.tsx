@@ -1,9 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React from "react";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import {RootState, RootDispatch, sliderStateNext, sliderStatePrev} from '../../store/store';
-import Slider from '../Container/Slider';
+import { RootState, RootDispatch } from "../../store/store";
+import { sliderStateNext, sliderStatePrev } from "../../store/reducers/slider";
+import Slider from "../Container/Slider";
 
 interface IVideoListStyleProps {
   mode?: string;
@@ -18,9 +19,12 @@ const VideoContainer = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '45%' : '55%')};
-  height: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '180px' : '110px')};
-  margin-right: ${({mode}: IVideoListStyleProps) => (mode === 'analysis' ? '20px' : '15px')};
+  width: ${({ mode }: IVideoListStyleProps) =>
+    mode === "analysis" ? "45%" : "55%"};
+  height: ${({ mode }: IVideoListStyleProps) =>
+    mode === "analysis" ? "180px" : "110px"};
+  margin-right: ${({ mode }: IVideoListStyleProps) =>
+    mode === "analysis" ? "20px" : "15px"};
   border-radius: 10px;
 
   &:hover {
@@ -42,7 +46,7 @@ const Info = styled.div`
     margin-bottom: 20px;
   }
   :nth-child(even) {
-    font-family: 'S-CoreDream-4Regular';
+    font-family: "S-CoreDream-4Regular";
   }
   :nth-child(odd) {
     color: #d10909;
@@ -63,7 +67,7 @@ const VideoTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -90,9 +94,11 @@ interface OwnProps {
 }
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
-  if (ownProps.type === 'keyword') {
-    return {states: {data: state.keyword.video, current: state.slider.keyword}};
-  } else if (ownProps.type === 'statistics') {
+  if (ownProps.type === "keyword") {
+    return {
+      states: { data: state.keyword.video, current: state.slider.keyword },
+    };
+  } else if (ownProps.type === "statistics") {
     return {
       states: {
         data:
@@ -102,9 +108,12 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
         current: state.slider.statistics,
       },
     };
-  } else if (ownProps.type === 'star') {
+  } else if (ownProps.type === "star") {
     return {
-      states: {data: state.star.video.concat(state.period.video), current: state.slider.star},
+      states: {
+        data: state.star.video.concat(state.period.video),
+        current: state.slider.star,
+      },
     };
   }
 }
@@ -134,10 +143,10 @@ interface IVideoListProps extends Props {
   title?: string;
 }
 
-function VideoList({states, update, mode, type}: IVideoListProps) {
+function VideoList({ states, update, mode, type }: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
-    const direction = e.currentTarget.id === 'next' ? true : false;
-    update({page: type, len: usingData.data.length - 1}, direction);
+    const direction = e.currentTarget.id === "next" ? true : false;
+    update({ page: type, len: usingData.data.length - 1 }, direction);
   };
 
   const usingData = states.data.filter((data) => data.type === mode)[0];
@@ -150,7 +159,7 @@ function VideoList({states, update, mode, type}: IVideoListProps) {
     </ErrorContainer>
   ) : (
     <>
-      {mode === 'analysis' ? (
+      {mode === "analysis" ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
             <Image src={usingData.data[current].thumbnail_url} mode={mode} />

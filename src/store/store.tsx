@@ -7,6 +7,7 @@ import { statisticsSlice } from "./reducers/statistics";
 import { searchYoutuberSlice } from "./reducers/searchYoutuber";
 import { periodSlice } from "./reducers/period";
 import { starSlice } from "./reducers/star";
+import { sliderSlice } from "./reducers/slider";
 
 export interface IWordMapData {
   name: string;
@@ -58,47 +59,6 @@ export interface IVideoListData {
   current?: number;
 }
 
-const sliderSlice = createSlice({
-  name: "sliderReducer",
-  initialState: {
-    keyword: 0,
-    statistics: 0,
-    star: 0,
-  },
-  reducers: {
-    sliderStateNext: (state, action) => {
-      if (action.payload.page === "keyword") {
-        state.keyword !== action.payload.len
-          ? (state.keyword += 1)
-          : (state.keyword = 0);
-      } else if (action.payload.page === "statistics") {
-        state.statistics !== action.payload.len
-          ? (state.statistics += 1)
-          : (state.statistics = 0);
-      } else if (action.payload.page === "star") {
-        state.star !== action.payload.len
-          ? (state.star += 1)
-          : (state.star = 0);
-      }
-    },
-    sliderStatePrev: (state, action) => {
-      if (action.payload.page === "keyword") {
-        state.keyword !== 0
-          ? (state.keyword -= 1)
-          : (state.keyword = action.payload.len);
-      } else if (action.payload.page === "statistics") {
-        state.statistics !== 0
-          ? (state.statistics -= 1)
-          : (state.statistics = action.payload.len);
-      } else if (action.payload.page === "star") {
-        state.star !== 0
-          ? (state.star -= 1)
-          : (state.star = action.payload.len);
-      }
-    },
-  },
-});
-
 const headerSlice = createSlice({
   name: "headerReducer",
   initialState: {
@@ -138,8 +98,6 @@ const cReducer = combineReducers({
 const store = configureStore({
   reducer: cReducer,
 });
-
-export const { sliderStateNext, sliderStatePrev } = sliderSlice.actions;
 
 export const {
   setIsOpenSignIn,
