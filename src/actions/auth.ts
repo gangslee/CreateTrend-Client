@@ -6,6 +6,7 @@ import {
   removeToken,
   setToken,
   userLoaded,
+  setUserInfo,
 } from "../store/reducers/auth";
 import { getApi } from "./API/authAPI";
 
@@ -25,6 +26,7 @@ export const loadUser = async (state: RootState, dispatch: RootDispatch) => {
 
     const data = await getApi.auth(config);
     data ? dispatch(userLoaded(data)) : dispatch(removeToken());
+    console.log("token is in browser");
   } else {
     console.log("no token in browser");
   }
@@ -46,7 +48,7 @@ export const signIn = async (
 
   if (data) {
     dispatch(setToken(data));
-    dispatch(userLoaded(data));
+    dispatch(setUserInfo(data));
   } else {
     dispatch(removeToken());
   }
@@ -100,5 +102,7 @@ export const signUp = async (
   }
 
   const userInfoData = await getApi.getUserInfo(config);
-  userInfoData ? dispatch(userLoaded(userInfoData)) : console.log("eeeeerorrr");
+  userInfoData
+    ? dispatch(userLoaded(userInfoData))
+    : console.log("getUserInfo API error");
 };

@@ -1,12 +1,12 @@
-import {configureStore, createSlice, combineReducers} from '@reduxjs/toolkit';
+import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
 
-import {authSlice} from './reducers/auth';
-import {homeSlice} from './reducers/home';
-import {keywordSlice} from './reducers/keyword';
-import {statisticsSlice} from './reducers/statistics';
-import {searchYoutuberSlice} from './reducers/searchYoutuber';
-import {periodSlice} from './reducers/period';
-import {starSlice} from './reducers/star';
+import { authSlice } from "./reducers/auth";
+import { homeSlice } from "./reducers/home";
+import { keywordSlice } from "./reducers/keyword";
+import { statisticsSlice } from "./reducers/statistics";
+import { searchYoutuberSlice } from "./reducers/searchYoutuber";
+import { periodSlice } from "./reducers/period";
+import { starSlice } from "./reducers/star";
 
 export interface IWordMapData {
   name: string;
@@ -59,7 +59,7 @@ export interface IVideoListData {
 }
 
 const sliderSlice = createSlice({
-  name: 'sliderReducer',
+  name: "sliderReducer",
   initialState: {
     keyword: 0,
     statistics: 0,
@@ -67,36 +67,40 @@ const sliderSlice = createSlice({
   },
   reducers: {
     sliderStateNext: (state, action) => {
-      if (action.payload.page === 'keyword') {
-        state.keyword !== action.payload.len ? (state.keyword += 1) : (state.keyword = 0);
-      } else if (action.payload.page === 'statistics') {
-        state.statistics !== action.payload.len ? (state.statistics += 1) : (state.statistics = 0);
-      } else if (action.payload.page === 'star') {
-        state.star !== action.payload.len ? (state.star += 1) : (state.star = 0);
+      if (action.payload.page === "keyword") {
+        state.keyword !== action.payload.len
+          ? (state.keyword += 1)
+          : (state.keyword = 0);
+      } else if (action.payload.page === "statistics") {
+        state.statistics !== action.payload.len
+          ? (state.statistics += 1)
+          : (state.statistics = 0);
+      } else if (action.payload.page === "star") {
+        state.star !== action.payload.len
+          ? (state.star += 1)
+          : (state.star = 0);
       }
     },
     sliderStatePrev: (state, action) => {
-      if (action.payload.page === 'keyword') {
-        state.keyword !== 0 ? (state.keyword -= 1) : (state.keyword = action.payload.len);
-      } else if (action.payload.page === 'statistics') {
-        state.statistics !== 0 ? (state.statistics -= 1) : (state.statistics = action.payload.len);
-      } else if (action.payload.page === 'star') {
-        state.star !== 0 ? (state.star -= 1) : (state.star = action.payload.len);
+      if (action.payload.page === "keyword") {
+        state.keyword !== 0
+          ? (state.keyword -= 1)
+          : (state.keyword = action.payload.len);
+      } else if (action.payload.page === "statistics") {
+        state.statistics !== 0
+          ? (state.statistics -= 1)
+          : (state.statistics = action.payload.len);
+      } else if (action.payload.page === "star") {
+        state.star !== 0
+          ? (state.star -= 1)
+          : (state.star = action.payload.len);
       }
     },
-  },
-});
-
-const pageSlice = createSlice({
-  name: 'pageReducer',
-  initialState: 'home',
-  reducers: {
-    currentPage: (state, action) => (state = action.payload),
   },
 });
 
 const headerSlice = createSlice({
-  name: 'headerReducer',
+  name: "headerReducer",
   initialState: {
     isOpenSignIn: false,
     isOpenSignUp: false,
@@ -127,7 +131,6 @@ const cReducer = combineReducers({
   star: starSlice.reducer,
   period: periodSlice.reducer,
   slider: sliderSlice.reducer,
-  page: pageSlice.reducer,
   header: headerSlice.reducer,
   auth: authSlice.reducer,
 });
@@ -136,11 +139,13 @@ const store = configureStore({
   reducer: cReducer,
 });
 
-export const {sliderStateNext, sliderStatePrev} = sliderSlice.actions;
+export const { sliderStateNext, sliderStatePrev } = sliderSlice.actions;
 
-export const {currentPage} = pageSlice.actions;
-
-export const {setIsOpenSignIn, setIsOpenSignUp, setIsOpenUserMenu} = headerSlice.actions;
+export const {
+  setIsOpenSignIn,
+  setIsOpenSignUp,
+  setIsOpenUserMenu,
+} = headerSlice.actions;
 
 export default store;
 

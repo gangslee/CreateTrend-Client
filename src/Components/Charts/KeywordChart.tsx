@@ -1,10 +1,10 @@
-import React from 'react';
-import styled, {css} from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import React from "react";
+import styled, { css } from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import {RootState, RootDispatch} from '../../store/store';
-import {callLoader} from '../../store/reducers/keyword';
-import {Link} from 'react-router-dom';
+import { RootState, RootDispatch } from "../../store/store";
+import { callLoader } from "../../store/reducers/keyword";
+import { Link } from "react-router-dom";
 
 type styleType = {
   type: string;
@@ -28,18 +28,19 @@ const KeywordChartContainer = styled.div`
   align-items: center;
   padding: 0px 25px;
   box-sizing: border-box;
-  line-height: ${({type}: styleType) => (type === 'keyword' ? '2.67' : '60px')};
-  font-family: 'S-CoreDream-4Regular';
+  line-height: ${({ type }: styleType) =>
+    type === "keyword" ? "2.67" : "60px"};
+  font-family: "S-CoreDream-4Regular";
   font-stretch: normal;
   letter-spacing: normal;
-  font-size: ${({type}: styleType) => (type === 'keyword' ? '15px' : '18px')};
+  font-size: ${({ type }: styleType) => (type === "keyword" ? "15px" : "18px")};
   font-weight: 600;
-  ${({type, current}: styleType) =>
-    type === 'statistics' &&
+  ${({ type, current }: styleType) =>
+    type === "statistics" &&
     current &&
     css`
       color: #d10909;
-      font-family: 'S-CoreDream-6Bold';
+      font-family: "S-CoreDream-6Bold";
       border: solid 2px #d10909;
       border-bottom: 2px solid #d10909;
       padding: 2px 23px;
@@ -54,14 +55,14 @@ const KeywordContainer = styled.div`
 
 const Rank = styled.span`
   width: 15%;
-  font-family: 'NotoSans';
+  font-family: "NotoSans";
   font-weight: bold;
   display: inline-block;
   text-align: center;
   margin-right: 15px;
   color: #222;
-  ${({type}: styleType) =>
-    type === 'statistics' &&
+  ${({ type }: styleType) =>
+    type === "statistics" &&
     css`
       font-size: 25px;
     `}
@@ -103,13 +104,11 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
     states: {
       data:
-        ownProps.type === 'keyword'
+        ownProps.type === "keyword"
           ? state.keyword.keyword
           : state.statistics.keywordChart !== null
           ? [state.statistics.keywordChart[state.statistics.currentChart]]
           : null,
-
-      page: state.page,
       chart: state.statistics.currentChart,
       keyword: state.statistics.currentKeyword,
     },
@@ -139,12 +138,22 @@ interface IKeywordChartProps extends Props {
   clickWord?: (word: string) => void;
 }
 
-function KeywordChart({states, dispatches, index, type, stateFunc, clickWord}: IKeywordChartProps) {
+function KeywordChart({
+  states,
+  dispatches,
+  index,
+  type,
+  stateFunc,
+  clickWord,
+}: IKeywordChartProps) {
   const usingData =
-    states.data !== null && (type === 'keyword' ? states.data[index] : states.data[0]);
+    states.data !== null &&
+    (type === "keyword" ? states.data[index] : states.data[0]);
 
   const handleKeywordClick = (e: React.MouseEvent) => {
-    const idx = usingData.keyword.findIndex((data) => data.name === e.currentTarget.innerHTML);
+    const idx = usingData.keyword.findIndex(
+      (data) => data.name === e.currentTarget.innerHTML
+    );
     stateFunc(idx);
   };
 
@@ -154,7 +163,7 @@ function KeywordChart({states, dispatches, index, type, stateFunc, clickWord}: I
 
   return (
     <>
-      {type === 'keyword' && (
+      {type === "keyword" && (
         <Subtitle>
           {usingData.type} <TitleRed>TOP 10</TitleRed>
         </Subtitle>
@@ -166,12 +175,19 @@ function KeywordChart({states, dispatches, index, type, stateFunc, clickWord}: I
       ) : (
         <>
           {usingData.keyword.map((keyword, index) => (
-            <KeywordChartContainer current={states.keyword === index} type={type} key={index}>
-              {type === 'keyword' ? (
+            <KeywordChartContainer
+              current={states.keyword === index}
+              type={type}
+              key={index}
+            >
+              {type === "keyword" ? (
                 <KeywordContainer>
                   <Rank type={type}>{index + 1}</Rank>
                   <Keyword>
-                    <SLink to={`/keyword/${keyword.name}`} onClick={handleSLinkClick}>
+                    <SLink
+                      to={`/keyword/${keyword.name}`}
+                      onClick={handleSLinkClick}
+                    >
                       {keyword.name}
                     </SLink>
                   </Keyword>

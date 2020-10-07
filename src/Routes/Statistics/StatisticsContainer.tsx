@@ -1,15 +1,15 @@
-import React, {useLayoutEffect} from 'react';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useLayoutEffect } from "react";
+import { connect, ConnectedProps } from "react-redux";
 
-import {RootState, RootDispatch, currentPage, IKeywordChartData} from '../../store/store';
+import { RootState, RootDispatch, IKeywordChartData } from "../../store/store";
 import {
   statisticsDataUpdate,
   chartStateUpdate,
   keywordStateUpdate,
   keywordDetailUpdate,
-} from '../../store/reducers/statistics';
-import StatisticsPresenter from './StatisticsPresenter';
-import {getApi} from '../../actions/API/dataAPI';
+} from "../../store/reducers/statistics";
+import StatisticsPresenter from "./StatisticsPresenter";
+import { getApi } from "../../actions/API/dataAPI";
 
 function mapStateToProps(state: RootState) {
   return {
@@ -31,11 +31,12 @@ function mapDispatchToProps(dispatch: RootDispatch) {
         list: (data: IKeywordChartData[]) => {
           dispatch(statisticsDataUpdate(data));
         },
-        keyword: (data: IKeywordChartData, currentChart: number, currentKeyword: number) => {
-          dispatch(keywordDetailUpdate({data, currentChart, currentKeyword}));
-        },
-        page: () => {
-          dispatch(currentPage('statistics'));
+        keyword: (
+          data: IKeywordChartData,
+          currentChart: number,
+          currentKeyword: number
+        ) => {
+          dispatch(keywordDetailUpdate({ data, currentChart, currentKeyword }));
         },
       },
       stateFuncs: {
@@ -56,8 +57,8 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function StatisticsContainer({states, dispatches}: Props) {
-  const type = states.data.currentChart === 0 ? '인기' : '영상화';
+function StatisticsContainer({ states, dispatches }: Props) {
+  const type = states.data.currentChart === 0 ? "인기" : "영상화";
 
   useLayoutEffect(() => {
     const getChartData = async () => {
@@ -67,15 +68,22 @@ function StatisticsContainer({states, dispatches}: Props) {
 
     const getKeywordData = async () => {
       if (!states.currentData.visit) {
-        const data = await getApi.statisticsKeyword(type, states.currentData.name);
-        dispatches.update.keyword(data, states.data.currentChart, states.data.currentKeyword);
+        const data = await getApi.statisticsKeyword(
+          type,
+          states.currentData.name
+        );
+        dispatches.update.keyword(
+          data,
+          states.data.currentChart,
+          states.data.currentKeyword
+        );
       }
     };
     const fetchData = async () => {
       try {
         states.data.isChecked ? getKeywordData() : getChartData();
       } catch (e) {
-        console.log('Statistics Container fetch error');
+        console.log("Statistics Container fetch error");
       }
     };
 
