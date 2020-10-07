@@ -1,4 +1,4 @@
-import { configureStore, createSlice, combineReducers } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import { authSlice } from "./reducers/auth";
 import { homeSlice } from "./reducers/home";
@@ -8,6 +8,7 @@ import { searchYoutuberSlice } from "./reducers/searchYoutuber";
 import { periodSlice } from "./reducers/period";
 import { starSlice } from "./reducers/star";
 import { sliderSlice } from "./reducers/slider";
+import { headerSlice } from "./reducers/header";
 
 export interface IWordMapData {
   name: string;
@@ -59,30 +60,6 @@ export interface IVideoListData {
   current?: number;
 }
 
-const headerSlice = createSlice({
-  name: "headerReducer",
-  initialState: {
-    isOpenSignIn: false,
-    isOpenSignUp: false,
-    isOpenUserMenu: false,
-    isMembership: true,
-  },
-  reducers: {
-    setIsOpenSignIn: (state, action) => {
-      state.isOpenSignIn = action.payload;
-      state.isOpenSignUp = false;
-    },
-    setIsOpenSignUp: (state, action) => {
-      state.isOpenSignUp = action.payload;
-      state.isOpenSignIn = false;
-    },
-
-    setIsOpenUserMenu: (state, action) => {
-      state.isOpenUserMenu = action.payload;
-    },
-  },
-});
-
 const cReducer = combineReducers({
   home: homeSlice.reducer,
   keyword: keywordSlice.reducer,
@@ -98,12 +75,6 @@ const cReducer = combineReducers({
 const store = configureStore({
   reducer: cReducer,
 });
-
-export const {
-  setIsOpenSignIn,
-  setIsOpenSignUp,
-  setIsOpenUserMenu,
-} = headerSlice.actions;
 
 export default store;
 

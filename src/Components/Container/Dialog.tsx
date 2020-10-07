@@ -3,12 +3,8 @@ import styled from "styled-components";
 import Modal from "react-modal";
 import { connect, ConnectedProps } from "react-redux";
 
-import store, {
-  RootState,
-  RootDispatch,
-  setIsOpenSignIn,
-  setIsOpenSignUp,
-} from "../../store/store";
+import store, { RootState, RootDispatch } from "../../store/store";
+import { setIsOpenSignIn, setIsOpenSignUp } from "../../store/reducers/header";
 import { signIn, signUp } from "../../actions/auth";
 
 const Container = styled.div`

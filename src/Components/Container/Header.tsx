@@ -3,13 +3,12 @@ import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import { connect, ConnectedProps } from "react-redux";
 
-import store, {
-  RootState,
-  RootDispatch,
+import store, { RootState, RootDispatch } from "../../store/store";
+import {
   setIsOpenSignIn,
   setIsOpenSignUp,
   setIsOpenUserMenu,
-} from "../../store/store";
+} from "../../store/reducers/header";
 import Dialog from "./Dialog";
 import { signOut } from "../../actions/auth";
 import { searchTermUpdate } from "../../store/reducers/home";
