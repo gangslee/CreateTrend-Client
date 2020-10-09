@@ -231,15 +231,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IStarPresenterProps extends Props {
-  funcs: {
-    starPie: (n: number) => void;
-    periodLine: (id: string, start: string, end: string) => void;
-  };
+  periodLine: (id: string, start: string, end: string) => void;
   id: string;
   period: string;
 }
 
-function StarPresenter({ funcs, id, period, states }: IStarPresenterProps) {
+function StarPresenter({ periodLine, id, period, states }: IStarPresenterProps) {
   const channelName =
     states.star.channelInfo && states.star.channelInfo.channel_name;
   return (
@@ -303,7 +300,7 @@ function StarPresenter({ funcs, id, period, states }: IStarPresenterProps) {
                   <PieContainer>
                     <Subtitle>콘텐츠 분포도</Subtitle>
                     <PieChartContainer>
-                      <PieChart stateFunc={funcs.starPie} type="star" />
+                      <PieChart  type="star" />
                     </PieChartContainer>
                   </PieContainer>
                   <WordMapContainer>
@@ -332,7 +329,7 @@ function StarPresenter({ funcs, id, period, states }: IStarPresenterProps) {
               </SearchPeriod>
             </RightContainer>
             <LineChartContainer>
-              <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
+              <LineChart type="star" stateFunc={periodLine} id={id} />
             </LineChartContainer>
           </GraphContainer>
 
@@ -350,7 +347,7 @@ function StarPresenter({ funcs, id, period, states }: IStarPresenterProps) {
                 기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
               </Subtitle>
               <PieSection>
-                <PieChart stateFunc={funcs.starPie} type="period" />
+                <PieChart  type="period" />
               </PieSection>
             </AsideSection>
           </BottomSection>

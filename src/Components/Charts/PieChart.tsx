@@ -2,11 +2,12 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import { connect, ConnectedProps } from "react-redux";
 
-import { RootState } from "../../store/store";
+import { RootDispatch, RootState } from "../../store/store";
 
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { starPieSliceStateUpdate } from "../../store/reducers/star";
 
 am4core.useTheme(am4themes_animated);
 
@@ -33,30 +34,41 @@ interface OwnProps {
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   return {
+    states:{
     data:
       ownProps.type === "star"
         ? state.star.keyword.pie
         : state.period.keyword.pie,
+    } 
   };
 }
 
-const connector = connect(mapStateToProps);
+function mapDispatchToProps(dispatch:RootDispatch){
+  return{
+    dispatches:{
+      setPieState: (idx: number) => {
+        dispatch(starPieSliceStateUpdate(idx));
+      },
+    }
+  }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
 interface IPieChartProps extends Props {
-  stateFunc: (n: number) => void;
   type: string;
 }
 
-function PieChart({ data, stateFunc, type }: IPieChartProps) {
+function PieChart({ states, dispatches, type }: IPieChartProps) {
   const chartRef = useRef(null);
   useEffect(() => {
     const chart = am4core.create(`${type}-pieChart`, am4charts.PieChart3D);
     chart.innerRadius = am4core.percent(40);
-    chart.data = data.slice(0, 5);
+    chart.data = states.data.slice(0, 5);
 
     const pieSeries = chart.series.push(new am4charts.PieSeries3D());
     pieSeries.dataFields.value = "value";
@@ -76,10 +88,10 @@ function PieChart({ data, stateFunc, type }: IPieChartProps) {
         }
       });
       if (e.target.isActive) {
-        const idx = data.findIndex(
+        const idx = states.data.findIndex(
           (data) => data.name === e.target.dataItem.properties.category
         );
-        stateFunc(idx);
+        dispatches.setPieState(idx);
       }
     });
 
@@ -88,9 +100,9 @@ function PieChart({ data, stateFunc, type }: IPieChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [data, stateFunc, type]);
+  }, [states.data, dispatches, type]);
 
-  return data.length === 0 ? (
+  return states.data.length === 0 ? (
     <ErrorContainer>
       {type === "period" ? (
         <>
