@@ -1,11 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IKeywordChartData } from "../types";
+import {createSlice} from '@reduxjs/toolkit';
+import {IKeywordChartData} from '../types';
 
 interface IinitialStateProps {
   keywordChart: IKeywordChartData[];
   currentChart?: number;
   currentKeyword?: number;
-  isChecked?: boolean;
+  isChecked: boolean;
+  isLoadingChart:boolean;
+  isLoadingData:boolean;
 }
 
 const initialState: IinitialStateProps = {
@@ -13,19 +15,20 @@ const initialState: IinitialStateProps = {
   currentChart: 0,
   currentKeyword: 0,
   isChecked: false,
+  isLoadingChart:true,
+  isLoadingData:true,
 };
 
 export const statisticsSlice = createSlice({
-  name: "statisticsReducer",
+  name: 'statisticsReducer',
   initialState,
   reducers: {
     statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
-        state.keywordChart.map((data) =>
-          data.keyword.map((word) => (word.visit = false))
-        );
+        state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
         state.isChecked = true;
+        state.isLoadingChart = false;
       }
     },
     keywordDetailUpdate: (state, action) => {
@@ -45,20 +48,25 @@ export const statisticsSlice = createSlice({
         state.keywordChart[action.payload.currentChart].keyword[
           action.payload.currentKeyword
         ].video = [action.payload.data.keyword[0].video];
+        state.isLoadingData = false;
       }
     },
     disableUseAbleStatistics: (state) => {
       state.isChecked = false;
     },
     chartStateUpdate: (state) => {
-      state.currentChart === 0
-        ? (state.currentChart = 1)
-        : (state.currentChart = 0);
+      state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
       state.currentKeyword = 0;
     },
     keywordStateUpdate: (state, action) => {
       state.currentKeyword = action.payload;
     },
+    setLoadingChart:(state)=>{
+      state.isLoadingChart = true;
+    },
+    setLoadingData:(state)=>{
+      state.isLoadingData = true;
+    }
   },
 });
 
@@ -68,4 +76,6 @@ export const {
   disableUseAbleStatistics,
   chartStateUpdate,
   keywordStateUpdate,
+  setLoadingChart,
+  setLoadingData
 } = statisticsSlice.actions;

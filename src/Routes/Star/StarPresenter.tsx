@@ -237,17 +237,14 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IStarPresenterProps extends Props {
-  funcs: {
-    starPie: (n: number) => void;
-    periodLine: (id: string, start: string, end: string) => void;
-  };
+  periodLine: (id: string, start: string, end: string) => void;
   id: string;
   period: string;
 }
 
-function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
-  const channelName = states.star.channelInfo && states.star.channelInfo.channel_name;
-
+function StarPresenter({ periodLine, id, period, states }: IStarPresenterProps) {
+  const channelName =
+    states.star.channelInfo && states.star.channelInfo.channel_name;
   return (
     <BGSecond>
       {states.star.isLoading || states.period.isLoading ? (
@@ -298,7 +295,7 @@ function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
                     <Subtitle>콘텐츠 분포도</Subtitle>
                     <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
                     <PieChartContainer>
-                      <PieChart stateFunc={funcs.starPie} type="star" />
+                      <PieChart  type="star" />
                     </PieChartContainer>
                   </PieContainer>
                   <WordMapContainer>
@@ -328,7 +325,7 @@ function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
               <SearchPeriod>{`${states.period.start} ~ ${states.period.end}`}</SearchPeriod>
             </RightContainer>
             <LineChartContainer>
-              <LineChart type="star" stateFunc={funcs.periodLine} id={id} />
+              <LineChart type="star" stateFunc={periodLine} id={id} />
             </LineChartContainer>
           </GraphContainer>
 
@@ -348,7 +345,7 @@ function StarPresenter({funcs, id, period, states}: IStarPresenterProps) {
               </Subtitle>
               <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
               <PieSection>
-                <PieChart stateFunc={funcs.starPie} type="period" />
+                <PieChart  type="period" />
               </PieSection>
             </AsideSection>
           </BottomSection>
