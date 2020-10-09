@@ -1,18 +1,11 @@
-import React, { useEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
+import React, {useEffect} from 'react';
+import {connect, ConnectedProps} from 'react-redux';
 
-import { RootState, RootDispatch } from "../../store/store";
-import {
-  starDataUpdate,
-  starPieSliceStateUpdate,
-  IStarState,
-} from "../../store/reducers/star";
-import {
-  periodDataUpdate,
-  periodDateUpdate,
-} from "../../store/reducers/period";
-import StarPresenter from "./StarPresenter";
-import { getApi } from "../../actions/API/dataAPI";
+import {RootState, RootDispatch} from '../../store/store';
+import {starDataUpdate, starPieSliceStateUpdate, IStarState} from '../../store/reducers/star';
+import {periodDataUpdate, periodDateUpdate} from '../../store/reducers/period';
+import StarPresenter from './StarPresenter';
+import {getApi} from '../../actions/API/dataAPI';
 
 interface OwnProps {
   match: {
@@ -25,7 +18,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   const {
     match: {
-      params: { id },
+      params: {id},
     },
   } = ownProps;
   return {
@@ -44,14 +37,14 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       }
     },
     setDate: (start: string, end: string) => {
-      dispatch(periodDateUpdate({ start: start, end: end }));
+      dispatch(periodDateUpdate({start: start, end: end}));
     },
     stateFuncs: {
       starPie: (idx: number) => {
         dispatch(starPieSliceStateUpdate(idx));
       },
       periodLine: async (id: string, start: string, end: string) => {
-        dispatch(periodDateUpdate({ start: start, end: end }));
+        dispatch(periodDateUpdate({start: start, end: end}));
         const data = await getApi.period(id, start, end);
         dispatch(periodDataUpdate(data));
       },
@@ -65,7 +58,7 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function StarContainer({ periodDate, id, update, setDate, stateFuncs }: Props) {
+function StarContainer({periodDate, id, update, setDate, stateFuncs}: Props) {
   useEffect(() => {
     const fetchData = async (id: string, start: string, end: string) => {
       try {
@@ -87,11 +80,7 @@ function StarContainer({ periodDate, id, update, setDate, stateFuncs }: Props) {
   }, [update, id, setDate]);
 
   return (
-    <StarPresenter
-      funcs={stateFuncs}
-      id={id}
-      period={`${periodDate.start} ~ ${periodDate.end}`}
-    />
+    <StarPresenter funcs={stateFuncs} id={id} period={`${periodDate.start} ~ ${periodDate.end}`} />
   );
 }
 

@@ -234,7 +234,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
   return (
     <BGSecond>
       <Slogan>
-        "궁금한 <SloganRed>키워드</SloganRed>를 검색해 보세요"
+        "궁금한 영상 <SloganRed>콘텐츠</SloganRed> 또는 <SloganRed>주제</SloganRed>를 검색해 보세요"
       </Slogan>
       <SearchBarContainer onSubmit={handleOnSubmit}>
         <SearchBar searchKeyword={searchKeyword} />
@@ -258,6 +258,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <Subtitle>
             <TitleRed>{search}</TitleRed> 워드맵
           </Subtitle>
+          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
 
           <GraphContainer setPadding={false}>
             {data.isLoading ? <Loader /> : <WordMap type="keyword" />}
@@ -300,6 +301,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <Subtitle>
             <TitleRed>{search}</TitleRed> 조회수 급상승 영상
           </Subtitle>
+          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
 
           <VideoContainer mode="analysis">
             {data.isLoading ? (
@@ -308,6 +310,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
               <VideoList mode="analysis" type="keyword" title={search} />
             )}
           </VideoContainer>
+
           <ChartContainer>
             {[0, 1].map((idx) => (
               <KeywordChartContainer key={idx}>
@@ -325,6 +328,8 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <Subtitle>
             <TitleRed>{search}</TitleRed> 인기 영상
           </Subtitle>
+          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+
           <VideoContainer mode="aside">
             {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
           </VideoContainer>
