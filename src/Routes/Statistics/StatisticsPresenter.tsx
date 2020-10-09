@@ -169,14 +169,15 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IChannelPresenterProps extends Props {
-  title: string | null;
   funcs: {
     chart: () => void;
     keyword: (n: number) => void;
   };
 }
 
-function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
+function StatisticsPresenter({funcs, data}: IChannelPresenterProps) {
+  const title =
+    data.keywordChart && data.keywordChart[data.currentChart].keyword[data.currentKeyword].name;
   return (
     <BGSecond>
       <Slogan>

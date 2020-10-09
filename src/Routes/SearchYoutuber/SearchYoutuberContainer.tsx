@@ -26,12 +26,12 @@ type Props = PropsFromRedux & RouteComponentProps<IParamsProps>;
 
 function SearchYoutuberContainer({states, match, history}: Props) {
   useLayoutEffect(() => {
-    fetchData(store.getState(), store.dispatch, match.params.youtuber_name);
+    fetchData(store.dispatch, match.params.youtuber_name);
   }, [match]);
 
   const searchKeyword = async () => {
     if (match.params.youtuber_name === states.search.searchTerm && states.search.searchType === 1) {
-      fetchData(store.getState(), store.dispatch, match.params.youtuber_name);
+      fetchData(store.dispatch, match.params.youtuber_name);
     } else {
       history.push(
         `/${states.search.searchType === 0 ? 'keyword' : 'searchYoutuber'}/${
