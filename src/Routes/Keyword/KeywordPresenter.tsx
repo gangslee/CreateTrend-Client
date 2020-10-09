@@ -1,19 +1,20 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
+import React from 'react';
+import styled, {css} from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
 
-import Loader from "../../Components/Container/Loader";
-import WordMap from "../../Components/Charts/Wordmap";
-import LineChart from "../../Components/Charts/LineChart";
-import KeywordChart from "../../Components/Charts/KeywordChart";
-import VideoList from "../../Components/Lists/VideoList";
-import { RootState, RootDispatch } from "../../store/store";
-import { setRadioState } from "../../store/reducers/keyword";
-import SearchBar from "../../Components/Container/SearchBar";
-import { BGSecond } from "../../Components/Container/BGContiner";
+import Loader from '../../Components/Container/Loader';
+import WordMap from '../../Components/Charts/Wordmap';
+import LineChart from '../../Components/Charts/LineChart';
+import KeywordChart from '../../Components/Charts/KeywordChart';
+import VideoList from '../../Components/Lists/VideoList';
+import {RootState, RootDispatch} from '../../store/store';
+import {setRadioState} from '../../store/reducers/keyword';
+import SearchBar from '../../Components/Container/SearchBar';
+import {BGSecond} from '../../Components/Container/BGContiner';
+import NoticeTooltip from '../../Components/Container/NoticeTooltip';
 
 const Slogan = styled.div`
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 30px;
   text-align: center;
   margin: 70px 0px;
@@ -88,7 +89,7 @@ const SForm = styled.form`
 `;
 
 const RadioBt = styled.input.attrs({
-  type: "radio",
+  type: 'radio',
 })`
   display: none;
 `;
@@ -100,7 +101,7 @@ const RadioLabel = styled.label`
   align-items: center;
 
   ::before {
-    content: " ";
+    content: ' ';
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -117,65 +118,16 @@ const RadioContainer = styled.div`
   vertical-align: middle;
 
   margin-left: 20px;
-  input[type="radio"]:checked + label:after {
+  input[type='radio']:checked + label:after {
     border-radius: 50%;
     width: 15px;
     height: 15px;
-    content: " ";
+    content: ' ';
     top: 8px;
     left: 7px;
     position: absolute;
     background: #d10909;
     cursor: pointer;
-  }
-`;
-
-const Notice = styled.div`
-  display: none;
-  width: 225px;
-  min-height: 90px;
-  box-shadow: 5px 5px 10px 0 rgba(95, 111, 174, 0.3);
-  background-color: #d10909;
-  position: absolute;
-  top: 25px;
-  left: 30px;
-  border-radius: 10px;
-  border-top-left-radius: 0;
-  padding: 20px 25px;
-  font-family: "S-CoreDream-4Regular";
-  font-weight: normal;
-  font-size: 15px;
-  line-height: 1.67;
-  color: #fff;
-  z-index: 1;
-`;
-
-const NoticeIcon = styled.span`
-  display: inline-block;
-  width: 30px;
-  height: 30px;
-  background-color: #b8c0e1;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 16px;
-  line-height: 2;
-  text-align: center;
-  font-family: "S-CoreDream-5Medium";
-  cursor: pointer;
-  transition: opacity 0.3s ease-in-out;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const NoticeContainer = styled.div`
-  display: inline-block;
-  position: relative;
-  &:hover {
-    ${Notice} {
-      display: inline-block;
-      transition: all 1s ease-in-out;
-    }
   }
 `;
 
@@ -192,7 +144,7 @@ const GraphContainer = styled.div`
 
   margin-bottom: 40px;
   background-color: #fff;
-  ${({ setPadding }: ITypeProps) =>
+  ${({setPadding}: ITypeProps) =>
     setPadding &&
     css`
       padding-top: 45px;
@@ -204,18 +156,16 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div`
-  height: ${({ mode }: IVideoProps) =>
-    mode === "analysis" ? "250px" : "750px"};
+  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '750px')};
   box-sizing: border-box;
   border: 2px solid #ecf1ff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: ${({ mode }: IVideoProps) =>
-    mode === "analysis" ? "10px" : "50px 20px"};
+  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '10px' : '50px 20px')};
   margin-bottom: 40px;
   background-color: #fff;
-  ${({ mode }: IVideoProps) =>
-    mode === "analysis" &&
+  ${({mode}: IVideoProps) =>
+    mode === 'analysis' &&
     css`
       display: flex;
       justify-content: center;
@@ -269,18 +219,10 @@ interface IKeywordPresenter extends Props {
   clickWord: (word: string) => void;
 }
 
-function KeywordPresenter({
-  data,
-  dispatches,
-  search,
-  searchKeyword,
-  clickWord,
-}: IKeywordPresenter) {
+function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: IKeywordPresenter) {
   const handleOnChange = (e: React.ChangeEvent) => {
-    ((e.currentTarget.getAttribute("value") === "영상화 추이" &&
-      data.currentChart === 1) ||
-      (e.currentTarget.getAttribute("value") === "인기도 추이" &&
-        data.currentChart === 0)) &&
+    ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
+      (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
   };
 
@@ -300,10 +242,10 @@ function KeywordPresenter({
 
       <TitleContainer>
         <TitleIcon
-          src={require("../../Asset/images/hashtag.png")}
+          src={require('../../Asset/images/hashtag.png')}
           srcSet={
-            (require("../../Asset/images/hashtag@2x.png"),
-            require("../../Asset/images/hashtag@3x.png"))
+            (require('../../Asset/images/hashtag@2x.png'),
+            require('../../Asset/images/hashtag@3x.png'))
           }
         />
         <Title>
@@ -325,11 +267,9 @@ function KeywordPresenter({
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
             </Subtitle>
-            <NoticeContainer>
-              <NoticeIcon>?</NoticeIcon>
-              <Notice>원하는 키워드를 선택하여 동향을 파악해 보세요.</Notice>
-            </NoticeContainer>
+            <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
           </SubtitleContainer>
+
           <SForm>
             <RadioContainer>
               <RadioBt
@@ -374,11 +314,7 @@ function KeywordPresenter({
                 {data.isLoading ? (
                   <Loader />
                 ) : (
-                  <KeywordChart
-                    index={idx}
-                    type="keyword"
-                    clickWord={clickWord}
-                  />
+                  <KeywordChart index={idx} type="keyword" clickWord={clickWord} />
                 )}
               </KeywordChartContainer>
             ))}
@@ -390,11 +326,7 @@ function KeywordPresenter({
             <TitleRed>{search}</TitleRed> 인기 영상
           </Subtitle>
           <VideoContainer mode="aside">
-            {data.isLoading ? (
-              <Loader />
-            ) : (
-              <VideoList mode="aside" type="keyword" title={search} />
-            )}
+            {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
           </VideoContainer>
         </AsideSection>
       </Container>
