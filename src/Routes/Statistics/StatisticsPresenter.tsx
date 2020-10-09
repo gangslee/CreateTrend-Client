@@ -10,8 +10,9 @@ import KeywordChart from '../../Components/Charts/KeywordChart';
 import Wordmap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import VideoList from '../../Components/Lists/VideoList';
-import {RootState} from '../../store/store';
+import {RootDispatch, RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
+import { chartStateUpdate, keywordStateUpdate } from '../../store/reducers/statistics';
 
 const Slogan = styled.div`
   font-family: 'S-CoreDream-5Medium';
@@ -158,26 +159,34 @@ const VideoContainer = styled.div`
 
 function mapStateToProps(state: RootState) {
   return {
-    data: state.statistics,
+    states:{
+      data: state.statistics,
+    }
   };
 }
 
-const connector = connect(mapStateToProps);
+function mapDispatchToProps(dispatch:RootDispatch){
+  return{
+    dispatches:{
+      chart: () => {
+        dispatch(chartStateUpdate());
+      },
+      keyword: (n: number) => {
+        dispatch(keywordStateUpdate(n));
+      },
+    }
+  }
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-interface IChannelPresenterProps extends Props {
-  funcs: {
-    chart: () => void;
-    keyword: (n: number) => void;
-  };
-}
-
-function StatisticsPresenter({funcs, data}: IChannelPresenterProps) {
+function StatisticsPresenter({states,dispatches}: Props) {
   const title =
-    data.keywordChart && data.keywordChart[data.currentChart].keyword[data.currentKeyword].name;
+    states.data.keywordChart && states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].name;
   return (
     <BGSecond>
       <Slogan>
@@ -187,24 +196,20 @@ function StatisticsPresenter({funcs, data}: IChannelPresenterProps) {
         <KeywordContainer>
           <ChartContainer>
             <TabContainer>
-              <Tab type="chart" stateFunc={funcs.chart} />
+              <Tab type="chart" stateFunc={dispatches.chart} />
             </TabContainer>
             <KeywordChartContainer>
-              {data.keywordChart !== null ? (
-                <KeywordChart stateFunc={funcs.keyword} type="statistics" />
-              ) : (
+              {states.data.isLoadingChart ?  (
                 <Loader />
+              ):(
+                <KeywordChart stateFunc={dispatches.keyword} type="statistics" />
               )}
             </KeywordChartContainer>
           </ChartContainer>
           <ResultContainer>
-            {data.keywordChart !== null &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword].wordmap !==
-              undefined &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular !==
-              undefined &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword].line !== undefined ? (
+            {states.data.isLoadingData ? (
+              <Loader />
+            ):(
               <>
                 <Subtitle>
                   <TitleRed>{title}</TitleRed> 인기도 & 워드맵
@@ -214,10 +219,10 @@ function StatisticsPresenter({funcs, data}: IChannelPresenterProps) {
                     <PopularText>평균 인기도</PopularText>
                     <SCircle
                       value={
-                        data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular
+                        states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].popular
                       }
                       text={`${
-                        data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular
+                        states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].popular
                       }%`}
                       styles={buildStyles({pathColor: '#d10909', textColor: '#222'})}
                     />
@@ -235,8 +240,6 @@ function StatisticsPresenter({funcs, data}: IChannelPresenterProps) {
                   </LineChartContainer>
                 </SubResultContainer>
               </>
-            ) : (
-              <Loader />
             )}
           </ResultContainer>
         </KeywordContainer>
@@ -253,12 +256,10 @@ function StatisticsPresenter({funcs, data}: IChannelPresenterProps) {
           </Title>
         </TitleContainer>
         <VideoContainer>
-          {data.keywordChart !== null &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword].video !== undefined ? (
-            <VideoList mode="analysis" type="statistics" title={title} />
-          ) : (
+          {states.data.isLoadingData ?  (
             <Loader />
+          ):(
+            <VideoList mode="analysis" type="statistics" title={title} />
           )}
         </VideoContainer>
       </Container>

@@ -1,37 +1,34 @@
 import React, {useLayoutEffect} from 'react';
 import {connect, ConnectedProps} from 'react-redux';
 
-import store, {RootDispatch} from '../../store/store';
-
-import {chartStateUpdate, keywordStateUpdate} from '../../store/reducers/statistics';
+import store, {RootState} from '../../store/store';
 import StatisticsPresenter from './StatisticsPresenter';
 import {fetchData} from '../../actions/statistics';
 
-function mapDispatchToProps(dispatch: RootDispatch) {
+function mapStateToProps(state: RootState){
   return {
-    dispatches: {
-      chart: () => {
-        dispatch(chartStateUpdate());
-      },
-      keyword: (n: number) => {
-        dispatch(keywordStateUpdate(n));
-      },
-    },
-  };
+    states:{
+      currentData: state.statistics.keywordChart
+        ? state.statistics.keywordChart[state.statistics.currentChart].keyword[
+            state.statistics.currentKeyword
+          ]
+        : null,
+    }
+  }
 }
 
-const connector = connect(null, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function StatisticsContainer({dispatches}: Props) {
+function StatisticsContainer({states}: Props) {
   useLayoutEffect(() => {
     fetchData(store.getState(), store.dispatch);
-  });
+  },[states.currentData]);
 
-  return <StatisticsPresenter funcs={dispatches} />;
+  return <StatisticsPresenter />;
 }
 
 export default connector(StatisticsContainer);
