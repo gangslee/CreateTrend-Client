@@ -18,9 +18,9 @@ export default () => (
     <>
       <Header />
       <Switch>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Statistics} />
+        <Route path="/search" component={Home} />
         <Route path="/keyword/:search" component={Keyword} />
-        <Route path="/statistics" component={Statistics} />
         <Route
           path="/searchyoutuber/:youtuber_name"
           component={SearchYoutuber}

@@ -1,20 +1,63 @@
-import React from 'react';
-import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
-import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import React from "react";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
-import Tab from '../../Components/Container/Tab';
-import Loader from '../../Components/Container/Loader';
-import KeywordChart from '../../Components/Charts/KeywordChart';
-import Wordmap from '../../Components/Charts/Wordmap';
-import LineChart from '../../Components/Charts/LineChart';
-import VideoList from '../../Components/Lists/VideoList';
-import {RootState} from '../../store/store';
-import {BGSecond} from '../../Components/Container/BGContiner';
+import Tab from "../../Components/Container/Tab";
+import Loader from "../../Components/Container/Loader";
+import KeywordChart from "../../Components/Charts/KeywordChart";
+import Wordmap from "../../Components/Charts/Wordmap";
+import LineChart from "../../Components/Charts/LineChart";
+import VideoList from "../../Components/Lists/VideoList";
+import { RootState } from "../../store/store";
+import { BGSecond } from "../../Components/Container/BGContiner";
+import SearchBar from "../../Components/Container/SearchBar";
+
+const MainTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 80px;
+`;
+
+const MainTitle = styled.span`
+  display: inline-block;
+  font-size: 45px;
+  font-family: "Lato";
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  color: #222;
+`;
+
+const MainTitleRed = styled.span`
+  color: #d10909;
+`;
+
+const MainSubtitle = styled.span`
+  display: inline-block;
+  font-family: "S-CoreDream-4Regular";
+  font-size: 20px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: #222;
+  margin-top: 20px;
+`;
+
+const SForm = styled.form`
+  margin-top: 50px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
+`;
 
 const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-size: 30px;
   text-align: center;
   margin: 70px 0px;
@@ -75,7 +118,7 @@ const Title = styled.span`
 
 const Subtitle = styled.span`
   display: inline-block;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 22px;
   line-height: 1.36;
   :nth-child(2) {
@@ -116,7 +159,7 @@ const CircleContainer = styled.div`
 `;
 
 const PopularText = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 20px;
   line-height: 1.4;
   color: #999;
@@ -168,20 +211,43 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-interface IChannelPresenterProps extends Props {
+interface IStatisticsPresenterProps extends Props {
   title: string | null;
   funcs: {
     chart: () => void;
     keyword: (n: number) => void;
   };
+  searchKeyword: () => void;
 }
 
-function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
+function StatisticsPresenter({
+  funcs,
+  title,
+  data,
+  searchKeyword,
+}: IStatisticsPresenterProps) {
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    searchKeyword();
+  };
   return (
     <BGSecond>
-      <Slogan>
+      {/* <Slogan>
         "지금 <SloganRed>가장 HOT</SloganRed>한 주제들을 한눈에 보세요"
-      </Slogan>
+      </Slogan> */}
+
+      <MainTitleContainer>
+        <MainTitle>
+          <MainTitleRed>Youtube</MainTitleRed> AI assistant
+        </MainTitle>
+        <MainSubtitle>
+          AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.
+        </MainSubtitle>
+      </MainTitleContainer>
+      <SForm onSubmit={handleOnSubmit}>
+        <SearchBar searchKeyword={searchKeyword} />
+      </SForm>
+
       <Container>
         <KeywordContainer>
           <ChartContainer>
@@ -198,12 +264,15 @@ function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
           </ChartContainer>
           <ResultContainer>
             {data.keywordChart !== null &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword].wordmap !==
-              undefined &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular !==
-              undefined &&
-            data.keywordChart[data.currentChart].keyword[data.currentKeyword].line !== undefined ? (
+            data.keywordChart[data.currentChart].keyword[
+              data.currentKeyword
+            ] !== undefined &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword]
+              .wordmap !== undefined &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword]
+              .popular !== undefined &&
+            data.keywordChart[data.currentChart].keyword[data.currentKeyword]
+              .line !== undefined ? (
               <>
                 <Subtitle>
                   <TitleRed>{title}</TitleRed> 인기도 & 워드맵
@@ -213,12 +282,19 @@ function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
                     <PopularText>평균 인기도</PopularText>
                     <SCircle
                       value={
-                        data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular
+                        data.keywordChart[data.currentChart].keyword[
+                          data.currentKeyword
+                        ].popular
                       }
                       text={`${
-                        data.keywordChart[data.currentChart].keyword[data.currentKeyword].popular
+                        data.keywordChart[data.currentChart].keyword[
+                          data.currentKeyword
+                        ].popular
                       }%`}
-                      styles={buildStyles({pathColor: '#d10909', textColor: '#222'})}
+                      styles={buildStyles({
+                        pathColor: "#d10909",
+                        textColor: "#222",
+                      })}
                     />
                   </CircleContainer>
                   <WordmapContainer>
@@ -241,10 +317,10 @@ function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
         </KeywordContainer>
         <TitleContainer>
           <TitleIcon
-            src={require('../../Asset/images/youtubeIcon.png')}
+            src={require("../../Asset/images/youtubeIcon.png")}
             srcSet={
-              (require('../../Asset/images/youtubeIcon@2x.png'),
-              require('../../Asset/images/youtubeIcon@3x.png'))
+              (require("../../Asset/images/youtubeIcon@2x.png"),
+              require("../../Asset/images/youtubeIcon@3x.png"))
             }
           />
           <Title>
@@ -253,8 +329,10 @@ function StatisticsPresenter({funcs, title, data}: IChannelPresenterProps) {
         </TitleContainer>
         <VideoContainer>
           {data.keywordChart !== null &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword] !== undefined &&
-          data.keywordChart[data.currentChart].keyword[data.currentKeyword].video !== undefined ? (
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword] !==
+            undefined &&
+          data.keywordChart[data.currentChart].keyword[data.currentKeyword]
+            .video !== undefined ? (
             <VideoList mode="analysis" type="statistics" title={title} />
           ) : (
             <Loader />

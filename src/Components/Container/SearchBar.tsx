@@ -65,7 +65,7 @@ const Icon = styled.img`
 
 function mapStateToProps(state: RootState) {
   return {
-    searchStates: {
+    states: {
       searchTerm: state.home.searchTerm,
       searchType: state.home.searchType,
     },
@@ -91,7 +91,7 @@ interface ISearchBarProps extends Props {
   searchKeyword: () => void;
 }
 
-function SearchBar({ searchStates, updates, searchKeyword }: ISearchBarProps) {
+function SearchBar({ states, updates, searchKeyword }: ISearchBarProps) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updates.searchTerm(e.target.value);
   };
@@ -106,7 +106,15 @@ function SearchBar({ searchStates, updates, searchKeyword }: ISearchBarProps) {
         <Tab type="search" stateFunc={updates.serachType} />
       </TabContainer>
       <InputContainer>
-        <Input onChange={handleOnChange} value={searchStates.searchTerm} />
+        <Input
+          onChange={handleOnChange}
+          value={states.searchTerm}
+          placeholder={
+            states.searchType === 0
+              ? "콘텐츠 또는 주제를 입력해주세요"
+              : "채널명을 입력해주세요"
+          }
+        />
         <IconContainer>
           <Icon
             src={require("../../Asset/images/Search.svg")}

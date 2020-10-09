@@ -133,7 +133,7 @@ const RadioContainer = styled.div`
 const Notice = styled.div`
   display: none;
   width: 225px;
-  height: 90px;
+  min-height: 90px;
   box-shadow: 5px 5px 10px 0 rgba(95, 111, 174, 0.3);
   background-color: #d10909;
   position: absolute;
@@ -147,6 +147,7 @@ const Notice = styled.div`
   font-size: 15px;
   line-height: 1.67;
   color: #fff;
+  z-index: 1;
 `;
 
 const NoticeIcon = styled.span`

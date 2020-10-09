@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import SearchBar from '../../Components/Container/SearchBar';
+import React from "react";
+import styled from "styled-components";
 
-import bg from '../../Asset/images/bg1.svg';
+import SearchBar from "../../Components/Container/SearchBar";
+import bg from "../../Asset/images/bg1.svg";
 
 const BgContainer = styled.div`
   background-image: url(${bg});
@@ -42,7 +42,7 @@ const TitleRed = styled.span`
 
 const Subtitle = styled.span`
   display: inline-block;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 20px;
   font-stretch: normal;
   font-style: normal;
@@ -62,7 +62,7 @@ interface IHomePresenterProps {
   searchKeyword: () => void;
 }
 
-function HomePresenter({searchKeyword}: IHomePresenterProps) {
+function HomePresenter({ searchKeyword }: IHomePresenterProps) {
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
@@ -75,7 +75,9 @@ function HomePresenter({searchKeyword}: IHomePresenterProps) {
           <Title>
             <TitleRed>Youtube</TitleRed> AI assistant
           </Title>
-          <Subtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</Subtitle>
+          <Subtitle>
+            AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.
+          </Subtitle>
         </TitleContainer>
 
         <SForm onSubmit={handleOnSubmit}>

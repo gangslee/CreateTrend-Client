@@ -11,6 +11,7 @@ import {
 } from "../../store/reducers/statistics";
 import StatisticsPresenter from "./StatisticsPresenter";
 import { getApi } from "../../actions/API/dataAPI";
+import { RouteComponentProps } from "react-router-dom";
 
 function mapStateToProps(state: RootState) {
   return {
@@ -21,6 +22,8 @@ function mapStateToProps(state: RootState) {
             state.statistics.currentKeyword
           ]
         : null,
+      searchTerm: state.home.searchTerm,
+      searchType: state.home.searchType,
     },
   };
 }
@@ -56,9 +59,9 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-type Props = PropsFromRedux;
+type Props = PropsFromRedux & RouteComponentProps;
 
-function StatisticsContainer({ states, dispatches }: Props) {
+function StatisticsContainer({ states, dispatches, history }: Props) {
   const type = states.data.currentChart === 0 ? "인기" : "영상화";
 
   useLayoutEffect(() => {
@@ -91,10 +94,19 @@ function StatisticsContainer({ states, dispatches }: Props) {
     fetchData();
   }, [dispatches.update, states.currentData, states.data, type]);
 
+  const searchKeyword = () => {
+    history.push(
+      `/${states.searchType === 0 ? "keyword" : "searchyoutuber"}/${
+        states.searchTerm
+      }`
+    );
+  };
+
   return (
     <StatisticsPresenter
       funcs={dispatches.stateFuncs}
       title={states.data.keywordChart && states.currentData.name}
+      searchKeyword={searchKeyword}
     />
   );
 }
