@@ -237,9 +237,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IStarPresenterProps extends Props {
-  periodLine: (id: string, start: string, end: string) => void;
+  
   id: string;
   period: string;
+  periodLine: (id: string, start: string, end: string) => void;
 }
 
 function StarPresenter({ periodLine, id, period, states }: IStarPresenterProps) {

@@ -26,7 +26,9 @@ export const statisticsSlice = createSlice({
     statisticsDataUpdate: (state, action) => {
       if (action.payload) {
         state.keywordChart = action.payload;
-        state.keywordChart.map((data) => data.keyword.map((word) => (word.visit = false)));
+        state.keywordChart.map((data) => (
+          data.keyword.map((word) => (word.visit = false))
+        ));
         state.isChecked = true;
         state.isLoadingChart = false;
       }
@@ -57,16 +59,19 @@ export const statisticsSlice = createSlice({
     chartStateUpdate: (state) => {
       state.currentChart === 0 ? (state.currentChart = 1) : (state.currentChart = 0);
       state.currentKeyword = 0;
+      if(!state.keywordChart[state.currentChart].keyword[0].visit){
+        state.isLoadingData = true;
+      }
     },
     keywordStateUpdate: (state, action) => {
+      if(!state.keywordChart[state.currentChart].keyword[action.payload].visit){
+        state.isLoadingData = true;
+      }
       state.currentKeyword = action.payload;
     },
     setLoadingChart:(state)=>{
       state.isLoadingChart = true;
     },
-    setLoadingData:(state)=>{
-      state.isLoadingData = true;
-    }
   },
 });
 
@@ -77,5 +82,4 @@ export const {
   chartStateUpdate,
   keywordStateUpdate,
   setLoadingChart,
-  setLoadingData
 } = statisticsSlice.actions;

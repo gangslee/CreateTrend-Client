@@ -148,7 +148,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
     const direction = e.currentTarget.id === "next" ? true : false;
     update({ page: type, len: usingData.data.length - 1 }, direction);
   };
-
+  
   const usingData = states.data.filter((data) => data.type === mode)[0];
 
   const current = states.current;

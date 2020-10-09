@@ -25,8 +25,13 @@ interface IParamsProps {
 
 type Props = PropsFromRedux&RouteComponentProps<IParamsProps>;
 
+const periodLine = async (id: string, start: string, end: string) => {
+  fetchPeriodData(store.dispatch, id, start,end) 
+};
+
 function StarContainer({ states, match }: Props) {
   useLayoutEffect(() => {
+    
     const today = new Date();
     const end = today.toJSON().slice(0, 10);
     today.setDate(today.getDate() - 50);
@@ -35,9 +40,6 @@ function StarContainer({ states, match }: Props) {
     fetchPeriodData(store.dispatch, match.params.id, start,end)
   }, [match.params.id]);
 
-  const periodLine = async (id: string, start: string, end: string) => {
-    fetchPeriodData(store.dispatch, id, start,end)
-  };
 
   return (
     <StarPresenter

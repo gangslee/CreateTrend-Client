@@ -60,6 +60,7 @@ interface ILineChartProps extends Props {
 }
 
 function LineChart({ states, type, id, stateFunc }: ILineChartProps) {
+ 
   const chartRef = useRef(null);
   const useData = states.data[0];
   const unit = useData.type === "인기도 추이" ? "%" : "건";
@@ -130,7 +131,7 @@ function LineChart({ states, type, id, stateFunc }: ILineChartProps) {
     return () => {
       chart.dispose();
     };
-  }, [useData, type, id, stateFunc, unit]);
+  }, [id, stateFunc, type, unit, useData.data, useData.type]);
 
   return useData.data.length === 0 ? (
     <ErrorContainer>

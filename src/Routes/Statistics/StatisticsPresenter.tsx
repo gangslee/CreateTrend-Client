@@ -316,6 +316,7 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           {states.data.isLoadingData ?  (
             <Loader />
           ):(
+            
             <VideoList mode="analysis" type="statistics" title={title} />
           )}
         </VideoContainer>

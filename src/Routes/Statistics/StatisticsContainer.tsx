@@ -14,6 +14,7 @@ function mapStateToProps(state: RootState){
             state.statistics.currentKeyword
           ]
         : null,
+        data:state.statistics,
       searchTerm: state.home.searchTerm,
       searchType: state.home.searchType,
     },
@@ -30,7 +31,7 @@ function StatisticsContainer({states, history}: Props) {
   useLayoutEffect(() => {
     fetchData(store.getState(), store.dispatch);
   },[states.currentData]);
-
+  
   const searchKeyword = () => {
     history.push(
       `/${states.searchType === 0 ? "keyword" : "searchyoutuber"}/${
