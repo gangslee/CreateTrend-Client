@@ -9,16 +9,35 @@ import LineChart from '../../Components/Charts/LineChart';
 import {RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
+import SearchBar from '../../Components/Container/SearchBar';
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
+
 
 const Container = styled.div`
   width: 1220px;
   margin: 50px auto;
   box-sizing: border-box;
   padding-top: 10px;
+`;
+
+const SForm = styled.form`
+  margin: 50px 0px;
+  display: flex;
+  justify-content: center;
+`;
+
+const Slogan = styled.div`
+  font-family: 'S-CoreDream-5Medium';
+  font-size: 30px;
+  text-align: center;
+  margin: 30px 0px;
+`;
+
+const SloganRed = styled.span`
+  color: #dd0909;
 `;
 
 const ChannelName = styled.span`
@@ -237,15 +256,21 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IStarPresenterProps extends Props {
-  
   id: string;
   period: string;
   periodLine: (id: string, start: string, end: string) => void;
+  searchKeyword: () => void;
 }
 
-function StarPresenter({ periodLine, id, period, states }: IStarPresenterProps) {
+function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarPresenterProps) {
   const channelName =
     states.star.channelInfo && states.star.channelInfo.channel_name;
+
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    searchKeyword();
+  };
+  
   return (
     <BGSecond>
       {states.star.isLoading || states.period.isLoading ? (
@@ -254,6 +279,12 @@ function StarPresenter({ periodLine, id, period, states }: IStarPresenterProps) 
         </LoaderContainer>
       ) : (
         <Container>
+          <Slogan>"<SloganRed>{channelName}</SloganRed> 채널을 알아보아요"</Slogan>
+
+          <SForm onSubmit={handleOnSubmit}>
+            <SearchBar searchKeyword={searchKeyword}/>
+          </SForm>
+
           <ChannelName>{channelName}</ChannelName>
 
           <SearchPeriod>검색기간 :{`${states.period.start} ~ ${states.period.end}`}</SearchPeriod>

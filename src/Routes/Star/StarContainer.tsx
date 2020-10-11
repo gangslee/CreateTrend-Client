@@ -10,7 +10,9 @@ function mapStateToProps(state: RootState) {
   return {
     states:{
       start: state.period.start,
-      end:state.period.end
+      end:state.period.end,
+      searchTerm: state.home.searchTerm,
+      searchType: state.home.searchType,
     } 
   };
 }
@@ -29,7 +31,8 @@ const periodLine = async (id: string, start: string, end: string) => {
   fetchPeriodData(store.dispatch, id, start,end) 
 };
 
-function StarContainer({ states, match }: Props) {
+
+function StarContainer({ states, history, match }: Props) {
   useLayoutEffect(() => {
     
     const today = new Date();
@@ -40,12 +43,20 @@ function StarContainer({ states, match }: Props) {
     fetchPeriodData(store.dispatch, match.params.id, start,end)
   }, [match.params.id]);
 
+  const searchKeyword = () => {
+    history.push(
+      `/${states.searchType === 0 ? "keyword" : "searchyoutuber"}/${
+        states.searchTerm
+      }`
+    );
+  };
 
   return (
     <StarPresenter
-      periodLine={periodLine}
       id={match.params.id}
       period={`${states.start} ~ ${states.end}`}
+      periodLine={periodLine}
+      searchKeyword={searchKeyword}
     />
   );
 }
