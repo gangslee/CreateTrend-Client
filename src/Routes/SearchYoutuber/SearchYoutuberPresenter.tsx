@@ -180,10 +180,16 @@ const ThumbnailContainer = styled.div`
   margin-left: 50px;
 `;
 
-const Thumbnail = styled.img`
+const ImageContainer = styled.a`
+  display:inline-block;
   width: 190px;
   height: 120px;
-  border-radius: 5px;
+`
+
+const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 `;
 
 const LoaderContainer = styled.div`
@@ -335,8 +341,12 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
                     </ChannelDetailLineContainer>
                   </ChannelDetailContainer>
                   <ThumbnailContainer>
+                    <ImageContainer >
                     <Thumbnail src={data.recent_videos[0]} />
+                    </ImageContainer>
+                    <ImageContainer>
                     <Thumbnail src={data.recent_videos[1]} />
+                    </ImageContainer>
                   </ThumbnailContainer>
                 </ResultContainer>
               </SLink>

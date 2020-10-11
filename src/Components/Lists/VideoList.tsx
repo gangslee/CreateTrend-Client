@@ -18,13 +18,19 @@ const VideoContainer = styled.div`
   padding: 10px;
 `;
 
-const Image = styled.img`
-  width: ${({ mode }: IVideoListStyleProps) =>
+const ImageContainer = styled.a<IVideoListStyleProps>`
+  display:inline-block;
+  width: ${({ mode }) =>
     mode === "analysis" ? "45%" : "55%"};
-  height: ${({ mode }: IVideoListStyleProps) =>
+  height: ${({ mode }) =>
     mode === "analysis" ? "180px" : "110px"};
-  margin-right: ${({ mode }: IVideoListStyleProps) =>
+  margin-right: ${({ mode }) =>
     mode === "analysis" ? "20px" : "15px"};
+`
+
+const Image = styled.img`
+  width:100%;
+  height:100%;
   border-radius: 10px;
 
   &:hover {
@@ -162,7 +168,9 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
       {mode === "analysis" ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <Image src={usingData.data[current].thumbnail_url} mode={mode} />
+            <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+            <Image src={usingData.data[current].thumbnail_url}/>
+            </ImageContainer>
             <InfoContainer>
               <Info>영상 제목</Info>
               <Info>{usingData.data[current].video_name}</Info>
@@ -170,7 +178,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
               <Info>
                 {usingData.data[current].videokeywordnew
                   .slice(0, 5)
-                  .map((word, index) => `#${word.keyword}   `)}
+                  .map((word) => `#${word.keyword}   `)}
               </Info>
             </InfoContainer>
           </VideoContainer>
@@ -179,8 +187,10 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
         <>
           {usingData.data.slice(0, 5).map((data, index) => (
             <VideoContainer key={index}>
-              <Image src={usingData.data[index].thumbnail_url} mode={mode} />
-
+              
+              <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
+              <Image src={usingData.data[index].thumbnail_url} />
+            </ImageContainer>
               <VideoTitle>{data.video_name}</VideoTitle>
             </VideoContainer>
           ))}
