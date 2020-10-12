@@ -258,7 +258,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <Subtitle>
             <TitleRed>{search}</TitleRed> 워드맵
           </Subtitle>
-          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+          <NoticeTooltip text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `} />
 
           <GraphContainer setPadding={false}>
             {data.isLoading ? <Loader /> : <WordMap type="keyword" />}
@@ -268,7 +268,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
             </Subtitle>
-            <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+            <NoticeTooltip text={`우측에 버튼을 통해 지난 2주 사이의 '${search}' 콘텐츠의 영상화 추이 변화와 인기도 추이 변화를 확인해보세요! `} />
           </SubtitleContainer>
 
           <SForm>
@@ -301,7 +301,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <Subtitle>
             <TitleRed>{search}</TitleRed> 조회수 급상승 영상
           </Subtitle>
-          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
 
           <VideoContainer mode="analysis">
             {data.isLoading ? (
@@ -328,7 +328,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <Subtitle>
             <TitleRed>{search}</TitleRed> 인기 영상
           </Subtitle>
-          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
 
           <VideoContainer mode="aside">
             {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}

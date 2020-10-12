@@ -265,7 +265,7 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
                 <Subtitle>
                   <TitleRed>{title}</TitleRed> 인기도 & 워드맵
                 </Subtitle>
-                <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+                <NoticeTooltip text={`한 달간 '${title}' 콘텐츠의 평균 인기도와 연관 콘텐츠들을 확인해보세요! `} />
                 <SubResultContainer>
                   <CircleContainer>
                     <PopularText>평균 인기도</PopularText>
@@ -289,7 +289,7 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
                 <Subtitle>
                   <TitleRed>{title}</TitleRed> 인기도 추이
                 </Subtitle>
-                <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+                <NoticeTooltip text={`한 달간 '${title}' 콘텐츠의 인기도 변화 추이를 확인해보세요! `} />
                 <SubResultContainer>
                   <LineChartContainer>
                     <LineChart type="statistics" />
@@ -310,7 +310,7 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           <Title>
             <TitleRed>{title}</TitleRed> 조회수 급상승 영상
           </Title>
-          <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+          <NoticeTooltip text={`'${title}'을 콘텐츠로한 조회수 급상승 영상들을 확인해보세요! `} />
         </TitleContainer>
         <VideoContainer>
           {states.data.isLoadingData ?  (

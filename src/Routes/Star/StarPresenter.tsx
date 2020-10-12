@@ -293,7 +293,7 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
             <AnalysisSection>
               <ChannelContainer>
                 <Subtitle>채널 소개</Subtitle>
-                <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+                <NoticeTooltip text={`'${channelName}' 채널의 간략 정보를 확인해보세요! `} />
                 <ChannelInfoContainer>
                   <Avatar src={states.star.channelInfo.thumbnail_url} />
                   <InfoContainer>
@@ -325,14 +325,14 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
                 <ChannelInfoContainer>
                   <PieContainer>
                     <Subtitle>콘텐츠 분포도</Subtitle>
-                    <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+                    <NoticeTooltip text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠 분포를 확인해보세요! `} />
                     <PieChartContainer>
                       <PieChart  type="star" />
                     </PieChartContainer>
                   </PieContainer>
                   <WordMapContainer>
                     <Subtitle>채널 워드맵</Subtitle>
-                    <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+                    <NoticeTooltip text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠들을 확인해보세요! `} />
                   </WordMapContainer>
                 </ChannelInfoContainer>
               </ChannelContainer>
@@ -340,7 +340,7 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
 
             <VideoContainer mode="aside">
               <Subtitle>채널 최고 조회수 영상</Subtitle>
-              <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+              <NoticeTooltip text={`'${channelName}' 채널의 인기 영상들을 확인해보세요!`} />
               <VideoList mode="aside" type="star" title={channelName} />
             </VideoContainer>
           </ResultContainer>
@@ -349,7 +349,7 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
             <Title>
               <TitleRed>{channelName}</TitleRed> 구독자수 추이
             </Title>
-            <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+            <NoticeTooltip text={`최근 8주간 '${channelName}' 채널의 구독자수 추이 변화를 확인해보세요!\n 차트를 드래그하면 기간을 설정도 가능해요!`} />
           </TitleContainer>
 
           <GraphContainer>
@@ -366,7 +366,7 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
               <Subtitle>
                 기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
               </Subtitle>
-              <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+              <NoticeTooltip text={`설정하신 기간 동안의 '${channelName}' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`} />
               <VideoContainer mode="analysis">
                 <VideoList mode="analysis" type="star" title={period} />
               </VideoContainer>
@@ -375,7 +375,7 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
               <Subtitle>
                 기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
               </Subtitle>
-              <NoticeTooltip text="원하는 키워드를 선택하여 동향을 파악해 보세요." />
+              <NoticeTooltip text={`설정하신 기간 동안의 '${channelName}' 채널 영상들의 주 콘텐츠들을 확인해보세요!`} />
               <PieSection>
                 <PieChart  type="period" />
               </PieSection>

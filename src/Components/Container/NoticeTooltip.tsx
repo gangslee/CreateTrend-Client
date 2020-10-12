@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Notice = styled.div`
   display: none;
-  width: 225px;
+  width: 260px;
   min-height: 90px;
   box-shadow: 5px 5px 10px 0 rgba(95, 111, 174, 0.3);
   background-color: #d10909;
