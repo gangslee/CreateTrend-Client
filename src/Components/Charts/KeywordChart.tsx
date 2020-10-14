@@ -12,11 +12,12 @@ type styleType = {
 };
 
 const Subtitle = styled.div`
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1.36;
   text-align: center;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
   border-bottom: 2px solid #222;
+  margin-bottom:5px;
 `;
 
 const TitleRed = styled.span`
@@ -29,7 +30,7 @@ const KeywordChartContainer = styled.div`
   padding: 0px 25px;
   box-sizing: border-box;
   line-height: ${({ type }: styleType) =>
-    type === "keyword" ? "2.67" : "60px"};
+    type === "keyword" ? "2.45" : "60px"};
   font-family: "S-CoreDream-4Regular";
   font-stretch: normal;
   letter-spacing: normal;

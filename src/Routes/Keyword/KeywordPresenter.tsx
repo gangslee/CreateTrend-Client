@@ -63,11 +63,11 @@ const Container = styled.div`
 `;
 
 const AnalysisSection = styled.div`
-  width: 790px;
+  width: 870px;
 `;
 
 const AsideSection = styled.div`
-  width: 380px;
+  width: 300px;
 `;
 
 const SubtitleContainer = styled.div`
@@ -135,20 +135,19 @@ interface ITypeProps {
   setPadding: boolean;
 }
 
-const GraphContainer = styled.div`
-  height: 330px;
+const GraphContainer = styled.div<ITypeProps>`
+  height: 400px;
   border: 2px solid #ecf1ff;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
   padding: 5px;
-
-  margin-bottom: 40px;
   background-color: #fff;
-  ${({setPadding}: ITypeProps) =>
+  ${({setPadding}) =>
     setPadding &&
     css`
-      padding-top: 45px;
+      padding-top:45px;
     `}
+    margin-bottom:${({setPadding})=> setPadding? '40px': '70px'}
 `;
 
 interface IVideoProps {
@@ -156,6 +155,7 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div`
+  width:100%;
   height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '750px')};
   box-sizing: border-box;
   border: 2px solid #ecf1ff;
@@ -174,22 +174,14 @@ const VideoContainer = styled.div`
 `;
 
 const KeywordChartContainer = styled.div`
-  height: 530px;
-  width: 48%;
+  height: 440px;
   box-sizing: border-box;
-  padding: 35px 25px;
+  padding: 25px 20px;
   border: 2px solid #ecf1ff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   background-color: #fff;
-`;
-
-const ChartContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  :not(:last-child) {
-    margin-bottom: 40px;
-  }
+  margin-bottom:40px;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -303,25 +295,6 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           </Subtitle>
           <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
 
-          <VideoContainer mode="analysis">
-            {data.isLoading ? (
-              <Loader />
-            ) : (
-              <VideoList mode="analysis" type="keyword" title={search} />
-            )}
-          </VideoContainer>
-
-          <ChartContainer>
-            {[0, 1].map((idx) => (
-              <KeywordChartContainer key={idx}>
-                {data.isLoading ? (
-                  <Loader />
-                ) : (
-                  <KeywordChart index={idx} type="keyword" clickWord={clickWord} />
-                )}
-              </KeywordChartContainer>
-            ))}
-          </ChartContainer>
         </AnalysisSection>
 
         <AsideSection>
@@ -330,10 +303,31 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           </Subtitle>
           <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
 
-          <VideoContainer mode="aside">
-            {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
-          </VideoContainer>
+          <KeywordChartContainer>
+                {data.isLoading ? (
+                  <Loader />
+                ) : (
+                  <KeywordChart index={0} type="keyword" clickWord={clickWord} />
+                )}
+              </KeywordChartContainer>
+              <KeywordChartContainer>
+                {data.isLoading ? (
+                  <Loader />
+                ) : (
+                  <KeywordChart index={1} type="keyword" clickWord={clickWord} />
+                )}
+              </KeywordChartContainer>
+
         </AsideSection>
+      </Container>
+      <Container>
+      <VideoContainer mode="analysis">
+            {data.isLoading ? (
+              <Loader />
+            ) : (
+              <VideoList mode="analysis" type="keyword" title={search} />
+            )}
+          </VideoContainer>
       </Container>
     </BGSecond>
   );

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import bg2 from '../../Asset/images/bg2.svg';
 
 const BgContainerSecond = styled.div`
+  min-width:1440px;
   background-image: url(${bg2});
   padding-left: 80px;
   margin-left: -80px;
