@@ -7,7 +7,8 @@ import { sliderStateNext, sliderStatePrev } from "../../store/reducers/slider";
 import Slider from "../Container/Slider";
 
 interface IVideoListStyleProps {
-  mode?: string;
+  type?:string;
+  mode?:string;
 }
 
 const VideoContainer = styled.div`
@@ -18,7 +19,22 @@ const VideoContainer = styled.div`
   padding: 10px;
 `;
 
+const Grid = styled.div`
+  display:flex;
+  justify-content:space-between;
+`;
+
 const ImageContainer = styled.a<IVideoListStyleProps>`
+  display:inline-block;
+  width: ${({ type }) =>
+    type === "keyword" || type==='statistics' ? "270px" : "55%"};
+  height: ${({ type }) =>
+    type === "keyword" || type==='statistics' ? "180px" : "110px"};
+  margin-right: ${({ type }) =>
+    type === "keyword" || type==='statistics' ? "0px" : "15px"};
+`
+
+const StarImageContainer = styled.a<IVideoListStyleProps>`
   display:inline-block;
   width: ${({ mode }) =>
     mode === "analysis" ? "45%" : "55%"};
@@ -26,8 +42,7 @@ const ImageContainer = styled.a<IVideoListStyleProps>`
     mode === "analysis" ? "180px" : "110px"};
   margin-right: ${({ mode }) =>
     mode === "analysis" ? "20px" : "15px"};
-`
-
+`;
 const Image = styled.img`
   width:100%;
   height:100%;
@@ -40,11 +55,24 @@ const Image = styled.img`
   cursor: pointer;
 `;
 
-const InfoContainer = styled.div`
+const Title = styled.div`
+  font-family:'S-CoreDream-4Regular';
+  font-size: 15px;
+  line-height: 1.4;
+  margin-top:15px;
+  width:100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`
+
+const SliderInfoContainer = styled.div`
   width: 65%;
 `;
 
-const Info = styled.div`
+const SliderInfo = styled.div`
   font-size: 16px;
   font-weight: 600;
 
@@ -154,7 +182,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
     const direction = e.currentTarget.id === "next" ? true : false;
     update({ page: type, len: usingData.data.length - 1 }, direction);
   };
-  
+  console.log(type)
   const usingData = states.data.filter((data) => data.type === mode)[0];
 
   const current = states.current;
@@ -165,37 +193,64 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
     </ErrorContainer>
   ) : (
     <>
-      {mode === "analysis" ? (
+      {type === "keyword" || type==='statistics' ? (
+        // <Slider onClick={handleOnClick}>
+        //   <VideoContainer>
+        //     <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+        //     <Image src={usingData.data[current].thumbnail_url}/>
+        //     </ImageContainer>
+        //     <InfoContainer>
+        //       <Info>영상 제목</Info>
+        //       <Info>{usingData.data[current].video_name}</Info>
+        //       <Info>관련 키워드</Info>
+        //       <Info>
+        //         {usingData.data[current].videokeywordnew
+        //           .slice(0, 5)
+        //           .map((word) => `#${word.keyword}   `)}
+        //       </Info>
+        //     </InfoContainer>
+        //   </VideoContainer>
+        // </Slider>
+        <Grid>
+          {usingData.data.slice(0,4).map((data)=>
+              <ImageContainer key={data.video_id} type={type}  target="_blank" href={`https://www.youtube.com/watch?v=${data.video_id}`} rel="noopener noreferrer">
+                <Image src={data.thumbnail_url}/>
+                <Title>{data.video_name}</Title>
+              </ImageContainer>
+          )}
+
+        </Grid>
+      ) : 
+        mode==='analysis'?        
         <Slider onClick={handleOnClick}>
           <VideoContainer>
-            <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+            <StarImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
             <Image src={usingData.data[current].thumbnail_url}/>
-            </ImageContainer>
-            <InfoContainer>
-              <Info>영상 제목</Info>
-              <Info>{usingData.data[current].video_name}</Info>
-              <Info>관련 키워드</Info>
-              <Info>
+            </StarImageContainer>
+            <SliderInfoContainer>
+              <SliderInfo>영상 제목</SliderInfo>
+              <SliderInfo>{usingData.data[current].video_name}</SliderInfo>
+              <SliderInfo>관련 키워드</SliderInfo>
+              <SliderInfo>
                 {usingData.data[current].videokeywordnew
                   .slice(0, 5)
                   .map((word) => `#${word.keyword}   `)}
-              </Info>
-            </InfoContainer>
+              </SliderInfo>
+            </SliderInfoContainer>
           </VideoContainer>
-        </Slider>
-      ) : (
+        </Slider>:
         <>
           {usingData.data.slice(0, 5).map((data, index) => (
             <VideoContainer key={index}>
-              
-              <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
-              <Image src={usingData.data[index].thumbnail_url} />
-            </ImageContainer>
+              <ImageContainer type={type}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
+                <Image src={usingData.data[index].thumbnail_url} />
+              </ImageContainer>
               <VideoTitle>{data.video_name}</VideoTitle>
             </VideoContainer>
           ))}
         </>
-      )}
+        
+      }
     </>
   );
 }

@@ -312,14 +312,14 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           </Title>
           <NoticeTooltip text={`'${title}'을 콘텐츠로한 조회수 급상승 영상들을 확인해보세요! `} />
         </TitleContainer>
-        <VideoContainer>
+        {/* <VideoContainer> */}
           {states.data.isLoadingData ?  (
             <Loader />
           ):(
             
             <VideoList mode="analysis" type="statistics" title={title} />
           )}
-        </VideoContainer>
+        {/* </VideoContainer> */}
       </Container>
     </BGSecond>
   );

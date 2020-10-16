@@ -141,35 +141,31 @@ const GraphContainer = styled.div<ITypeProps>`
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
   padding: 5px;
-  background-color: #fff;
   ${({setPadding}) =>
-    setPadding &&
-    css`
-      padding-top:45px;
-    `}
-    margin-bottom:${({setPadding})=> setPadding? '40px': '70px'}
+    setPadding &&css`padding-top:45px;`}
+  margin-bottom:${({setPadding})=> setPadding? '40px': '70px'};
+  background-color: #fff;
 `;
 
 interface IVideoProps {
   mode: string;
 }
 
+const BottomContainer = styled.div`
+  width: 1220px;
+  margin: 30px auto;
+`
+
 const VideoContainer = styled.div`
   width:100%;
   height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '750px')};
   box-sizing: border-box;
-  border: 2px solid #ecf1ff;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '10px' : '50px 20px')};
+  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '30px 0px' : '50px 20px')};
   margin-bottom: 40px;
-  background-color: #fff;
   ${({mode}: IVideoProps) =>
     mode === 'analysis' &&
     css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border-top: 1px solid #dbe0f5;
     `}
 `;
 
@@ -290,11 +286,6 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
             {data.isLoading ? <Loader /> : <LineChart type="keyword" />}
           </GraphContainer>
 
-          <Subtitle>
-            <TitleRed>{search}</TitleRed> 조회수 급상승 영상
-          </Subtitle>
-          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
-
         </AnalysisSection>
 
         <AsideSection>
@@ -320,15 +311,31 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
 
         </AsideSection>
       </Container>
-      <Container>
+
+      <BottomContainer>
+      <Subtitle>
+            <TitleRed>{search}</TitleRed> 조회수 급상승 영상
+          </Subtitle>
+          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
       <VideoContainer mode="analysis">
             {data.isLoading ? (
               <Loader />
             ) : (
               <VideoList mode="analysis" type="keyword" title={search} />
             )}
-          </VideoContainer>
-      </Container>
+        </VideoContainer>
+        <Subtitle>
+            <TitleRed>{search}</TitleRed> 인기 영상
+          </Subtitle>
+          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
+        <VideoContainer mode="analysis">
+            {data.isLoading ? (
+              <Loader />
+            ) : (
+              <VideoList mode="aside" type="keyword" title={search} />
+            )}
+        </VideoContainer>
+      </BottomContainer>
     </BGSecond>
   );
 }
