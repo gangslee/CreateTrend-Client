@@ -178,20 +178,6 @@ const LineChartContainer = styled.div`
   padding: 5px;
 `;
 
-const VideoContainer = styled.div`
-  height: 300px;
-  box-sizing: border-box;
-  border: 2px solid #ecf1ff;
-  border-radius: 10px;
-  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
-  padding: 10px;
-  margin-bottom: 20px;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 function mapStateToProps(state: RootState) {
   return {
     states:{
@@ -312,14 +298,12 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           </Title>
           <NoticeTooltip text={`'${title}'을 콘텐츠로한 조회수 급상승 영상들을 확인해보세요! `} />
         </TitleContainer>
-        {/* <VideoContainer> */}
           {states.data.isLoadingData ?  (
             <Loader />
           ):(
             
             <VideoList mode="analysis" type="statistics" title={title} />
           )}
-        {/* </VideoContainer> */}
       </Container>
     </BGSecond>
   );

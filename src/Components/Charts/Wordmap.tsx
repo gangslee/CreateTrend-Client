@@ -44,14 +44,8 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
         ].wordmap,
     };
   } else if (ownProps.type === "star") {
-    const currentStar = state.star.keyword.current;
-    const currentPeriod = state.period.keyword.current;
-
     return {
-      data:
-        ownProps.type === "star"
-          ? state.star.wordmap
-          : state.period.keyword.pie[currentPeriod].wordmap,
+      data:state.star.wordmap
     };
   }
 }
