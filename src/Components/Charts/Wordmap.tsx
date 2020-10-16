@@ -50,7 +50,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     return {
       data:
         ownProps.type === "star"
-          ? state.star.keyword.pie[currentStar].wordmap
+          ? state.star.wordmap
           : state.period.keyword.pie[currentPeriod].wordmap,
     };
   }
@@ -93,8 +93,8 @@ function WordMap({ data, type }: IWordMapProps) {
     series.fontSize = type === "keyword" ? 15 : 12;
 
     // series.fontWeight = 'bold';
-    series.minRadius = am4core.percent(6);
-    series.maxRadius = am4core.percent(13);
+    series.minRadius = type === "star" ? am4core.percent(8) : am4core.percent(6);
+    series.maxRadius = type === "star" ? am4core.percent(16) : am4core.percent(13);
     series.nodes.template.tooltipText = "{name}";
     series.nodes.template.label.hideOversized = true;
     series.nodes.template.label.truncate = true;

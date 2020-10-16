@@ -10,6 +10,7 @@ import {RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
 import SearchBar from '../../Components/Container/SearchBar';
+import Wordmap from '../../Components/Charts/Wordmap';
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
@@ -163,6 +164,12 @@ const WordMapContainer = styled.div`
   border: solid 1px #dbe0f5;
 `;
 
+const WordMapHeightContainer = styled.div`
+  height: 290px;
+  background-color: #fff;
+  margin-top:-30px;
+`;
+
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
@@ -189,7 +196,6 @@ const GraphContainer = styled.div`
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
   padding: 20px 30px;
-
   margin-bottom: 40px;
   background-color: #fff;
 `;
@@ -333,6 +339,9 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
                   <WordMapContainer>
                     <Subtitle>채널 워드맵</Subtitle>
                     <NoticeTooltip text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠들을 확인해보세요! `} />
+                    <WordMapHeightContainer>
+                      <Wordmap type='star'></Wordmap>
+                    </WordMapHeightContainer>
                   </WordMapContainer>
                 </ChannelInfoContainer>
               </ChannelContainer>

@@ -18,6 +18,15 @@ export interface IStarState {
     }[];
     current: 0;
   };
+  wordmap?:{
+    name:string;
+    color:string;
+    children:{
+      name:string;
+      color:string;
+      value:number;
+    }[];
+  }
   line?: ILineChartData[];
   video: IVideoListData[];
   isLoading?: boolean;
@@ -30,6 +39,7 @@ const initialState: IStarState = {
   keyword: null,
   line: null,
   video: null,
+  wordmap:null,
   isLoading: true,
 };
 
@@ -42,6 +52,7 @@ export const starSlice = createSlice({
       state.keyword = action.payload.keyword;
       state.line = [action.payload.line];
       state.video = [action.payload.video];
+      state.wordmap = action.payload.wordmap;
       state.isLoading = false;
     },
     starPieSliceStateUpdate: (state, action) => {
