@@ -180,7 +180,7 @@ const ThumbnailContainer = styled.div`
   margin-left: 50px;
 `;
 
-const ImageContainer = styled.a`
+const ImageContainer = styled.div`
   display:inline-block;
   width: 190px;
   height: 120px;

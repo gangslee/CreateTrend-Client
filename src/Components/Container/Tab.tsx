@@ -78,7 +78,7 @@ interface ITabProps extends Props {
 
 function Tab({states, stateFunc, type}: ITabProps) {
   const chartType = type === 'chart' ? states.chart : states.search;
-  const titles = type === 'chart' ? ['인기', '영상'] : ['키워드', '스타채널'];
+  const titles = type === 'chart' ? ['인기', '영상'] : ['콘텐츠', '스타채널'];
   const currentType = titles[chartType];
 
   const handleOnClick = (e: React.MouseEvent) => {

@@ -111,7 +111,7 @@ function SearchBar({ states, updates, searchKeyword }: ISearchBarProps) {
           value={states.searchTerm}
           placeholder={
             states.searchType === 0
-              ? "콘텐츠 또는 주제를 입력해주세요"
+              ? "콘텐츠 또는 주제를 입력해주세요  EX) 손흥민, 쇼미더머니"
               : "채널명을 입력해주세요"
           }
         />

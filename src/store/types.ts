@@ -44,6 +44,8 @@ export interface IVideoListData {
     videokeywordnew?: {
       keyword: string;
     }[];
+    popularity?: number,
+    views?: number
   }[];
   current?: number;
 }

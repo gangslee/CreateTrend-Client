@@ -61,6 +61,7 @@ const SForm = styled.form`
 const Container = styled.div`
   width: 1200px;
   margin: 50px auto;
+  padding-bottom:50px;
 `;
 
 const KeywordContainer = styled.div`
@@ -316,7 +317,6 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           {states.data.isLoadingData ?  (
             <Loader />
           ):(
-            
             <VideoList mode="analysis" type="statistics" title={title} />
           )}
         {/* </VideoContainer> */}

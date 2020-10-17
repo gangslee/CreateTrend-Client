@@ -16,6 +16,7 @@ const BgContainerSecond = styled.div`
   letter-spacing: normal;
   color: #222;
   min-height: 110vh;
+  box-sizing:border-box;
 `;
 
 interface Props {
