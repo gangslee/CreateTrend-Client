@@ -22,11 +22,12 @@ const BgContainerSecond = styled.div`
 const BgContainerFirst = styled.div`
   background-image: url(${bg1});
   width: 100%;
-  min-height: 100vh;
+  min-height: 110vh;
   background-position: center;
   background-repeat: no-repeat;
   object-fit: contain;
   padding-top: 70px;
+  box-sizing:border-box;
 `;
 
 interface Props {
