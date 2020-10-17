@@ -11,6 +11,7 @@ import Keyword from "../Routes/Keyword";
 import Statistics from "../Routes/Statistics";
 import SearchYoutuber from "../Routes/SearchYoutuber";
 import Star from "../Routes/Star";
+import Predict from "../Routes/Predict";
 import Header from "./Container/Header";
 
 export default () => (
@@ -26,6 +27,7 @@ export default () => (
           component={SearchYoutuber}
         />
         <Route path="/star/:id" component={Star} />
+        <Route path='/predict' component={Predict}/>
         <Redirect from="*" to="/" />
       </Switch>
     </>
