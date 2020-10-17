@@ -1,18 +1,23 @@
-import React from 'react';
+import React, {useCallback} from 'react'
 import styled from 'styled-components';
+import {useDropzone} from 'react-dropzone'
 
 import { BGFirst } from '../../Components/Container/BGContiner';
 
 const Container = styled.div`
    width:1220px;
    margin:0px auto;
+   display:flex;
+   flex-direction:column;
+   justify-content:center;
+   align-items:center;
 `
 const Slogan = styled.div`
   font-family: 'S-CoreDream-5Medium';
   font-size: 30px;
   text-align: center;
   margin-top:110px;
-  margin-bottom:70px;
+  margin-bottom:30px;
 `;
 
 const SloganRed = styled.span`
@@ -35,7 +40,7 @@ const Subtitle = styled.span`
 `;
 
 const InputContainer = styled.div`
-  padding:30px 20px;
+  padding:30px 0px;
   display:flex;
   justify-content:space-between;
 `
@@ -56,7 +61,7 @@ const UploadLabel = styled.label`
   justify-content:center;
   align-items:center;
   border: 2px dashed #dbe0f5;
-  width:80%;
+  width:410px;
   height:320px;
   padding:0px 15px; 
   box-sizing:border-box;
@@ -87,6 +92,7 @@ const InfoContainer = styled.div`
 
 const InputText = styled.input`
   width:100%;
+  font-family: "S-CoreDream-5Medium";
   font-size: 16px;
   line-height:2.1;
   color: #222;
@@ -97,6 +103,7 @@ const InputText = styled.input`
   }
 `
 const SBT = styled.button`
+  font-family: "S-CoreDream-5Medium";
   width:120px;
   padding:15px 0px; 
   margin:0px auto;
@@ -107,7 +114,19 @@ const SBT = styled.button`
   border-radius:10px;
 `
 
+const DropZone = styled.div`
+  :focus{
+    outline:none;
+  }
+`
+
 function PredictPresenter(){
+
+  const onDrop = useCallback(acceptedFiles => {
+    console.log(acceptedFiles)
+  }, [])
+
+  const {getRootProps, getInputProps} = useDropzone({onDrop, accept: 'image/jpeg, image/png'})
     return <BGFirst>
         <Container>
         <Slogan>
@@ -118,12 +137,17 @@ function PredictPresenter(){
           <Subtitle>영상 정보</Subtitle>
           <InputContainer>
             <UploadContainer>
-              <Upload id="upload" type="file" accept="image/png, image/jpg"/>
+            <DropZone {...getRootProps()} >
+              <Upload {...getInputProps()} />
               <UploadLabel htmlFor="upload">
+              
                 <UploadImage src={require('../../Asset/images/image-file.svg')}/>
                 <UploadText>조회수를 예측하고 싶은 썸네일을 올려주세요!</UploadText>
                 <UploadText>(.png, .jpg 파일만 가능합니다.)</UploadText>
+                
               </UploadLabel>
+              </DropZone>
+              
             </UploadContainer>
             <InfoContainer>
               <InputText type="text" placeholder="영상 제목"/>

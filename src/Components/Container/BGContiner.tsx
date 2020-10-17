@@ -20,14 +20,18 @@ const BgContainerSecond = styled.div`
 `;
 
 const BgContainerFirst = styled.div`
+  min-width:1440px;
   background-image: url(${bg1});
-  width: 100%;
-  min-height: 110vh;
-  background-position: center;
-  background-repeat: no-repeat;
-  object-fit: contain;
-  padding-top: 70px;
-  box-sizing:border-box;
+  padding-left: 100px;
+  margin-left: -100px;
+  margin-top: -100px;
+  padding-top: 170px;
+  padding-bottom: 50px;
+  font-family: 'S-CoreDream-6Bold';
+  font-stretch: normal;
+  letter-spacing: normal;
+  color: #222;
+  min-height: 110.5vh;
 `;
 
 interface Props {
