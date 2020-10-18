@@ -1,8 +1,12 @@
-import React, {useCallback} from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import {useDropzone} from 'react-dropzone'
+import {connect, ConnectedProps} from 'react-redux';
 
+import {RootDispatch, RootState} from '../../store/store';
 import { BGFirst } from '../../Components/Container/BGContiner';
+import { setPredictData } from '../../store/reducers/predict';
+
 
 const Container = styled.div`
    width:1220px;
@@ -74,6 +78,12 @@ const UploadImage = styled.img`
   margin-bottom:20px;
 `
 
+const Preview = styled.img`
+  width:250px;
+  height:150px;
+  margin-bottom:30px;
+`
+
 const UploadText = styled.div`
   font-family: 'S-CoreDream-6Bold';
   font-size:18px;
@@ -120,19 +130,47 @@ const DropZone = styled.div`
   }
 `
 
-function PredictPresenter(){
+function mapStateToProps(state: RootState) {
+  return {
+    states: {
+      data: state.predict
+    },
+  };
+}
 
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles)
-  }, [])
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    dispatches: {
+      setData:(thumbnail:string)=>{
+        dispatch(setPredictData({thumbnail}))
+      }
+    },
+  };
+}
 
-  const {getRootProps, getInputProps} = useDropzone({onDrop, accept: 'image/jpeg, image/png'})
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+function PredictPresenter({states, dispatches}:Props){
+
+  const {getRootProps, getInputProps} = useDropzone({
+    onDrop:acceptedFiles=>{
+      dispatches.setData(
+        acceptedFiles.map((file:any)=>Object.assign(file,{
+          preview: URL.createObjectURL(file)
+        }))[0].preview
+      )
+    }, 
+    accept: 'image/jpeg, image/png'})
     return <BGFirst>
         <Container>
         <Slogan>
         "<SloganRed>AI Assistant</SloganRed>와 함께 당신의 영상의 <SloganRed>조회수를 예측</SloganRed>해 보세요"
         </Slogan>
-
+      
       <UploadSection>
           <Subtitle>영상 정보</Subtitle>
           <InputContainer>
@@ -140,11 +178,9 @@ function PredictPresenter(){
             <DropZone {...getRootProps()} >
               <Upload {...getInputProps()} />
               <UploadLabel htmlFor="upload">
-              
-                <UploadImage src={require('../../Asset/images/image-file.svg')}/>
+                {states.data.thumbnail? <Preview src={states.data.thumbnail}/>: <UploadImage src={require('../../Asset/images/image-file.svg')}/>}
                 <UploadText>조회수를 예측하고 싶은 썸네일을 올려주세요!</UploadText>
                 <UploadText>(.png, .jpg 파일만 가능합니다.)</UploadText>
-                
               </UploadLabel>
               </DropZone>
               
@@ -161,4 +197,4 @@ function PredictPresenter(){
     </BGFirst>
 }
 
-export default PredictPresenter;
+export default connector(PredictPresenter);
