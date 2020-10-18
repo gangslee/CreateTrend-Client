@@ -157,14 +157,16 @@ type Props = PropsFromRedux;
 function PredictPresenter({states, dispatches}:Props){
 
   const {getRootProps, getInputProps} = useDropzone({
+    accept: 'image/jpeg, image/png',
     onDrop:acceptedFiles=>{
+      acceptedFiles.length!==0 &&
       dispatches.setData(
         acceptedFiles.map((file:any)=>Object.assign(file,{
           preview: URL.createObjectURL(file)
         }))[0].preview
       )
     }, 
-    accept: 'image/jpeg, image/png'})
+    })
     return <BGFirst>
         <Container>
         <Slogan>
