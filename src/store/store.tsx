@@ -9,6 +9,7 @@ import { periodSlice } from "./reducers/period";
 import { starSlice } from "./reducers/star";
 import { sliderSlice } from "./reducers/slider";
 import { headerSlice } from "./reducers/header";
+import { predictSlice } from "./reducers/predict";
 
 const cReducer = combineReducers({
   home: homeSlice.reducer,
@@ -20,6 +21,7 @@ const cReducer = combineReducers({
   slider: sliderSlice.reducer,
   header: headerSlice.reducer,
   auth: authSlice.reducer,
+  predict:predictSlice.reducer,
 });
 
 const store = configureStore({

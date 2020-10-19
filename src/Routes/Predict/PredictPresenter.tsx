@@ -1,8 +1,12 @@
-import React, {useCallback} from 'react'
+import React from 'react'
 import styled from 'styled-components';
-import {useDropzone} from 'react-dropzone'
+import { useDropzone } from 'react-dropzone'
+import { connect, ConnectedProps } from 'react-redux';
 
+import { RootDispatch, RootState } from '../../store/store';
 import { BGFirst } from '../../Components/Container/BGContiner';
+import { setPredictData, setTextData } from '../../store/reducers/predict';
+
 
 const Container = styled.div`
    width:1220px;
@@ -39,7 +43,7 @@ const Subtitle = styled.span`
   line-height: 1.36;
 `;
 
-const InputContainer = styled.div`
+const InputContainer = styled.form`
   padding:30px 0px;
   display:flex;
   justify-content:space-between;
@@ -74,6 +78,12 @@ const UploadImage = styled.img`
   margin-bottom:20px;
 `
 
+const Preview = styled.img`
+  width:250px;
+  height:150px;
+  margin-bottom:20px;
+`
+
 const UploadText = styled.div`
   font-family: 'S-CoreDream-6Bold';
   font-size:18px;
@@ -97,10 +107,11 @@ const InputText = styled.input`
   line-height:2.1;
   color: #222;
   border:none;
-  border-bottom:2px solid #aaa;
+  border-bottom:2px solid #666;
   :focus{
     border-bottom:2px solid #dbe0f5;
   }
+  transition: border-bottom 0.3s ease-in-out;
 `
 const SBT = styled.button`
   font-family: "S-CoreDream-5Medium";
@@ -112,6 +123,11 @@ const SBT = styled.button`
   font-size:18px;
   border:none;
   border-radius:10px;
+  :active,
+  :hover {
+    
+  }
+  cursor:pointer;
 `
 
 const DropZone = styled.div`
@@ -120,45 +136,82 @@ const DropZone = styled.div`
   }
 `
 
-function PredictPresenter(){
+function mapStateToProps(state: RootState) {
+  return {
+    states: {
+      data: state.predict
+    },
+  };
+}
 
-  const onDrop = useCallback(acceptedFiles => {
-    console.log(acceptedFiles)
-  }, [])
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    dispatches: {
+      setThumbnail: (thumbnail: string) => {
+        dispatch(setPredictData({ thumbnail }))
+      },
+      setTextData: (text: { title: string, subscriber: string, date: string }) => {
+        dispatch(setTextData({ ...text }))
+      }
+    },
+  };
+}
 
-  const {getRootProps, getInputProps} = useDropzone({onDrop, accept: 'image/jpeg, image/png'})
-    return <BGFirst>
-        <Container>
-        <Slogan>
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type Props = PropsFromRedux;
+
+function PredictPresenter({ states, dispatches }: Props) {
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/jpeg, image/png',
+    onDrop: acceptedFiles => {
+      acceptedFiles.length > 0 &&
+        dispatches.setThumbnail(
+          acceptedFiles.map((file: any) => Object.assign(file, {
+            preview: URL.createObjectURL(file)
+          }))[0].preview
+        )
+    },
+  });
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+  }
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatches.setTextData({ ...states.data.text, [e.target.name]: e.target.value })
+  };
+
+  return <BGFirst>
+    <Container>
+      <Slogan>
         "<SloganRed>AI Assistant</SloganRed>와 함께 당신의 영상의 <SloganRed>조회수를 예측</SloganRed>해 보세요"
         </Slogan>
 
       <UploadSection>
-          <Subtitle>영상 정보</Subtitle>
-          <InputContainer>
-            <UploadContainer>
+        <Subtitle>영상 정보</Subtitle>
+        <InputContainer onSubmit={handleOnSubmit}>
+          <UploadContainer>
             <DropZone {...getRootProps()} >
               <Upload {...getInputProps()} />
               <UploadLabel htmlFor="upload">
-              
-                <UploadImage src={require('../../Asset/images/image-file.svg')}/>
+                {states.data.thumbnail ? <Preview src={states.data.thumbnail} /> : <UploadImage src={require('../../Asset/images/image-file.svg')} />}
                 <UploadText>조회수를 예측하고 싶은 썸네일을 올려주세요!</UploadText>
                 <UploadText>(.png, .jpg 파일만 가능합니다.)</UploadText>
-                
               </UploadLabel>
-              </DropZone>
-              
-            </UploadContainer>
-            <InfoContainer>
-              <InputText type="text" placeholder="영상 제목"/>
-              <InputText type="text" placeholder="구독자수  EX) 10만 -> 100000"/>
-              <InputText type="text" placeholder="업로드 날짜  EX) 2020-01-01"/>
-              <SBT>예측하기</SBT>
-            </InfoContainer>
-          </InputContainer>
+            </DropZone>
+
+          </UploadContainer>
+          <InfoContainer>
+            <InputText type="text" name='title' placeholder="영상 제목" onChange={handleOnChange} />
+            <InputText type="text" name='subscriber' placeholder="구독자수  EX) 100000" onChange={handleOnChange} />
+            <InputText type="text" name='date' placeholder="업로드 날짜  EX) 2020-01-01" onChange={handleOnChange} />
+            <SBT>예측하기</SBT>
+          </InfoContainer>
+        </InputContainer>
       </UploadSection>
-        </Container>
-    </BGFirst>
+    </Container>
+  </BGFirst>
 }
 
-export default PredictPresenter;
+export default connector(PredictPresenter);

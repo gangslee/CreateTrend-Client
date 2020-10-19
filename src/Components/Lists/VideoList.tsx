@@ -55,7 +55,6 @@ const Image = styled.img<IVideoListStyleProps>`
   height: ${({ type, mode }) =>
     type === "star" && mode === 'aside' ? "110px" : "180px"};
   border-radius: 10px;
-  background-color:#000;
   &:hover {
     filter: brightness(80%); 
   }
@@ -261,8 +260,9 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
                     <Image src={usingData.data[index].thumbnail_url} type={type} mode={mode} />
                   </StarImageContainer>
                   <VideoTitle>{data.video_name}</VideoTitle>
-                </VideoContainer>
-              ))}
+                </VideoContainer >
+              ))
+              }
             </>
 
         }
