@@ -7,8 +7,8 @@ import { sliderStateNext, sliderStatePrev } from "../../store/reducers/slider";
 import Slider from "../Container/Slider";
 
 interface IVideoListStyleProps {
-  type?:string;
-  mode?:string;
+  type?: string;
+  mode?: string;
 }
 
 const VideoContainer = styled.div`
@@ -27,11 +27,11 @@ const Grid = styled.div`
 const ImageContainer = styled.a<IVideoListStyleProps>`
   display:inline-block;
   width: ${({ type }) =>
-    type === "keyword" || type==='statistics' ? "270px" : "55%"};
+    type === "keyword" || type === 'statistics' ? "270px" : "55%"};
   height: ${({ type }) =>
-    type === "keyword" || type==='statistics' ? "180px" : "110px"};
+    type === "keyword" || type === 'statistics' ? "180px" : "110px"};
   margin-right: ${({ type }) =>
-    type === "keyword" || type==='statistics' ? "0px" : "15px"};
+    type === "keyword" || type === 'statistics' ? "0px" : "15px"};
 `
 
 const StarImageContainer = styled.a<IVideoListStyleProps>`
@@ -47,7 +47,6 @@ const Image = styled.img`
   width:100%;
   height:100%;
   border-radius: 10px;
-
   &:hover {
     opacity: 0.7;
   }
@@ -192,67 +191,67 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
       <Error>분석결과가 없습니다!</Error>
     </ErrorContainer>
   ) : (
-    <>
-      {type === "keyword" || type==='statistics' ? (
-        // <Slider onClick={handleOnClick}>
-        //   <VideoContainer>
-        //     <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
-        //     <Image src={usingData.data[current].thumbnail_url}/>
-        //     </ImageContainer>
-        //     <InfoContainer>
-        //       <Info>영상 제목</Info>
-        //       <Info>{usingData.data[current].video_name}</Info>
-        //       <Info>관련 키워드</Info>
-        //       <Info>
-        //         {usingData.data[current].videokeywordnew
-        //           .slice(0, 5)
-        //           .map((word) => `#${word.keyword}   `)}
-        //       </Info>
-        //     </InfoContainer>
-        //   </VideoContainer>
-        // </Slider>
-        <Grid>
-          {usingData.data.slice(0,4).map((data)=>
-              <ImageContainer key={data.video_id} type={type}  target="_blank" href={`https://www.youtube.com/watch?v=${data.video_id}`} rel="noopener noreferrer">
-                <Image src={data.thumbnail_url}/>
+      <>
+        {type === "keyword" || type === 'statistics' ? (
+          // <Slider onClick={handleOnClick}>
+          //   <VideoContainer>
+          //     <ImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+          //     <Image src={usingData.data[current].thumbnail_url}/>
+          //     </ImageContainer>
+          //     <InfoContainer>
+          //       <Info>영상 제목</Info>
+          //       <Info>{usingData.data[current].video_name}</Info>
+          //       <Info>관련 키워드</Info>
+          //       <Info>
+          //         {usingData.data[current].videokeywordnew
+          //           .slice(0, 5)
+          //           .map((word) => `#${word.keyword}   `)}
+          //       </Info>
+          //     </InfoContainer>
+          //   </VideoContainer>
+          // </Slider>
+          <Grid>
+            {usingData.data.slice(0, 4).map((data) =>
+              <ImageContainer key={data.video_id} type={type} target="_blank" href={`https://www.youtube.com/watch?v=${data.video_id}`} rel="noopener noreferrer">
+                <Image src={data.thumbnail_url} />
                 <Title>{data.video_name}</Title>
               </ImageContainer>
-          )}
+            )}
 
-        </Grid>
-      ) : 
-        mode==='analysis'?        
-        <Slider onClick={handleOnClick}>
-          <VideoContainer>
-            <StarImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
-            <Image src={usingData.data[current].thumbnail_url}/>
-            </StarImageContainer>
-            <SliderInfoContainer>
-              <SliderInfo>영상 제목</SliderInfo>
-              <SliderInfo>{usingData.data[current].video_name}</SliderInfo>
-              <SliderInfo>관련 키워드</SliderInfo>
-              <SliderInfo>
-                {usingData.data[current].videokeywordnew
-                  .slice(0, 5)
-                  .map((word) => `#${word.keyword}   `)}
-              </SliderInfo>
-            </SliderInfoContainer>
-          </VideoContainer>
-        </Slider>:
-        <>
-          {usingData.data.slice(0, 5).map((data, index) => (
-            <VideoContainer key={index}>
-              <ImageContainer type={type}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
-                <Image src={usingData.data[index].thumbnail_url} />
-              </ImageContainer>
-              <VideoTitle>{data.video_name}</VideoTitle>
-            </VideoContainer>
-          ))}
-        </>
-        
-      }
-    </>
-  );
+          </Grid>
+        ) :
+          mode === 'analysis' ?
+            <Slider onClick={handleOnClick}>
+              <VideoContainer>
+                <StarImageContainer mode={mode} target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+                  <Image src={usingData.data[current].thumbnail_url} />
+                </StarImageContainer>
+                <SliderInfoContainer>
+                  <SliderInfo>영상 제목</SliderInfo>
+                  <SliderInfo>{usingData.data[current].video_name}</SliderInfo>
+                  <SliderInfo>관련 키워드</SliderInfo>
+                  <SliderInfo>
+                    {usingData.data[current].videokeywordnew
+                      .slice(0, 5)
+                      .map((word) => `#${word.keyword}   `)}
+                  </SliderInfo>
+                </SliderInfoContainer>
+              </VideoContainer>
+            </Slider> :
+            <>
+              {usingData.data.slice(0, 5).map((data, index) => (
+                <VideoContainer key={index}>
+                  <ImageContainer type={type} target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
+                    <Image src={usingData.data[index].thumbnail_url} />
+                  </ImageContainer>
+                  <VideoTitle>{data.video_name}</VideoTitle>
+                </VideoContainer>
+              ))}
+            </>
+
+        }
+      </>
+    );
 }
 
 export default connector(VideoList);
