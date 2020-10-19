@@ -1,16 +1,16 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import styled, { css } from 'styled-components';
+import { connect, ConnectedProps } from 'react-redux';
 
 import Loader from '../../Components/Container/Loader';
 import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
-import {RootState, RootDispatch} from '../../store/store';
-import {setRadioState} from '../../store/reducers/keyword';
+import { RootState, RootDispatch } from '../../store/store';
+import { setRadioState } from '../../store/reducers/keyword';
 import SearchBar from '../../Components/Container/SearchBar';
-import {BGSecond} from '../../Components/Container/BGContiner';
+import { BGSecond } from '../../Components/Container/BGContiner';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
 
 const Slogan = styled.div`
@@ -141,9 +141,9 @@ const GraphContainer = styled.div<ITypeProps>`
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
   padding: 5px;
-  ${({setPadding}) =>
-    setPadding &&css`padding-top:45px;`}
-  margin-bottom:${({setPadding})=> setPadding? '40px': '70px'};
+  ${({ setPadding }) =>
+    setPadding && css`padding-top:45px;`}
+  margin-bottom:${({ setPadding }) => setPadding ? '40px' : '70px'};
   background-color: #fff;
 `;
 
@@ -158,15 +158,11 @@ const BottomContainer = styled.div`
 
 const VideoContainer = styled.div`
   width:100%;
-  height: ${({mode}: IVideoProps) => (mode === 'analysis' ? '250px' : '750px')};
+  height: 330px;
   box-sizing: border-box;
-  padding: ${({mode}: IVideoProps) => (mode === 'analysis' ? '30px 0px' : '50px 20px')};
+  padding: 30px 0px;
   margin-bottom: 40px;
-  ${({mode}: IVideoProps) =>
-    mode === 'analysis' &&
-    css`
-      border-top: 1px solid #dbe0f5;
-    `}
+  border-top: 1px solid #dbe0f5;
 `;
 
 const KeywordChartContainer = styled.div`
@@ -207,7 +203,7 @@ interface IKeywordPresenter extends Props {
   clickWord: (word: string) => void;
 }
 
-function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: IKeywordPresenter) {
+function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }: IKeywordPresenter) {
   const handleOnChange = (e: React.ChangeEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
@@ -233,7 +229,7 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           src={require('../../Asset/images/hashtag.png')}
           srcSet={
             (require('../../Asset/images/hashtag@2x.png'),
-            require('../../Asset/images/hashtag@3x.png'))
+              require('../../Asset/images/hashtag@3x.png'))
           }
         />
         <Title>
@@ -295,43 +291,43 @@ function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: 
           <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
 
           <KeywordChartContainer>
-                {data.isLoading ? (
-                  <Loader />
-                ) : (
-                  <KeywordChart index={0} type="keyword" clickWord={clickWord} />
-                )}
-              </KeywordChartContainer>
-              <KeywordChartContainer>
-                {data.isLoading ? (
-                  <Loader />
-                ) : (
-                  <KeywordChart index={1} type="keyword" clickWord={clickWord} />
-                )}
-              </KeywordChartContainer>
+            {data.isLoading ? (
+              <Loader />
+            ) : (
+                <KeywordChart index={0} type="keyword" clickWord={clickWord} />
+              )}
+          </KeywordChartContainer>
+          <KeywordChartContainer>
+            {data.isLoading ? (
+              <Loader />
+            ) : (
+                <KeywordChart index={1} type="keyword" clickWord={clickWord} />
+              )}
+          </KeywordChartContainer>
 
         </AsideSection>
       </Container>
 
       <BottomContainer>
-      <Subtitle>
-            <TitleRed>{search}</TitleRed> 조회수 급상승 영상
+        <Subtitle>
+          <TitleRed>{search}</TitleRed> 조회수 급상승 영상
           </Subtitle>
-          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
-      <VideoContainer mode="analysis">
-            {data.isLoading ? (
-              <Loader />
-            ) : (
+        <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
+        <VideoContainer>
+          {data.isLoading ? (
+            <Loader />
+          ) : (
               <VideoList mode="analysis" type="keyword" title={search} />
             )}
         </VideoContainer>
         <Subtitle>
-            <TitleRed>{search}</TitleRed> 인기 영상
+          <TitleRed>{search}</TitleRed> 인기 영상
           </Subtitle>
-          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
-        <VideoContainer mode="analysis">
-            {data.isLoading ? (
-              <Loader />
-            ) : (
+        <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
+        <VideoContainer>
+          {data.isLoading ? (
+            <Loader />
+          ) : (
               <VideoList mode="aside" type="keyword" title={search} />
             )}
         </VideoContainer>

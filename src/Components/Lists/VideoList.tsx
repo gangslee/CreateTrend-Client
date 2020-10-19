@@ -8,11 +8,11 @@ import Slider from "../Container/Slider";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
-const REGEX = /\B(?=(\d{3})+(?!\d))/g;  
+const REGEX = /\B(?=(\d{3})+(?!\d))/g;
 
 interface IVideoListStyleProps {
-  type?:string;
-  mode?:string;
+  type?: string;
+  mode?: string;
 }
 
 const VideoContainer = styled.div`
@@ -26,6 +26,7 @@ const VideoContainer = styled.div`
 const Grid = styled.div`
   display:flex;
   justify-content:space-between;
+  margin-bottom:30px;
 `;
 
 const ImageContainer = styled.a<IVideoListStyleProps>`
@@ -52,7 +53,7 @@ const StarImageContainer = styled.a<IVideoListStyleProps>`
 const Image = styled.img<IVideoListStyleProps>`
   width:100%;
   height: ${({ type, mode }) =>
-    type=== "star" && mode==='aside' ? "110px" : "180px"};
+    type === "star" && mode === 'aside' ? "110px" : "180px"};
   border-radius: 10px;
   background-color:#000;
   &:hover {
@@ -63,6 +64,7 @@ const Image = styled.img<IVideoListStyleProps>`
 `;
 
 const Title = styled.div`
+  height:42px;
   font-family:'S-CoreDream-4Regular';
   font-size: 15px;
   line-height: 1.4;
@@ -143,12 +145,12 @@ interface OwnProps {
   type: string;
 }
 
-function changeForm(n:number):string{
+function changeForm(n: number): string {
   return n >= HUNDREAD_MILLIONS
     ? `${(n / HUNDREAD_MILLIONS).toFixed(0)}억`
     : n >= TEN_THOUSANDS
-    ? `${(n / TEN_THOUSANDS).toFixed(0)}만`
-    : `${n.toString().replace(REGEX, ',')}`
+      ? `${(n / TEN_THOUSANDS).toFixed(0)}만`
+      : `${n.toString().replace(REGEX, ',')}`
 }
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
@@ -208,7 +210,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
     const direction = e.currentTarget.id === "next" ? true : false;
     update({ page: type, len: usingData.data.length - 1 }, direction);
   };
- 
+
   const usingData = states.data.filter((data) => data.type === mode)[0];
 
   const current = states.current;
@@ -218,54 +220,54 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
       <Error>분석결과가 없습니다!</Error>
     </ErrorContainer>
   ) : (
-    <>
-      {type === "keyword" || type==='statistics' ? (
-        <Grid>
-          {usingData.data.slice(0,4).map((data)=>
-              <ImageContainer key={data.video_id} type={type}  target="_blank" href={`https://www.youtube.com/watch?v=${data.video_id}`} rel="noopener noreferrer">
-                <Image src={data.thumbnail_url}/>
+      <>
+        {type === "keyword" || type === 'statistics' ? (
+          <Grid>
+            {usingData.data.slice(0, 4).map((data) =>
+              <ImageContainer key={data.video_id} type={type} target="_blank" href={`https://www.youtube.com/watch?v=${data.video_id}`} rel="noopener noreferrer">
+                <Image src={data.thumbnail_url} />
                 <Title>{data.video_name}</Title>
                 <InfoContainer>
                   <Info>{`조회수 ${changeForm(data.views)} views`}</Info>
                   <Info>{`인기도 ${data.popularity.toFixed(0)}%`}</Info>
                 </InfoContainer>
               </ImageContainer>
-          )}
+            )}
 
-        </Grid>
-      ) : 
-        mode==='analysis'?        
-        <Slider onClick={handleOnClick}>
-          <VideoContainer>
-            <StarImageContainer mode={mode}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
-            <Image src={usingData.data[current].thumbnail_url} />
-            </StarImageContainer>
-            <SliderInfoContainer>
-              <SliderInfo>영상 제목</SliderInfo>
-              <SliderInfo>{usingData.data[current].video_name}</SliderInfo>
-              <SliderInfo>관련 키워드</SliderInfo>
-              <SliderInfo>
-                {usingData.data[current].videokeywordnew
-                  .slice(0, 5)
-                  .map((word) => `#${word.keyword}   `)}
-              </SliderInfo>
-            </SliderInfoContainer>
-          </VideoContainer>
-        </Slider>:
-        <>
-          {usingData.data.slice(0, 5).map((data, index) => (
-            <VideoContainer key={index}>
-              <StarImageContainer type={type}  target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
-                <Image src={usingData.data[index].thumbnail_url} type={type} mode={mode}/>
-              </StarImageContainer>
-              <VideoTitle>{data.video_name}</VideoTitle>
-            </VideoContainer>
-          ))}
-        </>
-        
-      }
-    </>
-  );
+          </Grid>
+        ) :
+          mode === 'analysis' ?
+            <Slider onClick={handleOnClick}>
+              <VideoContainer>
+                <StarImageContainer mode={mode} target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+                  <Image src={usingData.data[current].thumbnail_url} />
+                </StarImageContainer>
+                <SliderInfoContainer>
+                  <SliderInfo>영상 제목</SliderInfo>
+                  <SliderInfo>{usingData.data[current].video_name}</SliderInfo>
+                  <SliderInfo>관련 키워드</SliderInfo>
+                  <SliderInfo>
+                    {usingData.data[current].videokeywordnew
+                      .slice(0, 5)
+                      .map((word) => `#${word.keyword}   `)}
+                  </SliderInfo>
+                </SliderInfoContainer>
+              </VideoContainer>
+            </Slider> :
+            <>
+              {usingData.data.slice(0, 5).map((data, index) => (
+                <VideoContainer key={index}>
+                  <StarImageContainer type={type} target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
+                    <Image src={usingData.data[index].thumbnail_url} type={type} mode={mode} />
+                  </StarImageContainer>
+                  <VideoTitle>{data.video_name}</VideoTitle>
+                </VideoContainer>
+              ))}
+            </>
+
+        }
+      </>
+    );
 }
 
 export default connector(VideoList);
