@@ -82,6 +82,7 @@ const Preview = styled.img`
   width:250px;
   height:150px;
   margin-bottom:20px;
+  border-radius:10px;
 `
 
 const UploadText = styled.div`
@@ -147,7 +148,7 @@ function mapStateToProps(state: RootState) {
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     dispatches: {
-      setThumbnail: (thumbnail: string) => {
+      setThumbnail: (thumbnail: string|ArrayBuffer) => {
         dispatch(setPredictData({ thumbnail }))
       },
       setTextData: (text: { title: string, subscriber: string, date: string }) => {
@@ -171,12 +172,14 @@ function PredictPresenter({ states, dispatches, handleOnSubmit }: IPredictPresen
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/jpeg, image/png',
     onDrop: acceptedFiles => {
-      acceptedFiles.length > 0 &&
-        dispatches.setThumbnail(
-          acceptedFiles.map((file: any) => Object.assign(file, {
-            preview: URL.createObjectURL(file)
-          }))[0].preview
-        )
+      if(acceptedFiles.length > 0){
+        let reader = new FileReader()
+        reader.readAsDataURL(acceptedFiles[0])
+        reader.onloadend = function() {
+          var base64data = reader.result;
+          dispatches.setThumbnail(base64data)
+        }
+      }
     },
   });
 

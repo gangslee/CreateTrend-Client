@@ -5,6 +5,7 @@ import PredictPresenter from './PredictPresenter';
 
 function PredictContainer(){
     const handleOnSubmit = (e: React.FormEvent) => {
+        console.log('asdsadasd')
         e.preventDefault()
         fetchData(store.getState(), store.dispatch)
     }
