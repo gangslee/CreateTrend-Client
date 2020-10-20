@@ -7,6 +7,7 @@ interface IinitialStateProps {
     subscriber: string;
     date: string;
   }
+  result:any;
   isLoading: boolean;
 }
 
@@ -17,6 +18,7 @@ const initialState: IinitialStateProps = {
     subscriber: null,
     date: null,
   },
+  result:null,
   isLoading: false,
 };
 
@@ -31,8 +33,12 @@ export const predictSlice = createSlice({
       state.text.title = action.payload.title
       state.text.subscriber = action.payload.subscriber
       state.text.date = action.payload.date
+    },
+    setResult:(state, action) =>{
+      console.log(action.payload)
+      state.result = action.payload
     }
   },
 });
 
-export const { setPredictData, setTextData } = predictSlice.actions;
+export const { setPredictData, setTextData, setResult } = predictSlice.actions;

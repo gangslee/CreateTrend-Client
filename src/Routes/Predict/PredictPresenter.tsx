@@ -163,7 +163,11 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux;
 
-function PredictPresenter({ states, dispatches }: Props) {
+interface IPredictPresenterProps extends Props{
+  handleOnSubmit : (e:React.FormEvent) => void;
+}
+
+function PredictPresenter({ states, dispatches, handleOnSubmit }: IPredictPresenterProps) {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/jpeg, image/png',
     onDrop: acceptedFiles => {
@@ -175,9 +179,7 @@ function PredictPresenter({ states, dispatches }: Props) {
         )
     },
   });
-  const handleOnSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-  }
+
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatches.setTextData({ ...states.data.text, [e.target.name]: e.target.value })
   };

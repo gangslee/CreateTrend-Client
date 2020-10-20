@@ -35,4 +35,7 @@ export const getApi = {
       start,
       end,
     }),
+  predict:(thumbnail_url:string, video_name:string, channel_subscriber:string, upload_date:string) =>
+    getData("views_predict/", "GET", {thumbnail_url, video_name, channel_subscriber, upload_date})
+  
 };
