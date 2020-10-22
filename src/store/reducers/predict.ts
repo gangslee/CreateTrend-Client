@@ -7,7 +7,15 @@ interface IinitialStateProps {
     subscriber: string;
     date: string;
   }
-  result:any;
+  result:{
+    fiveWeeks: number;
+    fourWeeks: number;
+    oneDay: number;
+    oneWeek: number;
+    threeWeeks: number;
+    threeYears: number;
+    twoWeeks: number;
+  };
   isLoading: boolean;
 }
 

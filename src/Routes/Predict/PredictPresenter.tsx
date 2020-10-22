@@ -24,7 +24,7 @@ const Slogan = styled.div`
   margin-bottom:30px;
 `;
 
-const SloganRed = styled.span`
+const Red = styled.span`
   color: #dd0909;
 `;
 
@@ -41,6 +41,13 @@ const Subtitle = styled.span`
   font-family: 'S-CoreDream-6Bold';
   font-size: 22px;
   line-height: 1.36;
+`;
+
+const Minititle = styled.span`
+  display: block;
+  font-family: 'S-CoreDream-6Bold';
+  font-size: 18px;
+  line-height: 1.24;
 `;
 
 const InputContainer = styled.form`
@@ -190,7 +197,7 @@ function PredictPresenter({ states, dispatches, handleOnSubmit }: IPredictPresen
   return <BGFirst>
     <Container>
       <Slogan>
-        "<SloganRed>AI Assistant</SloganRed>와 함께 당신의 영상의 <SloganRed>조회수를 예측</SloganRed>해 보세요"
+        "<Red>AI Assistant</Red>와 함께 당신의 영상의 <Red>조회수를 예측</Red>해 보세요"
         </Slogan>
 
       <UploadSection>
@@ -214,6 +221,7 @@ function PredictPresenter({ states, dispatches, handleOnSubmit }: IPredictPresen
             <SBT>예측하기</SBT>
           </InfoContainer>
         </InputContainer>
+        {states.data.result && <Minititle>{`${<Red>states.data.text.date</Red>}에 업로드 되는 ${<Red>states.data.text.title</Red>} 영상의 예상 조회수`}</Minititle>}
       </UploadSection>
     </Container>
   </BGFirst>
