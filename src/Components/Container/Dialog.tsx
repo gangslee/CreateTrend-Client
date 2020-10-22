@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "react-modal";
 import { connect, ConnectedProps } from "react-redux";
+import ReactPixel from 'react-facebook-pixel'
 
 import store, { RootState, RootDispatch } from "../../store/store";
 import { setIsOpenSignIn, setIsOpenSignUp } from "../../store/reducers/header";
@@ -164,6 +165,11 @@ function Dialog({ type, states, dispatches }: IDialogProps) {
     type === "signIn" ? dispatches.signIn(false) : dispatches.signUp(false);
   };
 
+  const options = {
+    autoConfig: true, // set pixel's autoConfig
+    debug: false, // enable logs
+  };
+
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (type === "signIn") {
@@ -173,6 +179,8 @@ function Dialog({ type, states, dispatches }: IDialogProps) {
       if (inputState.password === inputState.passwordCheck) {
         dispatches.signUp(false);
         signUp(inputState.email, inputState.password, store.dispatch);
+        ReactPixel.init('2474669376160852', null, options)
+        ReactPixel.track('Lead', null)
       } else {
         console.log(inputState);
         alert("password not match");
