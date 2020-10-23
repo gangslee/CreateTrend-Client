@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const HeaderContainer = styled.div`
   max-width: 1200px;
-  height: 70px;
+  height: 73px;
   display: flex;
   justify-content: space-between;
   align-items: center;

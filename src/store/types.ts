@@ -38,6 +38,7 @@ export interface IKeywordChartData {
 export interface IVideoListData {
   type: string;
   data: {
+    idx:number;
     video_id: string;
     video_name: string;
     thumbnail_url: string;

@@ -5,6 +5,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState, RootDispatch } from "../../store/store";
 import { sliderStateNext, sliderStatePrev } from "../../store/reducers/slider";
 import Slider from "../Container/Slider";
+import { Link } from "react-router-dom";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
@@ -29,7 +30,7 @@ const Grid = styled.div`
   margin-bottom:30px;
 `;
 
-const ImageContainer = styled.a<IVideoListStyleProps>`
+const ImageContainer = styled(Link)`
   display:inline-block;
   width: 270px;
   /* height: 180px; */
@@ -41,7 +42,7 @@ const ImageContainer = styled.a<IVideoListStyleProps>`
   box-sizing:border-box;
 `
 
-const StarImageContainer = styled.a<IVideoListStyleProps>`
+const StarImageContainer = styled(Link)<IVideoListStyleProps>`
   display:inline-block;
   width: ${({ mode }) =>
     mode === "analysis" ? "45%" : "55%"};
@@ -50,6 +51,7 @@ const StarImageContainer = styled.a<IVideoListStyleProps>`
   margin-right: ${({ mode }) =>
     mode === "analysis" ? "20px" : "15px"};
 `;
+
 const Image = styled.img<IVideoListStyleProps>`
   width:100%;
   height: ${({ type, mode }) =>
@@ -223,7 +225,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
         {type === "keyword" || type === 'statistics' ? (
           <Grid>
             {usingData.data.slice(0, 4).map((data) =>
-              <ImageContainer key={data.video_id} type={type} target="_blank" href={`https://www.youtube.com/watch?v=${data.video_id}`} rel="noopener noreferrer">
+              <ImageContainer key={data.video_id} to={`/detail/${data.idx}`}>
                 <Image src={data.thumbnail_url} />
                 <Title>{data.video_name}</Title>
                 <InfoContainer>
@@ -238,7 +240,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
           mode === 'analysis' ?
             <Slider onClick={handleOnClick}>
               <VideoContainer>
-                <StarImageContainer mode={mode} target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[current].video_id}`} rel="noopener noreferrer">
+                <StarImageContainer mode={mode} to={`/detail/${usingData.data[current].idx}`}>
                   <Image src={usingData.data[current].thumbnail_url} />
                 </StarImageContainer>
                 <SliderInfoContainer>
@@ -256,8 +258,8 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
             <>
               {usingData.data.slice(0, 5).map((data, index) => (
                 <VideoContainer key={index}>
-                  <StarImageContainer type={type} target="_blank" href={`https://www.youtube.com/watch?v=${usingData.data[index].video_id}`} rel="noopener noreferrer">
-                    <Image src={usingData.data[index].thumbnail_url} type={type} mode={mode} />
+                  <StarImageContainer type={type} to={`/detail/${data.idx}`}>
+                    <Image src={data.thumbnail_url} type={type} mode={mode} />
                   </StarImageContainer>
                   <VideoTitle>{data.video_name}</VideoTitle>
                 </VideoContainer >

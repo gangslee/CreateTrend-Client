@@ -12,6 +12,7 @@ import Statistics from "../Routes/Statistics";
 import SearchYoutuber from "../Routes/SearchYoutuber";
 import Star from "../Routes/Star";
 import Predict from "../Routes/Predict";
+import VideoDetail from "../Routes/VideoDetail";
 import Header from "./Container/Header";
 
 export default () => (
@@ -28,6 +29,7 @@ export default () => (
         />
         <Route path="/star/:id" component={Star} />
         <Route path='/predict' component={Predict}/>
+        <Route path='/detail/:idx' component={VideoDetail}/>
         <Redirect from="*" to="/" />
       </Switch>
     </>
