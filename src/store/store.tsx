@@ -10,6 +10,7 @@ import { starSlice } from "./reducers/star";
 import { sliderSlice } from "./reducers/slider";
 import { headerSlice } from "./reducers/header";
 import { predictSlice } from "./reducers/predict";
+import { videoDetailSlice } from "./reducers/videoDetail";
 
 const cReducer = combineReducers({
   home: homeSlice.reducer,
@@ -22,6 +23,7 @@ const cReducer = combineReducers({
   header: headerSlice.reducer,
   auth: authSlice.reducer,
   predict:predictSlice.reducer,
+  videoDetail:videoDetailSlice.reducer,
 });
 
 const store = configureStore({

@@ -58,5 +58,6 @@ export const getApi = {
       end,
     }),
   predict:(thumbnail_url:string, video_name:string, channel_subscriber:string, upload_date:string) =>
-    postData("views_predict/", JSON.stringify({thumbnail_url, video_name, channel_subscriber, upload_date}))
+    postData("views_predict/", JSON.stringify({thumbnail_url, video_name, channel_subscriber, upload_date})),
+  videoDetail:(idx:string)=> getData(`video_detail/${idx}/`)
 };
