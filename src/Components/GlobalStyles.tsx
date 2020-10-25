@@ -32,7 +32,7 @@ const globalStyles = createGlobalStyle`
     }
 
     body{
-        font-family: "Lato", sans-serif;    
+        font-family: "Lato", 'Noto Sans KR',sans-serif;    
     }
     input:focus{
         outline: none;

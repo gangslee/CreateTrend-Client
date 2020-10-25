@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import { ILineChartData } from "../types";
 
 interface IinitialStateProps {
     video: {
@@ -20,13 +21,7 @@ interface IinitialStateProps {
             }[]
         }
     };
-    lines: {
-        type: string;
-        data:{
-            date:string;
-            value:number;
-        }[]
-    };
+  lines: ILineChartData[];
   channel: {
         thumbnail_url: string;
         channel_description: string;
@@ -52,7 +47,7 @@ export const videoDetailSlice = createSlice({
     },
     setData:(state, action)=>{
         state.channel = action.payload.channel;
-        state.lines = action.payload.lines;
+        state.lines = [action.payload.lines];
         state.video = action.payload.video;
         state.isLoading = false;
     }

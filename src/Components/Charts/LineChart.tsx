@@ -1,11 +1,11 @@
-import React, { useRef, useLayoutEffect } from "react";
-import styled from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
+import React, {useRef, useLayoutEffect} from 'react';
+import styled from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
 
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4charts from "@amcharts/amcharts4/charts";
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
 
-import { RootState } from "../../store/store";
+import {RootState} from '../../store/store';
 
 const LineChartContainer = styled.div`
   height: 100%;
@@ -29,11 +29,11 @@ interface OwnProps {
 }
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
-  if (ownProps.type === "keyword") {
+  if (ownProps.type === 'keyword') {
     return {
-      states: { data: [state.keyword.lines[state.keyword.currentChart]] },
+      states: {data: [state.keyword.lines[state.keyword.currentChart]]},
     };
-  } else if (ownProps.type === "statistics") {
+  } else if (ownProps.type === 'statistics') {
     return {
       states: {
         data:
@@ -42,8 +42,10 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
           ].line,
       },
     };
-  } else if (ownProps.type === "star") {
-    return { states: { data: state.star.line } };
+  } else if (ownProps.type === 'star') {
+    return {states: {data: state.star.line}};
+  } else if (ownProps.type === 'detail') {
+    return {states: {data: state.videoDetail.lines}};
   }
 }
 
@@ -59,17 +61,16 @@ interface ILineChartProps extends Props {
   stateFunc?: (id: string, start: string, end: string) => void;
 }
 
-function LineChart({ states, type, id, stateFunc }: ILineChartProps) {
- 
+function LineChart({states, type, id, stateFunc}: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = states.data[0];
-  const unit = useData.type === "인기도 추이" ? "%" : "건";
+  const unit = useData.type === '인기도 추이' ? '%' : useData.type === '조회수 추이' ? '회' : '건';
   useLayoutEffect(() => {
     let chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
     if (useData.data.length > 0) {
       const dateAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-      dateAxis.dataFields.category = "date";
+      dateAxis.dataFields.category = 'date';
       dateAxis.cursorTooltipEnabled = false;
       dateAxis.renderer.fontSize = 12;
       dateAxis.renderer.grid.template.disabled = true;
@@ -81,40 +82,38 @@ function LineChart({ states, type, id, stateFunc }: ILineChartProps) {
 
       const series = chart.series.push(new am4charts.LineSeries());
       // series.name = 'Value';
-      series.stroke = am4core.color("#d10909");
+      series.stroke = am4core.color('#d10909');
       series.strokeWidth = 3;
-      series.dataFields.valueY = "value";
-      series.dataFields.categoryX = "date";
+      series.dataFields.valueY = 'value';
+      series.dataFields.categoryX = 'date';
 
       series.tooltipHTML = `<div style="padding:10px;"><div style="font-size:17px;margin-bottom:5px;">{value}${unit}</div><span style="font-size:16px;color:#999;">{date}</span></div>`;
       series.tooltip.getFillFromObject = false;
-      series.tooltip.background.fill = am4core.color("#fff");
+      series.tooltip.background.fill = am4core.color('#fff');
       series.tooltip.background.strokeWidth = 2;
-      series.tooltip.background.stroke = am4core.color("#d10909");
-      series.tooltip.label.fill = am4core.color("#222");
+      series.tooltip.background.stroke = am4core.color('#d10909');
+      series.tooltip.label.fill = am4core.color('#222');
 
       const bullet = series.bullets.push(new am4charts.CircleBullet());
-      bullet.circle.stroke = am4core.color("#d10909");
-      bullet.circle.fill = am4core.color("#fff");
+      bullet.circle.stroke = am4core.color('#d10909');
+      bullet.circle.fill = am4core.color('#fff');
       bullet.circle.strokeWidth = 2;
 
       chart.cursor = new am4charts.XYCursor();
-      chart.cursor.behavior = type === "star" ? "zoomX" : "none";
-      if (type === "star") {
-        chart.cursor.events.on("zoomended", function (e) {
+      chart.cursor.behavior = type === 'star' ? 'zoomX' : 'none';
+      if (type === 'star') {
+        chart.cursor.events.on('zoomended', function (e) {
           const range = e.target.xRange;
 
           const calculate = () => {
             const axis = e.target.chart.xAxes.getIndex(0);
-            const from = axis.getPositionLabel(
-              axis.toAxisPosition(range.start)
-            );
+            const from = axis.getPositionLabel(axis.toAxisPosition(range.start));
             const to = axis.getPositionLabel(axis.toAxisPosition(range.end));
             stateFunc(id, from.slice(0, 10), to.slice(0, 10));
           };
-          range !== undefined ? calculate() : alert("Select Again");
+          range !== undefined ? calculate() : alert('Select Again');
         });
-        chart.zoomOutButton.events.on("hit", () => {
+        chart.zoomOutButton.events.on('hit', () => {
           const today = new Date();
           const end = today.toJSON().slice(0, 10);
           today.setDate(today.getDate() - 50);

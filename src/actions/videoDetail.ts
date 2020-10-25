@@ -5,5 +5,5 @@ import {getApi} from './API/dataAPI';
 export const fetchData = async (dispatch: RootDispatch, idx: string) => {
   dispatch(setLoading());
   const data = await getApi.videoDetail(idx)
-  dispatch(setData(data));
+  data?dispatch(setData(data)):console.log('video detail API error');
 };
