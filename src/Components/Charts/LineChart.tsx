@@ -46,6 +46,8 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
     return {states: {data: state.star.line}};
   } else if (ownProps.type === 'detail') {
     return {states: {data: state.videoDetail.lines}};
+  } else if (ownProps.type === 'predict') {
+    return {states: {data: state.predict.lines}};
   }
 }
 

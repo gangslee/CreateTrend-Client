@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { ILineChartData } from "../types";
 
 interface IinitialStateProps {
   thumbnail: string;
@@ -6,8 +7,8 @@ interface IinitialStateProps {
     title: string;
     subscriber: string;
     date: string;
-  }
-  result:any;
+  };
+  lines:ILineChartData[]
   isLoading: boolean;
 }
 
@@ -18,7 +19,7 @@ const initialState: IinitialStateProps = {
     subscriber: null,
     date: null,
   },
-  result:null,
+  lines:null,
   isLoading: false,
 };
 
@@ -35,10 +36,13 @@ export const predictSlice = createSlice({
       state.text.date = action.payload.date
     },
     setResult:(state, action) =>{
-      console.log(action.payload)
-      state.result = action.payload
-    }
+      state.lines = [action.payload.lines]
+      state.isLoading = false;
+    },
+    setLoading: (state) => {
+      state.isLoading = true;
+    },
   },
 });
 
-export const { setPredictData, setTextData, setResult } = predictSlice.actions;
+export const { setPredictData, setTextData, setResult, setLoading } = predictSlice.actions;
