@@ -1,16 +1,16 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
-import { connect, ConnectedProps } from 'react-redux';
+import styled, {css} from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
 
 import Loader from '../../Components/Container/Loader';
 import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
-import { RootState, RootDispatch } from '../../store/store';
-import { setRadioState } from '../../store/reducers/keyword';
+import {RootState, RootDispatch} from '../../store/store';
+import {setRadioState} from '../../store/reducers/keyword';
 import SearchBar from '../../Components/Container/SearchBar';
-import { BGSecond } from '../../Components/Container/BGContiner';
+import {BGSecond} from '../../Components/Container/BGContiner';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
 
 const Slogan = styled.div`
@@ -24,7 +24,7 @@ const SloganRed = styled.span`
   color: #dd0909;
 `;
 
-const SearchBarContainer = styled.form`
+const SearchBarContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -141,9 +141,12 @@ const GraphContainer = styled.div<ITypeProps>`
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 10px;
   padding: 5px;
-  ${({ setPadding }) =>
-    setPadding && css`padding-top:45px;`}
-  margin-bottom:${({ setPadding }) => setPadding ? '40px' : '70px'};
+  ${({setPadding}) =>
+    setPadding &&
+    css`
+      padding-top: 45px;
+    `}
+  margin-bottom:${({setPadding}) => (setPadding ? '40px' : '70px')};
   background-color: #fff;
 `;
 
@@ -154,10 +157,10 @@ interface IVideoProps {
 const BottomContainer = styled.div`
   width: 1220px;
   margin: 30px auto;
-`
+`;
 
 const VideoContainer = styled.div`
-  width:100%;
+  width: 100%;
   height: 330px;
   box-sizing: border-box;
   padding: 30px 0px;
@@ -173,7 +176,7 @@ const KeywordChartContainer = styled.div`
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   background-color: #fff;
-  margin-bottom:40px;
+  margin-bottom: 40px;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -203,7 +206,7 @@ interface IKeywordPresenter extends Props {
   clickWord: (word: string) => void;
 }
 
-function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }: IKeywordPresenter) {
+function KeywordPresenter({data, dispatches, search, searchKeyword, clickWord}: IKeywordPresenter) {
   const handleOnChange = (e: React.ChangeEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
@@ -229,7 +232,7 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
           src={require('../../Asset/images/hashtag.png')}
           srcSet={
             (require('../../Asset/images/hashtag@2x.png'),
-              require('../../Asset/images/hashtag@3x.png'))
+            require('../../Asset/images/hashtag@3x.png'))
           }
         />
         <Title>
@@ -252,7 +255,9 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
             <Subtitle>
               <TitleRed>{search}</TitleRed> 추이
             </Subtitle>
-            <NoticeTooltip text={`우측에 버튼을 통해 지난 2주 사이의 '${search}' 콘텐츠의 영상화 추이 변화와 인기도 추이 변화를 확인해보세요! `} />
+            <NoticeTooltip
+              text={`우측에 버튼을 통해 지난 2주 사이의 '${search}' 콘텐츠의 영상화 추이 변화와 인기도 추이 변화를 확인해보세요! `}
+            />
           </SubtitleContainer>
 
           <SForm>
@@ -281,7 +286,6 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
           <GraphContainer setPadding={true}>
             {data.isLoading ? <Loader /> : <LineChart type="keyword" />}
           </GraphContainer>
-
         </AnalysisSection>
 
         <AsideSection>
@@ -294,42 +298,37 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
             {data.isLoading ? (
               <Loader />
             ) : (
-                <KeywordChart index={0} type="keyword" clickWord={clickWord} />
-              )}
+              <KeywordChart index={0} type="keyword" clickWord={clickWord} />
+            )}
           </KeywordChartContainer>
           <KeywordChartContainer>
             {data.isLoading ? (
               <Loader />
             ) : (
-                <KeywordChart index={1} type="keyword" clickWord={clickWord} />
-              )}
+              <KeywordChart index={1} type="keyword" clickWord={clickWord} />
+            )}
           </KeywordChartContainer>
-
         </AsideSection>
       </Container>
 
       <BottomContainer>
         <Subtitle>
           <TitleRed>{search}</TitleRed> 조회수 급상승 영상
-          </Subtitle>
+        </Subtitle>
         <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `} />
         <VideoContainer>
           {data.isLoading ? (
             <Loader />
           ) : (
-              <VideoList mode="analysis" type="keyword" title={search} />
-            )}
+            <VideoList mode="analysis" type="keyword" title={search} />
+          )}
         </VideoContainer>
         <Subtitle>
           <TitleRed>{search}</TitleRed> 인기 영상
-          </Subtitle>
+        </Subtitle>
         <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
         <VideoContainer>
-          {data.isLoading ? (
-            <Loader />
-          ) : (
-              <VideoList mode="aside" type="keyword" title={search} />
-            )}
+          {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
         </VideoContainer>
       </BottomContainer>
     </BGSecond>

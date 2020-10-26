@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
-import Tab from "../Container/Tab";
+import React from 'react';
+import styled from 'styled-components';
+import {connect, ConnectedProps} from 'react-redux';
+import Tab from '../Container/Tab';
 
-import { RootState, RootDispatch } from "../../store/store";
-import { searchTermUpdate, searchTypeUpdate } from "../../store/reducers/home";
+import {RootState, RootDispatch} from '../../store/store';
+import {searchTermUpdate, searchTypeUpdate} from '../../store/reducers/home';
 
 const Container = styled.div`
   width: 990px;
@@ -14,7 +14,7 @@ const TabContainer = styled.div`
   z-index: 1;
   width: 260px;
   height: 55px;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 14px;
   font-stretch: normal;
   font-style: normal;
@@ -38,7 +38,7 @@ const InputContainer = styled.div`
 
 const Input = styled.input`
   width: 900px;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-stretch: normal;
   font-style: normal;
   line-height: 16px;
@@ -91,7 +91,7 @@ interface ISearchBarProps extends Props {
   searchKeyword: () => void;
 }
 
-function SearchBar({ states, updates, searchKeyword }: ISearchBarProps) {
+function SearchBar({states, updates, searchKeyword}: ISearchBarProps) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updates.searchTerm(e.target.value);
   };
@@ -111,15 +111,12 @@ function SearchBar({ states, updates, searchKeyword }: ISearchBarProps) {
           value={states.searchTerm}
           placeholder={
             states.searchType === 0
-              ? "콘텐츠 또는 주제를 입력해주세요  EX) 손흥민, 쇼미더머니"
-              : "채널명을 입력해주세요"
+              ? '콘텐츠 또는 주제를 입력해주세요  EX) 손흥민, 쇼미더머니'
+              : '채널명을 입력해주세요'
           }
         />
         <IconContainer>
-          <Icon
-            src={require("../../Asset/images/Search.svg")}
-            onClick={handleOnClickSearchIcon}
-          />
+          <Icon src={require('../../Asset/images/Search.svg')} onClick={handleOnClickSearchIcon} />
         </IconContainer>
       </InputContainer>
     </Container>
