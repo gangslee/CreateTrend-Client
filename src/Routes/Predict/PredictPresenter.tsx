@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import styled from 'styled-components';
 import {useDropzone} from 'react-dropzone';
 import {connect, ConnectedProps} from 'react-redux';
@@ -186,10 +186,10 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
 interface IPredictPresenterProps extends Props {
-  handleOnSubmit: (e: React.FormEvent) => void;
+  getData: () => void;
 }
 
-function PredictPresenter({states, dispatches, handleOnSubmit}: IPredictPresenterProps) {
+function PredictPresenter({states, dispatches, getData}: IPredictPresenterProps) {
   const {getRootProps, getInputProps} = useDropzone({
     accept: 'image/jpeg, image/png',
     onDrop: (acceptedFiles) => {
@@ -206,6 +206,17 @@ function PredictPresenter({states, dispatches, handleOnSubmit}: IPredictPresente
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatches.setTextData({...states.data.text, [e.target.name]: e.target.value});
+  };
+
+  const scrollToRef = (ref: React.MutableRefObject<HTMLDivElement>) =>
+    window.scrollTo(0, ref.current.offsetTop);
+
+  const myRef = useRef<HTMLDivElement>(null);
+
+  const handleOnSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    scrollToRef(myRef);
+    getData();
   };
 
   return (
@@ -254,23 +265,25 @@ function PredictPresenter({states, dispatches, handleOnSubmit}: IPredictPresente
               <SBT>예측하기</SBT>
             </InfoContainer>
           </InputContainer>
-          {states.data.isLoading ? (
-            <LoaderContainer>
-              <Loader />
-            </LoaderContainer>
-          ) : (
-            states.data.lines && (
-              <>
-                <Minititle>
-                  <Red>{states.data.text.date}</Red>에 업로드 되는{' '}
-                  <Red> {states.data.text.title}</Red> 영상의 예상 조회수
-                </Minititle>
-                <ChartContainer>
-                  <LineChart type="predict" />
-                </ChartContainer>
-              </>
-            )
-          )}
+          <div ref={myRef}>
+            {states.data.isLoading ? (
+              <LoaderContainer>
+                <Loader />
+              </LoaderContainer>
+            ) : (
+              states.data.lines && (
+                <>
+                  <Minititle>
+                    <Red>{states.data.text.date}</Red>에 업로드 되는{' '}
+                    <Red> {states.data.text.title}</Red> 영상의 예상 조회수
+                  </Minititle>
+                  <ChartContainer>
+                    <LineChart type="predict" />
+                  </ChartContainer>
+                </>
+              )
+            )}
+          </div>
         </UploadSection>
       </Container>
     </BGSecond>

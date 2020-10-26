@@ -1,16 +1,14 @@
 import React from 'react';
-import { fetchData } from '../../actions/predict';
+import {fetchData} from '../../actions/predict';
 import store from '../../store/store';
 import PredictPresenter from './PredictPresenter';
 
-function PredictContainer(){
-    const handleOnSubmit = (e: React.FormEvent) => {
-        console.log('asdsadasd')
-        e.preventDefault()
-        fetchData(store.getState(), store.dispatch)
-    }
+function PredictContainer() {
+  const getData = () => {
+    fetchData(store.getState(), store.dispatch);
+  };
 
-    return <PredictPresenter handleOnSubmit={handleOnSubmit}/>
+  return <PredictPresenter getData={getData} />;
 }
 
 export default PredictContainer;
