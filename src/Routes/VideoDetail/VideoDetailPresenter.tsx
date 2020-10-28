@@ -90,7 +90,7 @@ const Desc = styled.span`
   -webkit-box-orient: vertical;
 `;
 
-const Keyword = styled.span`
+const Keyword = styled.a`
   display: inline-block;
   font-family: 'S-CoreDream-4Regular';
   font-size: 12px;
@@ -99,6 +99,9 @@ const Keyword = styled.span`
   background-color: #dee0eb;
   :not(:last-child) {
     margin-right: 12px;
+  }
+  :hover {
+    color: #d10909;
   }
 `;
 
@@ -225,7 +228,9 @@ function VideoDetailPresenter({states}: Props) {
                 <Desc>{states.data.channel.channel_description}</Desc>
                 <VideoInfoRow>
                   {states.data.video.video.videokeywordnew.slice(0, 5).map((word, index) => (
-                    <Keyword key={index}>{word.keyword}</Keyword>
+                    <Keyword key={index} href={`/keyword/${word.keyword}`} target="_blank">
+                      {word.keyword}
+                    </Keyword>
                   ))}
                 </VideoInfoRow>
                 <LikeDisLike>
@@ -234,7 +239,10 @@ function VideoDetailPresenter({states}: Props) {
                     <InfoPercent>
                       {states.data.video.video.videolikes.length === 0
                         ? '비공개'
-                        : `${states.data.video.video.videolikes[0].likes.toFixed(0)}`}
+                        : `${states.data.video.video.videolikes[0].likes.toFixed(0)}`.replace(
+                            REGEX,
+                            ','
+                          )}
                     </InfoPercent>
                   </LikeContainer>
                   <LikeContainer>
@@ -278,9 +286,10 @@ function VideoDetailPresenter({states}: Props) {
                   <InfoTitle>전체 평균 인기도 대비 영상 인기도</InfoTitle>
                   <InfoPercent>
                     {states.data.video.video_popularity
-                      ? `${(
-                          states.data.video.video_popularity / states.data.video.avg_popularity
-                        ).toFixed(0)}% `
+                      ? `${(states.data.video.video_popularity / states.data.video.avg_popularity)
+                          .toFixed(0)
+                          .toString()
+                          .replace(REGEX, ',')}% `
                       : '비공개'}
                   </InfoPercent>
                   {states.data.video.video_popularity / states.data.video.avg_popularity > 0 && (

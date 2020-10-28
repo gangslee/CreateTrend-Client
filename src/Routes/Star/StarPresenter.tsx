@@ -16,7 +16,6 @@ const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
 
-
 const Container = styled.div`
   width: 1220px;
   margin: 50px auto;
@@ -58,9 +57,16 @@ const ResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  min-height: 750px;
 `;
 
 const AnalysisSection = styled.div`
+  width: 790px;
+  display: inline-block;
+  height: 100%;
+`;
+
+const BottomAnalysisSection = styled.div`
   width: 790px;
   display: inline-block;
 `;
@@ -72,7 +78,7 @@ const AsideSection = styled.div`
 
 const ChannelContainer = styled.div`
   padding: 30px 20px;
-  min-height: 750px;
+  height: 100%;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
@@ -167,7 +173,7 @@ const WordMapContainer = styled.div`
 const WordMapHeightContainer = styled.div`
   height: 290px;
   background-color: #fff;
-  margin-top:-30px;
+  margin-top: -30px;
 `;
 
 const TitleContainer = styled.div`
@@ -229,7 +235,7 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div<IVideoProps>`
-  height: ${({mode}) => (mode === 'analysis' ? '260px' : '750px')};
+  height: ${({mode}) => (mode === 'analysis' ? '260px' : '100%')};
   background-color: #fff;
   box-sizing: border-box;
   border-radius: 10px;
@@ -239,6 +245,7 @@ const VideoContainer = styled.div<IVideoProps>`
     mode === 'aside' &&
     css`
       width: 380px;
+      height: 100%;
     `};
 `;
 
@@ -268,15 +275,14 @@ interface IStarPresenterProps extends Props {
   searchKeyword: () => void;
 }
 
-function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarPresenterProps) {
-  const channelName =
-    states.star.channelInfo && states.star.channelInfo.channel_name;
+function StarPresenter({states, id, period, periodLine, searchKeyword}: IStarPresenterProps) {
+  const channelName = states.star.channelInfo && states.star.channelInfo.channel_name;
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
   };
-  
+
   return (
     <BGSecond>
       {states.star.isLoading || states.period.isLoading ? (
@@ -285,10 +291,12 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
         </LoaderContainer>
       ) : (
         <Container>
-          <Slogan>"<SloganRed>{channelName}</SloganRed> 채널을 알아보아요"</Slogan>
+          <Slogan>
+            "<SloganRed>{channelName}</SloganRed> 채널을 알아보아요"
+          </Slogan>
 
           <SForm onSubmit={handleOnSubmit}>
-            <SearchBar searchKeyword={searchKeyword}/>
+            <SearchBar searchKeyword={searchKeyword} />
           </SForm>
 
           <ChannelName>{channelName}</ChannelName>
@@ -331,16 +339,20 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
                 <ChannelInfoContainer>
                   <PieContainer>
                     <Subtitle>콘텐츠 분포도</Subtitle>
-                    <NoticeTooltip text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠 분포를 확인해보세요! `} />
+                    <NoticeTooltip
+                      text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠 분포를 확인해보세요! `}
+                    />
                     <PieChartContainer>
-                      <PieChart  type="star" />
+                      <PieChart type="star" />
                     </PieChartContainer>
                   </PieContainer>
                   <WordMapContainer>
                     <Subtitle>채널 워드맵</Subtitle>
-                    <NoticeTooltip text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠들을 확인해보세요! `} />
+                    <NoticeTooltip
+                      text={`'${channelName}' 채널의 최근 영상들의 주 콘텐츠들을 확인해보세요! `}
+                    />
                     <WordMapHeightContainer>
-                      <Wordmap type='star'></Wordmap>
+                      <Wordmap type="star"></Wordmap>
                     </WordMapHeightContainer>
                   </WordMapContainer>
                 </ChannelInfoContainer>
@@ -358,7 +370,9 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
             <Title>
               <TitleRed>{channelName}</TitleRed> 구독자수 추이
             </Title>
-            <NoticeTooltip text={`최근 8주간 '${channelName}' 채널의 구독자수 추이 변화를 확인해보세요!\n 차트를 드래그하면 기간을 설정도 가능해요!`} />
+            <NoticeTooltip
+              text={`최근 8주간 '${channelName}' 채널의 구독자수 추이 변화를 확인해보세요!\n 차트를 드래그하면 기간을 설정도 가능해요!`}
+            />
           </TitleContainer>
 
           <GraphContainer>
@@ -371,22 +385,26 @@ function StarPresenter({ states, id, period, periodLine, searchKeyword }: IStarP
           </GraphContainer>
 
           <BottomSection>
-            <AnalysisSection>
+            <BottomAnalysisSection>
               <Subtitle>
                 기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
               </Subtitle>
-              <NoticeTooltip text={`설정하신 기간 동안의 '${channelName}' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`} />
+              <NoticeTooltip
+                text={`설정하신 기간 동안의 '${channelName}' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`}
+              />
               <VideoContainer mode="analysis">
                 <VideoList mode="analysis" type="star" title={period} />
               </VideoContainer>
-            </AnalysisSection>
+            </BottomAnalysisSection>
             <AsideSection>
               <Subtitle>
                 기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
               </Subtitle>
-              <NoticeTooltip text={`설정하신 기간 동안의 '${channelName}' 채널 영상들의 주 콘텐츠들을 확인해보세요!`} />
+              <NoticeTooltip
+                text={`설정하신 기간 동안의 '${channelName}' 채널 영상들의 주 콘텐츠들을 확인해보세요!`}
+              />
               <PieSection>
-                <PieChart  type="period" />
+                <PieChart type="period" />
               </PieSection>
             </AsideSection>
           </BottomSection>

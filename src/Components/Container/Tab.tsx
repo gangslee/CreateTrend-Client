@@ -8,18 +8,16 @@ type styleType = {
   type: string;
 };
 
-const Container = styled.div`
+const Container = styled.div<styleType>`
   width: 100%;
   height: 100%;
-  ${({type}: styleType) =>
-    type === 'chart'
-      ? css`
-          border-bottom: 1px solid #dbe0f5;
-        `
-      : css`
-          display: flex;
-          justify-content: space-between;
-        `};
+  display: flex;
+  justify-content: space-between;
+  ${({type}) =>
+    type === 'chart' &&
+    css`
+      border-bottom: 1px solid #dbe0f5;
+    `};
 `;
 
 interface ITabContainerProps {
@@ -28,16 +26,16 @@ interface ITabContainerProps {
   type: string;
 }
 
-const TabContainer = styled.div`
+const TabContainer = styled.div<ITabContainerProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
   width: 49%;
   height: 100%;
-  background-color: ${({current}: ITabContainerProps) => (current ? '#dd0909' : '#fff')};
+  background-color: ${({current}) => (current ? '#dd0909' : '#fff')};
   cursor: pointer;
-  color: ${({current}: ITabContainerProps) => (current ? '#fff' : '#999')};
-  ${({type}: ITabContainerProps) =>
+  color: ${({current}) => (current ? '#fff' : '#999')};
+  ${({type}) =>
     type === 'search' &&
     css`
       border-top-left-radius: 10px;

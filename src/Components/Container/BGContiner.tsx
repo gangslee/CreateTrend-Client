@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import bg1 from '../../Asset/images/bg1.svg'
+import bg1 from '../../Asset/images/bg1.svg';
 import bg2 from '../../Asset/images/bg2.svg';
 
 const BgContainerSecond = styled.div`
-  min-width:1440px;
+  min-width: 1440px;
   background-image: url(${bg2});
   padding-left: 80px;
   margin-left: -80px;
@@ -17,11 +17,11 @@ const BgContainerSecond = styled.div`
   letter-spacing: normal;
   color: #222;
   min-height: 110vh;
-  box-sizing:border-box;
+  box-sizing: border-box;
 `;
 
 const BgContainerFirst = styled.div`
-  min-width:1440px;
+  min-width: 1440px;
   background-image: url(${bg1});
   padding-left: 100px;
   margin-left: -100px;
@@ -40,7 +40,7 @@ interface Props {
 }
 
 export function BGFirst({children}: Props) {
-  return <BgContainerFirst >{children}</BgContainerFirst>;
+  return <BgContainerFirst>{children}</BgContainerFirst>;
 }
 
 export function BGSecond({children}: Props) {

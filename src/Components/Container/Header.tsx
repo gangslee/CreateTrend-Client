@@ -14,12 +14,15 @@ const Container = styled.div`
   top: 0;
   left: 0;
   width: 100%;
+  min-width: 1220px;
   height: 73px;
   background-color: #fff;
   z-index: 1;
+  border-bottom: 3px solid #d10909;
 `;
 
 const HeaderContainer = styled.div`
+  width: 100%;
   max-width: 1200px;
   height: 73px;
   display: flex;
@@ -44,16 +47,16 @@ const Logo = styled.img`
   margin-right: 30px;
 `;
 
-// const LeftItem = styled.span`
-//   font-size: 16px;
-//   font-family: 'S-CoreDream-6Bold';
-//   line-height: 1.44;
-//   color: #222;
-//   cursor: pointer;
-//   :last-child {
-//     margin-left: 50px;
-//   }
-// `;
+const LeftItem = styled.span`
+  font-size: 16px;
+  font-family: 'S-CoreDream-6Bold';
+  line-height: 1.44;
+  color: #222;
+  cursor: pointer;
+  /* :last-child {
+    margin-left: 50px;
+  } */
+`;
 
 const RightItem = styled.span`
   font-size: 14px;
@@ -71,9 +74,9 @@ interface ISLinkProps {
   location: string;
 }
 
-// const SLink = styled(Link)`
-//   color: ${({location}: ISLinkProps) => (location === '/search' ? '#d10909' : '#222')};
-// `;
+const SLink = styled(Link)`
+  color: ${({location}: ISLinkProps) => (location === '/predict' ? '#d10909' : '#222')};
+`;
 
 const UserIcon = styled.img`
   width: 40px;
@@ -264,12 +267,12 @@ function Header({states, dispatches, history}: Props) {
             <Logo src={require('../../Asset/images/logo.svg')} />
           </Link>
 
-          {/* <LeftItem>이용권 구매</LeftItem>
+          {/* <LeftItem>이용권 구매</LeftItem> */}
           <LeftItem>
-            <SLink to="/search" location={history.location.pathname}>
-              검색
+            <SLink to="/predict" location={history.location.pathname}>
+              조회수 예측
             </SLink>
-          </LeftItem> */}
+          </LeftItem>
         </HalfContainer>
 
         <HalfContainer>
@@ -328,7 +331,7 @@ function Header({states, dispatches, history}: Props) {
           )}
         </HalfContainer>
       </HeaderContainer>
-      <Divider />
+      {/* <Divider /> */}
     </Container>
   );
 }

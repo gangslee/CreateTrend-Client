@@ -14,7 +14,7 @@ import {RootDispatch, RootState} from '../../store/store';
 import {BGSecond} from '../../Components/Container/BGContiner';
 import SearchBar from '../../Components/Container/SearchBar';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
-import { chartStateUpdate, keywordStateUpdate } from '../../store/reducers/statistics';
+import {chartStateUpdate, keywordStateUpdate} from '../../store/reducers/statistics';
 
 const MainTitleContainer = styled.div`
   display: flex;
@@ -61,7 +61,6 @@ const SForm = styled.form`
 const Container = styled.div`
   width: 1200px;
   margin: 50px auto;
-  padding-bottom:50px;
 `;
 
 const KeywordContainer = styled.div`
@@ -84,7 +83,9 @@ const TabContainer = styled.div`
   margin-bottom: 20px;
 `;
 
-const KeywordChartContainer = styled.div``;
+const KeywordChartContainer = styled.div`
+  height: 608px;
+`;
 
 const ResultContainer = styled.div`
   width: 840px;
@@ -179,25 +180,29 @@ const LineChartContainer = styled.div`
   padding: 5px;
 `;
 
+const VideoContainer = styled.div`
+  height: 300px;
+`;
+
 function mapStateToProps(state: RootState) {
   return {
-    states:{
+    states: {
       data: state.statistics,
-    }
+    },
   };
 }
 
-function mapDispatchToProps(dispatch:RootDispatch){
-  return{
-    dispatches:{
+function mapDispatchToProps(dispatch: RootDispatch) {
+  return {
+    dispatches: {
       chart: () => {
         dispatch(chartStateUpdate());
       },
       keyword: (n: number) => {
         dispatch(keywordStateUpdate(n));
       },
-    }
-  }
+    },
+  };
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
@@ -210,13 +215,14 @@ interface IStatisticsPresenterProps extends Props {
   searchKeyword: () => void;
 }
 
-function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPresenterProps) {
+function StatisticsPresenter({states, dispatches, searchKeyword}: IStatisticsPresenterProps) {
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
   };
   const title =
-    states.data.keywordChart && states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].name;
+    states.data.keywordChart &&
+    states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].name;
   return (
     <BGSecond>
       <MainTitleContainer>
@@ -237,9 +243,9 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
               <Tab type="chart" stateFunc={dispatches.chart} />
             </TabContainer>
             <KeywordChartContainer>
-              {states.data.isLoadingChart ?  (
+              {states.data.isLoadingChart ? (
                 <Loader />
-              ):(
+              ) : (
                 <KeywordChart stateFunc={dispatches.keyword} type="statistics" />
               )}
             </KeywordChartContainer>
@@ -247,21 +253,27 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           <ResultContainer>
             {states.data.isLoadingData ? (
               <Loader />
-            ):(
+            ) : (
               <>
                 <Subtitle>
                   <TitleRed>{title}</TitleRed> 인기도 & 워드맵
                 </Subtitle>
-                <NoticeTooltip text={`한 달간 '${title}' 콘텐츠의 평균 인기도와 연관 콘텐츠들을 확인해보세요! `} />
+                <NoticeTooltip
+                  text={`한 달간 '${title}' 콘텐츠의 평균 인기도와 연관 콘텐츠들을 확인해보세요! `}
+                />
                 <SubResultContainer>
                   <CircleContainer>
                     <PopularText>평균 인기도</PopularText>
                     <SCircle
                       value={
-                        states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].popular
+                        states.data.keywordChart[states.data.currentChart].keyword[
+                          states.data.currentKeyword
+                        ].popular
                       }
                       text={`${
-                        states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].popular
+                        states.data.keywordChart[states.data.currentChart].keyword[
+                          states.data.currentKeyword
+                        ].popular
                       }%`}
                       styles={buildStyles({
                         pathColor: '#d10909',
@@ -276,7 +288,9 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
                 <Subtitle>
                   <TitleRed>{title}</TitleRed> 인기도 추이
                 </Subtitle>
-                <NoticeTooltip text={`한 달간 '${title}' 콘텐츠의 인기도 변화 추이를 확인해보세요! `} />
+                <NoticeTooltip
+                  text={`한 달간 '${title}' 콘텐츠의 인기도 변화 추이를 확인해보세요! `}
+                />
                 <SubResultContainer>
                   <LineChartContainer>
                     <LineChart type="statistics" />
@@ -299,11 +313,13 @@ function StatisticsPresenter({states,dispatches, searchKeyword}: IStatisticsPres
           </Title>
           <NoticeTooltip text={`'${title}'을 콘텐츠로한 조회수 급상승 영상들을 확인해보세요! `} />
         </TitleContainer>
-          {states.data.isLoadingData ?  (
+        <VideoContainer>
+          {states.data.isLoadingData ? (
             <Loader />
-          ):(
+          ) : (
             <VideoList mode="analysis" type="statistics" title={title} />
           )}
+        </VideoContainer>
       </Container>
     </BGSecond>
   );
