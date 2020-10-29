@@ -1,20 +1,21 @@
-import React from 'react';
-import {connect, ConnectedProps} from 'react-redux';
-import styled from 'styled-components';
+import React from "react";
+import { connect, ConnectedProps } from "react-redux";
+import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
-import {RootState} from '../../store/store';
-import {BGSecond} from '../../Components/Container/BGContiner';
-import SearchBar from '../../Components/Container/SearchBar';
-import Pagination from '../../Components/Container/Pagination';
-import Loader from '../../Components/Container/Loader';
-import {Link} from 'react-router-dom';
+import { RootState } from "../../store/store";
+import { BGSecond } from "../../Components/Container/BGContiner";
+import SearchBar from "../../Components/Container/SearchBar";
+import Pagination from "../../Components/Container/Pagination";
+import Loader from "../../Components/Container/Loader";
+import { Link } from "react-router-dom";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
 
 const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-size: 30px;
   text-align: center;
   margin: 70px 0px;
@@ -136,7 +137,7 @@ const Icon = styled.img`
 
 const IconInfo = styled.span`
   display: inline-block;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 14px;
   :not(:last-child) {
     margin-right: 14px;
@@ -162,7 +163,7 @@ const DetailInfoContainer = styled.div`
 `;
 
 const DetailInfoTitle = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 13px;
   line-height: 2.69;
   color: #999;
@@ -219,9 +220,15 @@ interface ISearchYoutuberProps extends Props {
   searchKeyword: () => void;
 }
 
-function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchYoutuberProps) {
+function SearchYoutuberPresenter({
+  states,
+  youtuberName,
+  searchKeyword,
+}: ISearchYoutuberProps) {
   const start = states.data && 0 + 4 * (states.page - 1);
-  const end = states.data && (states.data.length - 1 >= start + 3 ? start + 4 : states.data.length);
+  const end =
+    states.data &&
+    (states.data.length - 1 >= start + 3 ? start + 4 : states.data.length);
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -229,133 +236,165 @@ function SearchYoutuberPresenter({states, youtuberName, searchKeyword}: ISearchY
   };
 
   return (
-    <BGSecond>
-      <Slogan>
-        "궁금한 <SloganRed>스타채널</SloganRed>을 검색해 보세요"
-      </Slogan>
-      <SearchBarContainer onSubmit={handleOnSubmit}>
-        <SearchBar searchKeyword={searchKeyword} />
-      </SearchBarContainer>
-      <Container>
-        <TitleContainer>
-          <TitleIcon
-            src={require('../../Asset/images/hashtag.png')}
-            srcSet={
-              (require('../../Asset/images/hashtag@2x.png'),
-              require('../../Asset/images/hashtag@3x.png'))
-            }
-          />
-          <Title>
-            <TitleRed>{youtuberName}</TitleRed> 채널 검색 결과
-          </Title>
-        </TitleContainer>
-        {states.loading ? (
-          <LoaderContainer>
-            <Loader />
-          </LoaderContainer>
-        ) : (
-          <>
-            <SubtitleContainer>
-              <Subtitle>검색결과</Subtitle>
-              <Count>{states.data.length}</Count>
-            </SubtitleContainer>
-            {states.data.slice(start, end).map((data) => (
-              <SLink to={`/star/${data.idx}`} key={data.idx}>
-                <ResultContainer>
-                  <Avatar src={data.thumbnail_url} />
-                  <ChannelInfoContainer>
-                    <Subtitle>
-                      <EllipsTitle>{data.channel_name}</EllipsTitle>
-                    </Subtitle>
-                    <ChannelInfoLineContainer>
-                      <Icon
-                        src={require('../../Asset/images/view_icon.png')}
-                        srcSet={
-                          (require('../../Asset/images/view_icon@2x.png'),
-                          require('../../Asset/images/view_icon@3x.png'))
-                        }
-                      />
-                      <IconInfo>
-                        {data.subscriber_num === 0
-                          ? '비공개'
-                          : data.subscriber_num >= HUNDREAD_MILLIONS
-                          ? `${(data.subscriber_num / HUNDREAD_MILLIONS).toFixed(1)}억명`
-                          : data.subscriber_num >= TEN_THOUSANDS
-                          ? `${(data.subscriber_num / TEN_THOUSANDS).toFixed(1)}만명`
-                          : `${data.subscriber_num.toString().replace(REGEX, ',')}명`}
-                      </IconInfo>
-
-                      <Icon src={require('../../Asset/images/hits_icon.svg')} />
-
-                      <IconInfo>
-                        {data.max_views_count >= HUNDREAD_MILLIONS
-                          ? `${(data.max_views_count / HUNDREAD_MILLIONS).toFixed(0)}억`
-                          : data.max_views_count >= TEN_THOUSANDS
-                          ? `${(data.max_views_count / TEN_THOUSANDS).toFixed(0)}만`
-                          : `${data.max_views_count.toString().replace(REGEX, ',')}`}
-                      </IconInfo>
-
-                      <Icon src={require('../../Asset/images/video_icon.svg')} />
-                      <IconInfo>
-                        {data.video_counts >= HUNDREAD_MILLIONS
-                          ? `${(data.video_counts / HUNDREAD_MILLIONS).toFixed(0)}억개`
-                          : data.video_counts >= TEN_THOUSANDS
-                          ? `${(data.video_counts / TEN_THOUSANDS).toFixed(0)}만개`
-                          : `${data.video_counts.toString().replace(REGEX, ',')}개`}
-                      </IconInfo>
-                    </ChannelInfoLineContainer>
-                  </ChannelInfoContainer>
-                  <ChannelDetailContainer>
-                    <ChannelDetailLineContainer>
-                      <DetailInfoContainer>
-                        <DetailInfoTitle>조회수/구독자수</DetailInfoTitle>
-                        <DetailInfoItem>
+    <>
+      <Helmet
+        title={`Create Trend ㅣ 유튜버 검색 : ${youtuberName}`}
+        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
+      />
+      <BGSecond>
+        <Slogan>
+          "궁금한 <SloganRed>스타채널</SloganRed>을 검색해 보세요"
+        </Slogan>
+        <SearchBarContainer onSubmit={handleOnSubmit}>
+          <SearchBar searchKeyword={searchKeyword} />
+        </SearchBarContainer>
+        <Container>
+          <TitleContainer>
+            <TitleIcon
+              src={require("../../Asset/images/hashtag.png")}
+              srcSet={
+                (require("../../Asset/images/hashtag@2x.png"),
+                require("../../Asset/images/hashtag@3x.png"))
+              }
+            />
+            <Title>
+              <TitleRed>{youtuberName}</TitleRed> 채널 검색 결과
+            </Title>
+          </TitleContainer>
+          {states.loading ? (
+            <LoaderContainer>
+              <Loader />
+            </LoaderContainer>
+          ) : (
+            <>
+              <SubtitleContainer>
+                <Subtitle>검색결과</Subtitle>
+                <Count>{states.data.length}</Count>
+              </SubtitleContainer>
+              {states.data.slice(start, end).map((data) => (
+                <SLink to={`/star/${data.idx}`} key={data.idx}>
+                  <ResultContainer>
+                    <Avatar src={data.thumbnail_url} />
+                    <ChannelInfoContainer>
+                      <Subtitle>
+                        <EllipsTitle>{data.channel_name}</EllipsTitle>
+                      </Subtitle>
+                      <ChannelInfoLineContainer>
+                        <Icon
+                          src={require("../../Asset/images/view_icon.png")}
+                          srcSet={
+                            (require("../../Asset/images/view_icon@2x.png"),
+                            require("../../Asset/images/view_icon@3x.png"))
+                          }
+                        />
+                        <IconInfo>
                           {data.subscriber_num === 0
-                            ? '구독자수 비공개'
-                            : `${(
-                                data.max_views_count /
-                                data.video_counts /
-                                data.subscriber_num
-                              ).toFixed(2)}%`}
-                        </DetailInfoItem>
-                      </DetailInfoContainer>
-                      <DetailInfoContainer>
-                        <DetailInfoTitle>평균조회수</DetailInfoTitle>
-                        <DetailInfoItem>
-                          {data.max_views_count / data.video_counts >= HUNDREAD_MILLIONS
+                            ? "비공개"
+                            : data.subscriber_num >= HUNDREAD_MILLIONS
                             ? `${(
-                                data.max_views_count /
-                                data.video_counts /
-                                HUNDREAD_MILLIONS
-                              ).toFixed(1)}억`
-                            : data.max_views_count / data.video_counts >= TEN_THOUSANDS
-                            ? `${(data.max_views_count / data.video_counts / TEN_THOUSANDS).toFixed(
+                                data.subscriber_num / HUNDREAD_MILLIONS
+                              ).toFixed(1)}억명`
+                            : data.subscriber_num >= TEN_THOUSANDS
+                            ? `${(data.subscriber_num / TEN_THOUSANDS).toFixed(
                                 1
-                              )}만`
-                            : `${(data.max_views_count / data.video_counts)
-                                .toFixed(0)
+                              )}만명`
+                            : `${data.subscriber_num
                                 .toString()
-                                .replace(REGEX, ',')}`}
-                        </DetailInfoItem>
-                      </DetailInfoContainer>
-                    </ChannelDetailLineContainer>
-                  </ChannelDetailContainer>
-                  <ThumbnailContainer>
-                    <ImageContainer>
-                      <Thumbnail src={data.recent_videos[0]} />
-                    </ImageContainer>
-                    <ImageContainer>
-                      <Thumbnail src={data.recent_videos[1]} />
-                    </ImageContainer>
-                  </ThumbnailContainer>
-                </ResultContainer>
-              </SLink>
-            ))}
-            <Pagination />
-          </>
-        )}
-      </Container>
-    </BGSecond>
+                                .replace(REGEX, ",")}명`}
+                        </IconInfo>
+
+                        <Icon
+                          src={require("../../Asset/images/hits_icon.svg")}
+                        />
+
+                        <IconInfo>
+                          {data.max_views_count >= HUNDREAD_MILLIONS
+                            ? `${(
+                                data.max_views_count / HUNDREAD_MILLIONS
+                              ).toFixed(0)}억`
+                            : data.max_views_count >= TEN_THOUSANDS
+                            ? `${(data.max_views_count / TEN_THOUSANDS).toFixed(
+                                0
+                              )}만`
+                            : `${data.max_views_count
+                                .toString()
+                                .replace(REGEX, ",")}`}
+                        </IconInfo>
+
+                        <Icon
+                          src={require("../../Asset/images/video_icon.svg")}
+                        />
+                        <IconInfo>
+                          {data.video_counts >= HUNDREAD_MILLIONS
+                            ? `${(
+                                data.video_counts / HUNDREAD_MILLIONS
+                              ).toFixed(0)}억개`
+                            : data.video_counts >= TEN_THOUSANDS
+                            ? `${(data.video_counts / TEN_THOUSANDS).toFixed(
+                                0
+                              )}만개`
+                            : `${data.video_counts
+                                .toString()
+                                .replace(REGEX, ",")}개`}
+                        </IconInfo>
+                      </ChannelInfoLineContainer>
+                    </ChannelInfoContainer>
+                    <ChannelDetailContainer>
+                      <ChannelDetailLineContainer>
+                        <DetailInfoContainer>
+                          <DetailInfoTitle>조회수/구독자수</DetailInfoTitle>
+                          <DetailInfoItem>
+                            {data.subscriber_num === 0
+                              ? "구독자수 비공개"
+                              : `${(
+                                  data.max_views_count /
+                                  data.video_counts /
+                                  data.subscriber_num
+                                ).toFixed(2)}%`}
+                          </DetailInfoItem>
+                        </DetailInfoContainer>
+                        <DetailInfoContainer>
+                          <DetailInfoTitle>평균조회수</DetailInfoTitle>
+                          <DetailInfoItem>
+                            {data.max_views_count / data.video_counts >=
+                            HUNDREAD_MILLIONS
+                              ? `${(
+                                  data.max_views_count /
+                                  data.video_counts /
+                                  HUNDREAD_MILLIONS
+                                ).toFixed(1)}억`
+                              : data.max_views_count / data.video_counts >=
+                                TEN_THOUSANDS
+                              ? `${(
+                                  data.max_views_count /
+                                  data.video_counts /
+                                  TEN_THOUSANDS
+                                ).toFixed(1)}만`
+                              : `${(data.max_views_count / data.video_counts)
+                                  .toFixed(0)
+                                  .toString()
+                                  .replace(REGEX, ",")}`}
+                          </DetailInfoItem>
+                        </DetailInfoContainer>
+                      </ChannelDetailLineContainer>
+                    </ChannelDetailContainer>
+                    <ThumbnailContainer>
+                      <ImageContainer>
+                        <Thumbnail src={data.recent_videos[0]} />
+                      </ImageContainer>
+                      <ImageContainer>
+                        <Thumbnail src={data.recent_videos[1]} />
+                      </ImageContainer>
+                    </ThumbnailContainer>
+                  </ResultContainer>
+                </SLink>
+              ))}
+              <Pagination />
+            </>
+          )}
+        </Container>
+      </BGSecond>
+    </>
   );
 }
 

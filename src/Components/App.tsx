@@ -17,12 +17,12 @@ function App() {
     ReactPixel.init('2474669376160852', null, options);
     ReactPixel.track('PageView', null);
 
-    if (window.screen.width < 1220) {
-      const body = document.getElementsByTagName('body')[0];
-      body.style.transform = `scale(${window.screen.width / 1220})`;
-      body.style.transformOrigin = `top left`;
-      body.style.marginTop = '80px';
-    }
+    // if (window.screen.width < 1220) {
+    //   const body = document.getElementsByTagName('body')[0];
+    //   body.style.transform = `scale(${window.screen.width / 1220})`;
+    //   body.style.transformOrigin = `top left`;
+    //   body.style.marginTop = '80px';
+    // }
   });
   return (
     <>

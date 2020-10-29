@@ -84,11 +84,6 @@ const UserIcon = styled.img`
   cursor: pointer;
 `;
 
-const Divider = styled.div`
-  height: 3px;
-  background-color: #d10909;
-`;
-
 const UserMenuContainer = styled.div`
   width: 390px;
   height: 310px;
