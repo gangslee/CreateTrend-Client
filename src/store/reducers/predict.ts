@@ -8,7 +8,9 @@ interface IinitialStateProps {
     subscriber: string;
     date: string;
   };
-  lines:ILineChartData[]
+  lines:ILineChartData[];
+  title:string;
+  date:string;
   isLoading: boolean;
 }
 
@@ -20,6 +22,8 @@ const initialState: IinitialStateProps = {
     date: null,
   },
   lines:null,
+  title:null,
+  date:null,
   isLoading: false,
 };
 
@@ -37,6 +41,8 @@ export const predictSlice = createSlice({
     },
     setResult:(state, action) =>{
       state.lines = [action.payload.lines]
+      state.title = state.text.title
+      state.date = state.text.date
       state.isLoading = false;
     },
     setLoading: (state) => {

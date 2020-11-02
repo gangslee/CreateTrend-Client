@@ -212,8 +212,9 @@ function PredictPresenter({ states, dispatches, getData }: IPredictPresenterProp
     });
   };
 
-  const scrollToRef = (ref: React.MutableRefObject<HTMLDivElement>) =>
-    window.scrollTo(0, ref.current.offsetTop);
+  const scrollToRef = (ref: React.MutableRefObject<HTMLDivElement>) => {
+    window.scrollTo(0, ref.current.offsetTop + 600);
+  };
 
   const myRef = useRef<HTMLDivElement>(null);
 
@@ -283,8 +284,8 @@ function PredictPresenter({ states, dispatches, getData }: IPredictPresenterProp
                 states.data.lines && (
                   <>
                     <Minititle>
-                      <Red>{states.data.text.date}</Red>에 업로드 되는{' '}
-                      <Red> {states.data.text.title}</Red> 영상의 예상 조회수
+                      <Red>{states.data.date}</Red>에 업로드 되는 <Red> {states.data.title}</Red>{' '}
+                      영상의 예상 조회수
                     </Minititle>
                     <ChartContainer>
                       <LineChart type="predict" />
