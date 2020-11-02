@@ -1,10 +1,10 @@
-import React, { useLayoutEffect } from 'react';
-import ReactPixel from 'react-facebook-pixel';
+import React, { useLayoutEffect } from "react";
+import ReactPixel from "react-facebook-pixel";
 
-import Router from './Router';
-import GlobalStyles from './GlobalStyles';
-import store from '../store/store';
-import { loadUser } from '../actions/auth';
+import Router from "./Router";
+import GlobalStyles from "./GlobalStyles";
+import store from "../store/store";
+import { loadUser } from "../actions/auth";
 
 const options = {
   autoConfig: true, // set pixel's autoConfig
@@ -14,8 +14,8 @@ const options = {
 function App() {
   useLayoutEffect(() => {
     loadUser(store.getState(), store.dispatch);
-    ReactPixel.init('2474669376160852', null, options);
-    ReactPixel.track('PageView', null);
+    ReactPixel.init("842225599925369", null, options);
+    ReactPixel.track("PageView", null);
   });
   return (
     <>
