@@ -10,6 +10,15 @@ interface IinitialStateProps {
     keyword: string;
   };
   keywordList: string[];
+  keywordResult: {
+    current: number;
+    data: {
+      idx: number;
+      channel_thumbnail_url: string;
+      video_thumbnail_url: string;
+      video_name: string;
+    }[];
+  };
   lines: ILineChartData[];
   title: string;
   date: string;
@@ -25,6 +34,10 @@ const initialState: IinitialStateProps = {
     keyword: null,
   },
   keywordList: [],
+  keywordResult: {
+    current: null,
+    data: [],
+  },
   lines: null,
   title: null,
   date: null,
@@ -52,12 +65,17 @@ export const predictSlice = createSlice({
         state.keywordList.push(state.text.keyword);
         state.text.keyword = null;
       }
-      console.log(state.keywordList.length);
     },
     filterKeyword: (state, action) => {
       state.keywordList = state.keywordList.filter(
         (word) => word !== action.payload
       );
+    },
+    setKeywordResult: (state, action) => {
+      state.keywordResult.data = action.payload;
+    },
+    setKeywordResultCurrent: (state, action) => {
+      state.keywordResult.current = action.payload;
     },
     setLoading: (state) => {
       state.isLoading = true;
@@ -71,5 +89,7 @@ export const {
   setResult,
   pushKeyword,
   filterKeyword,
+  setKeywordResult,
+  setKeywordResultCurrent,
   setLoading,
 } = predictSlice.actions;

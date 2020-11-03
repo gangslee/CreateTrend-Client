@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig}from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
   headers: {
@@ -21,8 +21,8 @@ const makeRequestPost = (path: string, body?: string) =>
     `http://ec2-13-124-107-195.ap-northeast-2.compute.amazonaws.com/api/${path}`,
     body,
     config
-);
-  
+  );
+
 const getData = async (path: string, params = {}) => {
   try {
     const { data } = await makeRequestGet(path, params);
@@ -32,7 +32,7 @@ const getData = async (path: string, params = {}) => {
   }
 };
 
-const postData = async (path: string, body:string) => {
+const postData = async (path: string, body: string) => {
   try {
     const { data } = await makeRequestPost(path, body);
     return data;
@@ -42,7 +42,7 @@ const postData = async (path: string, body:string) => {
 };
 
 export const getApi = {
-  keyword: (search: string) => getData(`keyword_search/`,  { search }),
+  keyword: (search: string) => getData(`keyword_search/`, { search }),
   statistics: () => getData("channel_analyze/"),
   statisticsKeyword: (search: string, keyword: string) =>
     getData("channel_analyze/keyword_data/", {
@@ -50,14 +50,29 @@ export const getApi = {
       keyword,
     }),
   searchYoutuber: (youtuber_name: string) =>
-    getData("youtuber_search/channel_list/",  { youtuber_name }),
+    getData("youtuber_search/channel_list/", { youtuber_name }),
   star: (id: string) => getData(`youtuber_search/channel_list/${id}/`),
   period: (id: string, start: string, end: string) =>
     getData(`youtuber_search/channel_period_data/${id}/`, {
       start,
       end,
     }),
-  predict:(thumbnail_url:string, video_name:string, channel_subscriber:string, upload_date:string) =>
-    postData("views_predict/", JSON.stringify({thumbnail_url, video_name, channel_subscriber, upload_date})),
-  videoDetail:(idx:string)=> getData(`video_detail/${idx}/`)
+  predict: (
+    thumbnail_url: string,
+    video_name: string,
+    channel_subscriber: string,
+    upload_date: string
+  ) =>
+    postData(
+      "views_predict/",
+      JSON.stringify({
+        thumbnail_url,
+        video_name,
+        channel_subscriber,
+        upload_date,
+      })
+    ),
+  predictKeyword: (keyword_string: string) =>
+    getData("views_predict/simple_recommendation", { keyword_string }),
+  videoDetail: (idx: string) => getData(`video_detail/${idx}/`),
 };

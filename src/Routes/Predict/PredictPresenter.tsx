@@ -11,6 +11,7 @@ import {
   pushKeyword,
   setPredictData,
   setTextData,
+  setKeywordResultCurrent,
 } from "../../store/reducers/predict";
 import LineChart from "../../Components/Charts/LineChart";
 import Loader from "../../Components/Container/Loader";
@@ -36,7 +37,7 @@ const Red = styled.span`
 `;
 
 const UploadSection = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 50px auto;
   padding: 30px 40px;
   background-color: white;
@@ -59,7 +60,7 @@ const Minititle = styled.span`
 
 const KeywordContainer = styled.div`
   margin-top: 30px;
-  padding-left: 60px;
+  padding: 0px 30px;
 `;
 
 const KeywordForm = styled.form``;
@@ -71,11 +72,12 @@ const KeywordList = styled.div`
 const Keyword = styled.span`
   display: inline-block;
   padding: 16px 24px;
-  background-color: #ccc;
+  background-color: #dee0eb;
   color: #666;
   border-radius: 15px;
   text-align: center;
-  font-family: "S-CoreDream-5Medium";
+  font-family: "S-CoreDream-4Regular";
+  font-size: 14px;
   :not(:last-child) {
     margin-right: 15px;
   }
@@ -93,6 +95,56 @@ const Remove = styled.span`
     cursor: pointer;
     color: #555;
   }
+`;
+
+const KeywordResultContainer = styled.div`
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 23.9%);
+  grid-gap: 20px 15px;
+`;
+
+interface IImageContaineProps {
+  current: boolean;
+}
+
+const ImageContainer = styled.div<IImageContaineProps>`
+  display: inline-block;
+  background-color: white;
+  padding: 15px 15px 20px 15px;
+  border: ${({ current }) =>
+    current ? "3px solid #ecf1ff" : "1px solid #eee"};
+  box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+  cursor: pointer;
+`;
+
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+`;
+
+const VideoTitle = styled.div`
+  height: 42px;
+  font-family: "S-CoreDream-4Regular";
+  font-size: 15px;
+  line-height: 1.4;
+  margin-top: 10px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const InputContainer = styled.form`
@@ -148,6 +200,7 @@ const InfoContainer = styled.div`
   width: 39%;
   box-sizing: border-box;
   padding: 10px 0px;
+  padding-right: 60px;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
@@ -159,7 +212,7 @@ const InputText = styled.input`
   font-family: "S-CoreDream-5Medium";
   font-size: 16px;
   line-height: 1.8;
-  color: #222;
+  color: #666;
   padding-bottom: 5px;
   border: none;
   border-bottom: 2px solid #ccc;
@@ -229,6 +282,9 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       filterKeyword: (keyword: string) => {
         dispatch(filterKeyword(keyword));
       },
+      setKeywordResultCurrent: (current: number) => {
+        dispatch(setKeywordResultCurrent(current));
+      },
     },
   };
 }
@@ -241,12 +297,14 @@ type Props = PropsFromRedux;
 
 interface IPredictPresenterProps extends Props {
   getData: () => void;
+  getDataFromKeyword: () => void;
 }
 
 function PredictPresenter({
   states,
   dispatches,
   getData,
+  getDataFromKeyword,
 }: IPredictPresenterProps) {
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/jpeg, image/png",
@@ -284,6 +342,7 @@ function PredictPresenter({
   const handleOnSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatches.pushKeyword();
+    getDataFromKeyword();
     removeTerm(e.currentTarget.firstChild as HTMLInputElement);
   };
 
@@ -291,8 +350,15 @@ function PredictPresenter({
     input.value = null;
   };
 
-  const handleOnClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+  const handleOnClickKeyword = (e: React.MouseEvent<HTMLSpanElement>) => {
     dispatches.filterKeyword(e.currentTarget.nextSibling.nodeValue);
+    states.data.keywordList.length > 1 && getDataFromKeyword();
+  };
+
+  const handleOnClickImageContaier = (e: React.MouseEvent<HTMLDivElement>) => {
+    const idx = Number.parseInt(e.currentTarget.id);
+    idx !== states.data.keywordResult.current &&
+      dispatches.setKeywordResultCurrent(idx);
   };
 
   return (
@@ -322,11 +388,27 @@ function PredictPresenter({
                 {states.data.keywordList.length > 0 &&
                   states.data.keywordList.map((keyword, index) => (
                     <Keyword key={index}>
-                      <Remove onClick={handleOnClick}>X</Remove>
+                      <Remove onClick={handleOnClickKeyword}>X</Remove>
                       {keyword}
                     </Keyword>
                   ))}
               </KeywordList>
+              <KeywordResultContainer>
+                {states.data.keywordResult.data.length > 0 &&
+                  states.data.keywordList.length > 0 &&
+                  states.data.keywordResult.data.map((data) => (
+                    <ImageContainer
+                      id={data.idx.toString()}
+                      key={data.idx}
+                      current={data.idx === states.data.keywordResult.current}
+                      onClick={handleOnClickImageContaier}
+                    >
+                      <Avatar src={data.channel_thumbnail_url} />
+                      <Image src={data.video_thumbnail_url} />
+                      <VideoTitle>{data.video_name}</VideoTitle>
+                    </ImageContainer>
+                  ))}
+              </KeywordResultContainer>
             </KeywordContainer>
             <InputContainer onSubmit={handleOnSubmitUpload}>
               <UploadContainer>
