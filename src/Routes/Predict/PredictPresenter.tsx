@@ -1,20 +1,20 @@
-import React, { useRef } from "react";
-import styled from "styled-components";
-import { useDropzone } from "react-dropzone";
-import { connect, ConnectedProps } from "react-redux";
-import { Helmet } from "react-helmet";
+import React, { useRef } from 'react';
+import styled from 'styled-components';
+import { useDropzone } from 'react-dropzone';
+import { connect, ConnectedProps } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import { RootDispatch, RootState } from "../../store/store";
-import { BGSecond } from "../../Components/Container/BGContiner";
+import { RootDispatch, RootState } from '../../store/store';
+import { BGSecond } from '../../Components/Container/BGContiner';
 import {
   filterKeyword,
   pushKeyword,
   setPredictData,
   setTextData,
   setKeywordResultCurrent,
-} from "../../store/reducers/predict";
-import LineChart from "../../Components/Charts/LineChart";
-import Loader from "../../Components/Container/Loader";
+} from '../../store/reducers/predict';
+import LineChart from '../../Components/Charts/LineChart';
+import Loader from '../../Components/Container/Loader';
 
 const Container = styled.div`
   width: 1220px;
@@ -25,7 +25,7 @@ const Container = styled.div`
   align-items: center;
 `;
 const Slogan = styled.div`
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 30px;
   text-align: center;
   margin-top: 110px;
@@ -46,14 +46,14 @@ const UploadSection = styled.div`
 `;
 const Subtitle = styled.span`
   display: block;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 22px;
   line-height: 1.36;
 `;
 
 const Minititle = styled.span`
   display: block;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 20px;
   line-height: 1.36;
 `;
@@ -76,7 +76,7 @@ const Keyword = styled.span`
   color: #666;
   border-radius: 15px;
   text-align: center;
-  font-family: "S-CoreDream-4Regular";
+  font-family: 'S-CoreDream-4Regular';
   font-size: 14px;
   :not(:last-child) {
     margin-right: 15px;
@@ -88,7 +88,7 @@ const Remove = styled.span`
   position: absolute;
   top: 8px;
   right: 12px;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 6px;
   color: #888;
   :hover {
@@ -112,19 +112,37 @@ const ImageContainer = styled.div<IImageContaineProps>`
   display: inline-block;
   background-color: white;
   padding: 15px 15px 20px 15px;
-  border: ${({ current }) =>
-    current ? "3px solid #ecf1ff" : "1px solid #eee"};
+  border: ${({ current }) => (current ? '3px solid #ecf1ff' : '1px solid #eee')};
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 8px;
   box-sizing: border-box;
   cursor: pointer;
 `;
 
+const ChannelInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
 const Avatar = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-bottom: 10px;
+  margin-right: 10px;
+`;
+
+const ChannelTitle = styled.div`
+  height: 20px;
+  font-family: 'S-CoreDream-5Medium';
+  font-size: 14px;
+  line-height: 1.3;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const Image = styled.img`
@@ -135,7 +153,7 @@ const Image = styled.img`
 
 const VideoTitle = styled.div`
   height: 42px;
-  font-family: "S-CoreDream-4Regular";
+  font-family: 'S-CoreDream-4Regular';
   font-size: 15px;
   line-height: 1.4;
   margin-top: 10px;
@@ -191,7 +209,7 @@ const Preview = styled.img`
 `;
 
 const UploadText = styled.div`
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 18px;
   color: #dbe0f5;
   margin-bottom: 10px;
@@ -204,12 +222,12 @@ const InfoContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
 `;
 
 const InputText = styled.input`
   width: 100%;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 16px;
   line-height: 1.8;
   color: #666;
@@ -222,7 +240,7 @@ const InputText = styled.input`
   transition: border-bottom 0.3s linear;
 `;
 const SBT = styled.button`
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   width: 120px;
   padding: 15px 0px;
   margin: 0px auto;
@@ -269,11 +287,7 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       setThumbnail: (thumbnail: string | ArrayBuffer) => {
         dispatch(setPredictData({ thumbnail }));
       },
-      setTextData: (text: {
-        title: string;
-        subscriber: string;
-        date: string;
-      }) => {
+      setTextData: (text: { title: string; subscriber: string; date: string }) => {
         dispatch(setTextData({ ...text }));
       },
       pushKeyword: () => {
@@ -307,7 +321,7 @@ function PredictPresenter({
   getDataFromKeyword,
 }: IPredictPresenterProps) {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/jpeg, image/png",
+    accept: 'image/jpeg, image/png',
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         let reader = new FileReader();
@@ -357,21 +371,19 @@ function PredictPresenter({
 
   const handleOnClickImageContaier = (e: React.MouseEvent<HTMLDivElement>) => {
     const idx = Number.parseInt(e.currentTarget.id);
-    idx !== states.data.keywordResult.current &&
-      dispatches.setKeywordResultCurrent(idx);
+    idx !== states.data.keywordResult.current && dispatches.setKeywordResultCurrent(idx);
   };
 
   return (
     <>
       <Helmet
         title="Create Trend ㅣ 조회수 예측"
-        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
+        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
         <Container>
           <Slogan>
-            "<Red>AI Assistant</Red>와 함께 당신의 영상의{" "}
-            <Red>조회수를 예측</Red>해 보세요"
+            "<Red>AI Assistant</Red>와 함께 당신의 영상의 <Red>조회수를 예측</Red>해 보세요"
           </Slogan>
           <UploadSection>
             <Subtitle>키워드 선택</Subtitle>
@@ -403,7 +415,10 @@ function PredictPresenter({
                       current={data.idx === states.data.keywordResult.current}
                       onClick={handleOnClickImageContaier}
                     >
-                      <Avatar src={data.channel_thumbnail_url} />
+                      <ChannelInfoContainer>
+                        <Avatar src={data.channel_thumbnail_url} />
+                        <ChannelTitle>{data.channel_name}</ChannelTitle>
+                      </ChannelInfoContainer>
                       <Image src={data.video_thumbnail_url} />
                       <VideoTitle>{data.video_name}</VideoTitle>
                     </ImageContainer>
@@ -418,13 +433,9 @@ function PredictPresenter({
                     {states.data.thumbnail ? (
                       <Preview src={states.data.thumbnail} />
                     ) : (
-                      <UploadImage
-                        src={require("../../Asset/images/image-file.svg")}
-                      />
+                      <UploadImage src={require('../../Asset/images/image-file.svg')} />
                     )}
-                    <UploadText>
-                      조회수를 예측하고 싶은 썸네일을 올려주세요!
-                    </UploadText>
+                    <UploadText>조회수를 예측하고 싶은 썸네일을 올려주세요!</UploadText>
                     <UploadText>(.png, .jpg 파일만 가능합니다.)</UploadText>
                   </UploadLabel>
                 </DropZone>
@@ -460,8 +471,8 @@ function PredictPresenter({
                 states.data.lines && (
                   <>
                     <Minititle>
-                      <Red>{states.data.date}</Red>에 업로드 되는{" "}
-                      <Red> {states.data.title}</Red> 영상의 예상 조회수
+                      <Red>{states.data.date}</Red>에 업로드 되는 <Red> {states.data.title}</Red>{' '}
+                      영상의 예상 조회수
                     </Minititle>
                     <ChartContainer>
                       <LineChart type="predict" />

@@ -17,6 +17,7 @@ interface IinitialStateProps {
       channel_thumbnail_url: string;
       video_thumbnail_url: string;
       video_name: string;
+      channel_name:string;
     }[];
   };
   lines: ILineChartData[];
