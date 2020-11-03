@@ -7,10 +7,12 @@ interface IinitialStateProps {
     title: string;
     subscriber: string;
     date: string;
+    keyword: string;
   };
-  lines:ILineChartData[];
-  title:string;
-  date:string;
+  keywordList: string[];
+  lines: ILineChartData[];
+  title: string;
+  date: string;
   isLoading: boolean;
 }
 
@@ -20,10 +22,12 @@ const initialState: IinitialStateProps = {
     title: null,
     subscriber: null,
     date: null,
+    keyword: null,
   },
-  lines:null,
-  title:null,
-  date:null,
+  keywordList: [],
+  lines: null,
+  title: null,
+  date: null,
   isLoading: false,
 };
 
@@ -32,18 +36,28 @@ export const predictSlice = createSlice({
   initialState,
   reducers: {
     setPredictData: (state, action) => {
-      state.thumbnail = action.payload.thumbnail
+      state.thumbnail = action.payload.thumbnail;
     },
     setTextData: (state, action) => {
-      state.text.title = action.payload.title
-      state.text.subscriber = action.payload.subscriber
-      state.text.date = action.payload.date
+      state.text = action.payload;
     },
-    setResult:(state, action) =>{
-      state.lines = [action.payload.lines]
-      state.title = state.text.title
-      state.date = state.text.date
+    setResult: (state, action) => {
+      state.lines = [action.payload.lines];
+      state.title = state.text.title;
+      state.date = state.text.date;
       state.isLoading = false;
+    },
+    pushKeyword: (state) => {
+      if (state.text.keyword) {
+        state.keywordList.push(state.text.keyword);
+        state.text.keyword = null;
+      }
+      console.log(state.keywordList.length);
+    },
+    filterKeyword: (state, action) => {
+      state.keywordList = state.keywordList.filter(
+        (word) => word !== action.payload
+      );
     },
     setLoading: (state) => {
       state.isLoading = true;
@@ -51,4 +65,11 @@ export const predictSlice = createSlice({
   },
 });
 
-export const { setPredictData, setTextData, setResult, setLoading } = predictSlice.actions;
+export const {
+  setPredictData,
+  setTextData,
+  setResult,
+  pushKeyword,
+  filterKeyword,
+  setLoading,
+} = predictSlice.actions;

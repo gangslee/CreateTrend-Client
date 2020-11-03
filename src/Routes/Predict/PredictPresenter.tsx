@@ -1,14 +1,19 @@
-import React, { useRef } from 'react';
-import styled from 'styled-components';
-import { useDropzone } from 'react-dropzone';
-import { connect, ConnectedProps } from 'react-redux';
-import { Helmet } from 'react-helmet';
+import React, { useRef } from "react";
+import styled from "styled-components";
+import { useDropzone } from "react-dropzone";
+import { connect, ConnectedProps } from "react-redux";
+import { Helmet } from "react-helmet";
 
-import { RootDispatch, RootState } from '../../store/store';
-import { BGSecond } from '../../Components/Container/BGContiner';
-import { setPredictData, setTextData } from '../../store/reducers/predict';
-import LineChart from '../../Components/Charts/LineChart';
-import Loader from '../../Components/Container/Loader';
+import { RootDispatch, RootState } from "../../store/store";
+import { BGSecond } from "../../Components/Container/BGContiner";
+import {
+  filterKeyword,
+  pushKeyword,
+  setPredictData,
+  setTextData,
+} from "../../store/reducers/predict";
+import LineChart from "../../Components/Charts/LineChart";
+import Loader from "../../Components/Container/Loader";
 
 const Container = styled.div`
   width: 1220px;
@@ -19,7 +24,7 @@ const Container = styled.div`
   align-items: center;
 `;
 const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-size: 30px;
   text-align: center;
   margin-top: 110px;
@@ -40,16 +45,54 @@ const UploadSection = styled.div`
 `;
 const Subtitle = styled.span`
   display: block;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 22px;
   line-height: 1.36;
 `;
 
 const Minititle = styled.span`
   display: block;
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 20px;
   line-height: 1.36;
+`;
+
+const KeywordContainer = styled.div`
+  margin-top: 30px;
+  padding-left: 60px;
+`;
+
+const KeywordForm = styled.form``;
+
+const KeywordList = styled.div`
+  margin-top: 15px;
+`;
+
+const Keyword = styled.span`
+  display: inline-block;
+  padding: 16px 24px;
+  background-color: #ccc;
+  color: #666;
+  border-radius: 15px;
+  text-align: center;
+  font-family: "S-CoreDream-5Medium";
+  :not(:last-child) {
+    margin-right: 15px;
+  }
+  position: relative;
+`;
+
+const Remove = styled.span`
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-family: "S-CoreDream-6Bold";
+  font-size: 6px;
+  color: #888;
+  :hover {
+    cursor: pointer;
+    color: #555;
+  }
 `;
 
 const InputContainer = styled.form`
@@ -96,7 +139,7 @@ const Preview = styled.img`
 `;
 
 const UploadText = styled.div`
-  font-family: 'S-CoreDream-6Bold';
+  font-family: "S-CoreDream-6Bold";
   font-size: 18px;
   color: #dbe0f5;
   margin-bottom: 10px;
@@ -108,16 +151,16 @@ const InfoContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
 `;
 
 const InputText = styled.input`
   width: 100%;
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   font-size: 16px;
-  line-height: 2.1;
+  line-height: 1.8;
   color: #222;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
   border: none;
   border-bottom: 2px solid #ccc;
   :focus {
@@ -126,7 +169,7 @@ const InputText = styled.input`
   transition: border-bottom 0.3s linear;
 `;
 const SBT = styled.button`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   width: 120px;
   padding: 15px 0px;
   margin: 0px auto;
@@ -173,8 +216,18 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       setThumbnail: (thumbnail: string | ArrayBuffer) => {
         dispatch(setPredictData({ thumbnail }));
       },
-      setTextData: (text: { title: string; subscriber: string; date: string }) => {
+      setTextData: (text: {
+        title: string;
+        subscriber: string;
+        date: string;
+      }) => {
         dispatch(setTextData({ ...text }));
+      },
+      pushKeyword: () => {
+        dispatch(pushKeyword());
+      },
+      filterKeyword: (keyword: string) => {
+        dispatch(filterKeyword(keyword));
       },
     },
   };
@@ -190,9 +243,13 @@ interface IPredictPresenterProps extends Props {
   getData: () => void;
 }
 
-function PredictPresenter({ states, dispatches, getData }: IPredictPresenterProps) {
+function PredictPresenter({
+  states,
+  dispatches,
+  getData,
+}: IPredictPresenterProps) {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/jpeg, image/png',
+    accept: "image/jpeg, image/png",
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         let reader = new FileReader();
@@ -218,27 +275,60 @@ function PredictPresenter({ states, dispatches, getData }: IPredictPresenterProp
 
   const myRef = useRef<HTMLDivElement>(null);
 
-  const handleOnSubmit = (e: React.FormEvent) => {
+  const handleOnSubmitUpload = (e: React.FormEvent) => {
     e.preventDefault();
     scrollToRef(myRef);
     getData();
+  };
+
+  const handleOnSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatches.pushKeyword();
+    removeTerm(e.currentTarget.firstChild as HTMLInputElement);
+  };
+
+  const removeTerm = (input: HTMLInputElement) => {
+    input.value = null;
+  };
+
+  const handleOnClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    dispatches.filterKeyword(e.currentTarget.nextSibling.nodeValue);
   };
 
   return (
     <>
       <Helmet
         title="Create Trend ㅣ 조회수 예측"
-        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
+        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
       />
       <BGSecond>
         <Container>
           <Slogan>
-            "<Red>AI Assistant</Red>와 함께 당신의 영상의 <Red>조회수를 예측</Red>해 보세요"
+            "<Red>AI Assistant</Red>와 함께 당신의 영상의{" "}
+            <Red>조회수를 예측</Red>해 보세요"
           </Slogan>
-
           <UploadSection>
-            <Subtitle>영상 정보</Subtitle>
-            <InputContainer onSubmit={handleOnSubmit}>
+            <Subtitle>키워드 선택</Subtitle>
+            <KeywordContainer>
+              <KeywordForm onSubmit={handleOnSubmitSearch}>
+                <InputText
+                  type="text"
+                  name="keyword"
+                  placeholder="업로드 영상 관련 키워드 검색  EX) 여행, 음악"
+                  onChange={handleOnChange}
+                />
+              </KeywordForm>
+              <KeywordList>
+                {states.data.keywordList.length > 0 &&
+                  states.data.keywordList.map((keyword, index) => (
+                    <Keyword key={index}>
+                      <Remove onClick={handleOnClick}>X</Remove>
+                      {keyword}
+                    </Keyword>
+                  ))}
+              </KeywordList>
+            </KeywordContainer>
+            <InputContainer onSubmit={handleOnSubmitUpload}>
               <UploadContainer>
                 <DropZone {...getRootProps()}>
                   <Upload {...getInputProps()} />
@@ -246,9 +336,13 @@ function PredictPresenter({ states, dispatches, getData }: IPredictPresenterProp
                     {states.data.thumbnail ? (
                       <Preview src={states.data.thumbnail} />
                     ) : (
-                      <UploadImage src={require('../../Asset/images/image-file.svg')} />
+                      <UploadImage
+                        src={require("../../Asset/images/image-file.svg")}
+                      />
                     )}
-                    <UploadText>조회수를 예측하고 싶은 썸네일을 올려주세요!</UploadText>
+                    <UploadText>
+                      조회수를 예측하고 싶은 썸네일을 올려주세요!
+                    </UploadText>
                     <UploadText>(.png, .jpg 파일만 가능합니다.)</UploadText>
                   </UploadLabel>
                 </DropZone>
@@ -284,8 +378,8 @@ function PredictPresenter({ states, dispatches, getData }: IPredictPresenterProp
                 states.data.lines && (
                   <>
                     <Minititle>
-                      <Red>{states.data.date}</Red>에 업로드 되는 <Red> {states.data.title}</Red>{' '}
-                      영상의 예상 조회수
+                      <Red>{states.data.date}</Red>에 업로드 되는{" "}
+                      <Red> {states.data.title}</Red> 영상의 예상 조회수
                     </Minititle>
                     <ChartContainer>
                       <LineChart type="predict" />
