@@ -5,6 +5,7 @@ import { getApi } from "./API/dataAPI";
 
 export const fetchData = async (state: RootState, dispatch: RootDispatch) => {
   dispatch(setLoading());
+
   const data = await getApi.predict(
     state.predict.thumbnail,
     state.predict.text.title,
@@ -18,7 +19,7 @@ export const fetchDataFromKeyword = async (
   state: RootState,
   dispatch: RootDispatch
 ) => {
-  const keyword_string = state.predict.keywordList.join(" ");
+  const keyword_string = state.predict.keywordList.include.join(" ");
   const data = await getApi.predictKeyword(keyword_string);
   dispatch(setKeywordResult(data));
 };

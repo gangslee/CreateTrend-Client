@@ -7,9 +7,13 @@ interface IinitialStateProps {
     title: string;
     subscriber: string;
     date: string;
-    keyword: string;
+    include: string;
+    exclude: string;
   };
-  keywordList: string[];
+  keywordList: {
+    include: string[];
+    exclude: string[];
+  };
   keywordResult: {
     current: number;
     data: {
@@ -17,12 +21,13 @@ interface IinitialStateProps {
       channel_thumbnail_url: string;
       video_thumbnail_url: string;
       video_name: string;
-      channel_name:string;
+      channel_name: string;
     }[];
   };
   lines: ILineChartData[];
   title: string;
   date: string;
+  isAdvance: boolean;
   isLoading: boolean;
 }
 
@@ -32,9 +37,13 @@ const initialState: IinitialStateProps = {
     title: null,
     subscriber: null,
     date: null,
-    keyword: null,
+    include: null,
+    exclude: null,
   },
-  keywordList: [],
+  keywordList: {
+    include: [],
+    exclude: [],
+  },
   keywordResult: {
     current: null,
     data: [],
@@ -42,6 +51,7 @@ const initialState: IinitialStateProps = {
   lines: null,
   title: null,
   date: null,
+  isAdvance: false,
   isLoading: false,
 };
 
@@ -62,13 +72,13 @@ export const predictSlice = createSlice({
       state.isLoading = false;
     },
     pushKeyword: (state) => {
-      if (state.text.keyword) {
-        state.keywordList.push(state.text.keyword);
-        state.text.keyword = null;
+      if (state.text.include) {
+        state.keywordList.include.push(state.text.include);
+        state.text.include = null;
       }
     },
     filterKeyword: (state, action) => {
-      state.keywordList = state.keywordList.filter(
+      state.keywordList.include = state.keywordList.include.filter(
         (word) => word !== action.payload
       );
     },
@@ -77,6 +87,9 @@ export const predictSlice = createSlice({
     },
     setKeywordResultCurrent: (state, action) => {
       state.keywordResult.current = action.payload;
+    },
+    setAdvance: (state) => {
+      state.isAdvance = !state.isAdvance;
     },
     setLoading: (state) => {
       state.isLoading = true;
@@ -92,5 +105,6 @@ export const {
   filterKeyword,
   setKeywordResult,
   setKeywordResultCurrent,
+  setAdvance,
   setLoading,
 } = predictSlice.actions;
