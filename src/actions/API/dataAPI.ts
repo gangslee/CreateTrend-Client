@@ -74,5 +74,7 @@ export const getApi = {
     ),
   predictKeyword: (keyword_string: string) =>
     getData("views_predict/simple_recommendation", { keyword_string }),
+  predictKeywordAdvance: (keyword_string: string, must_keyword:string, must_not_keyword:string) =>
+    getData("views_predict/advanced_recommendation", { keyword_string, must_keyword, must_not_keyword }),
   videoDetail: (idx: string) => getData(`video_detail/${idx}/`),
 };

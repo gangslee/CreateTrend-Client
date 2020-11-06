@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
-import styled from "styled-components";
-import { useDropzone } from "react-dropzone";
-import { connect, ConnectedProps } from "react-redux";
-import { Helmet } from "react-helmet";
+import React, { useRef } from 'react';
+import styled from 'styled-components';
+import { useDropzone } from 'react-dropzone';
+import { connect, ConnectedProps } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import { RootDispatch, RootState } from "../../store/store";
-import { BGSecond } from "../../Components/Container/BGContiner";
+import { RootDispatch, RootState } from '../../store/store';
+import { BGSecond } from '../../Components/Container/BGContiner';
 import {
   filterKeyword,
   pushKeyword,
@@ -13,9 +13,9 @@ import {
   setTextData,
   setKeywordResultCurrent,
   setAdvance,
-} from "../../store/reducers/predict";
-import LineChart from "../../Components/Charts/LineChart";
-import Loader from "../../Components/Container/Loader";
+} from '../../store/reducers/predict';
+import LineChart from '../../Components/Charts/LineChart';
+import Loader from '../../Components/Container/Loader';
 
 const Container = styled.div`
   width: 1220px;
@@ -26,7 +26,7 @@ const Container = styled.div`
   align-items: center;
 `;
 const Slogan = styled.div`
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 30px;
   text-align: center;
   margin-top: 110px;
@@ -47,20 +47,20 @@ const UploadSection = styled.div`
 `;
 const Subtitle = styled.span`
   display: block;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 22px;
   line-height: 1.36;
 `;
 
 const Minititle = styled.span`
   display: block;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 20px;
   line-height: 1.36;
 `;
 
 const KeywordContainer = styled.div`
-  margin-top: 30px;
+  margin: 30px 0px;
   padding: 0px 30px;
 `;
 
@@ -93,7 +93,7 @@ const Keyword = styled.span`
   color: #666;
   border-radius: 15px;
   text-align: center;
-  font-family: "S-CoreDream-4Regular";
+  font-family: 'S-CoreDream-4Regular';
   font-size: 14px;
   :not(:last-child) {
     margin-right: 15px;
@@ -105,7 +105,7 @@ const Remove = styled.span`
   position: absolute;
   top: 8px;
   right: 12px;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 6px;
   color: #888;
   :hover {
@@ -129,8 +129,7 @@ const ImageContainer = styled.div<IImageContaineProps>`
   display: inline-block;
   background-color: white;
   padding: 15px 15px 20px 15px;
-  border: ${({ current }) =>
-    current ? "3px solid #ecf1ff" : "1px solid #eee"};
+  border: ${({ current }) => (current ? '3px solid #ecf1ff' : '1px solid #eee')};
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   border-radius: 8px;
   box-sizing: border-box;
@@ -152,7 +151,7 @@ const Avatar = styled.img`
 
 const ChannelTitle = styled.div`
   height: 20px;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 14px;
   line-height: 1.3;
   width: 100%;
@@ -171,7 +170,7 @@ const Image = styled.img`
 
 const VideoTitle = styled.div`
   height: 42px;
-  font-family: "S-CoreDream-4Regular";
+  font-family: 'S-CoreDream-4Regular';
   font-size: 15px;
   line-height: 1.4;
   margin-top: 10px;
@@ -187,7 +186,7 @@ const InputContainer = styled.form`
   padding: 30px 0px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 30px;
+  margin: 30px 0px;
 `;
 
 const UploadContainer = styled.div`
@@ -227,7 +226,7 @@ const Preview = styled.img`
 `;
 
 const UploadText = styled.div`
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 18px;
   color: #dbe0f5;
   margin-bottom: 10px;
@@ -240,12 +239,12 @@ const InfoContainer = styled.div`
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
 `;
 
 const InputText = styled.input`
   width: 100%;
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 16px;
   line-height: 1.8;
   color: #666;
@@ -258,7 +257,7 @@ const InputText = styled.input`
   transition: border-bottom 0.3s linear;
 `;
 const SBT = styled.button`
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   width: 120px;
   padding: 15px 0px;
   margin: 0px auto;
@@ -291,6 +290,23 @@ const LoaderContainer = styled.div`
   align-items: center;
 `;
 
+const Ref = styled.div`
+  margin-top: 30px;
+`;
+
+const ChartTextContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  min-height: 150px;
+`;
+
+const ChartText = styled.span`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
 function mapStateToProps(state: RootState) {
   return {
     states: {
@@ -305,18 +321,14 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       setThumbnail: (thumbnail: string | ArrayBuffer) => {
         dispatch(setPredictData({ thumbnail }));
       },
-      setTextData: (text: {
-        title: string;
-        subscriber: string;
-        date: string;
-      }) => {
+      setTextData: (text: { title: string; subscriber: string; date: string }) => {
         dispatch(setTextData({ ...text }));
       },
-      pushKeyword: () => {
-        dispatch(pushKeyword());
+      pushKeyword: (formType: string) => {
+        dispatch(pushKeyword(formType));
       },
-      filterKeyword: (keyword: string) => {
-        dispatch(filterKeyword(keyword));
+      filterKeyword: (className: string, keyword: string) => {
+        dispatch(filterKeyword({ className, keyword }));
       },
       setKeywordResultCurrent: (current: number) => {
         dispatch(setKeywordResultCurrent(current));
@@ -346,7 +358,7 @@ function PredictPresenter({
   getDataFromKeyword,
 }: IPredictPresenterProps) {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: "image/jpeg, image/png",
+    accept: 'image/jpeg, image/png',
     onDrop: (acceptedFiles) => {
       if (acceptedFiles.length > 0) {
         let reader = new FileReader();
@@ -367,20 +379,21 @@ function PredictPresenter({
   };
 
   const scrollToRef = (ref: React.MutableRefObject<HTMLDivElement>) => {
-    window.scrollTo(0, ref.current.offsetTop + 600);
+    window.scrollTo(0, ref.current.offsetTop - 300);
   };
 
-  const myRef = useRef<HTMLDivElement>(null);
+  const uploadRef = useRef<HTMLDivElement>(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   const handleOnSubmitUpload = (e: React.FormEvent) => {
     e.preventDefault();
-    scrollToRef(myRef);
+    scrollToRef(chartRef);
     getData();
   };
 
-  const handleOnSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmitKeyword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatches.pushKeyword();
+    dispatches.pushKeyword(e.currentTarget.id);
     getDataFromKeyword();
     removeTerm(e.currentTarget.firstChild as HTMLInputElement);
   };
@@ -390,8 +403,8 @@ function PredictPresenter({
   };
 
   const handleOnClickKeyword = (e: React.MouseEvent<HTMLSpanElement>) => {
-    dispatches.filterKeyword(e.currentTarget.nextSibling.nodeValue);
-    states.data.keywordList.include.length > 1 && getDataFromKeyword();
+    dispatches.filterKeyword(e.currentTarget.classList[2], e.currentTarget.nextSibling.nodeValue);
+    states.data.keywordList.keyword.length > 0 && getDataFromKeyword();
   };
 
   const handleOnClickImageContaier = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -399,69 +412,87 @@ function PredictPresenter({
 
     if (idx !== states.data.keywordResult.current) {
       dispatches.setKeywordResultCurrent(idx);
-      const name: HTMLInputElement = document.querySelector("#titleInput");
+      const name: HTMLInputElement = document.querySelector('#titleInput');
       name.value = states.data.keywordResult.data[idx].video_name;
-
       dispatches.setTextData({
         ...states.data.text,
         title: states.data.keywordResult.data[idx].video_name,
       });
-      dispatches.setThumbnail(
-        states.data.keywordResult.data[idx].video_thumbnail_url
-      );
-      scrollToRef(myRef);
+      dispatches.setThumbnail(states.data.keywordResult.data[idx].video_thumbnail_url);
+      scrollToRef(uploadRef);
     }
   };
 
   const handleOnClickAdvance = (e: React.MouseEvent) => {
     dispatches.setAdvance();
+    getDataFromKeyword();
   };
 
   return (
     <>
       <Helmet
         title="Create Trend ㅣ 조회수 예측"
-        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
+        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
         <Container>
           <Slogan>
-            "<Red>AI Assistant</Red>와 함께 당신의 영상의{" "}
-            <Red>조회수를 예측</Red>해 보세요"
+            "<Red>AI Assistant</Red>와 함께 당신의 영상의 <Red>조회수를 예측</Red>해 보세요"
           </Slogan>
           <UploadSection>
             <Subtitle>키워드 선택</Subtitle>
             <KeywordContainer>
-              <KeywordForm onSubmit={handleOnSubmitSearch}>
+              <KeywordForm id="keyword-form" onSubmit={handleOnSubmitKeyword}>
                 <InputText
                   type="text"
-                  name="include"
-                  placeholder="업로드 영상 관련 키워드 검색  EX) 여행, 음악"
+                  name="keyword"
+                  placeholder="업로드 영상 관련 키워드 검색"
                   onChange={handleOnChange}
                 />
                 <AdvanceIcon
                   src={require(`../../Asset/images/${
-                    states.data.isAdvance ? "top-arrow" : "bottom-arrow"
+                    states.data.isAdvance ? 'top-arrow' : 'bottom-arrow'
                   }.svg`)}
                   onClick={handleOnClickAdvance}
                 />
               </KeywordForm>
               <KeywordList>
-                {states.data.keywordList.include.length > 0 &&
-                  states.data.keywordList.include.map((keyword, index) => (
+                {states.data.keywordList.keyword.length > 0 &&
+                  states.data.keywordList.keyword.map((keyword, index) => (
                     <Keyword key={index}>
-                      <Remove onClick={handleOnClickKeyword}>X</Remove>
+                      <Remove className="keyword-remove" onClick={handleOnClickKeyword}>
+                        X
+                      </Remove>
                       {keyword}
                     </Keyword>
                   ))}
               </KeywordList>
               {states.data.isAdvance && (
                 <>
-                  <KeywordForm onSubmit={handleOnSubmitSearch}>
+                  <KeywordForm id="include-form" onSubmit={handleOnSubmitKeyword}>
+                    <InputText
+                      type="text"
+                      name="include"
+                      placeholder="반드시 포함하고 싶은 키워드 검색"
+                      onChange={handleOnChange}
+                    />
+                  </KeywordForm>
+                  <KeywordList>
+                    {states.data.keywordList.include.length > 0 &&
+                      states.data.keywordList.include.map((keyword, index) => (
+                        <Keyword key={index}>
+                          <Remove className="include-remove" onClick={handleOnClickKeyword}>
+                            X
+                          </Remove>
+                          {keyword}
+                        </Keyword>
+                      ))}
+                  </KeywordList>
+                  <KeywordForm id="exclude-form" onSubmit={handleOnSubmitKeyword}>
                     <InputText
                       type="text"
                       name="exclude"
-                      placeholder="제외하고 싶은 키워드 검색  EX) 여행, 음악"
+                      placeholder="제외하고 싶은 키워드 검색"
                       onChange={handleOnChange}
                     />
                   </KeywordForm>
@@ -469,7 +500,9 @@ function PredictPresenter({
                     {states.data.keywordList.exclude.length > 0 &&
                       states.data.keywordList.exclude.map((keyword, index) => (
                         <Keyword key={index}>
-                          <Remove onClick={handleOnClickKeyword}>X</Remove>
+                          <Remove className="exclude-remove" onClick={handleOnClickKeyword}>
+                            X
+                          </Remove>
                           {keyword}
                         </Keyword>
                       ))}
@@ -478,7 +511,7 @@ function PredictPresenter({
               )}
               <KeywordResultContainer>
                 {states.data.keywordResult.data.length > 0 &&
-                  states.data.keywordList.include.length > 0 &&
+                  states.data.keywordList.keyword.length > 0 &&
                   states.data.keywordResult.data.map((data, index) => (
                     <ImageContainer
                       id={index.toString()}
@@ -496,21 +529,18 @@ function PredictPresenter({
                   ))}
               </KeywordResultContainer>
             </KeywordContainer>
+            <Subtitle>조회수 예측</Subtitle>
             <InputContainer onSubmit={handleOnSubmitUpload}>
-              <UploadContainer>
+              <UploadContainer ref={uploadRef}>
                 <DropZone {...getRootProps()}>
                   <Upload {...getInputProps()} />
                   <UploadLabel htmlFor="upload">
                     {states.data.thumbnail ? (
                       <Preview src={states.data.thumbnail} />
                     ) : (
-                      <UploadImage
-                        src={require("../../Asset/images/image-file.svg")}
-                      />
+                      <UploadImage src={require('../../Asset/images/image-file.svg')} />
                     )}
-                    <UploadText>
-                      조회수를 예측하고 싶은 썸네일을 올려주세요!
-                    </UploadText>
+                    <UploadText>조회수를 예측하고 싶은 썸네일을 올려주세요!</UploadText>
                     <UploadText>(.png, .jpg 파일만 가능합니다.)</UploadText>
                   </UploadLabel>
                 </DropZone>
@@ -538,25 +568,32 @@ function PredictPresenter({
                 <SBT>예측하기</SBT>
               </InfoContainer>
             </InputContainer>
-            <div ref={myRef}>
-              {states.data.isLoading ? (
-                <LoaderContainer>
-                  <Loader />
-                </LoaderContainer>
+            <Ref ref={chartRef}>
+              {states.data.lines ? (
+                <Minititle>
+                  <Red>{states.data.date}</Red>에 업로드 되는 <Red> {states.data.title}</Red> 영상의
+                  예상 조회수 측정 결과
+                </Minititle>
               ) : (
-                states.data.lines && (
-                  <>
-                    <Minititle>
-                      <Red>{states.data.date}</Red>에 업로드 되는{" "}
-                      <Red> {states.data.title}</Red> 영상의 예상 조회수
-                    </Minititle>
-                    <ChartContainer>
-                      <LineChart type="predict" />
-                    </ChartContainer>
-                  </>
-                )
+                <Minititle>영상 예상 조회수 측정 결과</Minititle>
               )}
-            </div>
+              <ChartContainer>
+                {states.data.isLoading ? (
+                  <LoaderContainer>
+                    <Loader />
+                  </LoaderContainer>
+                ) : states.data.lines ? (
+                  <LineChart type="predict" />
+                ) : (
+                  <ChartTextContainer>
+                    <ChartText>
+                      조회수가 궁금한 영상의 썸네일, 제목, 채널의 구독자 수 그리고 업로드 날짜를
+                      입력해주세요
+                    </ChartText>
+                  </ChartTextContainer>
+                )}
+              </ChartContainer>
+            </Ref>
           </UploadSection>
         </Container>
       </BGSecond>

@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { ILineChartData } from "../types";
+import { createSlice } from '@reduxjs/toolkit';
+import { ILineChartData } from '../types';
 
 interface IinitialStateProps {
   thumbnail: string;
@@ -7,10 +7,12 @@ interface IinitialStateProps {
     title: string;
     subscriber: string;
     date: string;
+    keyword: string;
     include: string;
     exclude: string;
   };
   keywordList: {
+    keyword: string[];
     include: string[];
     exclude: string[];
   };
@@ -37,10 +39,12 @@ const initialState: IinitialStateProps = {
     title: null,
     subscriber: null,
     date: null,
+    keyword: null,
     include: null,
     exclude: null,
   },
   keywordList: {
+    keyword: [],
     include: [],
     exclude: [],
   },
@@ -56,7 +60,7 @@ const initialState: IinitialStateProps = {
 };
 
 export const predictSlice = createSlice({
-  name: "predictReducer",
+  name: 'predictReducer',
   initialState,
   reducers: {
     setPredictData: (state, action) => {
@@ -71,16 +75,46 @@ export const predictSlice = createSlice({
       state.date = state.text.date;
       state.isLoading = false;
     },
-    pushKeyword: (state) => {
-      if (state.text.include) {
+    pushKeyword: (state, action) => {
+      if (
+        action.payload === 'keyword-form' &&
+        state.text.keyword &&
+        !state.keywordList.keyword.includes(state.text.keyword)
+      ) {
+        state.keywordList.keyword.push(state.text.keyword);
+        state.text.keyword = null;
+      } else if (
+        action.payload === 'include-form' &&
+        state.text.include &&
+        !state.keywordList.include.includes(state.text.include)
+      ) {
         state.keywordList.include.push(state.text.include);
         state.text.include = null;
+      } else if (
+        action.payload === 'exclude-form' &&
+        state.text.exclude &&
+        !state.keywordList.exclude.includes(state.text.exclude)
+      ) {
+        state.keywordList.exclude.push(state.text.exclude);
+        state.text.exclude = null;
       }
     },
     filterKeyword: (state, action) => {
-      state.keywordList.include = state.keywordList.include.filter(
-        (word) => word !== action.payload
-      );
+      console.log(action.payload);
+      if (action.payload.className === 'keyword-remove') {
+        state.keywordList.keyword = state.keywordList.keyword.filter(
+          (word) => word !== action.payload.keyword
+        );
+        console.log(state.keywordList.keyword.length);
+      } else if (action.payload.className === 'include-remove') {
+        state.keywordList.include = state.keywordList.include.filter(
+          (word) => word !== action.payload.keyword
+        );
+      } else if (action.payload.className === 'exclude-remove') {
+        state.keywordList.exclude = state.keywordList.exclude.filter(
+          (word) => word !== action.payload.keyword
+        );
+      }
     },
     setKeywordResult: (state, action) => {
       state.keywordResult.data = action.payload;
