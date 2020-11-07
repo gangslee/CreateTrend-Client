@@ -21,7 +21,7 @@ export default () => (
         <Route path="/searchyoutuber/:youtuber_name" component={SearchYoutuber} />
         <Route path="/star/:id/:name" component={Star} />
         <Route path="/predict" component={Predict} />
-        <Route path="/detail/:idx" component={VideoDetail} />
+        <Route path="/detail/:idx/:title" component={VideoDetail} />
         <Redirect from="*" to="/" />
       </Switch>
     </>
