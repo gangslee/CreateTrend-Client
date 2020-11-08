@@ -4,8 +4,6 @@
 
 ## Summary
 
-
-  - [Summary](#summary)
   - [Example](#example)
   - [How it Works](#how-it-works)
   - [Getting Started](#getting-started)
@@ -170,13 +168,9 @@ npm run build
 - [react-facebook-pixel](https://github.com/zsajjad/react-facebook-pixel) - React에서 Facebook Pixel 사용 및 관리 라이브러리
 ## Authors
 
-
-
 - **이경수(grandnet1225@gmail.com)** - [gangselee](https://13.125.91.162/swmaestro/muna)
 
 ## License
-
-
 
 [![License](https://img.shields.io/badge/license-mit-blue)](http://badges.mit-license.org)
 
