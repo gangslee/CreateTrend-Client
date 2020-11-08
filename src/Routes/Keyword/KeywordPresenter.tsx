@@ -1,21 +1,21 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { connect, ConnectedProps } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
-import Loader from "../../Components/Container/Loader";
-import WordMap from "../../Components/Charts/Wordmap";
-import LineChart from "../../Components/Charts/LineChart";
-import KeywordChart from "../../Components/Charts/KeywordChart";
-import VideoList from "../../Components/Lists/VideoList";
-import { RootState, RootDispatch } from "../../store/store";
-import { setRadioState } from "../../store/reducers/keyword";
-import SearchBar from "../../Components/Container/SearchBar";
-import { BGSecond } from "../../Components/Container/BGContiner";
-import NoticeTooltip from "../../Components/Container/NoticeTooltip";
+import Loader from '../../Components/Container/Loader';
+import WordMap from '../../Components/Charts/Wordmap';
+import LineChart from '../../Components/Charts/LineChart';
+import KeywordChart from '../../Components/Charts/KeywordChart';
+import VideoList from '../../Components/Lists/VideoList';
+import { RootState, RootDispatch } from '../../store/store';
+import { setRadioState } from '../../store/reducers/keyword';
+import SearchBar from '../../Components/Container/SearchBar';
+import { BGSecond } from '../../Components/Container/BGContiner';
+import NoticeTooltip from '../../Components/Container/NoticeTooltip';
 
 const Slogan = styled.div`
-  font-family: "S-CoreDream-5Medium";
+  font-family: 'S-CoreDream-5Medium';
   font-size: 30px;
   text-align: center;
   margin: 70px 0px;
@@ -25,7 +25,7 @@ const SloganRed = styled.span`
   color: #dd0909;
 `;
 
-const SearchBarContainer = styled.div`
+const SearchBarContainer = styled.form`
   display: flex;
   justify-content: center;
 `;
@@ -90,7 +90,7 @@ const SForm = styled.form`
 `;
 
 const RadioBt = styled.input.attrs({
-  type: "radio",
+  type: 'radio',
 })`
   display: none;
 `;
@@ -102,7 +102,7 @@ const RadioLabel = styled.label`
   align-items: center;
 
   ::before {
-    content: " ";
+    content: ' ';
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -119,11 +119,11 @@ const RadioContainer = styled.div`
   vertical-align: middle;
 
   margin-left: 20px;
-  input[type="radio"]:checked + label:after {
+  input[type='radio']:checked + label:after {
     border-radius: 50%;
     width: 15px;
     height: 15px;
-    content: " ";
+    content: ' ';
     top: 8px;
     left: 7px;
     position: absolute;
@@ -147,13 +147,9 @@ const GraphContainer = styled.div<ITypeProps>`
     css`
       padding-top: 45px;
     `}
-  margin-bottom:${({ setPadding }) => (setPadding ? "40px" : "70px")};
+  margin-bottom:${({ setPadding }) => (setPadding ? '40px' : '70px')};
   background-color: #fff;
 `;
-
-interface IVideoProps {
-  mode: string;
-}
 
 const BottomContainer = styled.div`
   width: 1220px;
@@ -215,10 +211,8 @@ function KeywordPresenter({
   clickWord,
 }: IKeywordPresenter) {
   const handleOnChange = (e: React.ChangeEvent) => {
-    ((e.currentTarget.getAttribute("value") === "영상화 추이" &&
-      data.currentChart === 1) ||
-      (e.currentTarget.getAttribute("value") === "인기도 추이" &&
-        data.currentChart === 0)) &&
+    ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
+      (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
   };
 
@@ -231,12 +225,12 @@ function KeywordPresenter({
     <>
       <Helmet
         title={`Create Trend ㅣ ${search}`}
-        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
+        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
         <Slogan>
-          "궁금한 영상 <SloganRed>콘텐츠</SloganRed> 또는{" "}
-          <SloganRed>주제</SloganRed>를 검색해 보세요"
+          "궁금한 영상 <SloganRed>콘텐츠</SloganRed> 또는 <SloganRed>주제</SloganRed>를 검색해
+          보세요"
         </Slogan>
         <SearchBarContainer onSubmit={handleOnSubmit}>
           <SearchBar searchKeyword={searchKeyword} />
@@ -244,10 +238,10 @@ function KeywordPresenter({
 
         <TitleContainer>
           <TitleIcon
-            src={require("../../Asset/images/hashtag.png")}
+            src={require('../../Asset/images/hashtag.png')}
             srcSet={
-              (require("../../Asset/images/hashtag@2x.png"),
-              require("../../Asset/images/hashtag@3x.png"))
+              (require('../../Asset/images/hashtag@2x.png'),
+              require('../../Asset/images/hashtag@3x.png'))
             }
           />
           <Title>
@@ -260,9 +254,7 @@ function KeywordPresenter({
             <Subtitle>
               <TitleRed>{search}</TitleRed> 워드맵
             </Subtitle>
-            <NoticeTooltip
-              text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `}
-            />
+            <NoticeTooltip text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `} />
 
             <GraphContainer setPadding={false}>
               {data.isLoading ? <Loader /> : <WordMap type="keyword" />}
@@ -347,15 +339,9 @@ function KeywordPresenter({
           <Subtitle>
             <TitleRed>{search}</TitleRed> 인기 영상
           </Subtitle>
-          <NoticeTooltip
-            text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `}
-          />
+          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
           <VideoContainer>
-            {data.isLoading ? (
-              <Loader />
-            ) : (
-              <VideoList mode="aside" type="keyword" title={search} />
-            )}
+            {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
           </VideoContainer>
         </BottomContainer>
       </BGSecond>
