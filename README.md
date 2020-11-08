@@ -41,7 +41,11 @@
 
 > 로그인 & 회원가입
 
-<div style="display:flex; max-height:400px; padding:10px; margin-bottom:30px;"><img src="./src/Asset/images/ScreenShot/SignIn.png" style="margin-right:30px;"/><img src="./src/Asset/images/ScreenShot/SignUp.png" /></div>
+<div style="padding:10px;"><img src="./src/Asset/images/ScreenShot/SignIn.png" style="max-height:600px;"/></div>
+
+<div style="padding:10px;"><img src="./src/Asset/images/ScreenShot/SignUp.png" style="max-height:600px;"/></div>
+
+
 
 ## How it Works
 
