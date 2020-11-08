@@ -39,14 +39,6 @@
 
 <div style="padding:10px;"><img src="./src/Asset/images/ScreenShot/VideoDetail.png" style="max-height:600px;"/></div>
 
-> 로그인 & 회원가입
-
-<div style="padding:10px;"><img src="./src/Asset/images/ScreenShot/SignIn.png" style="max-height:600px;"/></div>
-
-<div style="padding:10px;"><img src="./src/Asset/images/ScreenShot/SignUp.png" style="max-height:600px;"/></div>
-
-
-
 ## How it Works
 
 ### Common
