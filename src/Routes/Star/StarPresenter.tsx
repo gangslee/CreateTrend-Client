@@ -58,13 +58,11 @@ const ResultContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
-  height: 750px;
 `;
 
 const AnalysisSection = styled.div`
   width: 790px;
   display: inline-block;
-  height: 100%;
 `;
 
 const BottomAnalysisSection = styled.div`
@@ -79,11 +77,11 @@ const AsideSection = styled.div`
 
 const ChannelContainer = styled.div`
   padding: 30px 20px;
-  height: 100%;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   box-sizing: border-box;
+  min-height: 780px;
 `;
 
 const Subtitle = styled.span`
@@ -246,7 +244,7 @@ const VideoContainer = styled.div<IVideoProps>`
     mode === 'aside' &&
     css`
       width: 380px;
-      height: 100%;
+      height: 780px;
     `};
 `;
 
@@ -256,6 +254,10 @@ const LoaderContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const LoaderContainerChannelInfo = styled.div`
+  height: 780px;
 `;
 
 function mapStateToProps(state: RootState) {
@@ -272,8 +274,8 @@ type Props = PropsFromRedux;
 
 interface IStarPresenterProps extends Props {
   id: string;
-  channel: string;
   period: string;
+  channel: string;
   periodLine: (id: string, start: string, end: string) => void;
   searchKeyword: () => void;
 }
@@ -294,7 +296,7 @@ function StarPresenter({
   return (
     <>
       <Helmet
-        title={`Create Trend ㅣ ${channel}`}
+        title={`Create Trend | ${channel}`}
         link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
@@ -314,9 +316,11 @@ function StarPresenter({
             <AnalysisSection>
               <ChannelContainer>
                 {states.star.isLoading ? (
-                  <LoaderContainer>
-                    <Loader />
-                  </LoaderContainer>
+                  <LoaderContainerChannelInfo>
+                    <LoaderContainer>
+                      <Loader />
+                    </LoaderContainer>
+                  </LoaderContainerChannelInfo>
                 ) : (
                   <>
                     <Subtitle>채널 소개</Subtitle>
@@ -394,11 +398,12 @@ function StarPresenter({
           </ResultContainer>
 
           <TitleContainer>
-            <Title>{!states.star.isLoading && <TitleRed>{channel}</TitleRed>} 구독자수 추이</Title>
+            <Title>
+              <TitleRed>{channel}</TitleRed>
+              구독자수 추이
+            </Title>
             <NoticeTooltip
-              text={`최근 8주간 '${
-                !states.star.isLoading && channel
-              }' 채널의 구독자수 추이 변화를 확인해보세요!\n 차트를 드래그하면 기간을 설정도 가능해요!`}
+              text={`최근 8주간 '${channel}' 채널의 구독자수 추이 변화를 확인해보세요!\n 차트를 드래그하면 기간을 설정도 가능해요!`}
             />
           </TitleContainer>
 
@@ -423,9 +428,7 @@ function StarPresenter({
                 기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
               </Subtitle>
               <NoticeTooltip
-                text={`설정하신 기간 동안의 '${
-                  !states.star.isLoading && channel
-                }' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`}
+                text={`설정하신 기간 동안의 '${channel}' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`}
               />
               <VideoContainer mode="analysis">
                 {states.star.isLoading ? (
@@ -444,9 +447,7 @@ function StarPresenter({
                 기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
               </Subtitle>
               <NoticeTooltip
-                text={`설정하신 기간 동안의 '${
-                  !states.star.isLoading && channel
-                }' 채널 영상들의 주 콘텐츠들을 확인해보세요!`}
+                text={`설정하신 기간 동안의 '${channel}' 채널 영상들의 주 콘텐츠들을 확인해보세요!`}
               />
               <PieSection>
                 {states.period.isLoading ? (

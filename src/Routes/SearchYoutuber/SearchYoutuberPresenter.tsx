@@ -266,7 +266,10 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: ISearc
                 <Count>{states.data.length}</Count>
               </SubtitleContainer>
               {states.data.slice(start, end).map((data) => (
-                <SLink to={`/star/${data.idx}/${data.channel_name}`} key={data.idx}>
+                <SLink
+                  to={`/star/${data.idx}/${encodeURIComponent(data.channel_name)}`}
+                  key={data.idx}
+                >
                   <ResultContainer>
                     <Avatar src={data.thumbnail_url} />
                     <ChannelInfoContainer>
