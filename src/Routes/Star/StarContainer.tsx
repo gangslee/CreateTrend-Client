@@ -1,32 +1,9 @@
 import React, { useLayoutEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 
-import store, { RootState } from '../../store/store';
+import store from '../../store/store';
 import StarPresenter from './StarPresenter';
 import { fetchStarData, fetchPeriodData } from '../../actions/star';
-import { RouteComponentProps } from 'react-router-dom';
-
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      start: state.period.start,
-      end: state.period.end,
-      searchTerm: state.home.searchTerm,
-      searchType: state.home.searchType,
-    },
-  };
-}
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IParamsProps {
-  id: string;
-  name: string;
-}
-
-type Props = PropsFromRedux & RouteComponentProps<IParamsProps>;
+import { connector, Props } from './connectors/container';
 
 const periodLine = async (id: string, start: string, end: string) => {
   fetchPeriodData(store.dispatch, id, start, end);

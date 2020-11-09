@@ -1,30 +1,11 @@
-import React, {useLayoutEffect} from 'react';
-import {RouteComponentProps} from 'react-router-dom';
-import {connect, ConnectedProps} from 'react-redux';
+import React, { useLayoutEffect } from 'react';
 
-import store, {RootState} from '../../store/store';
-import {fetchData} from '../../actions/searchYoutuber';
+import store from '../../store/store';
+import { fetchData } from '../../actions/searchYoutuber';
 import SearchYoutuberPresenter from './SearchYoutuberPresenter';
+import { connector, Props } from './connectors/container';
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      search: state.home,
-    },
-  };
-}
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IParamsProps {
-  youtuber_name: string;
-}
-
-type Props = PropsFromRedux & RouteComponentProps<IParamsProps>;
-
-function SearchYoutuberContainer({states, match, history}: Props) {
+function SearchYoutuberContainer({ states, match, history }: Props) {
   useLayoutEffect(() => {
     fetchData(store.dispatch, match.params.youtuber_name);
   }, [match]);
@@ -34,9 +15,9 @@ function SearchYoutuberContainer({states, match, history}: Props) {
       fetchData(store.dispatch, match.params.youtuber_name);
     } else {
       history.push(
-        `/${states.search.searchType === 0 ? 'keyword' : 'searchYoutuber'}/${
+        `/${states.search.searchType === 0 ? 'keyword' : 'searchYoutuber'}/${encodeURIComponent(
           states.search.searchTerm
-        }`
+        )}`
       );
     }
   };

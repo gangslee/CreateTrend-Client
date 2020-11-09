@@ -1,28 +1,23 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 
-import { RootState } from '../../store/store';
 import { BGSecond } from '../../Components/Container/BGContiner';
 import SearchBar from '../../Components/Container/SearchBar';
 import Pagination from '../../Components/Container/Pagination';
 import Loader from '../../Components/Container/Loader';
 import { Link } from 'react-router-dom';
+import Slogan from '../../Components/Text/Slogan';
+import Red from '../../Components/Text/Red';
+import Title from '../../Components/Text/Title';
+import { connector, IProps } from './connectors/presenter';
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
 
-const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
-  font-size: 30px;
-  text-align: center;
-  margin: 70px 0px;
-`;
-
-const SloganRed = styled.span`
-  color: #dd0909;
+const SloganContainer = styled.div`
+  margin: 90px 0 70px 0;
 `;
 
 const SearchBarContainer = styled.form`
@@ -38,18 +33,6 @@ const Container = styled.div`
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px 0px;
-  border-bottom: 1px solid #dbe0f5;
-`;
-
-const Title = styled.span`
-  font-size: 25px;
-  color: #333;
-  line-height: 1.4;
-`;
-
-const TitleRed = styled.span`
-  color: #d10909;
 `;
 
 const TitleIcon = styled.img`
@@ -199,28 +182,7 @@ const LoaderContainer = styled.div`
   justify-content: center;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      data: state.searchYoutuber.data,
-      page: state.searchYoutuber.page,
-      loading: state.searchYoutuber.isLoading,
-    },
-  };
-}
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux;
-
-interface ISearchYoutuberProps extends Props {
-  youtuberName: string;
-  searchKeyword: () => void;
-}
-
-function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: ISearchYoutuberProps) {
+function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps) {
   const start = states.data && 0 + 4 * (states.page - 1);
   const end = states.data && (states.data.length - 1 >= start + 3 ? start + 4 : states.data.length);
 
@@ -236,9 +198,11 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: ISearc
         link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
-        <Slogan>
-          "궁금한 <SloganRed>스타채널</SloganRed>을 검색해 보세요"
-        </Slogan>
+        <SloganContainer>
+          <Slogan>
+            "궁금한 <Red>스타채널</Red>을 검색해 보세요"
+          </Slogan>
+        </SloganContainer>
         <SearchBarContainer onSubmit={handleOnSubmit}>
           <SearchBar searchKeyword={searchKeyword} />
         </SearchBarContainer>
@@ -252,7 +216,7 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: ISearc
               }
             />
             <Title>
-              <TitleRed>{youtuberName}</TitleRed> 채널 검색 결과
+              <Red>{youtuberName}</Red> 채널 검색 결과
             </Title>
           </TitleContainer>
           {states.loading ? (

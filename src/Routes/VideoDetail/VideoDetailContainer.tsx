@@ -13,7 +13,7 @@ function VideoDetailContainer({ match }: RouteComponentProps<IParamsProps>) {
   useLayoutEffect(() => {
     fetchData(store.dispatch, match.params.idx);
   }, [match.params.idx]);
-  return <VideoDetailPresenter title={match.params.title} />;
+  return <VideoDetailPresenter title={decodeURIComponent(match.params.title)} />;
 }
 
 export default VideoDetailContainer;

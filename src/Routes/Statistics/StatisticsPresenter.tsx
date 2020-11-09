@@ -1,24 +1,21 @@
-import React from "react";
-import styled from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import styled from 'styled-components';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { Helmet } from 'react-helmet';
 
-import Tab from "../../Components/Container/Tab";
-import Loader from "../../Components/Container/Loader";
-import KeywordChart from "../../Components/Charts/KeywordChart";
-import Wordmap from "../../Components/Charts/Wordmap";
-import LineChart from "../../Components/Charts/LineChart";
-import VideoList from "../../Components/Lists/VideoList";
-import { RootDispatch, RootState } from "../../store/store";
-import { BGSecond } from "../../Components/Container/BGContiner";
-import SearchBar from "../../Components/Container/SearchBar";
-import NoticeTooltip from "../../Components/Container/NoticeTooltip";
-import {
-  chartStateUpdate,
-  keywordStateUpdate,
-} from "../../store/reducers/statistics";
+import Tab from '../../Components/Container/Tab';
+import Loader from '../../Components/Container/Loader';
+import KeywordChart from '../../Components/Charts/KeywordChart';
+import Wordmap from '../../Components/Charts/Wordmap';
+import LineChart from '../../Components/Charts/LineChart';
+import VideoList from '../../Components/Lists/VideoList';
+import { BGSecond } from '../../Components/Container/BGContiner';
+import SearchBar from '../../Components/Container/SearchBar';
+import NoticeTooltip from '../../Components/Container/NoticeTooltip';
+import Title from '../../Components/Text/Title';
+import Red from '../../Components/Text/Red';
+import { IProps, connector } from './connectors/presenter';
 
 const MainTitleContainer = styled.div`
   display: flex;
@@ -30,7 +27,7 @@ const MainTitleContainer = styled.div`
 const MainTitle = styled.span`
   display: inline-block;
   font-size: 45px;
-  font-family: "Lato";
+  font-family: 'Lato';
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
@@ -39,13 +36,9 @@ const MainTitle = styled.span`
   color: #222;
 `;
 
-const MainTitleRed = styled.span`
-  color: #d10909;
-`;
-
 const MainSubtitle = styled.span`
   display: inline-block;
-  font-family: "S-CoreDream-4Regular";
+  font-family: 'S-CoreDream-4Regular';
   font-size: 20px;
   font-stretch: normal;
   font-style: normal;
@@ -104,29 +97,17 @@ const TitleContainer = styled.div`
   align-items: center;
   width: 1200px;
   margin-top: 40px;
-  padding: 20px 0px;
-`;
-
-const Title = styled.span`
-  font-size: 25px;
-  color: #333;
-  line-height: 1.4;
-  margin-right: 10px;
 `;
 
 const Subtitle = styled.span`
   display: inline-block;
-  font-family: "S-CoreDream-6Bold";
+  font-family: 'S-CoreDream-6Bold';
   font-size: 22px;
   line-height: 1.36;
   :nth-child(2) {
     margin-bottom: 10px;
   }
   margin-right: 10px;
-`;
-
-const TitleRed = styled.span`
-  color: #d10909;
 `;
 
 const TitleIcon = styled.img`
@@ -158,7 +139,7 @@ const CircleContainer = styled.div`
 `;
 
 const PopularText = styled.span`
-  font-family: "S-CoreDream-4Regular";
+  font-family: 'S-CoreDream-4Regular';
   font-size: 20px;
   line-height: 1.4;
   color: #999;
@@ -188,65 +169,28 @@ const VideoContainer = styled.div`
   height: 300px;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      data: state.statistics,
-    },
-  };
-}
-
-function mapDispatchToProps(dispatch: RootDispatch) {
-  return {
-    dispatches: {
-      chart: () => {
-        dispatch(chartStateUpdate());
-      },
-      keyword: (n: number) => {
-        dispatch(keywordStateUpdate(n));
-      },
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux;
-
-interface IStatisticsPresenterProps extends Props {
-  searchKeyword: () => void;
-}
-
-function StatisticsPresenter({
-  states,
-  dispatches,
-  searchKeyword,
-}: IStatisticsPresenterProps) {
+function StatisticsPresenter({ states, dispatches, searchKeyword }: IProps) {
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
   };
+
   const title =
     states.data.keywordChart &&
-    states.data.keywordChart[states.data.currentChart].keyword[
-      states.data.currentKeyword
-    ].name;
+    states.data.keywordChart[states.data.currentChart].keyword[states.data.currentKeyword].name;
+
   return (
     <>
       <Helmet
         title="Create Trend"
-        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
+        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
         <MainTitleContainer>
           <MainTitle>
-            <MainTitleRed>Youtube</MainTitleRed> AI assistant
+            <Red>Youtube</Red> AI assistant
           </MainTitle>
-          <MainSubtitle>
-            AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.
-          </MainSubtitle>
+          <MainSubtitle>AI가 현재의 당신 채널을 분석하고 개선방향을 찾아드립니다.</MainSubtitle>
         </MainTitleContainer>
 
         <SForm onSubmit={handleOnSubmit}>
@@ -263,10 +207,7 @@ function StatisticsPresenter({
                 {states.data.isLoadingChart ? (
                   <Loader />
                 ) : (
-                  <KeywordChart
-                    stateFunc={dispatches.keyword}
-                    type="statistics"
-                  />
+                  <KeywordChart stateFunc={dispatches.keyword} type="statistics" />
                 )}
               </KeywordChartContainer>
             </ChartContainer>
@@ -276,7 +217,7 @@ function StatisticsPresenter({
               ) : (
                 <>
                   <Subtitle>
-                    <TitleRed>{title}</TitleRed> 인기도 & 워드맵
+                    <Red>{`${title} `}</Red> 인기도 & 워드맵
                   </Subtitle>
                   <NoticeTooltip
                     text={`한 달간 '${title}' 콘텐츠의 평균 인기도와 연관 콘텐츠들을 확인해보세요! `}
@@ -286,16 +227,18 @@ function StatisticsPresenter({
                       <PopularText>평균 인기도</PopularText>
                       <SCircle
                         value={
-                          states.data.keywordChart[states.data.currentChart]
-                            .keyword[states.data.currentKeyword].popular
+                          states.data.keywordChart[states.data.currentChart].keyword[
+                            states.data.currentKeyword
+                          ].popular
                         }
                         text={`${
-                          states.data.keywordChart[states.data.currentChart]
-                            .keyword[states.data.currentKeyword].popular
+                          states.data.keywordChart[states.data.currentChart].keyword[
+                            states.data.currentKeyword
+                          ].popular
                         }%`}
                         styles={buildStyles({
-                          pathColor: "#d10909",
-                          textColor: "#222",
+                          pathColor: '#d10909',
+                          textColor: '#222',
                         })}
                       />
                     </CircleContainer>
@@ -304,14 +247,12 @@ function StatisticsPresenter({
                     </WordmapContainer>
                   </SubResultContainer>
                   <Subtitle>
-                    <TitleRed>{title}</TitleRed>
-                    {states.data.currentChart === 0
-                      ? "인기도 추이"
-                      : " 영상화 추이"}
+                    <Red>{title}</Red>
+                    {states.data.currentChart === 0 ? ' 인기도 추이' : ' 영상화 추이'}
                   </Subtitle>
                   <NoticeTooltip
                     text={`한 달간 '${title}' 콘텐츠의 ${
-                      states.data.currentChart === 0 ? "인기도" : " 영상화"
+                      states.data.currentChart === 0 ? '인기도' : ' 영상화'
                     } 변화 추이를 확인해보세요! `}
                   />
                   <SubResultContainer>
@@ -325,18 +266,16 @@ function StatisticsPresenter({
           </KeywordContainer>
           <TitleContainer>
             <TitleIcon
-              src={require("../../Asset/images/youtubeIcon.png")}
+              src={require('../../Asset/images/youtubeIcon.png')}
               srcSet={
-                (require("../../Asset/images/youtubeIcon@2x.png"),
-                require("../../Asset/images/youtubeIcon@3x.png"))
+                (require('../../Asset/images/youtubeIcon@2x.png'),
+                require('../../Asset/images/youtubeIcon@3x.png'))
               }
             />
             <Title>
-              <TitleRed>{title}</TitleRed> 조회수 급상승 영상
+              <Red>{title}</Red> 조회수 급상승 영상
             </Title>
-            <NoticeTooltip
-              text={`'${title}'을 콘텐츠로한 조회수 급상승 영상들을 확인해보세요! `}
-            />
+            <NoticeTooltip text={`'${title}'을 콘텐츠로한 조회수 급상승 영상들을 확인해보세요! `} />
           </TitleContainer>
           <VideoContainer>
             {states.data.isLoadingData ? (

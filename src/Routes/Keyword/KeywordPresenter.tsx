@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { connect, ConnectedProps } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import Loader from '../../Components/Container/Loader';
@@ -8,24 +7,19 @@ import WordMap from '../../Components/Charts/Wordmap';
 import LineChart from '../../Components/Charts/LineChart';
 import KeywordChart from '../../Components/Charts/KeywordChart';
 import VideoList from '../../Components/Lists/VideoList';
-import { RootState, RootDispatch } from '../../store/store';
-import { setRadioState } from '../../store/reducers/keyword';
 import SearchBar from '../../Components/Container/SearchBar';
 import { BGSecond } from '../../Components/Container/BGContiner';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
+import Slogan from '../../Components/Text/Slogan';
+import Red from '../../Components/Text/Red';
+import Title from '../../Components/Text/Title';
+import { connector, IProps } from './connectors/presenter';
 
-const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
-  font-size: 30px;
-  text-align: center;
-  margin: 70px 0px;
+const SloganContainer = styled.div`
+  margin: 90px 0 60px 0;
 `;
 
-const SloganRed = styled.span`
-  color: #dd0909;
-`;
-
-const SearchBarContainer = styled.form`
+const SearchBarContainer = styled.div`
   display: flex;
   justify-content: center;
 `;
@@ -33,20 +27,9 @@ const SearchBarContainer = styled.form`
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
+  border-bottom: 1px solid #dbe0f5;
   width: 1200px;
   margin: 50px auto;
-  padding: 20px 0px;
-  border-bottom: 1px solid #dbe0f5;
-`;
-
-const Title = styled.span`
-  font-size: 25px;
-  color: #333;
-  line-height: 1.4;
-`;
-
-const TitleRed = styled.span`
-  color: #d10909;
 `;
 
 const TitleIcon = styled.img`
@@ -176,40 +159,7 @@ const KeywordChartContainer = styled.div`
   margin-bottom: 40px;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    data: state.keyword,
-  };
-}
-
-function mapDispatchToProps(dispatch: RootDispatch) {
-  return {
-    dispatches: {
-      radio: () => {
-        dispatch(setRadioState());
-      },
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux;
-interface IKeywordPresenter extends Props {
-  search: string;
-  searchKeyword: () => void;
-  clickWord: (word: string) => void;
-}
-
-function KeywordPresenter({
-  data,
-  dispatches,
-  search,
-  searchKeyword,
-  clickWord,
-}: IKeywordPresenter) {
+function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }: IProps) {
   const handleOnChange = (e: React.ChangeEvent) => {
     ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
       (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
@@ -228,10 +178,11 @@ function KeywordPresenter({
         link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
-        <Slogan>
-          "궁금한 영상 <SloganRed>콘텐츠</SloganRed> 또는 <SloganRed>주제</SloganRed>를 검색해
-          보세요"
-        </Slogan>
+        <SloganContainer>
+          <Slogan>
+            "궁금한 영상 <Red>콘텐츠</Red> 또는 <Red>주제</Red>를 검색해 보세요"
+          </Slogan>
+        </SloganContainer>
         <SearchBarContainer onSubmit={handleOnSubmit}>
           <SearchBar searchKeyword={searchKeyword} />
         </SearchBarContainer>
@@ -245,14 +196,14 @@ function KeywordPresenter({
             }
           />
           <Title>
-            <TitleRed>{search}</TitleRed> 키워드 검색 결과
+            <Red>{search}</Red> 키워드 검색 결과
           </Title>
         </TitleContainer>
 
         <Container>
           <AnalysisSection>
             <Subtitle>
-              <TitleRed>{search}</TitleRed> 워드맵
+              <Red>{search}</Red> 워드맵
             </Subtitle>
             <NoticeTooltip text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `} />
 
@@ -262,7 +213,7 @@ function KeywordPresenter({
 
             <SubtitleContainer>
               <Subtitle>
-                <TitleRed>{search}</TitleRed> 추이
+                <Red>{search}</Red> 추이
               </Subtitle>
               <NoticeTooltip
                 text={`우측에 버튼을 통해 지난 2주 사이의 '${search}' 콘텐츠의 영상화 추이 변화와 인기도 추이 변화를 확인해보세요! `}
@@ -299,7 +250,7 @@ function KeywordPresenter({
 
           <AsideSection>
             <Subtitle>
-              <TitleRed>{search}</TitleRed> 관련 키워드
+              <Red>{search}</Red> 관련 키워드
             </Subtitle>
             <NoticeTooltip
               text={`'${search}'과 관련된 인기 키워드, 영상화 키워드 TOP 10을 확인해보세요! `}
@@ -324,7 +275,7 @@ function KeywordPresenter({
 
         <BottomContainer>
           <Subtitle>
-            <TitleRed>{search}</TitleRed> 조회수 급상승 영상
+            <Red>{search}</Red> 조회수 급상승 영상
           </Subtitle>
           <NoticeTooltip
             text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `}
@@ -337,7 +288,7 @@ function KeywordPresenter({
             )}
           </VideoContainer>
           <Subtitle>
-            <TitleRed>{search}</TitleRed> 인기 영상
+            <Red>{search}</Red> 인기 영상
           </Subtitle>
           <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
           <VideoContainer>

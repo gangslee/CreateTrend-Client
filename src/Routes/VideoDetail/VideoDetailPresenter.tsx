@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect, ConnectedProps } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import { BGSecond } from '../../Components/Container/BGContiner';
-import { RootState } from '../../store/store';
 import LineChart from '../../Components/Charts/LineChart';
 import Loader from '../../Components/Container/Loader';
+import Red from '../../Components/Text/Red';
+import Slogan from '../../Components/Text/Slogan';
+import { IPresenterProps, connector } from './connectors/presenter';
 
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
 
@@ -15,16 +16,9 @@ const Container = styled.div`
   margin: 0px auto;
 `;
 
-const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
-  font-size: 30px;
-  text-align: center;
+const SloganContainer = styled.div`
   margin-top: 90px;
-  margin-bottom: 60px;
-`;
-
-const Red = styled.span`
-  color: #dd0909;
+  margin-bottom: 30px;
 `;
 
 const VideoTitle = styled.span`
@@ -195,40 +189,20 @@ const LoaderContainer = styled.div`
   align-items: center;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      data: state.videoDetail,
-    },
-  };
-}
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux;
-
-interface IVideoDetailPresenterProps extends Props {
-  title: string;
-}
-
-function VideoDetailPresenter({ states, title }: IVideoDetailPresenterProps) {
+function VideoDetailPresenter({ states, title }: IPresenterProps) {
   return (
     <>
       <Helmet
-        title={
-          states.data.isLoading
-            ? 'Create Trend'
-            : `Create Trend ㅣ영상 상세 분석 : ${states.data.video.video.video_name}`
-        }
+        title={`Create Trend ㅣ영상 상세 분석 : ${title}`}
         link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
       <BGSecond>
         <Container>
-          <Slogan>
-            "영상 상세 분석을 통해 영상에 대한 보다 <Red>자세한 분석 결과</Red>를 확인해보세요"
-          </Slogan>
+          <SloganContainer>
+            <Slogan>
+              "영상 상세 분석을 통해 영상에 대한 보다 <Red>자세한 분석 결과</Red>를 확인해보세요"
+            </Slogan>
+          </SloganContainer>
           <VideoTitle>{title}</VideoTitle>
           <InfoContainer>
             <ThumbnailContainer

@@ -1,37 +1,16 @@
 import React, { useLayoutEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import { RouteComponentProps, useHistory } from 'react-router';
 
-import store, { RootState } from '../../store/store';
+import store from '../../store/store';
 import KeywordPresenter from './KeywordPresenter';
 import { fetchData } from '../../actions/keyword';
+import { Props } from './connectors/container';
+import { connector } from './connectors/presenter';
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      searchTerm: state.home.searchTerm,
-      searchType: state.home.searchType,
-    },
-  };
-}
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-interface IParamsProps {
-  search: string;
-}
-
-type Props = PropsFromRedux & RouteComponentProps<IParamsProps>;
-
-function KeywordContainer({ states, match }: Props) {
+function KeywordContainer({ states, history, match }: Props) {
   const { search } = match.params;
   useLayoutEffect(() => {
     fetchData(store.dispatch, search);
   }, [search]);
-
-  const history = useHistory();
 
   const searchKeyword = () => {
     if (search === states.searchTerm && states.searchType === 0) {

@@ -1,21 +1,14 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
-import { connect, ConnectedProps } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
-import { RootDispatch, RootState } from '../../store/store';
 import { BGSecond } from '../../Components/Container/BGContiner';
-import {
-  filterKeyword,
-  pushKeyword,
-  setPredictData,
-  setTextData,
-  setKeywordResultCurrent,
-  setAdvance,
-} from '../../store/reducers/predict';
 import LineChart from '../../Components/Charts/LineChart';
 import Loader from '../../Components/Container/Loader';
+import Red from '../../Components/Text/Red';
+import Slogan from '../../Components/Text/Slogan';
+import { connector, IProps } from './connector/presenter';
 
 const Container = styled.div`
   width: 1220px;
@@ -25,16 +18,9 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
-  font-size: 30px;
-  text-align: center;
-  margin-top: 110px;
-  margin-bottom: 30px;
-`;
 
-const Red = styled.span`
-  color: #dd0909;
+const SloganContainer = styled.div`
+  margin-top: 60px;
 `;
 
 const UploadSection = styled.div`
@@ -307,56 +293,7 @@ const ChartText = styled.span`
   font-weight: 600;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: {
-      data: state.predict,
-    },
-  };
-}
-
-function mapDispatchToProps(dispatch: RootDispatch) {
-  return {
-    dispatches: {
-      setThumbnail: (thumbnail: string | ArrayBuffer) => {
-        dispatch(setPredictData({ thumbnail }));
-      },
-      setTextData: (text: { title: string; subscriber: string; date: string }) => {
-        dispatch(setTextData({ ...text }));
-      },
-      pushKeyword: (formType: string) => {
-        dispatch(pushKeyword(formType));
-      },
-      filterKeyword: (className: string, keyword: string) => {
-        dispatch(filterKeyword({ className, keyword }));
-      },
-      setKeywordResultCurrent: (current: number) => {
-        dispatch(setKeywordResultCurrent(current));
-      },
-      setAdvance: () => {
-        dispatch(setAdvance());
-      },
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux;
-
-interface IPredictPresenterProps extends Props {
-  getData: () => void;
-  getDataFromKeyword: () => void;
-}
-
-function PredictPresenter({
-  states,
-  dispatches,
-  getData,
-  getDataFromKeyword,
-}: IPredictPresenterProps) {
+function PredictPresenter({ states, dispatches, getData, getDataFromKeyword }: IProps) {
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/jpeg, image/png',
     onDrop: (acceptedFiles) => {
@@ -436,9 +373,11 @@ function PredictPresenter({
       />
       <BGSecond>
         <Container>
-          <Slogan>
-            "<Red>AI Assistant</Red>와 함께 당신의 영상의 <Red>조회수를 예측</Red>해 보세요"
-          </Slogan>
+          <SloganContainer>
+            <Slogan>
+              "<Red>AI Assistant</Red>와 함께 당신의 영상의 <Red>조회수를 예측</Red>해 보세요"
+            </Slogan>
+          </SloganContainer>
           <UploadSection>
             <Subtitle>키워드 선택</Subtitle>
             <KeywordContainer>

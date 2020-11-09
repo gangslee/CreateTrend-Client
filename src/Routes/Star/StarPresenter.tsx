@@ -1,17 +1,19 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { connect, ConnectedProps } from 'react-redux';
 import { Helmet } from 'react-helmet';
 
 import Loader from '../../Components/Container/Loader';
 import VideoList from '../../Components/Lists/VideoList';
 import PieChart from '../../Components/Charts/PieChart';
 import LineChart from '../../Components/Charts/LineChart';
-import { RootState } from '../../store/store';
 import { BGSecond } from '../../Components/Container/BGContiner';
 import NoticeTooltip from '../../Components/Container/NoticeTooltip';
 import SearchBar from '../../Components/Container/SearchBar';
 import Wordmap from '../../Components/Charts/Wordmap';
+import Slogan from '../../Components/Text/Slogan';
+import Red from '../../Components/Text/Red';
+import Title from '../../Components/Text/Title';
+import { connector, IProps } from './connectors/presenter';
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
@@ -28,17 +30,6 @@ const SForm = styled.form`
   margin: 50px 0px;
   display: flex;
   justify-content: center;
-`;
-
-const Slogan = styled.div`
-  font-family: 'S-CoreDream-5Medium';
-  font-size: 30px;
-  text-align: center;
-  margin: 30px 0px;
-`;
-
-const SloganRed = styled.span`
-  color: #dd0909;
 `;
 
 const ChannelName = styled.span`
@@ -180,19 +171,7 @@ const TitleContainer = styled.div`
   align-items: center;
   width: 1200px;
   margin: 40px auto;
-  padding: 20px 0px;
   border-bottom: 1px solid #dbe0f5;
-`;
-
-const Title = styled.span`
-  font-size: 25px;
-  color: #333;
-  line-height: 1.4;
-  margin-right: 10px;
-`;
-
-const TitleRed = styled.span`
-  color: #d10909;
 `;
 
 const GraphContainer = styled.div`
@@ -260,34 +239,7 @@ const LoaderContainerChannelInfo = styled.div`
   height: 780px;
 `;
 
-function mapStateToProps(state: RootState) {
-  return {
-    states: { star: state.star, period: state.period },
-  };
-}
-
-const connector = connect(mapStateToProps);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-
-type Props = PropsFromRedux;
-
-interface IStarPresenterProps extends Props {
-  id: string;
-  period: string;
-  channel: string;
-  periodLine: (id: string, start: string, end: string) => void;
-  searchKeyword: () => void;
-}
-
-function StarPresenter({
-  states,
-  id,
-  channel,
-  period,
-  periodLine,
-  searchKeyword,
-}: IStarPresenterProps) {
+function StarPresenter({ states, id, channel, period, periodLine, searchKeyword }: IProps) {
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
@@ -302,7 +254,7 @@ function StarPresenter({
       <BGSecond>
         <Container>
           <Slogan>
-            "<SloganRed>{channel}</SloganRed> 채널을 알아보아요"
+            "<Red>{channel}</Red> 채널을 알아보아요"
           </Slogan>
 
           <SForm onSubmit={handleOnSubmit}>
@@ -399,7 +351,7 @@ function StarPresenter({
 
           <TitleContainer>
             <Title>
-              <TitleRed>{channel}</TitleRed>
+              <Red>{`${channel} `}</Red>
               구독자수 추이
             </Title>
             <NoticeTooltip
@@ -425,7 +377,7 @@ function StarPresenter({
           <BottomSection>
             <BottomAnalysisSection>
               <Subtitle>
-                기간 내 <TitleRed>조회수 급상승 영상</TitleRed>
+                기간 내 <Red>조회수 급상승 영상</Red>
               </Subtitle>
               <NoticeTooltip
                 text={`설정하신 기간 동안의 '${channel}' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`}
@@ -444,7 +396,7 @@ function StarPresenter({
             </BottomAnalysisSection>
             <AsideSection>
               <Subtitle>
-                기간 내 <TitleRed>콘텐츠 분포도</TitleRed>
+                기간 내 <Red>콘텐츠 분포도</Red>
               </Subtitle>
               <NoticeTooltip
                 text={`설정하신 기간 동안의 '${channel}' 채널 영상들의 주 콘텐츠들을 확인해보세요!`}
