@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IWordMapData, ILineChartData, IVideoListData } from "../types";
+import { createSlice } from '@reduxjs/toolkit';
+import { IWordMapData, ILineChartData, IVideoListData } from '../types';
 
 export interface IStarState {
   channelInfo?: {
@@ -18,15 +18,15 @@ export interface IStarState {
     }[];
     current: 0;
   };
-  wordmap?:{
-    name:string;
-    color:string;
-    children:{
-      name:string;
-      color:string;
-      value:number;
+  wordmap?: {
+    name: string;
+    color: string;
+    children: {
+      name: string;
+      color: string;
+      value: number;
     }[];
-  }
+  };
   line?: ILineChartData[];
   video: IVideoListData[];
   isLoading?: boolean;
@@ -39,12 +39,12 @@ const initialState: IStarState = {
   keyword: null,
   line: null,
   video: null,
-  wordmap:null,
+  wordmap: null,
   isLoading: true,
 };
 
 export const starSlice = createSlice({
-  name: "starReducer",
+  name: 'starReducer',
   initialState,
   reducers: {
     starDataUpdate: (state, action) => {

@@ -50,9 +50,9 @@ function StarContainer({ states, history, match }: Props) {
     <StarPresenter
       id={match.params.id}
       period={`${states.start} ~ ${states.end}`}
+      channel={match.params.name}
       periodLine={periodLine}
       searchKeyword={searchKeyword}
-      channel={match.params.name}
     />
   );
 }

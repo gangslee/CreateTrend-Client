@@ -260,7 +260,11 @@ function VideoDetailPresenter({ states, title }: IVideoDetailPresenterProps) {
                   <Desc>{states.data.channel.channel_description}</Desc>
                   <VideoInfoRow>
                     {states.data.video.video.videokeywordnew.slice(0, 5).map((word, index) => (
-                      <Keyword key={index} href={`/keyword/${word.keyword}`} target="_blank">
+                      <Keyword
+                        key={index}
+                        href={`/keyword/${encodeURIComponent(word.keyword)}`}
+                        target="_blank"
+                      >
                         {word.keyword}
                       </Keyword>
                     ))}

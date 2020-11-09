@@ -33,7 +33,6 @@ const Grid = styled.div`
 const ImageContainer = styled(Link)`
   display: inline-block;
   width: 270px;
-  /* height: 180px; */
   background-color: white;
   padding: 15px 15px 20px 15px;
   border: 2px solid #ecf1ff;
@@ -221,7 +220,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
           {usingData.data.slice(0, 4).map((data) => (
             <ImageContainer
               key={data.video_id}
-              to={`/detail/${data.idx}/${data.video_name}/${usingData.data[current].video_name}`}
+              to={`/detail/${data.idx}/${encodeURIComponent(data.video_name)}`}
             >
               <Image src={data.thumbnail_url} />
               <Title>{data.video_name}</Title>
@@ -237,7 +236,9 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
           <VideoContainer>
             <StarImageContainer
               mode={mode}
-              to={`/detail/${usingData.data[current].idx}/${usingData.data[current].video_name}`}
+              to={`/detail/${usingData.data[current].idx}/${encodeURIComponent(
+                usingData.data[current].video_name
+              )}`}
             >
               <Image src={usingData.data[current].thumbnail_url} />
             </StarImageContainer>
@@ -257,7 +258,10 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
         <>
           {usingData.data.slice(0, 5).map((data, index) => (
             <VideoContainer key={index}>
-              <StarImageContainer type={type} to={`/detail/${data.idx}/${data.video_name}`}>
+              <StarImageContainer
+                type={type}
+                to={`/detail/${data.idx}/${encodeURIComponent(data.video_name)}`}
+              >
                 <Image src={data.thumbnail_url} type={type} mode={mode} />
               </StarImageContainer>
               <VideoTitle>{data.video_name}</VideoTitle>

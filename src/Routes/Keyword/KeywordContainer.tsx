@@ -1,10 +1,10 @@
-import React, { useLayoutEffect } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { RouteComponentProps, useHistory } from "react-router";
+import React, { useLayoutEffect } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { RouteComponentProps, useHistory } from 'react-router';
 
-import store, { RootState } from "../../store/store";
-import KeywordPresenter from "./KeywordPresenter";
-import { fetchData } from "../../actions/keyword";
+import store, { RootState } from '../../store/store';
+import KeywordPresenter from './KeywordPresenter';
+import { fetchData } from '../../actions/keyword';
 
 function mapStateToProps(state: RootState) {
   return {
@@ -38,9 +38,9 @@ function KeywordContainer({ states, match }: Props) {
       fetchData(store.dispatch, search);
     } else {
       history.push(
-        `/${states.searchType === 0 ? "keyword" : "searchYoutuber"}/${
+        `/${states.searchType === 0 ? 'keyword' : 'searchYoutuber'}/${encodeURIComponent(
           states.searchTerm
-        }`
+        )}`
       );
     }
   };
@@ -53,13 +53,7 @@ function KeywordContainer({ states, match }: Props) {
     }
   };
 
-  return (
-    <KeywordPresenter
-      search={search}
-      searchKeyword={searchKeyword}
-      clickWord={clickWord}
-    />
-  );
+  return <KeywordPresenter search={search} searchKeyword={searchKeyword} clickWord={clickWord} />;
 }
 
 export default connector(KeywordContainer);
