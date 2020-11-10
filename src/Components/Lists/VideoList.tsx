@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { connect, ConnectedProps } from 'react-redux';
+import React from "react";
+import styled from "styled-components";
+import { connect, ConnectedProps } from "react-redux";
 
-import { RootState, RootDispatch } from '../../store/store';
-import { sliderStateNext, sliderStatePrev } from '../../store/reducers/slider';
-import Slider from '../Container/Slider';
-import { Link } from 'react-router-dom';
+import { RootState, RootDispatch } from "../../store/store";
+import { sliderStateNext, sliderStatePrev } from "../../store/reducers/slider";
+import Slider from "../Container/Slider";
+import { Link } from "react-router-dom";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
@@ -43,14 +43,15 @@ const ImageContainer = styled(Link)`
 
 const StarImageContainer = styled(Link)<IVideoListStyleProps>`
   display: inline-block;
-  width: ${({ mode }) => (mode === 'analysis' ? '45%' : '55%')};
-  height: ${({ mode }) => (mode === 'analysis' ? '180px' : '110px')};
-  margin-right: ${({ mode }) => (mode === 'analysis' ? '20px' : '15px')};
+  width: ${({ mode }) => (mode === "analysis" ? "45%" : "55%")};
+  height: ${({ mode }) => (mode === "analysis" ? "180px" : "110px")};
+  margin-right: ${({ mode }) => (mode === "analysis" ? "20px" : "15px")};
 `;
 
 const Image = styled.img<IVideoListStyleProps>`
   width: 100%;
-  height: ${({ type, mode }) => (type === 'star' && mode === 'aside' ? '110px' : '180px')};
+  height: ${({ type, mode }) =>
+    type === "star" && mode === "aside" ? "110px" : "180px"};
   border-radius: 10px;
   &:hover {
     filter: brightness(80%);
@@ -61,7 +62,7 @@ const Image = styled.img<IVideoListStyleProps>`
 
 const Title = styled.div`
   height: 42px;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 15px;
   line-height: 1.4;
   margin: 10px 0px;
@@ -73,7 +74,7 @@ const Title = styled.div`
   -webkit-box-orient: vertical;
 `;
 const InfoContainer = styled.div`
-  font-family: 'S-CoreDream-5Medium';
+  font-family: "S-CoreDream-5Medium";
   display: flex;
   justify-content: space-between;
 `;
@@ -94,7 +95,7 @@ const SliderInfo = styled.div`
     margin-bottom: 20px;
   }
   :nth-child(even) {
-    font-family: 'S-CoreDream-4Regular';
+    font-family: "S-CoreDream-4Regular";
   }
   :nth-child(odd) {
     color: #d10909;
@@ -115,7 +116,7 @@ const VideoTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 15px;
   font-weight: normal;
   font-stretch: normal;
@@ -146,29 +147,29 @@ function changeForm(n: number): string {
     ? `${(n / HUNDREAD_MILLIONS).toFixed(0)}억`
     : n >= TEN_THOUSANDS
     ? `${(n / TEN_THOUSANDS).toFixed(0)}만`
-    : `${n.toString().replace(REGEX, ',')}`;
+    : `${n.toString().replace(REGEX, ",")}`;
 }
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
-  if (ownProps.type === 'keyword') {
+  if (ownProps.type === "keyword") {
     return {
-      states: { data: state.keyword.video, current: state.slider.keyword },
+      states: { data: state.keyword.video, current: null },
     };
-  } else if (ownProps.type === 'statistics') {
+  } else if (ownProps.type === "statistics") {
     return {
       states: {
         data:
           state.statistics.keywordChart[state.statistics.currentChart].keyword[
             state.statistics.currentKeyword
           ].video,
-        current: state.slider.statistics,
+        current: null,
       },
     };
-  } else if (ownProps.type === 'star') {
+  } else if (ownProps.type === "star") {
     return {
       states: {
         data: state.star.video.concat(state.period.video),
-        current: state.slider.star,
+        current: state.slider.current,
       },
     };
   }
@@ -201,7 +202,7 @@ interface IVideoListProps extends Props {
 
 function VideoList({ states, update, mode, type }: IVideoListProps) {
   const handleOnClick = (e: React.MouseEvent) => {
-    const direction = e.currentTarget.id === 'next' ? true : false;
+    const direction = e.currentTarget.id === "next" ? true : false;
     update({ page: type, len: usingData.data.length - 1 }, direction);
   };
 
@@ -215,7 +216,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
     </ErrorContainer>
   ) : (
     <>
-      {type === 'keyword' || type === 'statistics' ? (
+      {type === "keyword" || type === "statistics" ? (
         <Grid>
           {usingData.data.slice(0, 4).map((data) => (
             <ImageContainer
@@ -231,7 +232,7 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
             </ImageContainer>
           ))}
         </Grid>
-      ) : mode === 'analysis' ? (
+      ) : mode === "analysis" ? (
         <Slider onClick={handleOnClick}>
           <VideoContainer>
             <StarImageContainer
@@ -260,7 +261,9 @@ function VideoList({ states, update, mode, type }: IVideoListProps) {
             <VideoContainer key={index}>
               <StarImageContainer
                 type={type}
-                to={`/detail/${data.idx}/${encodeURIComponent(data.video_name)}`}
+                to={`/detail/${data.idx}/${encodeURIComponent(
+                  data.video_name
+                )}`}
               >
                 <Image src={data.thumbnail_url} type={type} mode={mode} />
               </StarImageContainer>

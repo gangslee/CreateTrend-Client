@@ -1,52 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IinitialStateProps {
-  keyword: number;
-  statistics: number;
-  star: number;
-}
+  current: number;
+} // Slider Component에 사용되는 data들을 담아둘 state 형식을 type으로 선언
 
 const initialState: IinitialStateProps = {
-  keyword: 0,
-  statistics: 0,
-  star: 0,
-};
+  current: 0,
+}; // Slider Component의 초기 state 선언
 
 export const sliderSlice = createSlice({
   name: "sliderReducer",
   initialState,
   reducers: {
     sliderStateNext: (state, action) => {
-      if (action.payload.page === "keyword") {
-        state.keyword !== action.payload.len
-          ? (state.keyword += 1)
-          : (state.keyword = 0);
-      } else if (action.payload.page === "statistics") {
-        state.statistics !== action.payload.len
-          ? (state.statistics += 1)
-          : (state.statistics = 0);
-      } else if (action.payload.page === "star") {
-        state.star !== action.payload.len
-          ? (state.star += 1)
-          : (state.star = 0);
-      }
-    },
+      state.current !== action.payload.len
+        ? (state.current += 1)
+        : (state.current = 0);
+    }, // Slider의 현재 상태를 변경 시켜 다음 영상을 출력하도록 변경
+
     sliderStatePrev: (state, action) => {
-      if (action.payload.page === "keyword") {
-        state.keyword !== 0
-          ? (state.keyword -= 1)
-          : (state.keyword = action.payload.len);
-      } else if (action.payload.page === "statistics") {
-        state.statistics !== 0
-          ? (state.statistics -= 1)
-          : (state.statistics = action.payload.len);
-      } else if (action.payload.page === "star") {
-        state.star !== 0
-          ? (state.star -= 1)
-          : (state.star = action.payload.len);
-      }
-    },
+      state.current !== 0
+        ? (state.current -= 1)
+        : (state.current = action.payload.len);
+    }, // Slider의 현재 상태를 변경 시켜 이전 영상을 출력하도록 변경
   },
-});
+}); // Slider Component에서 state 관리/변경에 사용되는 reducer들을 선언 후 createSlice를 통해 initialState와 결합 후 외부 파일에서 사용할 수 있도록 export
 
 export const { sliderStateNext, sliderStatePrev } = sliderSlice.actions;
+// 앞서 선언한 reducer들을 외부에서 직접적으로 사용할 수 있도록 export
