@@ -2,8 +2,7 @@ import React from "react";
 import styled, { css } from "styled-components";
 import { connect, ConnectedProps } from "react-redux";
 
-import { RootState, RootDispatch } from "../../store/store";
-import { callLoader } from "../../store/reducers/keyword";
+import { RootState } from "../../store/store";
 import { Link } from "react-router-dom";
 
 type styleType = {
@@ -17,7 +16,7 @@ const Subtitle = styled.div`
   text-align: center;
   padding-bottom: 10px;
   border-bottom: 2px solid #222;
-  margin-bottom:5px;
+  margin-bottom: 5px;
 `;
 
 const TitleRed = styled.span`
@@ -116,17 +115,7 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
   };
 }
 
-function mapDispatchToProps(dispatch: RootDispatch) {
-  return {
-    dispatches: {
-      callLoader: () => {
-        dispatch(callLoader());
-      },
-    },
-  };
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
+const connector = connect(mapStateToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -141,7 +130,6 @@ interface IKeywordChartProps extends Props {
 
 function KeywordChart({
   states,
-  dispatches,
   index,
   type,
   stateFunc,

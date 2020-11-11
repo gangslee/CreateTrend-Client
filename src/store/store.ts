@@ -22,15 +22,17 @@ const cReducer = combineReducers({
   slider: sliderSlice.reducer,
   header: headerSlice.reducer,
   auth: authSlice.reducer,
-  predict:predictSlice.reducer,
-  videoDetail:videoDetailSlice.reducer,
-});
+  predict: predictSlice.reducer,
+  videoDetail: videoDetailSlice.reducer,
+}); // 프로젝트의 모든 reducer를 combineReducers를 통해 결합하여 하나의 통합 reducer를 생성
 
 const store = configureStore({
   reducer: cReducer,
 });
 
 export default store;
+// 프로젝트의 통합 store를 생성 후 export
 
 export type RootState = ReturnType<typeof store.getState>;
 export type RootDispatch = typeof store.dispatch;
+// 통합 state, dispatch를 타입 화 시킨 후 export

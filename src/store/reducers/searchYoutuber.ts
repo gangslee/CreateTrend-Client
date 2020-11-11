@@ -53,7 +53,7 @@ export const searchYoutuberSlice = createSlice({
           : (state.page / 10 - 1) * 10 + 1;
     }, // 페이지 내 Pagination Component의 index 값을 이전 index 값으로 변경
   },
-});
+}); // 스타 채널 검색 결과 페이지에서 state 관리/변경에 사용되는 reducer들을 선언 후 createSlice를 통해 initialState와 결합 후 외부 파일에서 사용할 수 있도록 export
 
 export const {
   setLoading,
@@ -62,3 +62,4 @@ export const {
   prevPagination,
   currentPagination,
 } = searchYoutuberSlice.actions;
+// 앞서 선언한 reducer들을 외부에서 직접적으로 사용할 수 있도록 export

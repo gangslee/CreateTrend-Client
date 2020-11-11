@@ -1,13 +1,13 @@
-import { RootState, RootDispatch } from '../../../store/store';
-import { connect, ConnectedProps } from 'react-redux';
+import { RootState, RootDispatch } from "../../../store/store";
+import { connect, ConnectedProps } from "react-redux";
 import {
   filterKeyword,
   pushKeyword,
-  setPredictData,
+  setThumbnail,
   setTextData,
   setKeywordResultCurrent,
   setAdvance,
-} from '../../../store/reducers/predict';
+} from "../../../store/reducers/predict";
 
 function mapStateToProps(state: RootState) {
   return {
@@ -21,9 +21,13 @@ function mapDispatchToProps(dispatch: RootDispatch) {
   return {
     dispatches: {
       setThumbnail: (thumbnail: string | ArrayBuffer) => {
-        dispatch(setPredictData({ thumbnail }));
+        dispatch(setThumbnail({ thumbnail }));
       },
-      setTextData: (text: { title: string; subscriber: string; date: string }) => {
+      setTextData: (text: {
+        title: string;
+        subscriber: string;
+        date: string;
+      }) => {
         dispatch(setTextData({ ...text }));
       },
       pushKeyword: (formType: string) => {
