@@ -1,16 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
-import { BGSecond } from '../../Components/Container/BGContiner';
-import LineChart from '../../Components/Charts/LineChart';
-import Loader from '../../Components/Container/Loader';
-import Red from '../../Components/Text/Red';
-import Slogan from '../../Components/Text/Slogan';
-import { IPresenterProps, connector } from './connectors/presenter';
+import { BGSecond } from "../../Components/Container/BGContiner";
+import LineChart from "../../Components/Charts/LineChart";
+import Loader from "../../Components/Container/Loader";
+import Red from "../../Components/Text/Red";
+import Slogan from "../../Components/Text/Slogan";
+import { IProps, connector } from "./connectors/presenter";
 
-const REGEX = /\B(?=(\d{3})+(?!\d))/g;
+const REGEX = /\B(?=(\d{3})+(?!\d))/g; // 숫자 표기에 사용되는 정규식
 
+// 화면에 나타날 style을 포함한 Element들을 선언
 const Container = styled.div`
   width: 1200px;
   margin: 0px auto;
@@ -84,7 +85,7 @@ const ChannelName = styled.span`
 
 const Desc = styled.span`
   font-size: 18px;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   line-height: 1.6;
   margin: 20px 0px;
   overflow: hidden;
@@ -96,7 +97,7 @@ const Desc = styled.span`
 
 const Keyword = styled.a`
   display: inline-block;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 12px;
   border-radius: 10px;
   padding: 8px 12px;
@@ -127,14 +128,14 @@ const LikeContainer = styled.div`
 `;
 
 const InfoTitle = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 20px;
   line-height: 1.4;
   color: #999;
 `;
 
 const InfoPercent = styled.span`
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-weight: 600;
   font-size: 30px;
   line-height: 1.5;
@@ -163,7 +164,7 @@ const Right = styled.div`
 `;
 
 const SearchPeriod = styled.div`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 18px;
   line-height: 1.39;
   color: #999;
@@ -189,20 +190,27 @@ const LoaderContainer = styled.div`
   align-items: center;
 `;
 
-function VideoDetailPresenter({ states, title }: IPresenterProps) {
+// 영상 상세 분석 페이지의 UI Logic Component 생성
+function VideoDetailPresenter({ states, title }: IProps) {
   return (
     <>
+      {/* react-helmet을 통해 웹 문서 header 편집*/}
       <Helmet
         title={`Create Trend ㅣ영상 상세 분석 : ${title}`}
-        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
+        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
       />
+
       <BGSecond>
         <Container>
+          {/* 상단 slogan*/}
           <SloganContainer>
             <Slogan>
-              "영상 상세 분석을 통해 영상에 대한 보다 <Red>자세한 분석 결과</Red>를 확인해보세요"
+              "영상 상세 분석을 통해 영상에 대한 보다{" "}
+              <Red>자세한 분석 결과</Red>를 확인해보세요"
             </Slogan>
           </SloganContainer>
+
+          {/* 영상 썸네일 & 채널 정보*/}
           <VideoTitle>{title}</VideoTitle>
           <InfoContainer>
             <ThumbnailContainer
@@ -229,41 +237,43 @@ function VideoDetailPresenter({ states, title }: IPresenterProps) {
                 <>
                   <VideoInfoRow>
                     <Avatar src={states.data.channel.thumbnail_url} />
-                    <ChannelName>{states.data.channel.channel_name}</ChannelName>
+                    <ChannelName>
+                      {states.data.channel.channel_name}
+                    </ChannelName>
                   </VideoInfoRow>
                   <Desc>{states.data.channel.channel_description}</Desc>
                   <VideoInfoRow>
-                    {states.data.video.video.videokeywordnew.slice(0, 5).map((word, index) => (
-                      <Keyword
-                        key={index}
-                        href={`/keyword/${encodeURIComponent(word.keyword)}`}
-                        target="_blank"
-                      >
-                        {word.keyword}
-                      </Keyword>
-                    ))}
+                    {states.data.video.video.videokeywordnew
+                      .slice(0, 5)
+                      .map((word, index) => (
+                        <Keyword
+                          key={index}
+                          href={`/keyword/${encodeURIComponent(word.keyword)}`}
+                          target="_blank"
+                        >
+                          {word.keyword}
+                        </Keyword>
+                      ))}
                   </VideoInfoRow>
                   <LikeDisLike>
                     <LikeContainer>
                       <InfoTitle>좋아요</InfoTitle>
                       <InfoPercent>
                         {states.data.video.video.videolikes.length === 0
-                          ? '비공개'
-                          : `${states.data.video.video.videolikes[0].likes.toFixed(0)}`.replace(
-                              REGEX,
-                              ','
-                            )}
+                          ? "비공개"
+                          : `${states.data.video.video.videolikes[0].likes.toFixed(
+                              0
+                            )}`.replace(REGEX, ",")}
                       </InfoPercent>
                     </LikeContainer>
                     <LikeContainer>
                       <InfoTitle>싫어요</InfoTitle>
                       <InfoPercent>
                         {states.data.video.video.videolikes.length === 0
-                          ? '비공개'
-                          : `${states.data.video.video.videolikes[0].dislikes.toFixed(0)}`.replace(
-                              REGEX,
-                              ','
-                            )}
+                          ? "비공개"
+                          : `${states.data.video.video.videolikes[0].dislikes.toFixed(
+                              0
+                            )}`.replace(REGEX, ",")}
                       </InfoPercent>
                     </LikeContainer>
                   </LikeDisLike>
@@ -271,6 +281,8 @@ function VideoDetailPresenter({ states, title }: IPresenterProps) {
               )}
             </VideoInfo>
           </InfoContainer>
+
+          {/* 조회수 추이 그래프*/}
           <Subtitle>
             <Red>조회수</Red> 추이 그래프
           </Subtitle>
@@ -284,7 +296,9 @@ function VideoDetailPresenter({ states, title }: IPresenterProps) {
                 <Right>
                   {
                     <SearchPeriod>{`${states.data.lines[0].data[0].date} ~ ${
-                      states.data.lines[0].data[states.data.lines[0].data.length - 1].date
+                      states.data.lines[0].data[
+                        states.data.lines[0].data.length - 1
+                      ].date
                     }`}</SearchPeriod>
                   }
                 </Right>
@@ -296,28 +310,38 @@ function VideoDetailPresenter({ states, title }: IPresenterProps) {
                     <InfoTitle>전체 평균 인기도 대비 영상 인기도</InfoTitle>
                     <InfoPercent>
                       {states.data.video.video_popularity
-                        ? `${(states.data.video.video_popularity / states.data.video.avg_popularity)
+                        ? `${(
+                            states.data.video.video_popularity /
+                            states.data.video.avg_popularity
+                          )
                             .toFixed(0)
                             .toString()
-                            .replace(REGEX, ',')}% `
-                        : '비공개'}
+                            .replace(REGEX, ",")}% `
+                        : "비공개"}
                     </InfoPercent>
-                    {states.data.video.video_popularity / states.data.video.avg_popularity > 0 && (
-                      <Rise src={require('../../Asset/images/Rise_icon.svg')} />
+                    {states.data.video.video_popularity /
+                      states.data.video.avg_popularity >
+                      0 && (
+                      <Rise src={require("../../Asset/images/Rise_icon.svg")} />
                     )}
                   </LikeContainer>
                   <LikeContainer>
                     <InfoTitle>전체 평균 조회수 대비 영상 조회수</InfoTitle>
                     <InfoPercent>
                       {states.data.video.video_views
-                        ? `${(states.data.video.video_views / states.data.video.avg_videoviews)
+                        ? `${(
+                            states.data.video.video_views /
+                            states.data.video.avg_videoviews
+                          )
                             .toFixed(0)
                             .toString()
-                            .replace(REGEX, ',')}%`
-                        : '비공개'}
+                            .replace(REGEX, ",")}%`
+                        : "비공개"}
                     </InfoPercent>
-                    {states.data.video.video_views / states.data.video.avg_videoviews > 0 && (
-                      <Rise src={require('../../Asset/images/Rise_icon.svg')} />
+                    {states.data.video.video_views /
+                      states.data.video.avg_videoviews >
+                      0 && (
+                      <Rise src={require("../../Asset/images/Rise_icon.svg")} />
                     )}
                   </LikeContainer>
                 </LikeDisLike>
@@ -331,3 +355,4 @@ function VideoDetailPresenter({ states, title }: IPresenterProps) {
 }
 
 export default connector(VideoDetailPresenter);
+// 폴더 내 connector에서 생성한 connector를 통해 store의 state를 해당 Component의 props로 전달

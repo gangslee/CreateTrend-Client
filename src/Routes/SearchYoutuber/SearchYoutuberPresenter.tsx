@@ -1,21 +1,23 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import styled from "styled-components";
+import { Helmet } from "react-helmet";
 
-import { BGSecond } from '../../Components/Container/BGContiner';
-import SearchBar from '../../Components/Container/SearchBar';
-import Pagination from '../../Components/Container/Pagination';
-import Loader from '../../Components/Container/Loader';
-import { Link } from 'react-router-dom';
-import Slogan from '../../Components/Text/Slogan';
-import Red from '../../Components/Text/Red';
-import Title from '../../Components/Text/Title';
-import { connector, IProps } from './connectors/presenter';
+import { BGSecond } from "../../Components/Container/BGContiner";
+import SearchBar from "../../Components/Container/SearchBar";
+import Pagination from "../../Components/Container/Pagination";
+import Loader from "../../Components/Container/Loader";
+import { Link } from "react-router-dom";
+import Slogan from "../../Components/Text/Slogan";
+import Red from "../../Components/Text/Red";
+import Title from "../../Components/Text/Title";
+import { connector, IProps } from "./connectors/presenter";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
+// 숫자 표기에 사용되는 정규식, 상수 선언
 
+// 화면에 나타날 style을 포함한 Element들을 선언
 const SloganContainer = styled.div`
   margin: 90px 0 70px 0;
 `;
@@ -120,7 +122,7 @@ const Icon = styled.img`
 
 const IconInfo = styled.span`
   display: inline-block;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 14px;
   :not(:last-child) {
     margin-right: 14px;
@@ -146,7 +148,7 @@ const DetailInfoContainer = styled.div`
 `;
 
 const DetailInfoTitle = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 13px;
   line-height: 2.69;
   color: #999;
@@ -182,43 +184,58 @@ const LoaderContainer = styled.div`
   justify-content: center;
 `;
 
-function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps) {
+// 스타채널 검색 결과 페이지의 UI Logic Component 생성
+function SearchYoutuberPresenter({
+  states,
+  youtuberName,
+  searchKeyword,
+}: IProps) {
   const start = states.data && 0 + 4 * (states.page - 1);
-  const end = states.data && (states.data.length - 1 >= start + 3 ? start + 4 : states.data.length);
+  const end =
+    states.data &&
+    (states.data.length - 1 >= start + 3 ? start + 4 : states.data.length);
+  // pagination에 사용될 최소/최대 index 값 선언
 
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
-  };
+  }; // 검색 할 내용을 제출 시 실행되는 함수
 
   return (
     <>
+      {/* react-helmet을 통해 웹 문서 header 편집*/}
       <Helmet
         title={`Create Trend ㅣ 유튜버 검색 : ${youtuberName}`}
-        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
+        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
       />
+
       <BGSecond>
+        {/* 상단 slogan*/}
         <SloganContainer>
           <Slogan>
             "궁금한 <Red>스타채널</Red>을 검색해 보세요"
           </Slogan>
         </SloganContainer>
+
+        {/* 검색 창*/}
         <SearchBarContainer onSubmit={handleOnSubmit}>
           <SearchBar searchKeyword={searchKeyword} />
         </SearchBarContainer>
+
         <Container>
           <TitleContainer>
             <TitleIcon
-              src={require('../../Asset/images/hashtag.png')}
+              src={require("../../Asset/images/hashtag.png")}
               srcSet={
-                (require('../../Asset/images/hashtag@2x.png'),
-                require('../../Asset/images/hashtag@3x.png'))
+                (require("../../Asset/images/hashtag@2x.png"),
+                require("../../Asset/images/hashtag@3x.png"))
               }
             />
             <Title>
               <Red>{youtuberName}</Red> 채널 검색 결과
             </Title>
           </TitleContainer>
+
           {states.loading ? (
             <LoaderContainer>
               <Loader />
@@ -229,9 +246,13 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
                 <Subtitle>검색결과</Subtitle>
                 <Count>{states.data.length}</Count>
               </SubtitleContainer>
+
+              {/* 검색 결과로 나타나는 채널 리스트*/}
               {states.data.slice(start, end).map((data) => (
                 <SLink
-                  to={`/star/${data.idx}/${encodeURIComponent(data.channel_name)}`}
+                  to={`/star/${data.idx}/${encodeURIComponent(
+                    data.channel_name
+                  )}`}
                   key={data.idx}
                 >
                   <ResultContainer>
@@ -242,39 +263,61 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
                       </Subtitle>
                       <ChannelInfoLineContainer>
                         <Icon
-                          src={require('../../Asset/images/view_icon.png')}
+                          src={require("../../Asset/images/view_icon.png")}
                           srcSet={
-                            (require('../../Asset/images/view_icon@2x.png'),
-                            require('../../Asset/images/view_icon@3x.png'))
+                            (require("../../Asset/images/view_icon@2x.png"),
+                            require("../../Asset/images/view_icon@3x.png"))
                           }
                         />
                         <IconInfo>
                           {data.subscriber_num === 0
-                            ? '비공개'
+                            ? "비공개"
                             : data.subscriber_num >= HUNDREAD_MILLIONS
-                            ? `${(data.subscriber_num / HUNDREAD_MILLIONS).toFixed(1)}억명`
+                            ? `${(
+                                data.subscriber_num / HUNDREAD_MILLIONS
+                              ).toFixed(1)}억명`
                             : data.subscriber_num >= TEN_THOUSANDS
-                            ? `${(data.subscriber_num / TEN_THOUSANDS).toFixed(1)}만명`
-                            : `${data.subscriber_num.toString().replace(REGEX, ',')}명`}
+                            ? `${(data.subscriber_num / TEN_THOUSANDS).toFixed(
+                                1
+                              )}만명`
+                            : `${data.subscriber_num
+                                .toString()
+                                .replace(REGEX, ",")}명`}
                         </IconInfo>
 
-                        <Icon src={require('../../Asset/images/hits_icon.svg')} />
+                        <Icon
+                          src={require("../../Asset/images/hits_icon.svg")}
+                        />
 
                         <IconInfo>
                           {data.max_views_count >= HUNDREAD_MILLIONS
-                            ? `${(data.max_views_count / HUNDREAD_MILLIONS).toFixed(0)}억`
+                            ? `${(
+                                data.max_views_count / HUNDREAD_MILLIONS
+                              ).toFixed(0)}억`
                             : data.max_views_count >= TEN_THOUSANDS
-                            ? `${(data.max_views_count / TEN_THOUSANDS).toFixed(0)}만`
-                            : `${data.max_views_count.toString().replace(REGEX, ',')}`}
+                            ? `${(data.max_views_count / TEN_THOUSANDS).toFixed(
+                                0
+                              )}만`
+                            : `${data.max_views_count
+                                .toString()
+                                .replace(REGEX, ",")}`}
                         </IconInfo>
 
-                        <Icon src={require('../../Asset/images/video_icon.svg')} />
+                        <Icon
+                          src={require("../../Asset/images/video_icon.svg")}
+                        />
                         <IconInfo>
                           {data.video_counts >= HUNDREAD_MILLIONS
-                            ? `${(data.video_counts / HUNDREAD_MILLIONS).toFixed(0)}억개`
+                            ? `${(
+                                data.video_counts / HUNDREAD_MILLIONS
+                              ).toFixed(0)}억개`
                             : data.video_counts >= TEN_THOUSANDS
-                            ? `${(data.video_counts / TEN_THOUSANDS).toFixed(0)}만개`
-                            : `${data.video_counts.toString().replace(REGEX, ',')}개`}
+                            ? `${(data.video_counts / TEN_THOUSANDS).toFixed(
+                                0
+                              )}만개`
+                            : `${data.video_counts
+                                .toString()
+                                .replace(REGEX, ",")}개`}
                         </IconInfo>
                       </ChannelInfoLineContainer>
                     </ChannelInfoContainer>
@@ -284,7 +327,7 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
                           <DetailInfoTitle>조회수/구독자수</DetailInfoTitle>
                           <DetailInfoItem>
                             {data.subscriber_num === 0
-                              ? '구독자수 비공개'
+                              ? "구독자수 비공개"
                               : `${(
                                   data.max_views_count /
                                   data.video_counts /
@@ -295,13 +338,15 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
                         <DetailInfoContainer>
                           <DetailInfoTitle>평균조회수</DetailInfoTitle>
                           <DetailInfoItem>
-                            {data.max_views_count / data.video_counts >= HUNDREAD_MILLIONS
+                            {data.max_views_count / data.video_counts >=
+                            HUNDREAD_MILLIONS
                               ? `${(
                                   data.max_views_count /
                                   data.video_counts /
                                   HUNDREAD_MILLIONS
                                 ).toFixed(1)}억`
-                              : data.max_views_count / data.video_counts >= TEN_THOUSANDS
+                              : data.max_views_count / data.video_counts >=
+                                TEN_THOUSANDS
                               ? `${(
                                   data.max_views_count /
                                   data.video_counts /
@@ -310,7 +355,7 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
                               : `${(data.max_views_count / data.video_counts)
                                   .toFixed(0)
                                   .toString()
-                                  .replace(REGEX, ',')}`}
+                                  .replace(REGEX, ",")}`}
                           </DetailInfoItem>
                         </DetailInfoContainer>
                       </ChannelDetailLineContainer>
@@ -326,6 +371,8 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
                   </ResultContainer>
                 </SLink>
               ))}
+
+              {/* 페이지 변경에 사용되는 pagination*/}
               <Pagination />
             </>
           )}
@@ -336,3 +383,4 @@ function SearchYoutuberPresenter({ states, youtuberName, searchKeyword }: IProps
 }
 
 export default connector(SearchYoutuberPresenter);
+// 폴더 내 connector에서 생성한 connector를 통해 store의 state를 해당 Component의 props로 전달

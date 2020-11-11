@@ -1,24 +1,26 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import styled, { css } from "styled-components";
+import { Helmet } from "react-helmet";
 
-import Loader from '../../Components/Container/Loader';
-import VideoList from '../../Components/Lists/VideoList';
-import PieChart from '../../Components/Charts/PieChart';
-import LineChart from '../../Components/Charts/LineChart';
-import { BGSecond } from '../../Components/Container/BGContiner';
-import NoticeTooltip from '../../Components/Container/NoticeTooltip';
-import SearchBar from '../../Components/Container/SearchBar';
-import Wordmap from '../../Components/Charts/Wordmap';
-import Slogan from '../../Components/Text/Slogan';
-import Red from '../../Components/Text/Red';
-import Title from '../../Components/Text/Title';
-import { connector, IProps } from './connectors/presenter';
+import Loader from "../../Components/Container/Loader";
+import VideoList from "../../Components/Lists/VideoList";
+import PieChart from "../../Components/Charts/PieChart";
+import LineChart from "../../Components/Charts/LineChart";
+import { BGSecond } from "../../Components/Container/BGContiner";
+import NoticeTooltip from "../../Components/Container/NoticeTooltip";
+import SearchBar from "../../Components/Container/SearchBar";
+import Wordmap from "../../Components/Charts/Wordmap";
+import Slogan from "../../Components/Text/Slogan";
+import Red from "../../Components/Text/Red";
+import Title from "../../Components/Text/Title";
+import { connector, IProps } from "./connectors/presenter";
 
 const TEN_THOUSANDS = 10000;
 const HUNDREAD_MILLIONS: number = 100000000;
 const REGEX = /\B(?=(\d{3})+(?!\d))/g;
+// 숫자 표기에 사용되는 정규식, 상수 선언
 
+// 화면에 나타날 style을 포함한 Element들을 선언
 const Container = styled.div`
   width: 1220px;
   margin: 50px auto;
@@ -38,7 +40,7 @@ const ChannelName = styled.span`
 `;
 
 const SearchPeriod = styled.div`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 18px;
   line-height: 1.39;
   color: #999;
@@ -110,7 +112,7 @@ const Divider = styled.div`
 `;
 
 const InfoTitle = styled.span`
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 13px;
   line-height: 2.69;
   color: #999;
@@ -127,7 +129,7 @@ const DescContainer = styled.div`
   border-radius: 10px;
   background-color: #f6f7fb;
   padding: 25px 40px;
-  font-family: 'S-CoreDream-4Regular';
+  font-family: "S-CoreDream-4Regular";
   font-size: 15px;
   line-height: 1.67;
   margin: 25px 0px;
@@ -213,14 +215,14 @@ interface IVideoProps {
 }
 
 const VideoContainer = styled.div<IVideoProps>`
-  height: ${({ mode }) => (mode === 'analysis' ? '260px' : '100%')};
+  height: ${({ mode }) => (mode === "analysis" ? "260px" : "100%")};
   background-color: #fff;
   box-sizing: border-box;
   border-radius: 10px;
   box-shadow: 10px 10px 20px 0 rgba(95, 111, 174, 0.1);
   padding: 30px 25px;
   ${({ mode }) =>
-    mode === 'aside' &&
+    mode === "aside" &&
     css`
       width: 380px;
       height: 780px;
@@ -239,30 +241,44 @@ const LoaderContainerChannelInfo = styled.div`
   height: 780px;
 `;
 
-function StarPresenter({ states, id, channel, period, periodLine, searchKeyword }: IProps) {
+// 스타 채널 분석 페이지의 UI Logic Component 생성
+function StarPresenter({
+  states,
+  id,
+  channel,
+  period,
+  periodLine,
+  searchKeyword,
+}: IProps) {
   const handleOnSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
-  };
+  }; // 검색 할 내용을 제출 시 실행되는 함수
 
   return (
     <>
+      {/* react-helmet을 통해 웹 문서 header 편집*/}
       <Helmet
         title={`Create Trend | ${channel}`}
-        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
+        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
       />
+
       <BGSecond>
         <Container>
+          {/* 상단 slogan*/}
           <Slogan>
             "<Red>{channel}</Red> 채널을 알아보아요"
           </Slogan>
 
+          {/* 검색 창*/}
           <SForm onSubmit={handleOnSubmit}>
             <SearchBar searchKeyword={searchKeyword} />
           </SForm>
 
           <ChannelName>{channel}</ChannelName>
-          <SearchPeriod>검색기간 :{` ${states.period.start} ~ ${states.period.end}`}</SearchPeriod>
+          <SearchPeriod>
+            검색기간 :{` ${states.period.start} ~ ${states.period.end}`}
+          </SearchPeriod>
 
           <ResultContainer>
             <AnalysisSection>
@@ -276,7 +292,11 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
                 ) : (
                   <>
                     <Subtitle>채널 소개</Subtitle>
-                    <NoticeTooltip text={`'${channel}' 채널의 간략 정보를 확인해보세요! `} />
+                    <NoticeTooltip
+                      text={`'${channel}' 채널의 간략 정보를 확인해보세요! `}
+                    />
+
+                    {/* 채널 소개 Section*/}
                     <ChannelInfoContainer>
                       <Avatar src={states.star.channelInfo.thumbnail_url} />
                       <InfoContainer>
@@ -286,29 +306,40 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
                       <Divider />
                       <InfoContainer>
                         <InfoTitle>채널 개설일</InfoTitle>
-                        <InfoItem>{states.star.channelInfo.channel_start_date}</InfoItem>
+                        <InfoItem>
+                          {states.star.channelInfo.channel_start_date}
+                        </InfoItem>
                       </InfoContainer>
                       <Divider />
                       <InfoContainer>
                         <InfoTitle>구독자수</InfoTitle>
                         <InfoItem>
                           {states.star.channelInfo.subscriber === 0
-                            ? '비공개'
-                            : states.star.channelInfo.subscriber >= HUNDREAD_MILLIONS
-                            ? `${(states.star.channelInfo.subscriber / HUNDREAD_MILLIONS).toFixed(
-                                1
-                              )}억명`
-                            : states.star.channelInfo.subscriber >= TEN_THOUSANDS
-                            ? `${(states.star.channelInfo.subscriber / TEN_THOUSANDS).toFixed(
-                                1
-                              )}만명`
+                            ? "비공개"
+                            : states.star.channelInfo.subscriber >=
+                              HUNDREAD_MILLIONS
+                            ? `${(
+                                states.star.channelInfo.subscriber /
+                                HUNDREAD_MILLIONS
+                              ).toFixed(1)}억명`
+                            : states.star.channelInfo.subscriber >=
+                              TEN_THOUSANDS
+                            ? `${(
+                                states.star.channelInfo.subscriber /
+                                TEN_THOUSANDS
+                              ).toFixed(1)}만명`
                             : `${states.star.channelInfo.subscriber
                                 .toString()
-                                .replace(REGEX, ',')}명`}
+                                .replace(REGEX, ",")}명`}
                         </InfoItem>
                       </InfoContainer>
                     </ChannelInfoContainer>
-                    <DescContainer>{states.star.channelInfo.channel_description}</DescContainer>
+
+                    <DescContainer>
+                      {states.star.channelInfo.channel_description}
+                    </DescContainer>
+
+                    {/* 채널 콘텐츠 분포도 PieChart & 관련 키워드 Wordmap*/}
                     <ChannelInfoContainer>
                       <PieContainer>
                         <Subtitle>콘텐츠 분포도</Subtitle>
@@ -334,6 +365,7 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
               </ChannelContainer>
             </AnalysisSection>
 
+            {/* 채널 내 최고 조회수 영상 리스트*/}
             <VideoContainer mode="aside">
               {states.star.isLoading ? (
                 <LoaderContainer>
@@ -342,7 +374,9 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
               ) : (
                 <>
                   <Subtitle>채널 최고 조회수 영상</Subtitle>
-                  <NoticeTooltip text={`'${channel}' 채널의 인기 영상들을 확인해보세요!`} />
+                  <NoticeTooltip
+                    text={`'${channel}' 채널의 인기 영상들을 확인해보세요!`}
+                  />
                   <VideoList mode="aside" type="star" title={channel} />
                 </>
               )}
@@ -359,6 +393,7 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
             />
           </TitleContainer>
 
+          {/* 채널 구독자수 추이 그래프*/}
           <GraphContainer>
             <RightContainer>
               <SearchPeriod>{`${states.period.start} ~ ${states.period.end}`}</SearchPeriod>
@@ -382,6 +417,8 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
               <NoticeTooltip
                 text={`설정하신 기간 동안의 '${channel}' 채널의 가장 조회수 상승률이 높은 영상들을 확인해보세요!`}
               />
+
+              {/* 기간 내 조회수 급상승 영상*/}
               <VideoContainer mode="analysis">
                 {states.star.isLoading ? (
                   <LoaderContainer>
@@ -394,6 +431,7 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
                 )}
               </VideoContainer>
             </BottomAnalysisSection>
+
             <AsideSection>
               <Subtitle>
                 기간 내 <Red>콘텐츠 분포도</Red>
@@ -401,6 +439,8 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
               <NoticeTooltip
                 text={`설정하신 기간 동안의 '${channel}' 채널 영상들의 주 콘텐츠들을 확인해보세요!`}
               />
+
+              {/* 기간 내 채널 주 콘텐츠 분포도*/}
               <PieSection>
                 {states.period.isLoading ? (
                   <LoaderContainer>
@@ -421,3 +461,4 @@ function StarPresenter({ states, id, channel, period, periodLine, searchKeyword 
 }
 
 export default connector(StarPresenter);
+// 폴더 내 connector에서 생성한 connector를 통해 store의 state를 해당 Component의 props로 전달

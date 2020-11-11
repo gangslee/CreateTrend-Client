@@ -1,20 +1,21 @@
-import React from 'react';
-import styled, { css } from 'styled-components';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import styled, { css } from "styled-components";
+import { Helmet } from "react-helmet";
 
-import Loader from '../../Components/Container/Loader';
-import WordMap from '../../Components/Charts/Wordmap';
-import LineChart from '../../Components/Charts/LineChart';
-import KeywordChart from '../../Components/Charts/KeywordChart';
-import VideoList from '../../Components/Lists/VideoList';
-import SearchBar from '../../Components/Container/SearchBar';
-import { BGSecond } from '../../Components/Container/BGContiner';
-import NoticeTooltip from '../../Components/Container/NoticeTooltip';
-import Slogan from '../../Components/Text/Slogan';
-import Red from '../../Components/Text/Red';
-import Title from '../../Components/Text/Title';
-import { connector, IProps } from './connectors/presenter';
+import Loader from "../../Components/Container/Loader";
+import WordMap from "../../Components/Charts/Wordmap";
+import LineChart from "../../Components/Charts/LineChart";
+import KeywordChart from "../../Components/Charts/KeywordChart";
+import VideoList from "../../Components/Lists/VideoList";
+import SearchBar from "../../Components/Container/SearchBar";
+import { BGSecond } from "../../Components/Container/BGContiner";
+import NoticeTooltip from "../../Components/Container/NoticeTooltip";
+import Slogan from "../../Components/Text/Slogan";
+import Red from "../../Components/Text/Red";
+import Title from "../../Components/Text/Title";
+import { connector, IProps } from "./connectors/presenter";
 
+// 화면에 나타날 style을 포함한 Element들을 선언
 const SloganContainer = styled.div`
   margin: 90px 0 60px 0;
 `;
@@ -73,7 +74,7 @@ const SForm = styled.form`
 `;
 
 const RadioBt = styled.input.attrs({
-  type: 'radio',
+  type: "radio",
 })`
   display: none;
 `;
@@ -85,7 +86,7 @@ const RadioLabel = styled.label`
   align-items: center;
 
   ::before {
-    content: ' ';
+    content: " ";
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -102,11 +103,11 @@ const RadioContainer = styled.div`
   vertical-align: middle;
 
   margin-left: 20px;
-  input[type='radio']:checked + label:after {
+  input[type="radio"]:checked + label:after {
     border-radius: 50%;
     width: 15px;
     height: 15px;
-    content: ' ';
+    content: " ";
     top: 8px;
     left: 7px;
     position: absolute;
@@ -130,7 +131,7 @@ const GraphContainer = styled.div<ITypeProps>`
     css`
       padding-top: 45px;
     `}
-  margin-bottom:${({ setPadding }) => (setPadding ? '40px' : '70px')};
+  margin-bottom:${({ setPadding }) => (setPadding ? "40px" : "70px")};
   background-color: #fff;
 `;
 
@@ -159,40 +160,54 @@ const KeywordChartContainer = styled.div`
   margin-bottom: 40px;
 `;
 
-function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }: IProps) {
+// 키워드(콘텐츠) 분석 결과 페이지의 UI Logic Component 생성
+function KeywordPresenter({
+  data,
+  dispatches,
+  search,
+  searchKeyword,
+  clickWord,
+}: IProps) {
   const handleOnChange = (e: React.ChangeEvent) => {
-    ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
-      (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
+    ((e.currentTarget.getAttribute("value") === "영상화 추이" &&
+      data.currentChart === 1) ||
+      (e.currentTarget.getAttribute("value") === "인기도 추이" &&
+        data.currentChart === 0)) &&
       dispatches.radio();
-  };
+  }; // 현재 선택 된 라디오 버튼 변경 시 store에 반영
 
   const handleOnSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     searchKeyword();
-  };
+  }; // 검색 할 내용을 제출 시 실행되는 함수
 
   return (
     <>
+      {/* react-helmet을 통해 웹 문서 header 편집*/}
       <Helmet
         title={`Create Trend ㅣ ${search}`}
-        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
+        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
       />
+
       <BGSecond>
+        {/* 상단 slogan*/}
         <SloganContainer>
           <Slogan>
             "궁금한 영상 <Red>콘텐츠</Red> 또는 <Red>주제</Red>를 검색해 보세요"
           </Slogan>
         </SloganContainer>
+
+        {/* 검색 창*/}
         <SearchBarContainer onSubmit={handleOnSubmit}>
           <SearchBar searchKeyword={searchKeyword} />
         </SearchBarContainer>
 
         <TitleContainer>
           <TitleIcon
-            src={require('../../Asset/images/hashtag.png')}
+            src={require("../../Asset/images/hashtag.png")}
             srcSet={
-              (require('../../Asset/images/hashtag@2x.png'),
-              require('../../Asset/images/hashtag@3x.png'))
+              (require("../../Asset/images/hashtag@2x.png"),
+              require("../../Asset/images/hashtag@3x.png"))
             }
           />
           <Title>
@@ -205,8 +220,12 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
             <Subtitle>
               <Red>{search}</Red> 워드맵
             </Subtitle>
-            <NoticeTooltip text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `} />
 
+            <NoticeTooltip
+              text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `}
+            />
+
+            {/* 키워드 관련 WordMap*/}
             <GraphContainer setPadding={false}>
               {data.isLoading ? <Loader /> : <WordMap type="keyword" />}
             </GraphContainer>
@@ -215,11 +234,13 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
               <Subtitle>
                 <Red>{search}</Red> 추이
               </Subtitle>
+
               <NoticeTooltip
                 text={`우측에 버튼을 통해 지난 2주 사이의 '${search}' 콘텐츠의 영상화 추이 변화와 인기도 추이 변화를 확인해보세요! `}
               />
             </SubtitleContainer>
 
+            {/* 라디오 버튼*/}
             <SForm>
               <RadioContainer>
                 <RadioBt
@@ -243,6 +264,7 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
               </RadioContainer>
             </SForm>
 
+            {/* 키워드 인기도/영상화 추이 그래프*/}
             <GraphContainer setPadding={true}>
               {data.isLoading ? <Loader /> : <LineChart type="keyword" />}
             </GraphContainer>
@@ -250,12 +272,14 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
 
           <AsideSection>
             <Subtitle>
-              <Red>{search}</Red> 관련 키워드
+              <Red>{search}</Red> 키워드 TOP 10
             </Subtitle>
+
             <NoticeTooltip
               text={`'${search}'과 관련된 인기 키워드, 영상화 키워드 TOP 10을 확인해보세요! `}
             />
 
+            {/* 관련 키워드 차트*/}
             <KeywordChartContainer>
               {data.isLoading ? (
                 <Loader />
@@ -277,9 +301,12 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
           <Subtitle>
             <Red>{search}</Red> 조회수 급상승 영상
           </Subtitle>
+
           <NoticeTooltip
             text={`'${search}'을 콘텐츠로 하는 조회수 급상승 영상들을 확인해보세요! `}
           />
+
+          {/* 키워드 관련 조회수 급상승 영상 리스트*/}
           <VideoContainer>
             {data.isLoading ? (
               <Loader />
@@ -287,12 +314,22 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
               <VideoList mode="analysis" type="keyword" title={search} />
             )}
           </VideoContainer>
+
           <Subtitle>
             <Red>{search}</Red> 인기 영상
           </Subtitle>
-          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
+
+          <NoticeTooltip
+            text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `}
+          />
+
+          {/* 키워드 관련 인기 영상 리스트*/}
           <VideoContainer>
-            {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
+            {data.isLoading ? (
+              <Loader />
+            ) : (
+              <VideoList mode="aside" type="keyword" title={search} />
+            )}
           </VideoContainer>
         </BottomContainer>
       </BGSecond>
@@ -301,3 +338,4 @@ function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }
 }
 
 export default connector(KeywordPresenter);
+// 폴더 내 connector에서 생성한 connector를 통해 store의 state를 해당 Component의 props로 전달
