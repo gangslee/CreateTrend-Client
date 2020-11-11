@@ -1,14 +1,15 @@
-import React, {useRef} from 'react';
-import {Link, withRouter, RouteComponentProps} from 'react-router-dom';
+import React, { useRef } from 'react';
+import { Link, withRouter, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 
-import store, {RootState, RootDispatch} from '../../store/store';
-import {setIsOpenSignIn, setIsOpenSignUp, setIsOpenUserMenu} from '../../store/reducers/header';
+import store, { RootState, RootDispatch } from '../../store/store';
+import { setIsOpenSignIn, setIsOpenSignUp, setIsOpenUserMenu } from '../../store/reducers/header';
 import Dialog from './Dialog';
-import {signOut} from '../../actions/auth';
-import {searchTermUpdate} from '../../store/reducers/home';
+import { signOut } from '../../actions/auth';
+import { searchTermUpdate } from '../../store/reducers/home';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 const Container = styled.div`
   position: fixed;
   top: 0;
@@ -53,9 +54,6 @@ const LeftItem = styled.span`
   line-height: 1.44;
   color: #222;
   cursor: pointer;
-  /* :last-child {
-    margin-left: 50px;
-  } */
 `;
 
 const RightItem = styled.span`
@@ -75,7 +73,7 @@ interface ISLinkProps {
 }
 
 const SLink = styled(Link)`
-  color: ${({location}: ISLinkProps) => (location === '/predict' ? '#d10909' : '#222')};
+  color: ${({ location }: ISLinkProps) => (location === '/predict' ? '#d10909' : '#222')};
 `;
 
 const UserIcon = styled.img`
@@ -204,7 +202,7 @@ function mapStateToProps(state: RootState) {
       membership: state.auth.user ? state.auth.user.userinfo.on_subscribe : null,
     },
   };
-}
+} // store의 state들을 props로 mapping
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
@@ -215,54 +213,61 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       clearSearchBar: () => dispatch(searchTermUpdate('')),
     },
   };
-}
+} // store의 dispatch들을 props로 mapping
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
+// 해당 Component에 mapStateToProps와 mapDispatchToProps의 props를 넘겨주는 connect 함수를 변수로 선언
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 type Props = PropsFromRedux & RouteComponentProps;
+// 넘겨줄 props를 type화
 
-function Header({states, dispatches, history}: Props) {
-  const wrapperRef = useRef(null);
+function Header({ states, dispatches, history }: Props) {
+  const wrapperRef = useRef(null); // 사용자 메뉴의 영역 지정
 
   const handleOnClickLogo = (e: React.MouseEvent) => {
     dispatches.clearSearchBar();
-  };
+  }; // 로고 클릭시 메인 이동 후 검색 창 초기화
 
   const handleOnClickSignIn = (e: React.MouseEvent) => {
     dispatches.signIn(true);
-  };
+  }; // 로그인 modal 열기
+
   const handleOnClickSignUp = (e: React.MouseEvent) => {
     dispatches.signUp(true);
-  };
+  }; // 회원가입 modal 열기
+
   const handleOnClickUserIcon = (e: React.MouseEvent) => {
     dispatches.userMenu(true);
     document.addEventListener('click', closeUserMenu);
-  };
+  }; // 사용자 메뉴 열기
 
   const closeUserMenu = (e: MouseEvent) => {
     if (!(wrapperRef.current && wrapperRef.current.contains(e.target))) {
       dispatches.userMenu(false);
       document.removeEventListener('click', closeUserMenu);
     }
-  };
+  }; // 사용자 메뉴가 열려 있을 시 사용자 메뉴 이외의 영역을 클릭시 사용자 메뉴 종료
+
   const handleOnClickSignOut = (e: React.MouseEvent) => {
     dispatches.userMenu(false);
     document.removeEventListener('click', closeUserMenu);
     signOut(store.getState(), store.dispatch);
-  };
+  }; // 로그아웃
 
+  // 브라우저 상단 Global Navigation Bar Component 생성
   return (
     <Container>
+      {/* 로그인/회원가입 modal */}
       <Dialog type={(states.signIn && 'signIn') || (states.signUp && 'signUp')} />
+
       <HeaderContainer>
         <HalfContainer>
           <Link to="/" onClick={handleOnClickLogo}>
             <Logo src={require('../../Asset/images/logo.svg')} />
           </Link>
 
-          {/* <LeftItem>이용권 구매</LeftItem> */}
           <LeftItem>
             <SLink to="/predict" location={history.location.pathname}>
               조회수 예측
@@ -271,6 +276,7 @@ function Header({states, dispatches, history}: Props) {
         </HalfContainer>
 
         <HalfContainer>
+          {/* 사용자 메뉴 */}
           {states.userMenu && (
             <UserMenuContainer ref={wrapperRef}>
               <UserMenuHalfContainer>
@@ -288,6 +294,7 @@ function Header({states, dispatches, history}: Props) {
                   <UserEmail>abcd1234@email.com</UserEmail>
                 </UserInfoContainer>
               </UserMenuHalfContainer>
+
               {states.membership ? (
                 <UserMenuHalfContainer>
                   <MenuContainer>
@@ -312,6 +319,7 @@ function Header({states, dispatches, history}: Props) {
               <SignOutBt onClick={handleOnClickSignOut}>로그아웃</SignOutBt>
             </UserMenuContainer>
           )}
+
           {states.isAuthenticated ? (
             <UserIcon
               src={require('../../Asset/images/Login_Myinfo_icon.svg')}
@@ -326,9 +334,9 @@ function Header({states, dispatches, history}: Props) {
           )}
         </HalfContainer>
       </HeaderContainer>
-      {/* <Divider /> */}
     </Container>
   );
 }
 
 export default withRouter(connector(Header));
+// connector를 통해 store의 state를 해당 Component의 props로 전달

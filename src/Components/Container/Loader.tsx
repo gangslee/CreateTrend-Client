@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 const Container = styled.div`
   height: 100%;
   display: flex;
@@ -13,6 +14,7 @@ const Spinner = styled.img`
   height: 80px;
 `;
 
+// 로딩 Component 생성
 function Loader() {
   return (
     <Container>

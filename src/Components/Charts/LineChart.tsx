@@ -1,12 +1,13 @@
-import React, {useRef, useLayoutEffect} from 'react';
+import React, { useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 
-import {RootState} from '../../store/store';
+import { RootState } from '../../store/store';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 const LineChartContainer = styled.div`
   height: 100%;
 `;
@@ -31,7 +32,7 @@ interface OwnProps {
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
   if (ownProps.type === 'keyword') {
     return {
-      states: {data: [state.keyword.lines[state.keyword.currentChart]]},
+      states: { data: [state.keyword.lines[state.keyword.currentChart]] },
     };
   } else if (ownProps.type === 'statistics') {
     return {
@@ -43,15 +44,16 @@ function mapStateToProps(state: RootState, ownProps: OwnProps) {
       },
     };
   } else if (ownProps.type === 'star') {
-    return {states: {data: state.star.line}};
+    return { states: { data: state.star.line } };
   } else if (ownProps.type === 'detail') {
-    return {states: {data: state.videoDetail.lines}};
+    return { states: { data: state.videoDetail.lines } };
   } else if (ownProps.type === 'predict') {
-    return {states: {data: state.predict.lines}};
+    return { states: { data: state.predict.lines } };
   }
-}
+} // store의 state들을 props로 mapping
 
 const connector = connect(mapStateToProps);
+// 해당 Component에 mapStateToProps와 mapDispatchToProps의 props를 넘겨주는 connect 함수를 변수로 선언
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -61,15 +63,20 @@ interface ILineChartProps extends Props {
   type: string;
   id?: string;
   stateFunc?: (id: string, start: string, end: string) => void;
-}
+} // 넘겨줄 props와 추가로 요청받을 props를 type화
 
-function LineChart({states, type, id, stateFunc}: ILineChartProps) {
+// 추이 그래프 Component 생성
+function LineChart({ states, type, id, stateFunc }: ILineChartProps) {
   const chartRef = useRef(null);
   const useData = states.data[0];
   const unit = useData.type === '인기도 추이' ? '%' : useData.type === '조회수 추이' ? '회' : '건';
+
+  // Component 생성 시 차트 생성 및 기본 설정 진행
   useLayoutEffect(() => {
     let chart = am4core.create(useData.type, am4charts.XYChart);
     chart.data = useData.data;
+
+    // data가 존재 할 경우 chart 생성 및 기본 설정 진행
     if (useData.data.length > 0) {
       const dateAxis = chart.xAxes.push(new am4charts.CategoryAxis());
       dateAxis.dataFields.category = 'date';
@@ -83,7 +90,6 @@ function LineChart({states, type, id, stateFunc}: ILineChartProps) {
       valueAxis.renderer.line.strokeWidth = 2;
 
       const series = chart.series.push(new am4charts.LineSeries());
-      // series.name = 'Value';
       series.stroke = am4core.color('#d10909');
       series.strokeWidth = 3;
       series.dataFields.valueY = 'value';
@@ -103,6 +109,8 @@ function LineChart({states, type, id, stateFunc}: ILineChartProps) {
 
       chart.cursor = new am4charts.XYCursor();
       chart.cursor.behavior = type === 'star' ? 'zoomX' : 'none';
+
+      // StarPresenter의 차트의 경우 drag event를 통해 기간을 설정하는 함수를 추가
       if (type === 'star') {
         chart.cursor.events.on('zoomended', function (e) {
           const range = e.target.xRange;
@@ -126,9 +134,11 @@ function LineChart({states, type, id, stateFunc}: ILineChartProps) {
     } else {
       chart.dispose();
       chartRef.current = null;
-    }
+    } // data가 존재 하지 않을 시 차트 설정 값 제거
+
     chartRef.current = chart;
 
+    // Component LifeCycle 종료 시 차트 설정 값 제거
     return () => {
       chart.dispose();
     };
@@ -145,3 +155,4 @@ function LineChart({states, type, id, stateFunc}: ILineChartProps) {
 }
 
 export default connector(LineChart);
+// connector를 통해 store의 state를 해당 Component의 props로 전달

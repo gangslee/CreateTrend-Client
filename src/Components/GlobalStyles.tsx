@@ -1,6 +1,7 @@
-import {createGlobalStyle} from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
+// 프로젝트 내 기본 style 초기화 및 font 설정
 const globalStyles = createGlobalStyle`
     ${reset}
     

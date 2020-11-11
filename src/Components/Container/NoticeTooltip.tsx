@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 const Notice = styled.div`
   display: none;
   width: 260px;
@@ -54,7 +55,8 @@ interface Props {
   text: string;
 }
 
-export default function NoticeTooltip({text}: Props) {
+// 페이지 내 Component 설명 tooltip Component 생성
+export default function NoticeTooltip({ text }: Props) {
   return (
     <Container>
       <NoticeIcon>?</NoticeIcon>

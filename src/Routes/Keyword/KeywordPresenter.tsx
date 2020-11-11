@@ -1,19 +1,19 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import { Helmet } from "react-helmet";
+import React from 'react';
+import styled, { css } from 'styled-components';
+import { Helmet } from 'react-helmet';
 
-import Loader from "../../Components/Container/Loader";
-import WordMap from "../../Components/Charts/Wordmap";
-import LineChart from "../../Components/Charts/LineChart";
-import KeywordChart from "../../Components/Charts/KeywordChart";
-import VideoList from "../../Components/Lists/VideoList";
-import SearchBar from "../../Components/Container/SearchBar";
-import { BGSecond } from "../../Components/Container/BGContiner";
-import NoticeTooltip from "../../Components/Container/NoticeTooltip";
-import Slogan from "../../Components/Text/Slogan";
-import Red from "../../Components/Text/Red";
-import Title from "../../Components/Text/Title";
-import { connector, IProps } from "./connectors/presenter";
+import Loader from '../../Components/Container/Loader';
+import WordMap from '../../Components/Charts/Wordmap';
+import LineChart from '../../Components/Charts/LineChart';
+import KeywordChart from '../../Components/Charts/KeywordChart';
+import VideoList from '../../Components/Charts/VideoList';
+import SearchBar from '../../Components/Container/SearchBar';
+import { BGSecond } from '../../Components/Container/BGContiner';
+import NoticeTooltip from '../../Components/Container/NoticeTooltip';
+import Slogan from '../../Components/Text/Slogan';
+import Red from '../../Components/Text/Red';
+import Title from '../../Components/Text/Title';
+import { connector, IProps } from './connectors/presenter';
 
 // 화면에 나타날 style을 포함한 Element들을 선언
 const SloganContainer = styled.div`
@@ -74,7 +74,7 @@ const SForm = styled.form`
 `;
 
 const RadioBt = styled.input.attrs({
-  type: "radio",
+  type: 'radio',
 })`
   display: none;
 `;
@@ -86,7 +86,7 @@ const RadioLabel = styled.label`
   align-items: center;
 
   ::before {
-    content: " ";
+    content: ' ';
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -103,11 +103,11 @@ const RadioContainer = styled.div`
   vertical-align: middle;
 
   margin-left: 20px;
-  input[type="radio"]:checked + label:after {
+  input[type='radio']:checked + label:after {
     border-radius: 50%;
     width: 15px;
     height: 15px;
-    content: " ";
+    content: ' ';
     top: 8px;
     left: 7px;
     position: absolute;
@@ -131,7 +131,7 @@ const GraphContainer = styled.div<ITypeProps>`
     css`
       padding-top: 45px;
     `}
-  margin-bottom:${({ setPadding }) => (setPadding ? "40px" : "70px")};
+  margin-bottom:${({ setPadding }) => (setPadding ? '40px' : '70px')};
   background-color: #fff;
 `;
 
@@ -161,18 +161,10 @@ const KeywordChartContainer = styled.div`
 `;
 
 // 키워드(콘텐츠) 분석 결과 페이지의 UI Logic Component 생성
-function KeywordPresenter({
-  data,
-  dispatches,
-  search,
-  searchKeyword,
-  clickWord,
-}: IProps) {
+function KeywordPresenter({ data, dispatches, search, searchKeyword, clickWord }: IProps) {
   const handleOnChange = (e: React.ChangeEvent) => {
-    ((e.currentTarget.getAttribute("value") === "영상화 추이" &&
-      data.currentChart === 1) ||
-      (e.currentTarget.getAttribute("value") === "인기도 추이" &&
-        data.currentChart === 0)) &&
+    ((e.currentTarget.getAttribute('value') === '영상화 추이' && data.currentChart === 1) ||
+      (e.currentTarget.getAttribute('value') === '인기도 추이' && data.currentChart === 0)) &&
       dispatches.radio();
   }; // 현재 선택 된 라디오 버튼 변경 시 store에 반영
 
@@ -186,7 +178,7 @@ function KeywordPresenter({
       {/* react-helmet을 통해 웹 문서 header 편집*/}
       <Helmet
         title={`Create Trend ㅣ ${search}`}
-        link={[{ rel: "icon", type: "image/png", href: "symbol.png" }]}
+        link={[{ rel: 'icon', type: 'image/png', href: 'symbol.png' }]}
       />
 
       <BGSecond>
@@ -204,10 +196,10 @@ function KeywordPresenter({
 
         <TitleContainer>
           <TitleIcon
-            src={require("../../Asset/images/hashtag.png")}
+            src={require('../../Asset/images/hashtag.png')}
             srcSet={
-              (require("../../Asset/images/hashtag@2x.png"),
-              require("../../Asset/images/hashtag@3x.png"))
+              (require('../../Asset/images/hashtag@2x.png'),
+              require('../../Asset/images/hashtag@3x.png'))
             }
           />
           <Title>
@@ -221,9 +213,7 @@ function KeywordPresenter({
               <Red>{search}</Red> 워드맵
             </Subtitle>
 
-            <NoticeTooltip
-              text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `}
-            />
+            <NoticeTooltip text={`'${search}'과 연관성이 높은 콘텐츠들을 한 눈에 확인해보세요! `} />
 
             {/* 키워드 관련 WordMap*/}
             <GraphContainer setPadding={false}>
@@ -319,17 +309,11 @@ function KeywordPresenter({
             <Red>{search}</Red> 인기 영상
           </Subtitle>
 
-          <NoticeTooltip
-            text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `}
-          />
+          <NoticeTooltip text={`'${search}'을 콘텐츠로 하는 인기 영상들을 확인해보세요! `} />
 
           {/* 키워드 관련 인기 영상 리스트*/}
           <VideoContainer>
-            {data.isLoading ? (
-              <Loader />
-            ) : (
-              <VideoList mode="aside" type="keyword" title={search} />
-            )}
+            {data.isLoading ? <Loader /> : <VideoList mode="aside" type="keyword" title={search} />}
           </VideoContainer>
         </BottomContainer>
       </BGSecond>

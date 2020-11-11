@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import Tab from '../Container/Tab';
 
-import {RootState, RootDispatch} from '../../store/store';
-import {searchTermUpdate, searchTypeUpdate} from '../../store/reducers/home';
+import { RootState, RootDispatch } from '../../store/store';
+import { searchTermUpdate, searchTypeUpdate } from '../../store/reducers/home';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 const Container = styled.div`
   width: 990px;
 `;
@@ -70,7 +71,7 @@ function mapStateToProps(state: RootState) {
       searchType: state.home.searchType,
     },
   };
-}
+} // store의 state들을 props로 mapping
 
 function mapDispatchToProps(dispatch: RootDispatch) {
   return {
@@ -79,9 +80,10 @@ function mapDispatchToProps(dispatch: RootDispatch) {
       serachType: () => dispatch(searchTypeUpdate()),
     },
   };
-}
+} // store의 dispatch들을 props로 mapping
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
+// 해당 Component에 mapStateToProps와 mapDispatchToProps의 props를 넘겨주는 connect 함수를 변수로 선언
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -89,22 +91,26 @@ type Props = PropsFromRedux;
 
 interface ISearchBarProps extends Props {
   searchKeyword: () => void;
-}
+} // 넘겨줄 props와 추가로 요청받을 props를 type화
 
-function SearchBar({states, updates, searchKeyword}: ISearchBarProps) {
+// 검색 창 Component 생성
+function SearchBar({ states, updates, searchKeyword }: ISearchBarProps) {
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     updates.searchTerm(e.target.value);
-  };
+  }; // 입력 된 text data 변경 시 state에 반영
 
   const handleOnClickSearchIcon = async (e: React.MouseEvent) => {
     searchKeyword();
-  };
+  }; // 검색 아이콘 클릭 시 검색 진행
 
   return (
     <Container>
+      {/* 검색 타입 선택 Tab */}
       <TabContainer>
         <Tab type="search" stateFunc={updates.serachType} />
       </TabContainer>
+
+      {/* 검색 창 */}
       <InputContainer>
         <Input
           onChange={handleOnChange}
@@ -115,6 +121,7 @@ function SearchBar({states, updates, searchKeyword}: ISearchBarProps) {
               : '채널명을 입력해주세요'
           }
         />
+
         <IconContainer>
           <Icon src={require('../../Asset/images/Search.svg')} onClick={handleOnClickSearchIcon} />
         </IconContainer>
@@ -124,3 +131,4 @@ function SearchBar({states, updates, searchKeyword}: ISearchBarProps) {
 }
 
 export default connector(SearchBar);
+// connector를 통해 store의 state를 해당 Component의 props로 전달

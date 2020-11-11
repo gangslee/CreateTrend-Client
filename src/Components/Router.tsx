@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
-import Home from '../Routes/Home';
 import Keyword from '../Routes/Keyword';
 import Statistics from '../Routes/Statistics';
 import SearchYoutuber from '../Routes/SearchYoutuber';
@@ -16,7 +15,6 @@ export default () => (
       <Header />
       <Switch>
         <Route path="/" exact component={Statistics} />
-        <Route path="/search" component={Home} />
         <Route path="/keyword/:search" component={Keyword} />
         <Route path="/searchyoutuber/:youtuber_name" component={SearchYoutuber} />
         <Route path="/star/:id/:name" component={Star} />
@@ -27,3 +25,4 @@ export default () => (
     </>
   </Router>
 );
+// 각 페이지 별로 router 내부에 route로 설정

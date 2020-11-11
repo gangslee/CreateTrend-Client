@@ -1,9 +1,10 @@
 import React from 'react';
-import styled, {css} from 'styled-components';
-import {connect, ConnectedProps} from 'react-redux';
+import styled, { css } from 'styled-components';
+import { connect, ConnectedProps } from 'react-redux';
 
-import {RootState} from '../../store/store';
+import { RootState } from '../../store/store';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 type styleType = {
   type: string;
 };
@@ -13,7 +14,7 @@ const Container = styled.div<styleType>`
   height: 100%;
   display: flex;
   justify-content: space-between;
-  ${({type}) =>
+  ${({ type }) =>
     type === 'chart' &&
     css`
       border-bottom: 1px solid #dbe0f5;
@@ -32,15 +33,15 @@ const TabContainer = styled.div<ITabContainerProps>`
   align-items: center;
   width: 49%;
   height: 100%;
-  background-color: ${({current}) => (current ? '#dd0909' : '#fff')};
+  background-color: ${({ current }) => (current ? '#dd0909' : '#fff')};
   cursor: pointer;
-  color: ${({current}) => (current ? '#fff' : '#999')};
-  ${({type}) =>
+  color: ${({ current }) => (current ? '#fff' : '#999')};
+  ${({ type }) =>
     type === 'search' &&
     css`
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
-      ${({current}: ITabContainerProps) =>
+      ${({ current }: ITabContainerProps) =>
         !current &&
         css`
           border: 1px solid #dbdbdb;
@@ -61,9 +62,10 @@ function mapStateToProps(state: RootState) {
       search: state.home.searchType,
     },
   };
-}
+} // store의 state들을 props로 mapping
 
 const connector = connect(mapStateToProps);
+// 해당 Component에 mapStateToProps의 props를 넘겨주는 connect 함수를 변수로 선언
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
@@ -72,9 +74,10 @@ type Props = PropsFromRedux;
 interface ITabProps extends Props {
   type: string;
   stateFunc: () => void;
-}
+} // 넘겨줄 props와 추가로 요청받을 props를 type화
 
-function Tab({states, stateFunc, type}: ITabProps) {
+// 검색/차트 타입 설정에 사용되는 Tab Component 생성
+function Tab({ states, stateFunc, type }: ITabProps) {
   const chartType = type === 'chart' ? states.chart : states.search;
   const titles = type === 'chart' ? ['인기', '영상'] : ['콘텐츠', '스타채널'];
   const currentType = titles[chartType];
@@ -83,7 +86,7 @@ function Tab({states, stateFunc, type}: ITabProps) {
     if (e.currentTarget.innerHTML !== currentType) {
       stateFunc();
     }
-  };
+  }; // 선택 되지 않은 Tab 클릭 시 타입 변경
 
   return (
     <Container type={type}>
@@ -102,3 +105,4 @@ function Tab({states, stateFunc, type}: ITabProps) {
 }
 
 export default connector(Tab);
+// connector를 통해 store의 state를 해당 Component의 props로 전달

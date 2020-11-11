@@ -1,19 +1,19 @@
-import React, { useRef, useLayoutEffect } from "react";
-import styled from "styled-components";
-import { connect, ConnectedProps } from "react-redux";
+import React, { useRef, useLayoutEffect } from 'react';
+import styled from 'styled-components';
+import { connect, ConnectedProps } from 'react-redux';
 
-import { RootState } from "../../store/store";
+import { RootState } from '../../store/store';
 
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDirected";
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4plugins_forceDirected from '@amcharts/amcharts4/plugins/forceDirected';
 
+// Component에 사용될 style을 포함한 Element들을 선언
 type containerType = {
   type: string;
 };
 
 const WordmapContainer = styled.div`
-  height: ${({ type }: containerType) =>
-    type === "statistics" ? "100%" : "100%"};
+  height: ${({ type }: containerType) => (type === 'statistics' ? '100%' : '100%')};
 `;
 
 const ErrorContainer = styled.div`
@@ -34,18 +34,18 @@ interface OwnProps {
 }
 
 function mapStateToProps(state: RootState, ownProps: OwnProps) {
-  if (ownProps.type === "keyword") {
+  if (ownProps.type === 'keyword') {
     return { data: state.keyword.wordmap };
-  } else if (ownProps.type === "statistics") {
+  } else if (ownProps.type === 'statistics') {
     return {
       data:
         state.statistics.keywordChart[state.statistics.currentChart].keyword[
           state.statistics.currentKeyword
         ].wordmap,
     };
-  } else if (ownProps.type === "star") {
+  } else if (ownProps.type === 'star') {
     return {
-      data:state.star.wordmap
+      data: state.star.wordmap,
     };
   }
 }
@@ -62,34 +62,25 @@ interface IWordMapProps extends Props {
 
 function WordMap({ data, type }: IWordMapProps) {
   const chartRef = useRef(null);
+
+  // Component 생성 시 차트 생성 및 기본 설정 진행
   useLayoutEffect(() => {
-    const chart = am4core.create(
-      `${type}-wordmap`,
-      am4plugins_forceDirected.ForceDirectedTree
-    );
-    const series = chart.series.push(
-      new am4plugins_forceDirected.ForceDirectedSeries()
-    );
+    const chart = am4core.create(`${type}-wordmap`, am4plugins_forceDirected.ForceDirectedTree);
+    const series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries());
     series.data = [data];
 
-    // Set up data fields
-    series.dataFields.value = "value";
-    series.dataFields.name = "name";
-    series.dataFields.children = "children";
-    series.dataFields.color = "color";
+    series.dataFields.value = 'value';
+    series.dataFields.name = 'name';
+    series.dataFields.children = 'children';
+    series.dataFields.color = 'color';
 
-    // Add labels
-    series.nodes.template.label.text = "{name}";
-    // series.nodes.template.label.fill = am4core.color('#000');
-    // series.nodes.template.circle.strokeWidth = 4;
-    // series.nodes.template.circle.fill = am4core.color('#fff');
+    series.nodes.template.label.text = '{name}';
     series.nodes.template.outerCircle.strokeWidth = 4;
-    series.fontSize = type === "keyword" ? 15 : 12;
+    series.fontSize = type === 'keyword' ? 15 : 12;
 
-    // series.fontWeight = 'bold';
-    series.minRadius = type === "star" ? am4core.percent(8) : am4core.percent(6);
-    series.maxRadius = type === "star" ? am4core.percent(16) : am4core.percent(13);
-    series.nodes.template.tooltipText = "{name}";
+    series.minRadius = type === 'star' ? am4core.percent(8) : am4core.percent(6);
+    series.maxRadius = type === 'star' ? am4core.percent(16) : am4core.percent(13);
+    series.nodes.template.tooltipText = '{name}';
     series.nodes.template.label.hideOversized = true;
     series.nodes.template.label.truncate = true;
 
@@ -97,6 +88,7 @@ function WordMap({ data, type }: IWordMapProps) {
 
     chartRef.current = chart;
 
+    // Component LifeCycle 종료 시 차트 설정 값 제거
     return () => {
       chart.dispose();
     };
@@ -113,3 +105,4 @@ function WordMap({ data, type }: IWordMapProps) {
 }
 
 export default connector(WordMap);
+// connector를 통해 store의 state를 해당 Component의 props로 전달
