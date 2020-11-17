@@ -20,7 +20,7 @@ const SloganContainer = styled.div`
   margin: 90px 0 60px 0;
 `;
 
-const SearchBarContainer = styled.div`
+const SearchBarContainer = styled.form`
   display: flex;
   justify-content: center;
 `;

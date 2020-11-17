@@ -1,10 +1,13 @@
-import React from "react";
-import { fetchData, fetchDataFromKeyword } from "../../actions/predict";
-import store from "../../store/store";
-import PredictPresenter from "./PredictPresenter";
+import React, { useLayoutEffect } from 'react';
+import { fetchData, fetchDataFromKeyword } from '../../actions/predict';
+import store from '../../store/store';
+import PredictPresenter from './PredictPresenter';
 
 // 조회수 예측 페이지의 Data Logic Component 생성
 function PredictContainer() {
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  });
   const getData = () => {
     fetchData(store.getState(), store.dispatch);
   }; // 조회수 예측 실행시 API를 통해 서버로부터 data 요청
@@ -13,12 +16,7 @@ function PredictContainer() {
     fetchDataFromKeyword(store.getState(), store.dispatch);
   }; // 키워드 검색 실행시 API를 통해 서버로부터 data 요청
 
-  return (
-    <PredictPresenter
-      getData={getData}
-      getDataFromKeyword={getDataFromKeyword}
-    />
-  );
+  return <PredictPresenter getData={getData} getDataFromKeyword={getDataFromKeyword} />;
 }
 
 export default PredictContainer;
