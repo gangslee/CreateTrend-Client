@@ -5,7 +5,7 @@ import { fetchData } from '../../actions/searchYoutuber';
 import SearchYoutuberPresenter from './SearchYoutuberPresenter';
 import { connector, Props } from './connectors/container';
 
-// 스타채널 검색 결과 페이지의 Data Logic Component 생성
+// 스타채널 검색 결과 페이지의 Data Logic Component를 생성
 function SearchYoutuberContainer({ states, match, history }: Props) {
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
